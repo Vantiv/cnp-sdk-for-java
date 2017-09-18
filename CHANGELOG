@@ -1,4 +1,8 @@
 = LitleOnline CHANGELOG
+
+==Version 12.0.0 
+* Featrure: new repo cnp XML v12
+
 ==Version 11.0.2 (July 31, 2017)
 * BugFix: fix how a Communication instance is created
 * Feature: update URLs to be current, not including Sandbox
