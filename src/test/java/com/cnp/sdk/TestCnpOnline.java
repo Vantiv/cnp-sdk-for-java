@@ -2109,7 +2109,7 @@ public class TestCnpOnline {
         cat.setName("name");
         cat.setEndDate(Calendar.getInstance());
         sub.getCreateAddOns().add(cat);
-        recuring.setSubscription(sub);
+        // recuring.setSubscription(sub);
         sale.setRecurringRequest(recuring);
 
         Communication mockedCommunication = mock(Communication.class);
