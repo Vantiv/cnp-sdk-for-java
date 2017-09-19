@@ -1,5 +1,5 @@
 Vantiv eCommerce Java SDK
-=====================
+
 #### Warning:
 #### All major version changes require recertification to the new version. Once certified for the use of a new version, Vantiv modifies your Merchant Profile, allowing you to submit transaction to the Production Environment using the new version. Updating your code without recertification and modification of your Merchant Profile will result in transaction declines. Please consult you Implementation Analyst for additional information about this process.
 About Vantiv eCommerce
@@ -11,7 +11,7 @@ About this SDK
 --------------
 The Vantiv eCommerce Java SDK is a Java implementation of the [Vantiv eCommerce](https://developer.vantiv.com/community/ecommerce) XML API. This SDK was created to make it as easy as possible to process your payments with Vantiv eCommerce. This SDK utilizes the HTTPS protocol to securely connect to Vantiv eCommerce. Using the SDK requires coordination with the Vantiv eCommerce team in order to be provided with credentials for accessing our systems.
 
-Each Java SDK release supports all of the functionality present in the associated Vantiv eCommerce XML version (e.g., SDK v9.3.2 supports Vantiv eCommerce XML v9.3). Please see the online copy of our XSD for Vantiv eCommerce XML to get more details on what the Vantiv eCommerce payments engine supports.
+Each Java SDK release supports all of the functionality present in the associated Vantiv eCommerce XML version (e.g., SDK v12.0.0 supports Vantiv eCommerce XML v12.0). Please see the online copy of our XSD for Vantiv eCommerce XML to get more details on what the Vantiv eCommerce payments engine supports.
 
 This SDK was implemented to support the Java programming language and was created by Vantiv eCommerce. Its intended use is for online and batch transaction processing utilizing your account on the Vantiv eCommerce payments engine.
 
@@ -29,15 +29,21 @@ Setup
     1. For Maven:
         ```xml
             <dependency>
-                <groupId>com.cnp</groupId>
+
+        
+
+                <groupId>com.litle</groupId>
                 <artifactId>cnp-sdk-for-java</artifactId>
-                <version>8.25.4</version>
+                <version>12.0.0</version>
+
             </dependency>
         ```
 
     2. For Gradle:
         ```groovy
-            compile(group: 'com.cnp', name: 'cnp-sdk-for-java', version: '8.25.4')
+
+            compile(group: 'com.litle', name: 'cnp-sdk-for-java', version: '12.0.0')
+
         ```
         
 3. Create your configuration file with one of the following
@@ -46,10 +52,16 @@ Setup
 4. Use it:
 
 ```java
+
 import com.cnp.sdk.*;
 import com.cnp.sdk.generated.*
 
 public class SampleCnpTxn {
+
+import com.litle.sdk.*;
+import com.litle.sdk.generated.*;
+public class SampleLitleTxn {
+
 
 	public static void main(String[] args) {
 
@@ -75,4 +87,6 @@ public class SampleCnpTxn {
 }
 ```
 
-More examples can be found here [Java Gists](https://gist.github.com/cnpSDK)
+
+More examples can be found here [Java Gists](https://gist.github.com/VantivSDK)
+

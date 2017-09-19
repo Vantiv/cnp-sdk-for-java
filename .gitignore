@@ -19,4 +19,8 @@ bin/
 lib/
 out/
 build/
+_site
+images
+js
+
 

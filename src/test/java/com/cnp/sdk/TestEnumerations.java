@@ -126,9 +126,9 @@ public class TestEnumerations {
 		EnhancedData info = new EnhancedData();
 		info.setDestinationCountryCode(CountryTypeEnum.US);
 	}
-	@Test
-	public void iias() {
-		HealthcareIIAS info = new HealthcareIIAS();
-		info.setIIASFlag(IIASFlagType.Y);
-	}
+//	@Test
+//	public void iias() {
+//		HealthcareIIAS info = new HealthcareIIAS();
+//		info.setIIASFlag(IIASFlagType.Y);
+//	}
 }
