@@ -30,19 +30,19 @@ Setup
         ```xml
             <dependency>
                 <groupId>com.litle</groupId>
-                <artifactId>litle-sdk-for-java</artifactId>
-                <version>8.25.4</version>
+                <artifactId>cnp-sdk-for-java</artifactId>
+                <version>12.0.0</version>
             </dependency>
         ```
 
     2. For Gradle:
         ```groovy
-            compile(group: 'com.litle', name: 'litle-sdk-for-java', version: '8.25.4')
+            compile(group: 'com.litle', name: 'cnp-sdk-for-java', version: '12.0.0')
         ```
         
 3. Create your configuration file with one of the following
-    * Run `java -jar /path/to/litle-sdk-for-java.jar` and answer the questions, or
-    * Add a file `.litle_SDK_config.properties` to your home directory with the correct properties in it
+    * Run `java -jar /path/to/cnp-sdk-for-java.jar` and answer the questions, or
+    * Add a file `.cnp_SDK_config.properties` to your home directory with the correct properties in it
 4. Use it:
 
 ```java
@@ -75,4 +75,4 @@ public class SampleLitleTxn {
 }
 ```
 
-More examples can be found here [Java Gists](https://gist.github.com/litleSDK)
+More examples can be found here [Java Gists](https://gist.github.com/VantivSDK)
