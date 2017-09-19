@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 public class ForceCaptureExample {
     public static void main(String[] args) {
@@ -15,11 +15,11 @@ public class ForceCaptureExample {
         forceCapture.setCard(card);
         forceCapture.setId("id");
  
-        ForceCaptureResponse response = new LitleOnline().forceCapture(forceCapture);
+        ForceCaptureResponse response = new CnpOnline().forceCapture(forceCapture);
         //Display Results 
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
 	if(!response.getMessage().equals("Approved"))
         throw new RuntimeException(" The ForceCaptureExample does not give the right response");
     }

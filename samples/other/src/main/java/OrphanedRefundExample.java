@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 public class OrphanedRefundExample {
     public static void main(String[] args) {
@@ -24,11 +24,11 @@ public class OrphanedRefundExample {
         credit.setCard(card);
         credit.setId("id");
  
-        CreditResponse response = new LitleOnline().credit(credit);
+        CreditResponse response = new CnpOnline().credit(credit);
         //Display Results 
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
 	if(!response.getMessage().equals("Approved"))
         throw new RuntimeException(" The OrphanedRefundExample does not give the right response");
     }

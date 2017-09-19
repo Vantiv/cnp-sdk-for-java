@@ -8,7 +8,7 @@ repositories {
  }
   task execSamples(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.MechaBatch'
+        main='com.cnp.sdk.samples.MechaBatch'
         classpath = sourceSets.main.runtimeClasspath	
 
      

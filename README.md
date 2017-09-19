@@ -1,5 +1,5 @@
 Vantiv eCommerce Java SDK
-=====================
+
 #### Warning:
 #### All major version changes require recertification to the new version. Once certified for the use of a new version, Vantiv modifies your Merchant Profile, allowing you to submit transaction to the Production Environment using the new version. Updating your code without recertification and modification of your Merchant Profile will result in transaction declines. Please consult you Implementation Analyst for additional information about this process.
 About Vantiv eCommerce
@@ -29,15 +29,21 @@ Setup
     1. For Maven:
         ```xml
             <dependency>
+
+        
+
                 <groupId>com.litle</groupId>
                 <artifactId>cnp-sdk-for-java</artifactId>
                 <version>12.0.0</version>
+
             </dependency>
         ```
 
     2. For Gradle:
         ```groovy
+
             compile(group: 'com.litle', name: 'cnp-sdk-for-java', version: '12.0.0')
+
         ```
         
 3. Create your configuration file with one of the following
@@ -46,9 +52,16 @@ Setup
 4. Use it:
 
 ```java
+
+import com.cnp.sdk.*;
+import com.cnp.sdk.generated.*
+
+public class SampleCnpTxn {
+
 import com.litle.sdk.*;
 import com.litle.sdk.generated.*;
 public class SampleLitleTxn {
+
 
 	public static void main(String[] args) {
 
@@ -65,13 +78,15 @@ public class SampleLitleTxn {
 		sale.setCard(card);
 		
 		// Peform the transaction on the Vantiv eCommerce Platform
-		SaleResponse response = new LitleOnline().sale(sale);
+		SaleResponse response = new CnpOnline().sale(sale);
 
 		// display result
 		System.out.println("Message: " + response.getMessage());
-		System.out.println("Vantiv eCommerce Transaction ID: " + response.getLitleTxnId());
+		System.out.println("Vantiv eCommerce Transaction ID: " + response.getCnpTxnId());
 	}
 }
 ```
 
+
 More examples can be found here [Java Gists](https://gist.github.com/VantivSDK)
+

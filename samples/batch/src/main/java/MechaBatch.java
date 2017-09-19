@@ -1,20 +1,20 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
 import java.util.Calendar;
 import java.util.Properties;
  
 /*
-An example of the batch functionality of Litle Java SDK. We create one of each transaction type, add them to a batch, and then deliver the batch over sFTP to Litle. Note the use of an anonymous class to process responses.
+An example of the batch functionality of Cnp Java SDK. We create one of each transaction type, add them to a batch, and then deliver the batch over sFTP to Cnp. Note the use of an anonymous class to process responses.
  */
 public class MechaBatch {
     public static void main(String[] args) {    	
-    	String requestFileName = "litleSdk-testBatchFile-MECHA.xml";
-	LitleBatchFileRequest request = new LitleBatchFileRequest(requestFileName);
+    	String requestFileName = "cnpSdk-testBatchFile-MECHA.xml";
+	CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
 	Properties configFromFile = request.getConfig();
 	String merchantId = configFromFile.getProperty("merchantId");
 	
-	LitleBatchRequest batch = request.createBatch(merchantId);
+	CnpBatchRequest batch = request.createBatch(merchantId);
 	 
 	//card
 	CardType card = new CardType();
@@ -35,7 +35,7 @@ public class MechaBatch {
 	contact.setName("Bob");
 	contact.setCity("Lowell");
 	contact.setState("MA");
-	contact.setEmail("Bob@litle.com");
+	contact.setEmail("Bob@cnp.com");
 	 
 	Authorization auth = new Authorization();
 	auth.setReportGroup("Planets");
@@ -66,7 +66,7 @@ public class MechaBatch {
 	 
 	AuthReversal authReversal = new AuthReversal();
 	authReversal.setReportGroup("Planets");
-	authReversal.setLitleTxnId(12345678000L);
+	authReversal.setCnpTxnId(12345678000L);
 	authReversal.setAmount(106L);
 	authReversal.setPayPalNotes("Notes");
 	authReversal.setId("id");
@@ -84,7 +84,7 @@ public class MechaBatch {
 	cardValidationNumOnToken.setId("12345");
 	cardValidationNumOnToken.setCustomerId("0987");
 	cardValidationNumOnToken.setOrderId("12344");
-	cardValidationNumOnToken.setLitleToken("1233456789103801");
+	cardValidationNumOnToken.setCnpToken("1233456789103801");
 	cardValidationNumOnToken.setCardValidationNum("123");
 	cardValidationNumOnToken.setId("id");
 	batch.addTransaction(cardValidationNumOnToken);
@@ -101,7 +101,7 @@ public class MechaBatch {
 	 
 	Capture capture = new Capture();
 	capture.setReportGroup("Planets");
-	capture.setLitleTxnId(123456000L);
+	capture.setCnpTxnId(123456000L);
 	capture.setAmount(106L);
 	capture.setId("id");
 	batch.addTransaction(capture);
@@ -132,14 +132,14 @@ public class MechaBatch {
 	 
 	EcheckCredit echeckCredit = new EcheckCredit();
 	echeckCredit.setReportGroup("Planets");
-	echeckCredit.setLitleTxnId(1234567890L);
+	echeckCredit.setCnpTxnId(1234567890L);
 	echeckCredit.setAmount(12L);
 	echeckCredit.setId("id");
 	batch.addTransaction(echeckCredit);
 	 
 	EcheckRedeposit echeckRedeposit = new EcheckRedeposit();
 	echeckRedeposit.setReportGroup("Planets");
-	echeckRedeposit.setLitleTxnId(124321341412L);
+	echeckRedeposit.setCnpTxnId(124321341412L);
 	echeckRedeposit.setId("id");
 	batch.addTransaction(echeckRedeposit);
 	 
@@ -154,8 +154,8 @@ public class MechaBatch {
 	echeckSale.setId("id");
 	batch.addTransaction(echeckSale);
 	 
-	LitleBatchFileResponse fileResponse = request.sendToLitleSFTP();
-	LitleBatchResponse batchResponse = fileResponse.getNextLitleBatchResponse();
+	CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+	CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
         System.out.println("Response Message:"+fileResponse.getMessage());
 	 if(!fileResponse.getMessage().equals("Valid Format"))
          throw new RuntimeException(" The MechaBatch does not give the right response");

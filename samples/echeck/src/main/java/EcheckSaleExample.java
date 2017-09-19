@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 public class EcheckSaleExample {
     public static void main(String[] args) {
@@ -18,15 +18,15 @@ public class EcheckSaleExample {
 	contact.setName("Bob");
 	contact.setCity("lowell");
 	contact.setState("MA");
-	contact.setEmail("sdksupport@litle.com");
+	contact.setEmail("sdksupport@cnp.com");
 	echecksale.setBillToAddress(contact);
 	echecksale.setId("id");
   
-        EcheckSalesResponse response = new LitleOnline().echeckSale(echecksale);
+        EcheckSalesResponse response = new CnpOnline().echeckSale(echecksale);
         //Display Results
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
 	if(!response.getMessage().equals("Approved"))
         throw new RuntimeException(" The EcheckSaleExample does not give the right response");
     }

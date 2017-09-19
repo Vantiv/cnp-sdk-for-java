@@ -1,12 +1,12 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 import java.util.Properties;
  
 public class MultiCurrencyExample {
     public static void main(String[] args) {
-        LitleOnline usdCurrency = new LitleOnline(); //This will use the default merchant setup in .litle_SDK_config.properties supporting purchases in USD
+        CnpOnline usdCurrency = new CnpOnline(); //This will use the default merchant setup in .cnp_SDK_config.properties supporting purchases in USD
  
         Authorization authorization = new Authorization();
     	authorization.setReportGroup("Planets");
@@ -24,41 +24,41 @@ public class MultiCurrencyExample {
         //Display Results
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
  
         Properties cdnProps = new Properties();
         cdnProps.setProperty("merchantId","1002");
-        cdnProps.setProperty("url","https://www.testlitle.com/sandbox/communicator/online");
+        cdnProps.setProperty("url","https://www.testcnp.com/sandbox/communicator/online");
         cdnProps.setProperty("username","username");
         cdnProps.setProperty("password","topsecret"); 
         cdnProps.setProperty("proxyHost","websenseproxy");  
         cdnProps.setProperty("proxyPort","8080");      
         cdnProps.setProperty("version","8.10");
         cdnProps.setProperty("timeout","65");
-        LitleOnline cdnCurrency = new LitleOnline(cdnProps); //Override the default merchant setup in .litle_SDK_config.properties to force purchase in CDN
+        CnpOnline cdnCurrency = new CnpOnline(cdnProps); //Override the default merchant setup in .cnp_SDK_config.properties to force purchase in CDN
  
         AuthorizationResponse response2 = cdnCurrency.authorize(authorization);  //Perform the same authorization using CDN instead of USD
         //Display Results 
         System.out.println("Response: " + response2.getResponse());
         System.out.println("Message: " + response2.getMessage());
-        System.out.println("Litle Transaction ID: " + response2.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response2.getCnpTxnId());
  
         Properties yenProps = new Properties();
         yenProps.setProperty("merchantId","1003"); //Notice that 1003 is a different merchant.  In our system, they could be setup for YEN purchases
-        yenProps.setProperty("url","https://www.testlitle.com/sandbox/communicator/online");
+        yenProps.setProperty("url","https://www.testcnp.com/sandbox/communicator/online");
         yenProps.setProperty("username","username");
         yenProps.setProperty("password","topsecret");    
         yenProps.setProperty("proxyHost","websenseproxy");  
         yenProps.setProperty("proxyPort","8080");     
         yenProps.setProperty("version","8.10");
         yenProps.setProperty("timeout","65");
-        LitleOnline yenCurrency = new LitleOnline(yenProps); //Override the default merchant setup in .litle_SDK_config.properties to force purchase in YEN
+        CnpOnline yenCurrency = new CnpOnline(yenProps); //Override the default merchant setup in .cnp_SDK_config.properties to force purchase in YEN
         
         AuthorizationResponse response3 = yenCurrency.authorize(authorization);  //Perform the same authorization using YEN instead of USD
         //Display Results
         System.out.println("Response: " + response3.getResponse());
         System.out.println("Message: " + response3.getMessage());
-        System.out.println("Litle Transaction ID: " + response3.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response3.getCnpTxnId());
 	if(!response.getMessage().equals("Approved")||!response2.getMessage().equals("Approved")||!response3.getMessage().equals("Approved"))
         throw new RuntimeException(" The MultiCurrencyExample does not give the right response");
  

@@ -1,12 +1,12 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 import java.util.Properties;
  
 public class MultiCurrencyExample2 {
     public static void main(String[] args) {
-        LitleOnline litle = new LitleOnline();
+        CnpOnline cnp = new CnpOnline();
  
         Authorization authorization = new Authorization();
         authorization.setReportGroup("Planets");
@@ -21,18 +21,18 @@ public class MultiCurrencyExample2 {
         authorization.setId("id");
         Contact obj=new Contact();
         obj.setCountry(CountryTypeEnum.values()[0]);
-        LitleOnlineRequest overrides = new LitleOnlineRequest();
+        CnpOnlineRequest overrides = new CnpOnlineRequest();
         if(obj.getCountry().name().equalsIgnoreCase("USA")) {
             overrides.setMerchantId("1001"); //configured in our system for USD
         } else if(obj.getCountry().name().equalsIgnoreCase("CA")) {
             overrides.setMerchantId("1002"); //configured in our system for CDN
         }
  
-        AuthorizationResponse response = litle.authorize(authorization, overrides);
+        AuthorizationResponse response = cnp.authorize(authorization, overrides);
         //Display Results 
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
 	if(!response.getMessage().equals("Approved"))
         throw new RuntimeException(" The MultiCurrencyExample does not give the right response");
     }

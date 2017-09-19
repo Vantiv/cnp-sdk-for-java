@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
 
 public class SampleDetailTax {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class SampleDetailTax {
 	  card.setType(MethodOfPaymentTypeEnum.VI);
 	  authorization.setCard(card);
 	 
-	  AuthorizationResponse response = new LitleOnline().authorize(authorization);
+	  AuthorizationResponse response = new CnpOnline().authorize(authorization);
 	  System.out.println("Response: " + response.getMessage());
 	  // In your sample, you can ignore this 	
           if(!response.getMessage().equals("Approved"))

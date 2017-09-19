@@ -1,22 +1,22 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.AccountUpdateFileRequestData;
-import com.litle.sdk.generate.RFRRequest;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.AccountUpdateFileRequestData;
+import com.cnp.sdk.generate.RFRRequest;
 import java.util.Calendar;
-public class RfrLitleExample {
+public class RfrCnpExample {
     public static void main(String[] args) {
         String merchantId = "0180";
-        String requestFileName = "litleSdk-testRFRFile-fileConfigSFTP.xml";
+        String requestFileName = "cnpSdk-testRFRFile-fileConfigSFTP.xml";
         RFRRequest rfrRequest = new RFRRequest();
         AccountUpdateFileRequestData data = new AccountUpdateFileRequestData();
         data.setMerchantId(merchantId);
         data.setPostDay(Calendar.getInstance());
         rfrRequest.setAccountUpdateFileRequestData(data);
          
-        LitleRFRFileRequest request = new LitleRFRFileRequest(requestFileName, rfrRequest); 
+        CnpRFRFileRequest request = new CnpRFRFileRequest(requestFileName, rfrRequest); 
         try{
-            LitleRFRFileResponse response = request.sendToLitleSFTP();
-            String message=response.getLitleRFRResponse().getRFRResponseMessage();
+            CnpRFRFileResponse response = request.sendToCnpSFTP();
+            String message=response.getCnpRFRResponse().getRFRResponseMessage();
         }
         catch(Exception e){       
         }
