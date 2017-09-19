@@ -8,23 +8,23 @@ repositories {
  }
   task execEcheckCreditExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.EcheckCreditExample'
+        main='com.cnp.sdk.samples.EcheckCreditExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
   task execEcheckRedepositExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.EcheckRedepositExample'
+        main='com.cnp.sdk.samples.EcheckRedepositExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
   task execEcheckSaleExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.EcheckSaleExample'
+        main='com.cnp.sdk.samples.EcheckSaleExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
 
   task execEcheckVerificationExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.EcheckVerificationExample'
+        main='com.cnp.sdk.samples.EcheckVerificationExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
 

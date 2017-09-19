@@ -8,30 +8,30 @@ repositories {
  }
   task execAuthExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.AuthExample'
+        main='com.cnp.sdk.samples.AuthExample'
         classpath = sourceSets.main.runtimeClasspath	
 
      
 }
   task execAuthReversalExample(type:JavaExec) {
 	check.dependsOn it
-        main='com.litle.sdk.samples.AuthReversalExample'
+        main='com.cnp.sdk.samples.AuthReversalExample'
         classpath = sourceSets.main.runtimeClasspath
 }
    task execAuthWithTokenExample(type:JavaExec) {
 	check.dependsOn it
-        main='com.litle.sdk.samples.AuthWithTokenExample'
+        main='com.cnp.sdk.samples.AuthWithTokenExample'
         classpath = sourceSets.main.runtimeClasspath
 
 }
   task execFullLifeCycleExample(type:JavaExec) {
 	check.dependsOn it
-        main='com.litle.sdk.samples.FullLifeCycleExample'
+        main='com.cnp.sdk.samples.FullLifeCycleExample'
         classpath = sourceSets.main.runtimeClasspath
 }
  task execSampleDetailTax(type:JavaExec) {
 	check.dependsOn it
-        main='com.litle.sdk.samples.SampleDetailTax'
+        main='com.cnp.sdk.samples.SampleDetailTax'
         classpath = sourceSets.main.runtimeClasspath
 }
    

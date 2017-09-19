@@ -1,4 +1,4 @@
-rootProject.name='litle-sdk-for-java'
+rootProject.name='cnp-sdk-for-java'
 include 'samples/auth'
 project(":samples/auth").name = "auth"
 include 'samples/batch'

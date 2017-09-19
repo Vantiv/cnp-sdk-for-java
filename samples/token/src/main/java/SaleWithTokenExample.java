@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 public class SaleWithTokenExample {
     public static void main(String[] args) {
@@ -11,16 +11,16 @@ public class SaleWithTokenExample {
         CardTokenType token = new CardTokenType();
         token.setCardValidationNum("349");
         token.setExpDate("1214");
-        token.setLitleToken("1111222233334000");
+        token.setCnpToken("1111222233334000");
         token.setType(MethodOfPaymentTypeEnum.VI);
         sale.setToken(token);
         sale.setId("id");
  
-        SaleResponse response = new LitleOnline().sale(sale);
+        SaleResponse response = new CnpOnline().sale(sale);
         //Display Results 
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
         if(!response.getMessage().equals("Approved"))
         throw new RuntimeException(" The SaleWithTokenExample does not give the right response");
     }

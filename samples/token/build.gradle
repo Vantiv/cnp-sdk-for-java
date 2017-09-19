@@ -8,12 +8,12 @@ repositories {
  }
   task execRegisterTokenExample (type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.RegisterTokenExample'
+        main='com.cnp.sdk.samples.RegisterTokenExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
  task execSaleWithTokenExample (type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.SaleWithTokenExample'
+        main='com.cnp.sdk.samples.SaleWithTokenExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
 

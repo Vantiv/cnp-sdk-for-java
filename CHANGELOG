@@ -1,4 +1,4 @@
-= LitleOnline CHANGELOG
+= CnpOnline CHANGELOG
 ==Version 11.0.2 (July 31, 2017)
 * BugFix: fix how a Communication instance is created
 * Feature: update URLs to be current, not including Sandbox
@@ -46,12 +46,12 @@ HTTP timeout set to 500ms
 * Feature: Migrate build to Gradle
 
 == Version 8.25.3 (May 1, 2014)
-* Bug: Using the LitleResponseProcessor to check for responses would never work with EcheckSales.
+* Bug: Using the CnpResponseProcessor to check for responses would never work with EcheckSales.
 * Feature: Make it possible to load properties file from classpath
 
 == Version 8.25.2 (April 3, 2014)
 * Feature: Add support to multi step SFTP batching. Now this process can be done in up to three steps: generate batch file, send file and retrieve file.
-* Feature: Improved performance when creating multiple instances of LitleOnline. 
+* Feature: Improved performance when creating multiple instances of CnpOnline. 
 
 == Version 8.25.1 (March 21, 2014)
 * Bugfix: delete the reports directory on clean in build.xml
@@ -88,8 +88,8 @@ HTTP timeout set to 500ms
 
 == Version 8.20.0 (August 7, 2013)
 
-* Backwards-Incompatible Feature: More initial support for Recurring, including the ability to update or cancel subscriptions.  LitleBatchResponse::getNextResponse now returns LitleTransactionInterface instead of TransactionType.  This is to support the new recurring transaction types which also implement TransactionType.  Most existing uses of TransactionType can just cast from LitleTransactionInterface without any other changes.  The LitleResponseParser interface also includes 3 additional processor methods to handle the 3 transaction types.
-* Feature: Addition of an adapter to the LitleResponseProcessor so that clients don't need to implement all of the methods if most are not used.
+* Backwards-Incompatible Feature: More initial support for Recurring, including the ability to update or cancel subscriptions.  CnpBatchResponse::getNextResponse now returns CnpTransactionInterface instead of TransactionType.  This is to support the new recurring transaction types which also implement TransactionType.  Most existing uses of TransactionType can just cast from CnpTransactionInterface without any other changes.  The CnpResponseParser interface also includes 3 additional processor methods to handle the 3 transaction types.
+* Feature: Addition of an adapter to the CnpResponseProcessor so that clients don't need to implement all of the methods if most are not used.
 
 == Version 8.19.0 (July 29, 2013)
 
@@ -98,7 +98,7 @@ HTTP timeout set to 500ms
 
 == Version 8.18.0 (June 14, 2013)
 
-* Feature: Batch support - see https://gist.github.com/litleSDK/5768846 and https://gist.github.com/litleSDK/5768893
+* Feature: Batch support - see https://gist.github.com/cnpSDK/5768846 and https://gist.github.com/cnpSDK/5768893
 * Feature: Add support for Recurring
 
 == Version 8.17.0 (March 29, 2013)
@@ -132,7 +132,7 @@ HTTP timeout set to 500ms
 * Feature: Temporary storage of card validation num on tokens
 * Feature: Updating card validation numbers on tokens
 * Bugfix: Merged pull request #3 from aingram to speed up performance and avoid concurrent connection limit
-* Cleanup: Removed dependency for CXF, based on suggestion from viniciusccarvalho at https://github.com/LitleCo/litle-sdk-for-java/issues/4
+* Cleanup: Removed dependency for CXF, based on suggestion from viniciusccarvalho at https://github.com/CnpCo/cnp-sdk-for-java/issues/4
 * Cleanup: Updated httpclient dependency to version 4.0.1
 
 == Version 8.13.2 (June 18, 2012)

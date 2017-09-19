@@ -8,7 +8,7 @@ repositories {
  }
   task execCreditExample(type:JavaExec){
 	check.dependsOn it
-        main='com.litle.sdk.samples.CreditExample'
+        main='com.cnp.sdk.samples.CreditExample'
         classpath = sourceSets.main.runtimeClasspath	   
 }
 

@@ -1,11 +1,11 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 //Full Lifecycle
 public class FullLifeCycleExample {
     public static void main(String[] args) {
-        LitleOnline litle = new LitleOnline();
+        CnpOnline cnp = new CnpOnline();
  
         Authorization auth = new Authorization();
         auth.setOrderId("1");
@@ -27,37 +27,37 @@ public class FullLifeCycleExample {
         auth.setCard(card);
         auth.setId("id");
  
-        AuthorizationResponse authResponse = litle.authorize(auth);
+        AuthorizationResponse authResponse = cnp.authorize(auth);
         System.out.println("Response: " + authResponse.getResponse());
         System.out.println("Message: " + authResponse.getMessage());
-        System.out.println("Litle Transaction ID: " + authResponse.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + authResponse.getCnpTxnId());
  
         Capture capture = new Capture();
-        capture.setLitleTxnId(authResponse.getLitleTxnId());
+        capture.setCnpTxnId(authResponse.getCnpTxnId());
         capture.setId("id");
-        CaptureResponse captureResponse = litle.capture(capture);  //Capture the Auth
+        CaptureResponse captureResponse = cnp.capture(capture);  //Capture the Auth
         System.out.println("Response: " + captureResponse.getResponse());
         System.out.println("Message: " + captureResponse.getMessage());
-        System.out.println("Litle Transaction ID: " + captureResponse.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + captureResponse.getCnpTxnId());
  
         Credit credit = new Credit();
-        credit.setLitleTxnId(captureResponse.getLitleTxnId());  
+        credit.setCnpTxnId(captureResponse.getCnpTxnId());  
         credit.setId("id");
-        CreditResponse creditResponse = litle.credit(credit); //Refund the capture
+        CreditResponse creditResponse = cnp.credit(credit); //Refund the capture
         System.out.println("Response: " + creditResponse.getResponse());
         System.out.println("Message: " + creditResponse.getMessage());
-        System.out.println("Litle Transaction ID: " + creditResponse.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + creditResponse.getCnpTxnId());
 	// In your sample, you can ignore this 	
 	if(!creditResponse.getMessage().equals("Approved")||!captureResponse.getMessage().equals("Approved")||!authResponse.getMessage().equals("Approved"))
         throw new RuntimeException(" The AuthWithTokenExample does not give the right response");
   
         //TODO - Fix the void here
        /* Void credit = new Credit();
-        capture.setLitleTxnId(captureResponse.getLitleTxnId());
-        CreditResponse creditResponse = litle.credit(credit); //Refund the capture
+        capture.setCnpTxnId(captureResponse.getCnpTxnId());
+        CreditResponse creditResponse = cnp.credit(credit); //Refund the capture
         System.out.println("Response: " + creditResponse.getResponse());
         System.out.println("Message: " + creditResponse.getMessage());
-        System.out.println("Litle Transaction ID: " + creditResponse.getLitleTxnId());*/
+        System.out.println("Cnp Transaction ID: " + creditResponse.getCnpTxnId());*/
  
     }
 }

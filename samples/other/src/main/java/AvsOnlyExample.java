@@ -1,6 +1,6 @@
-package com.litle.sdk.samples;
-import com.litle.sdk.*;
-import com.litle.sdk.generate.*;
+package com.cnp.sdk.samples;
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
  
 //AVS Only
 public class AvsOnlyExample {
@@ -25,14 +25,14 @@ public class AvsOnlyExample {
         auth.setCard(card);
         auth.setId("id"); 
  
-        AuthorizationResponse response = new LitleOnline().authorize(auth);
+        AuthorizationResponse response = new CnpOnline().authorize(auth);
         FraudResult fraudresult = new FraudResult();
         fraudresult.setAvsResult("12");
         response.setFraudResult(fraudresult);
         //Display Results
         System.out.println("Response: " + response.getResponse());
         System.out.println("Message: " + response.getMessage());
-        System.out.println("Litle Transaction ID: " + response.getLitleTxnId());
+        System.out.println("Cnp Transaction ID: " + response.getCnpTxnId());
         
         System.out.println("AVS Result: " + response.getFraudResult().getAvsResult());
 	if(!response.getMessage().equals("Approved"))
