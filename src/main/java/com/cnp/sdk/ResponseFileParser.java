@@ -76,7 +76,7 @@ public class ResponseFileParser {
 					startRecordingRetString = true;
 					retStringBuf.append(currentStartingTagInFile);
 					if( openingTagToLookFor.compareToIgnoreCase("<cnpResponse") != 0 ){
-						retStringBuf.append(" xmlns=\"http://www.cnp.com/schema\"");
+						retStringBuf.append(" xmlns=\"http://www.vantivcnp.com/schema\"");
 					}
 					startRecordingStartingTag = false;
 					currentStartingTagInFile.delete(0,

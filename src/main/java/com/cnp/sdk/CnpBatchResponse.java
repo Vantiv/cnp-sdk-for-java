@@ -66,7 +66,7 @@ public class CnpBatchResponse {
 
 		try {
 			batchResponseXML = responseFileParser.getNextTag("batchResponse");
-			//batchResponseXML = "<batchResponse cnpBatchId=\"1431\" merchantId=\"101\" xmlns=\"http://www.cnp.com/schema\"></batchResponse>";
+			//batchResponseXML = "<batchResponse cnpBatchId=\"1431\" merchantId=\"101\" xmlns=\"http://www.vantivcnp.com/schema\"></batchResponse>";
 			jc = JAXBContext.newInstance("com.cnp.sdk.generate");
 			unmarshaller = jc.createUnmarshaller();
 			batchResponse = (BatchResponse) unmarshaller.unmarshal(new StringReader(batchResponseXML));
