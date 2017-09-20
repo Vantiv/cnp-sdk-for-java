@@ -128,7 +128,7 @@ public class Communication {
 				System.out.println("Request XML: " + xmlRequest);
 			}
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
-			System.out.println("POST    "+post);
+			//System.out.println("POST    "+post);
 			HttpResponse response = httpClient.execute(post);
 			System.out.println("RESPONSE    "+response); 
 			entity = response.getEntity();

@@ -964,7 +964,7 @@ public class CnpOnline {
 			if(this.removeStubs){
 			    xmlRequest = xmlRequest.replaceAll("<[A-Za-z]+\\s*/>", "");
 			}
-			System.out.println("config-------------"+config+"\n\n\n");
+		//	System.out.println("config-------------"+config+"\n\n\n");
 			String xmlResponse = communication.requestToServer(xmlRequest, config);
 			
 			if(xmlResponse.contains("http://www.vantivcnp.com/schema")){

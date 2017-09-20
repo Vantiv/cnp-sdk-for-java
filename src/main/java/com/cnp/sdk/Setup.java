@@ -14,7 +14,7 @@ public class Setup {
 	@SuppressWarnings("serial")
 	private static final HashMap<String,String> URL_MAP = new HashMap<String,String>() {
 		{
-			put("sandbox","https://www.testcnp.com/sandbox/communicator/online");
+			put("sandbox","https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online");
 			put("prelive","https://payments.vantivprelive.com/vap/communicator/online");
 			put("postlive","https://payments.vantivpostlive.com/vap/communicator/online");
 			put("production","https://payments.vantivcnp.com/vap/communicator/online");
@@ -58,7 +58,7 @@ public class Setup {
 				System.out.println("====== Invalid choice entered ======");
 			}
 			System.out.println("Please choose an environment from the following list (example: 'prelive'):");
-			System.out.println("\tsandbox => www.testcnp.com");
+			System.out.println("\tsandbox => www.testvantivcnp.com");
 			System.out.println("\tprelive => payments.vantivprelive.com");
 			System.out.println("\tpostlive => payments.vantivpostlive.com");
 			System.out.println("\tproduction => payments.vantivcnp.com");
@@ -72,8 +72,8 @@ public class Setup {
 			) {
 				// standard predefined cases
 				config.put("url", URL_MAP.get(lastUserInput.toLowerCase()));
-				config.put("batchHost", URL_MAP.get(("batch" + lastUserInput).toLowerCase()));
-				config.put("batchPort", PORT_MAP.get(("batch" + lastUserInput).toLowerCase()));
+				config.put("batchHost", URL_MAP.get(("batchprelive")));
+				config.put("batchPort", PORT_MAP.get(("batchprelive")));
 				badInput = false;
 			} else if(lastUserInput.compareToIgnoreCase("other") == 0) {
 				// user wants to enter custom values
