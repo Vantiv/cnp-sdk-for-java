@@ -975,11 +975,11 @@ public class CnpOnline {
 			// non-zero responses indicate a problem
 			if(!"0".equals(response.getResponse())) {
 				if ("2".equals(response.getResponse()) || "3".equals(response.getResponse())) {
-					throw new VantivInvalidCredentialException(response.getMessage());
+					throw new CnpInvalidCredentialException(response.getMessage());
 				} else if ("4".equals(response.getResponse())) {
-					throw new VantivConnectionLimitExceededException(response.getMessage());
+					throw new CnpConnectionLimitExceededException(response.getMessage());
 				} else if ("5".equals(response.getResponse())) {
-					throw new VantivObjectionableContentException(response.getMessage());
+					throw new CnpObjectionableContentException(response.getMessage());
 				} else {
 					throw new CnpOnlineException(response.getMessage());
 				}
