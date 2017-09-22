@@ -142,7 +142,7 @@ public class Communication {
 				System.out.println("Response XML: " + xmlResponse);
 			}
 		} catch (IOException e) {
-			throw new CnpOnlineException("Exception connection to Cnp", e);
+			throw new CnpOnlineException("Exception connection to Vantiv eCommerce", e);
 		} finally {
 			if (entity != null) {
 				EntityUtils.consumeQuietly(entity);
