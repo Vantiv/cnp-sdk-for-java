@@ -1432,7 +1432,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"11.3\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
+                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
                                 		+ "<deactivateReversal>"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
@@ -1777,7 +1777,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                        "<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                         + "<giftCardAuthReversalResponse id=\"id\" reportGroup=\"rptGrp\">"
                         + "<cnpTxnId>21825673457518565</cnpTxnId>"
                         + "<response>330</response>"
@@ -1838,7 +1838,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                        "<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                         + "<giftCardAuthReversalResponse id=\"id\" reportGroup=\"rptGrp\">"
                         + "<cnpTxnId>21825673457518565</cnpTxnId>"
                         + "<response>330</response>"
@@ -1898,7 +1898,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                        "<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                         + "<giftCardCaptureResponse id=\"id\" reportGroup=\"rptGrp\">"
                         + "<cnpTxnId>21825673457518565</cnpTxnId>"
                         + "<response>330</response>"
@@ -1957,7 +1957,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                		"<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                		"<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                                 + "<giftCardCaptureResponse id=\"id\" reportGroup=\"rptGrp\">"
                                 + "<cnpTxnId>21825673457518565</cnpTxnId>"
                                 + "<response>330</response>"
@@ -2011,7 +2011,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                        "<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                         + "<giftCardCreditResponse id=\"id\" reportGroup=\"rptGrp\">"
                         + "<cnpTxnId>21825673457518565</cnpTxnId>"
                         + "<response>330</response>"
@@ -2064,7 +2064,7 @@ public class TestCnpOnline {
                                 		+ "</cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                		"<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
+                		"<cnpOnlineResponse version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
                                 + "<giftCardCreditResponse id=\"id\" reportGroup=\"rptGrp\">"
                                 + "<cnpTxnId>21825673457518565</cnpTxnId>"
                                 + "<response>330</response>"
@@ -2119,7 +2119,7 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<sale.*?<card>.*?<number>4100000000000002</number>.*?</card>.*?<createAddOn>.*?</createAddOn>.*?</sale>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId></saleResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId></saleResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         SaleResponse saleresponse = cnp.sale(sale);
         assertEquals(123L, saleresponse.getCnpTxnId());
@@ -2136,7 +2136,7 @@ public class TestCnpOnline {
         
         Communication mockedComm = mock (Communication.class);
         when(mockedComm.requestToServer(matches(".*?<cnpOnlineRequest.*?<queryTransaction.*id=\"1234\".*?customerId=\"customerId\".*?<origId>org1</origId>.*?<origActionType>A</origActionType>.*?"),
-                any(Properties.class))).thenReturn("<cnpOnlineResponse version='11.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionResponse id='1234' customerId='customerId'> <response>150</response> <responseTime>2015-04-14T12:37:26</responseTime> <message>Original transaction not found</message><matchCount>0</matchCount></queryTransactionResponse></cnpOnlineResponse>");
+                any(Properties.class))).thenReturn("<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionResponse id='1234' customerId='customerId'> <response>150</response> <responseTime>2015-04-14T12:37:26</responseTime> <message>Original transaction not found</message><matchCount>0</matchCount></queryTransactionResponse></cnpOnlineResponse>");
         
         cnp.setCommunication(mockedComm);
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
@@ -2158,7 +2158,7 @@ public class TestCnpOnline {
         
         Communication mockedComm = mock (Communication.class); 
         when(mockedComm.requestToServer(matches(".*?<cnpOnlineRequest.*?<queryTransaction.*id=\"findId\".*?customerId=\"customerId\".*?<origId>org1</origId>.*?<origActionType>A</origActionType>.*?"),
-                any(Properties.class))).thenReturn("<cnpOnlineResponse version='11.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionResponse id='findId' customerId='customerId'> <response>150</response> <responseTime>2015-04-14T12:37:26</responseTime> " +
+                any(Properties.class))).thenReturn("<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionResponse id='findId' customerId='customerId'> <response>150</response> <responseTime>2015-04-14T12:37:26</responseTime> " +
                 		"<message>Original transaction found</message><matchCount>1</matchCount>" +
                 		"<results_max10> <authorizationResponse id=\"findId\" > <cnpTxnId>1111111</cnpTxnId> <orderId>150306_auth</orderId> <response>000</response><responseTime>2015-04-14T12:37:23</responseTime><postDate>2015-04-14</postDate><message>Approved</message></authorizationResponse></results_max10></queryTransactionResponse></cnpOnlineResponse>");
         
@@ -2184,7 +2184,7 @@ public class TestCnpOnline {
         
         Communication mockedComm = mock (Communication.class);
         when(mockedComm.requestToServer(matches(".*?<cnpOnlineRequest.*?<queryTransaction.*id=\"1234\".*?customerId=\"customerId\".*?<origId>org1</origId>.*?<origActionType>A</origActionType>.*?"),
-                any(Properties.class))).thenReturn("<cnpOnlineResponse version='11.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionUnavailableResponse id='1234' customerId='customerId'><cnpTxnId>123456</cnpTxnId> <response>123</response> <message>Sample message</message></queryTransactionUnavailableResponse></cnpOnlineResponse>");
+                any(Properties.class))).thenReturn("<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionUnavailableResponse id='1234' customerId='customerId'><cnpTxnId>123456</cnpTxnId> <response>123</response> <message>Sample message</message></queryTransactionUnavailableResponse></cnpOnlineResponse>");
         
         cnp.setCommunication(mockedComm);
         TransactionTypeWithReportGroup response =cnp.queryTransaction(queryTransaction);
@@ -2212,7 +2212,7 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<fraudCheck.*?<advancedFraudChecks>.*?</advancedFraudChecks>.*?</fraudCheck>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='11.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><fraudCheckResponse id='' reportGroup='Default Report Group' customerId=''><cnpTxnId>602413782865196123</cnpTxnId><response>123</response><responseTime>2016-07-11T15:12:34</responseTime><message>Call Discover</message><advancedFraudResults><deviceReviewStatus>pass</deviceReviewStatus><deviceReputationScore>42</deviceReputationScore><triggeredRule>triggered_rule_1</triggeredRule><triggeredRule>triggered_rule_2</triggeredRule><triggeredRule>triggered_rule_3</triggeredRule><triggeredRule>triggered_rule_4</triggeredRule><triggeredRule>triggered_rule_5</triggeredRule></advancedFraudResults></fraudCheckResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><fraudCheckResponse id='' reportGroup='Default Report Group' customerId=''><cnpTxnId>602413782865196123</cnpTxnId><response>123</response><responseTime>2016-07-11T15:12:34</responseTime><message>Call Discover</message><advancedFraudResults><deviceReviewStatus>pass</deviceReviewStatus><deviceReputationScore>42</deviceReputationScore><triggeredRule>triggered_rule_1</triggeredRule><triggeredRule>triggered_rule_2</triggeredRule><triggeredRule>triggered_rule_3</triggeredRule><triggeredRule>triggered_rule_4</triggeredRule><triggeredRule>triggered_rule_5</triggeredRule></advancedFraudResults></fraudCheckResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);        
         
         FraudCheckResponse fraudCheckResponse = cnp.fraudCheck(fraudCheck);
@@ -2221,34 +2221,5 @@ public class TestCnpOnline {
         assertEquals(new Integer(42), advancedFraudResultsType.getDeviceReputationScore());
         assertEquals(5, advancedFraudResultsType.getTriggeredRules().size());
     }
-    
-    
-    //@Test
-/*    public void testPayFacCredit() throws Exception {
-      
-        PayFacCredit payFacCredit = new PayFacCredit();
-        payFacCredit.setFundingSubmerchantId("12345");
-        payFacCredit.setFundsTransferId("1234567");
-        payFacCredit.setAmount(108L);
-      Communication mockedCommunication = mock(Communication.class);
-        when(
-                mockedCommunication
-                        .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<payFacCredit reportGroup=\"rptGrp\" id=\"id\">"
-                                        + "<fundingSubmerchantId>12345</fundingSubmerchantId>"
-                                        + "<fundsTransferId>1234567</fundsTransferId>"
-                                        + "<amount>108L</amount>"
-                                        + "</payFacCredit>"
-                                        + "</cnpOnlineRequest>.*?"),
-                                any(Properties.class)))
-                .thenReturn(
-                        "<cnpOnlineResponse version=\"11.0\" xmlns=\"http://www.vantivcnp.com/schema\" response=\"0\" message=\"Valid Format\">"
-                        + "<payFacCreditResponse id=\"id\" reportGroup=\"rptGrp\">"
-                        + "</payFacCreditResponse>"
-                        + "</cnpOnlineResponse>");
-        cnp.setCommunication(mockedCommunication);
-        PayFacCreditResponse response = cnp.payFacCredit(payFacCredit);
-       // assertEquals(21825673457518565L, response.getCnpTxnId());
-    }*/
 
 }
