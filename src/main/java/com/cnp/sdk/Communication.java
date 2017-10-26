@@ -105,11 +105,13 @@ public class Communication {
 			proxy = new HttpHost(proxyHost, Integer.valueOf(proxyPort));
 			requestConfig = RequestConfig.copy(RequestConfig.DEFAULT)
 					.setProxy(proxy)
-					.setConnectionRequestTimeout(httpTimeout)
+					.setSocketTimeout(4000)
+					.setConnectTimeout(httpTimeout)
 					.build();
 		} else {
 			requestConfig = RequestConfig.copy(RequestConfig.DEFAULT)
-					.setConnectionRequestTimeout(httpTimeout)
+			        .setSocketTimeout(4000)
+                    .setConnectTimeout(httpTimeout)
 					.build();
 		}
 

@@ -2090,6 +2090,7 @@ public class TestCnpOnline {
         sale.setAmount(106L);
         sale.setCnpTxnId(123456L);
         sale.setOrderId("12344");
+        sale.setId("id");
         sale.setOrderSource(OrderSourceType.ECOMMERCE);
         CardType card = new CardType();
         card.setType(MethodOfPaymentTypeEnum.VI);
@@ -2109,7 +2110,7 @@ public class TestCnpOnline {
         cat.setName("name");
         cat.setEndDate(Calendar.getInstance());
         sub.getCreateAddOns().add(cat);
-        // recuring.setSubscription(sub);
+        recuring.setCreateSubscription(sub);
         sale.setRecurringRequest(recuring);
 
         Communication mockedCommunication = mock(Communication.class);

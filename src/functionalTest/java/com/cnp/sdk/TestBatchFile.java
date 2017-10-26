@@ -39,7 +39,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.cnp.com",
+        assertEquals("prelive.litle.com",
                 configFromFile.getProperty("batchHost"));
         assertEquals("15000", configFromFile.getProperty("batchPort"));
 

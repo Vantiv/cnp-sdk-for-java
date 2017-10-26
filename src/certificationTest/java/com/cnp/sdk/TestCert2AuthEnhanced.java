@@ -26,7 +26,7 @@ public class TestCert2AuthEnhanced {
         Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.cnp.com/vap/communicator/online");
+        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
         config.setProperty("proxyHost", "");
         config.setProperty("proxyPort", "");
         cnp = new CnpOnline(config);
