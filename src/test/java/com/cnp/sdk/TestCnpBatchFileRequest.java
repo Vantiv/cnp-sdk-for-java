@@ -14,8 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.cnp.sdk.CnpBatchFileRequest;
-import com.cnp.sdk.CnpBatchRequest;
 import com.cnp.sdk.generate.ApplepayHeaderType;
 import com.cnp.sdk.generate.ApplepayType;
 import com.cnp.sdk.generate.CardType;
@@ -57,7 +55,7 @@ public class TestCnpBatchFileRequest {
         configToPass.setProperty("username", "usr1");
         configToPass.setProperty("password", "pass");
 
-        cnpBatchFileRequest.intializeMembers("testFile.xml", configToPass);
+        cnpBatchFileRequest.initializeMembers("testFile.xml", configToPass);
 
         assertEquals(cnpBatchFileRequest.getConfig().getProperty("username"), "usr1");
         assertEquals(cnpBatchFileRequest.getConfig().getProperty("password"), "pass");

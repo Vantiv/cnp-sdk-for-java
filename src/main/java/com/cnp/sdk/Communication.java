@@ -162,6 +162,7 @@ public class Communication {
 	 * @param configuration
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void sendCnpBatchFileToIBC(File requestFile, File responseFile, Properties configuration) throws IOException {
 		String hostName = configuration.getProperty("batchHost");
 		String hostPort = configuration.getProperty("batchPort");
@@ -178,7 +179,7 @@ public class Communication {
 	}
 
 	/**
-	 * This method sends the request file to Cnp's server sFTP
+	 * This method sends the request file to Vantiv eCommerce's sFTP server
 	 * @param requestFile
 	 * @param configuration
 	 * @throws IOException
@@ -201,7 +202,7 @@ public class Communication {
     	    session.connect();
 	    }
 	    catch(JSchException e){
-	        throw new CnpBatchException("Exception connection to Cnp", e);
+	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
 	    }
 
 	    Channel channel = null;
@@ -211,7 +212,8 @@ public class Communication {
 	        channel.connect();
 	    }
 	    catch(JSchException e){
-	        throw new CnpBatchException("Exception connection to Cnp", e);
+	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : " +
+					"error in session.openChannel/channel.connect", e);
 	    }
 
 	    ChannelSftp sftp = (ChannelSftp) channel;
@@ -230,10 +232,11 @@ public class Communication {
 
 	    try {
             sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
-            sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" + requestFile.getName() + ".asc");
+            sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" +
+					requestFile.getName() + ".asc");
         }
 	    catch (SftpException e) {
-            throw new CnpBatchException("Exception SFTP operation", e);
+            throw new CnpBatchException("Exception in sFTP operation", e);
         }
 
 	    channel.disconnect();
@@ -241,8 +244,8 @@ public class Communication {
 	}
 
 	/**
-	 * Grabs the response file from Cnp's sFTP server. This method is blocking! It will continue to poll until the timeout has elapsed
-	 * or the file has been retrieved!
+	 * Grabs the response file from Vantiv eCommerce's sFTP server. This method is blocking!
+	 * It will continue to poll until the timeout has elapsed or the file has been retrieved!
 	 * @param requestFile
 	 * @param responseFile
 	 * @param configuration
@@ -266,7 +269,7 @@ public class Communication {
             session.connect();
         }
         catch(JSchException e){
-            throw new CnpBatchException("Exception connection to Cnp", e);
+            throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
         }
 
         Channel channel = null;
@@ -276,7 +279,8 @@ public class Communication {
             channel.connect();
         }
         catch(JSchException e){
-            throw new CnpBatchException("Exception connection to Cnp", e);
+            throw new CnpBatchException("Exception connection to Vantiv eCommerce : " +
+					"error in session.openChannel/channel.connect", e);
         }
 
         ChannelSftp sftp = (ChannelSftp) channel;
@@ -302,7 +306,7 @@ public class Communication {
                 try {
                     sftp.rm("outbound/" + requestFile.getName() + ".asc");
                 } catch (SftpException e) {
-                    throw new CnpBatchException("Exception SFTP operation", e);
+                    throw new CnpBatchException("Exception in sFTP operation", e);
                 }
                 break;
             }
