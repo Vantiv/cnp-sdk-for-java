@@ -1,3 +1,0 @@
-<litleResponse version="11.3" xmlns="http://www.litle.com/schema" response="1" message="Error validating xml data against the schema on line 1
-tag name &quot;cnpRequest&quot; is not allowed. Possible tag names are: &lt;RFRRequest&gt;,&lt;RFRResponse&gt;,&lt;accountUpdate&gt;,&lt;accountUpdateFileRequestData&gt;,&lt;accountUpdateResponse&gt;,&lt;accountUpdater&gt;,&lt;activate&gt;,&lt;activateResponse&gt;,&lt;activateReversalResponse&gt;,&lt;amexAggregatorData&gt;,&lt;androidpayResponse&gt;,&lt;applepayResponse&gt;,&lt;authInformation&gt;,&lt;authReversal&gt; (more text omitted...)" litleSessionId="82921742333952019">
-</litleResponse>

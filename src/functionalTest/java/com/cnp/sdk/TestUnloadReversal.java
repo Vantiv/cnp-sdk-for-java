@@ -36,8 +36,6 @@ public class TestUnloadReversal {
         unloadReversal.setReportGroup("rptGrp");
         unloadReversal.setId("id");
 
-
-
         unloadReversal.setCnpTxnId(369852147l);
         unloadReversal.setCard(giftCard);
         unloadReversal.setOriginalRefCode("ref");
@@ -48,10 +46,6 @@ public class TestUnloadReversal {
 
         UnloadReversalResponse response=cnp.unloadReversal(unloadReversal);
         assertEquals("Approved", response.getMessage());
-
-
     }
-
-
 
 }

@@ -29,7 +29,6 @@ public class CnpBatchFileRequest{
 	private File requestFile;
 	private File responseFile;
 	private File tempBatchRequestFile;
-	//private File tempCnpRequestFile;
 	private String requestId;
 	private Marshaller marshaller;
 	private Configuration config = null;
@@ -39,13 +38,13 @@ public class CnpBatchFileRequest{
 	/**
 	 * Recommend NOT to change this value.
 	 */
-	protected final int cnpLimit_maxAllowedTransactionsPerFile = 500000;
+	protected final int CNP_LIMIT_MAX_ALLOWED_TNXS_PER_FILE = 500000;
 
 	/**
 	 * Construct a CnpBatchFileRequest using the configuration specified in location specified by requestFileName
 	 */
 	public CnpBatchFileRequest(String requestFileName) {
-		intializeMembers(requestFileName);
+		initializeMembers(requestFileName);
 	}
 
 	/**
@@ -57,12 +56,10 @@ public class CnpBatchFileRequest{
 	 *
 	 * Properties that *must* be set are:
 	 *
-	 * batchHost (eg https://payments.cnp.com)
-	 * batchPort (eg 8080) username
+	 * batchHost (eg https://payments.vantivcnp.com)
 	 * merchantId
 	 * password
 	 * batchTcpTimeout (in seconds)
-	 * batchUseSSL
 	 * BatchRequestPath folder - specify the absolute path
 	 * BatchResponsePath folder - specify the absolute path
 	 * sftpUsername
@@ -73,11 +70,11 @@ public class CnpBatchFileRequest{
 	 * proxyPort
 	 * printxml (possible values "true" and "false" defaults to false)
 	 *
-	 * @param RequestFileName
-	 *            , config
+	 * @param requestFileName
+	 * @param properties
 	 */
 	public CnpBatchFileRequest(String requestFileName, Properties properties) {
-		intializeMembers(requestFileName, properties);
+		initializeMembers(requestFileName, properties);
 	}
 
 	/**
@@ -87,14 +84,14 @@ public class CnpBatchFileRequest{
 	 */
 	public CnpBatchFileRequest(String requestFileName, Configuration config) {
 		this.config = config;
-		intializeMembers(requestFileName, null);
+		initializeMembers(requestFileName, null);
 	}
 
-	private void intializeMembers(String requestFileName) {
-		intializeMembers(requestFileName, null);
+	private void initializeMembers(String requestFileName) {
+		initializeMembers(requestFileName, null);
 	}
 
-	public void intializeMembers(String requestFileName, Properties in_properties) throws CnpBatchException{
+	public void initializeMembers(String requestFileName, Properties in_properties) throws CnpBatchException{
 		try {
 			this.jc = JAXBContext.newInstance("com.cnp.sdk.generate");
 			if(config == null){
@@ -118,9 +115,9 @@ public class CnpBatchFileRequest{
 			}
 
 			this.maxAllowedTransactionsPerFile = Integer.parseInt(properties.getProperty("maxAllowedTransactionsPerFile", "1000"));
-			if (maxAllowedTransactionsPerFile > cnpLimit_maxAllowedTransactionsPerFile) {
+			if (maxAllowedTransactionsPerFile > CNP_LIMIT_MAX_ALLOWED_TNXS_PER_FILE) {
 				throw new CnpBatchException("maxAllowedTransactionsPerFile property value cannot exceed "
-								+ String.valueOf(cnpLimit_maxAllowedTransactionsPerFile));
+								+ String.valueOf(CNP_LIMIT_MAX_ALLOWED_TNXS_PER_FILE));
 			}
 
 			requestFile = getFileToWrite("batchRequestFolder");
@@ -130,11 +127,14 @@ public class CnpBatchFileRequest{
 			throw new CnpBatchException(
 					"Configuration file not found." +
 							" If you are not using the .cnp_SDK_config.properties file," +
-							" please use the " + CnpBatchFileRequest.class.getSimpleName() + "(String, Properties) constructor." +
-							" If you are using .cnp_SDK_config.properties, you can generate one using java -jar cnp-sdk-for-java-x.xx.jar", e);
+							" please use the " + CnpBatchFileRequest.class.getSimpleName() +
+							"(String, Properties) constructor." +
+							" If you are using .cnp_SDK_config.properties, you can generate one using:" +
+							" java -jar cnp-sdk-for-java-x.xx.jar", e);
 		} catch (IOException e) {
 			throw new CnpBatchException(
-					"Configuration file could not be loaded.  Check to see if the current user has permission to access the file", e);
+					"Configuration file could not be loaded.  " +
+							"Check to see if the current user has permission to access the file", e);
 		} catch (JAXBException e) {
 			throw new CnpBatchException(
 					"Unable to load jaxb dependencies.  Perhaps a classpath issue?", e);
@@ -167,7 +167,6 @@ public class CnpBatchFileRequest{
 	 * object call sendToCnp method.
 	 *
 	 * @throws CnpBatchException
-	 * @throws JAXBException
 	 */
 	public void generateRequestFile() throws CnpBatchException {
 		try {
@@ -202,7 +201,9 @@ public class CnpBatchFileRequest{
 			tempBatchRequestFile.delete();
 			cnpReqWriter.close();
 		} catch (IOException e) {
-			throw new CnpBatchException("Error while creating a batch request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+			throw new CnpBatchException("Error while creating a batch request file. " +
+					"Check to see if the current user has permission to read and write to " +
+					this.properties.getProperty("batchRequestFolder"), e);
 		}
 
 	}
@@ -241,7 +242,8 @@ public class CnpBatchFileRequest{
 				}
 			}
 		} catch (FileNotFoundException e) {
-			throw new CnpBatchException("File .cnp_SDK_config.properties was not found. Please run the Setup.java application to create the file at location "+ (new Configuration()).location(), e);
+			throw new CnpBatchException("File .cnp_SDK_config.properties was not found. Please run the " +
+					"Setup.java application to create the file at location "+ (new Configuration()).location(), e);
 		} catch (IOException e) {
 			throw new CnpBatchException("There was an exception while reading the .cnp_SDK_config.properties file.", e);
 		}
@@ -262,20 +264,20 @@ public class CnpBatchFileRequest{
 	}
 
 	/**
-	 * This method generates the request and response file and the objects to access the
-	 * transaction responses.
-	 *
+	 * Deprecated delivery method, this delivery method may be removed at anytime!
 	 * @throws CnpBatchException
 	 */
+	@Deprecated
 	public CnpBatchFileResponse sendToCnp() throws CnpBatchException {
 	    return sendToCnpStream();
 	}
 
 	/**
-	 * Sends the file to Cnp over a TCP socket, the less favorable method of sending batches to Cnp.
+	 * Deprecated delivery method, this delivery method may be removed at anytime!
 	 * @return A response object for the batch file
 	 * @throws CnpBatchException
 	 */
+	@Deprecated
 	public CnpBatchFileResponse sendToCnpStream() throws CnpBatchException{
 	    try {
             prepareForDelivery();
@@ -285,12 +287,14 @@ public class CnpBatchFileRequest{
             return retObj;
 
         } catch (IOException e) {
-            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+            throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
+					"Check to see if the current user has permission to read and write to " +
+					this.properties.getProperty("batchRequestFolder"), e);
         }
 	}
 
 	/**
-     * Sends the file to Cnp over sFTP, the preferred method of sending batches to Cnp.
+     * Sends the file to Vantiv over sFTP, the preferred method of sending batches to Vantiv eCommerce.
      * @return A response object for the batch file
      * @throws CnpBatchException
      */
@@ -299,7 +303,7 @@ public class CnpBatchFileRequest{
 	}
 
 	/**
-	 * Sends the file to Cnp over sFTP, the preferred method of sending batches to Cnp.
+	 * Sends the file to Vantiv over sFTP, this is the preferred method of sending batches to Vantiv eCommerce.
 	 * @param useExistingFile If the batch file was prepared in an earlier step, this method
 	 * can be told to use the existing file.
 	 * @return A response object for the batch file
@@ -316,12 +320,14 @@ public class CnpBatchFileRequest{
             CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
             return retObj;
         } catch (IOException e) {
-            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+            throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
+					"Check to see if the current user has permission to read and write to "
+					+ this.properties.getProperty("batchRequestFolder"), e);
         }
 	}
 
 	/**
-     * Only sends the file to Cnp after sFTP. This method requires separate invocation of the retrieve method.
+     * Only sends the file to Vantiv over sFTP. This method requires separate invocation of the retrieve method.
      * @throws CnpBatchException
      */
     public void sendOnlyToCnpSFTP() throws CnpBatchException{
@@ -329,7 +335,7 @@ public class CnpBatchFileRequest{
     }
 
 	/**
-	 * Only sends the file to Cnp after sFTP. This method requires separate invocation of the retrieve method.
+	 * Only sends the file to Vantiv after sFTP. This method requires separate invocation of the retrieve method.
      * @param useExistingFile If the batch file was prepared in an earlier step, this method
      * can be told to use the existing file.
 	 * @throws CnpBatchException
@@ -341,12 +347,14 @@ public class CnpBatchFileRequest{
             }
             communication.sendCnpRequestFileToSFTP(requestFile, properties);
         } catch (IOException e) {
-            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+            throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
+					"Check to see if the current user has permission to read and write to " +
+					this.properties.getProperty("batchRequestFolder"), e);
         }
     }
 
 	/**
-	 * Only retrieves the file from Cnp over sFTP. This method requires separate invocation of the send method.
+	 * Only retrieves the file from Vantiv over sFTP. This method requires separate invocation of the send method.
 	 * @return A response object for the file
 	 * @throws CnpBatchException
 	 */
@@ -356,7 +364,9 @@ public class CnpBatchFileRequest{
             CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
             return retObj;
         } catch (IOException e) {
-            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+            throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
+					"Check to see if the current user has permission to read and write to " +
+					this.properties.getProperty("batchRequestFolder"), e);
         }
     }
 
@@ -405,7 +415,8 @@ public class CnpBatchFileRequest{
                     "There was an exception while marshalling BatchRequest or CnpRequest objects.", e);
         } catch (IOException e) {
             throw new CnpBatchException(
-                    "There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to "
+                    "There was an exception while creating the Cnp Request file. " +
+							"Check to see if the current user has permission to read and write to "
                             + this.properties.getProperty("batchRequestFolder"), e);
         }
     }
