@@ -1128,7 +1128,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<activate><amount>100</amount></activate></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?<activate reportGroup=\"Default Report Group\"><amount>100</amount></activate></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><activateResponse><cnpTxnId>123456</cnpTxnId></activateResponse></cnpOnlineResponse>");
@@ -1146,7 +1146,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<activate><amount>100</amount></activate></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<activate reportGroup=\"Default Report Group\"><amount>100</amount></activate></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><activateResponse><cnpTxnId>123456</cnpTxnId></activateResponse></cnpOnlineResponse>");
@@ -1166,7 +1166,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<deactivate><orderId>123</orderId></deactivate></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?<deactivate reportGroup=\"Default Report Group\"><orderId>123</orderId></deactivate></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><deactivateResponse><cnpTxnId>123456</cnpTxnId></deactivateResponse></cnpOnlineResponse>");
@@ -1184,7 +1184,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<deactivate><orderId>123</orderId></deactivate></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<deactivate reportGroup=\"Default Report Group\"><orderId>123</orderId></deactivate></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><deactivateResponse><cnpTxnId>123456</cnpTxnId></deactivateResponse></cnpOnlineResponse>");
@@ -1204,7 +1204,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<load><orderId>123</orderId></load></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?<load reportGroup=\"Default Report Group\"><orderId>123</orderId></load></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><loadResponse><cnpTxnId>123456</cnpTxnId></loadResponse></cnpOnlineResponse>");
@@ -1222,7 +1222,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<load><orderId>123</orderId></load></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<load reportGroup=\"Default Report Group\"><orderId>123</orderId></load></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><loadResponse><cnpTxnId>123456</cnpTxnId></loadResponse></cnpOnlineResponse>");
@@ -1242,7 +1242,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<unload><orderId>123</orderId></unload></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?<unload reportGroup=\"Default Report Group\"><orderId>123</orderId></unload></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><unloadResponse><cnpTxnId>123456</cnpTxnId></unloadResponse></cnpOnlineResponse>");
@@ -1260,7 +1260,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<unload><orderId>123</orderId></unload></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<unload reportGroup=\"Default Report Group\"><orderId>123</orderId></unload></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><unloadResponse><cnpTxnId>123456</cnpTxnId></unloadResponse></cnpOnlineResponse>");
@@ -1280,7 +1280,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<balanceInquiry><orderId>123</orderId></balanceInquiry></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?<balanceInquiry reportGroup=\"Default Report Group\"><orderId>123</orderId></balanceInquiry></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><balanceInquiryResponse><cnpTxnId>123456</cnpTxnId></balanceInquiryResponse></cnpOnlineResponse>");
@@ -1298,7 +1298,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<balanceInquiry><orderId>123</orderId></balanceInquiry></cnpOnlineRequest>.*?"),
+                                matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<balanceInquiry reportGroup=\"Default Report Group\"><orderId>123</orderId></balanceInquiry></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
                         "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><balanceInquiryResponse><cnpTxnId>123456</cnpTxnId></balanceInquiryResponse></cnpOnlineResponse>");
@@ -1330,7 +1330,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<activateReversal id=\"id\">"
+                                matches(".*?<cnpOnlineRequest.*?<activateReversal reportGroup=\"Default Report Group\" id=\"id\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<card>"
                                 		+ "<type>GC</type>"
@@ -1363,7 +1363,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?"
-                                		+ "<activateReversal>"
+                                		+ "<activateReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</activateReversal>"
@@ -1399,7 +1399,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<deactivateReversal id=\"id\">"
+                                matches(".*?<cnpOnlineRequest.*?<deactivateReversal reportGroup=\"Default Report Group\" id=\"id\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<card>"
                                 		+ "<type>GC</type>"
@@ -1433,7 +1433,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"12.0\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
-                                		+ "<deactivateReversal>"
+                                		+ "<deactivateReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</deactivateReversal"
@@ -1470,7 +1470,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<loadReversal id=\"id\">"
+                                matches(".*?<cnpOnlineRequest.*?<loadReversal reportGroup=\"Default Report Group\" id=\"id\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<card>"
                                 		+ "<type>GC</type>"
@@ -1504,7 +1504,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?"
-                                		+ "<loadReversal>"
+                                		+ "<loadReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</loadReversal>"
@@ -1540,7 +1540,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest.*?<unloadReversal id=\"id\">"
+                                matches(".*?<cnpOnlineRequest.*?<unloadReversal reportGroup=\"Default Report Group\" id=\"id\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<card>"
                                 		+ "<type>GC</type>"
@@ -1573,7 +1573,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?"
-                                		+ "<unloadReversal>"
+                                		+ "<unloadReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</unloadReversal>"
@@ -1647,7 +1647,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?"
-                                		+ "<refundReversal>"
+                                		+ "<refundReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</refundReversal>"
@@ -1720,7 +1720,7 @@ public class TestCnpOnline {
                 mockedCommunication
                         .requestToServer(
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?"
-                                		+ "<depositReversal>"
+                                		+ "<depositReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
                                 		+ "</depositReversal>"

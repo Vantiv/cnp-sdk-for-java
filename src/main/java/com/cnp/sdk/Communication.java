@@ -99,19 +99,18 @@ public class Communication {
 		String proxyPort = configuration.getProperty("proxyPort");
 		boolean httpKeepAlive = Boolean.valueOf(configuration.getProperty("httpKeepAlive", "false"));
 		int httpTimeout = Integer.valueOf(configuration.getProperty("timeout", "6000"));
-		int httpSocketTimeout =4000;
 		HttpHost proxy;
 		RequestConfig requestConfig;
 		if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null && proxyHost.length() > 0) {
 			proxy = new HttpHost(proxyHost, Integer.valueOf(proxyPort));
 			requestConfig = RequestConfig.copy(RequestConfig.DEFAULT)
 					.setProxy(proxy)
-					.setSocketTimeout(httpSocketTimeout)
+					.setSocketTimeout(4000)
 					.setConnectTimeout(httpTimeout)
 					.build();
 		} else {
 			requestConfig = RequestConfig.copy(RequestConfig.DEFAULT)
-			        .setSocketTimeout(httpSocketTimeout)
+			        .setSocketTimeout(4000)
                     .setConnectTimeout(httpTimeout)
 					.build();
 		}

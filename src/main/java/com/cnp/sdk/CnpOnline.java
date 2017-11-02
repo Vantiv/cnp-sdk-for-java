@@ -500,6 +500,8 @@ public class CnpOnline {
 
     public ActivateResponse activate(Activate activate, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(activate);
+
 
         request.setTransaction(CnpContext.getObjectFactory().createActivate(activate));
         CnpOnlineResponse response = sendToCnp(request);
@@ -514,6 +516,8 @@ public class CnpOnline {
 
     public DeactivateResponse deactivate(Deactivate deactivate, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(deactivate);
+
 
         request.setTransaction(CnpContext.getObjectFactory().createDeactivate(deactivate));
         CnpOnlineResponse response = sendToCnp(request);
@@ -528,6 +532,7 @@ public class CnpOnline {
 
     public LoadResponse load(Load load, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(load);
 
         request.setTransaction(CnpContext.getObjectFactory().createLoad(load));
         CnpOnlineResponse response = sendToCnp(request);
@@ -542,6 +547,7 @@ public class CnpOnline {
 
     public UnloadResponse unload(Unload unload, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(unload);
 
         request.setTransaction(CnpContext.getObjectFactory().createUnload(unload));
         CnpOnlineResponse response = sendToCnp(request);
@@ -556,6 +562,7 @@ public class CnpOnline {
 
     public BalanceInquiryResponse balanceInquiry(BalanceInquiry balanceInquiry, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(balanceInquiry);
 
         request.setTransaction(CnpContext.getObjectFactory().createBalanceInquiry(balanceInquiry));
         CnpOnlineResponse response = sendToCnp(request);
@@ -570,6 +577,7 @@ public class CnpOnline {
 
     public ActivateReversalResponse activateReversal(ActivateReversal activateReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(activateReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createActivateReversal(activateReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -584,6 +592,7 @@ public class CnpOnline {
 
     public DeactivateReversalResponse deactivateReversal(DeactivateReversal deactivateReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(deactivateReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createDeactivateReversal(deactivateReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -598,6 +607,7 @@ public class CnpOnline {
 
     public LoadReversalResponse loadReversal(LoadReversal loadReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(loadReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createLoadReversal(loadReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -612,6 +622,7 @@ public class CnpOnline {
 
     public UnloadReversalResponse unloadReversal(UnloadReversal unloadReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(unloadReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createUnloadReversal(unloadReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -626,6 +637,7 @@ public class CnpOnline {
 
     public RefundReversalResponse refundReversal(RefundReversal refundReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(refundReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createRefundReversal(refundReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -640,6 +652,7 @@ public class CnpOnline {
 
     public DepositReversalResponse depositReversal(DepositReversal depositReversal, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(depositReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createDepositReversal(depositReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -654,6 +667,7 @@ public class CnpOnline {
 
     public TransactionTypeWithReportGroup queryTransaction(QueryTransaction queryTransaction, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(queryTransaction);
 
         request.setTransaction(CnpContext.getObjectFactory().createQueryTransaction(queryTransaction));
         CnpOnlineResponse response = sendToCnp(request);
@@ -668,6 +682,7 @@ public class CnpOnline {
     
     public GiftCardCaptureResponse giftCardCapture(GiftCardCapture giftCardCapture, CnpOnlineRequest overrides) {
     	CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+    	fillInReportGroup(giftCardCapture);
 
         request.setTransaction(CnpContext.getObjectFactory().createGiftCardCapture(giftCardCapture));
         CnpOnlineResponse response = sendToCnp(request);
@@ -682,6 +697,7 @@ public class CnpOnline {
     
     public GiftCardAuthReversalResponse giftCardAuthReversal(GiftCardAuthReversal giftCardAuthReversal, CnpOnlineRequest overrides) {
     	CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+    	fillInReportGroup(giftCardAuthReversal);
 
         request.setTransaction(CnpContext.getObjectFactory().createGiftCardAuthReversal(giftCardAuthReversal));
         CnpOnlineResponse response = sendToCnp(request);
@@ -696,6 +712,7 @@ public class CnpOnline {
     
     public GiftCardCreditResponse giftCardCredit(GiftCardCredit giftCardCredit, CnpOnlineRequest overrides) {
     	CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+    	fillInReportGroup(giftCardCredit);
 
         request.setTransaction(CnpContext.getObjectFactory().createGiftCardCredit(giftCardCredit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -713,6 +730,7 @@ public class CnpOnline {
     
     public PayFacCreditResponse payFacCredit(PayFacCredit payFacCredit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(payFacCredit);
 
         request.setTransaction(CnpContext.getObjectFactory().createPayFacCredit(payFacCredit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -728,6 +746,7 @@ public class CnpOnline {
     
     public PayFacDebitResponse payFacDebit(PayFacDebit payFacDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(payFacDebit);
 
         request.setTransaction(CnpContext.getObjectFactory().createPayFacDebit(payFacDebit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -744,6 +763,7 @@ public class CnpOnline {
     
     public SubmerchantCreditResponse submerchantCredit(SubmerchantCredit submerchantCredit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(submerchantCredit);
 
         request.setTransaction(CnpContext.getObjectFactory().createSubmerchantCredit(submerchantCredit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -759,6 +779,7 @@ public class CnpOnline {
     
     public SubmerchantDebitResponse submerchantDebit(SubmerchantDebit submerchantDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(submerchantDebit);
 
         request.setTransaction(CnpContext.getObjectFactory().createSubmerchantDebit(submerchantDebit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -773,6 +794,7 @@ public class CnpOnline {
     
     public ReserveCreditResponse reserveCredit(ReserveCredit reserveCredit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(reserveCredit);
 
         request.setTransaction(CnpContext.getObjectFactory().createReserveCredit(reserveCredit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -790,6 +812,7 @@ public class CnpOnline {
     
     public ReserveDebitResponse reserveDebit(ReserveDebit reserveDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(reserveDebit);
 
         request.setTransaction(CnpContext.getObjectFactory().createReserveDebit(reserveDebit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -806,6 +829,7 @@ public class CnpOnline {
     
     public FundingInstructionVoidResponse fundingInstructionVoid(FundingInstructionVoid fundingInstructionVoid, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(fundingInstructionVoid);
 
         request.setTransaction(CnpContext.getObjectFactory().createFundingInstructionVoid(fundingInstructionVoid));
         CnpOnlineResponse response = sendToCnp(request);
@@ -829,6 +853,7 @@ public class CnpOnline {
     
     public VendorCreditResponse vendorCredit(VendorCredit vendorCredit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(vendorCredit);
 
         request.setTransaction(CnpContext.getObjectFactory().createVendorCredit(vendorCredit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -846,6 +871,7 @@ public class CnpOnline {
     
     public VendorDebitResponse vendorDebit(VendorDebit vendorDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(vendorDebit);
 
         request.setTransaction(CnpContext.getObjectFactory().createVendorDebit(vendorDebit));
         CnpOnlineResponse response = sendToCnp(request);
@@ -872,7 +898,8 @@ public class CnpOnline {
     
     public PhysicalCheckCreditResponse physicalCheckCredit(PhysicalCheckCredit physicalCheckCredit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
-
+        fillInReportGroup(physicalCheckCredit);
+        
         request.setTransaction(CnpContext.getObjectFactory().createPhysicalCheckCredit(physicalCheckCredit));
         CnpOnlineResponse response = sendToCnp(request);
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
@@ -889,6 +916,7 @@ public class CnpOnline {
     
     public PhysicalCheckDebitResponse physicalCheckDebit(PhysicalCheckDebit physicalCheckDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(physicalCheckDebit);
 
         request.setTransaction(CnpContext.getObjectFactory().createPhysicalCheckDebit(physicalCheckDebit));
         CnpOnlineResponse response = sendToCnp(request);
