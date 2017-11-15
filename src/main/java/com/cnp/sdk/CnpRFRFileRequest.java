@@ -147,6 +147,7 @@ public class CnpRFRFileRequest {
  * @return An RFR Response File
  * @throws CnpBatchException
  */
+    @Deprecated
     public CnpRFRFileResponse sendToCnpStream() throws CnpBatchException{
         try {
             communication.sendCnpBatchFileToIBC(requestFile, responseFile, properties);

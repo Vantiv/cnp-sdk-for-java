@@ -82,7 +82,7 @@ public class TestRFRFile {
         /* call method under test */
 
         try {
-            CnpRFRFileResponse response = request.sendToCnpStream();
+            CnpRFRFileResponse response = request.sendToCnpSFTP();
 
             // assert request and response files were created properly
             assertGeneratedFiles(workingDirRequests, workingDirResponses, requestFileName, request, response);
