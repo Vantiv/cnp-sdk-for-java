@@ -221,8 +221,8 @@ public class CnpBatchFileRequest{
 		boolean propertiesReadFromFile = false;
 		try {
 			String[] allProperties = { "username", "password", "proxyHost",
-					"proxyPort", "batchHost", "batchPort",
-					"batchTcpTimeout", "batchUseSSL",
+					"proxyPort", "batchHost", "batchTcpTimeout",
+					//"batchPort", "batchUseSSL",
 					"maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
 					"batchRequestFolder", "batchResponseFolder", "sftpUsername", "sftpPassword", "merchantId"};
 

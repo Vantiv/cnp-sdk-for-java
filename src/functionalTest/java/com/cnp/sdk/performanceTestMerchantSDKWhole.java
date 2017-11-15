@@ -87,7 +87,7 @@ public class performanceTestMerchantSDKWhole {
     		cnpBatchRequest.addTransaction(sale);
 		}
 
-		cnpBatchFileRequest.sendToCnp();
+		cnpBatchFileRequest.sendToCnpSFTP();
  		System.out.println("done");
  	}
 

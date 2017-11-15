@@ -54,7 +54,7 @@ public class TestBatchFile {
         prepareTestRequest(request);
 
         /* call method under test */
-        CnpBatchFileResponse response = request.sendToCnp();
+        CnpBatchFileResponse response = request.sendToCnpSFTP();//sendToCnp();
 
         // assert response can be processed through Java API
         assertJavaApi(request, response);
@@ -95,7 +95,7 @@ public class TestBatchFile {
         // actually add a transaction
 
         /* call method under test */
-        CnpBatchFileResponse response = request.sendToCnp();
+        CnpBatchFileResponse response = request.sendToCnpSFTP();
 
         // assert response can be processed through Java API
         assertJavaApi(request, response);
@@ -467,7 +467,7 @@ public class TestBatchFile {
 
         int transactionCount = batch.getNumberOfTransactions();
 
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse
                 .getNextCnpBatchResponse();
         int txns = 0;
@@ -580,7 +580,7 @@ public class TestBatchFile {
 
         int transactionCount = batch.getNumberOfTransactions();
 
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse
                 .getNextCnpBatchResponse();
         int txns = 0;
@@ -874,7 +874,7 @@ public class TestBatchFile {
 
         int transactionCount = batch.getNumberOfTransactions();
 
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse
                 .getNextCnpBatchResponse();
         int txns = 0;
@@ -998,7 +998,7 @@ public class TestBatchFile {
         batch.addTransaction(gcCredit);
 
         int transactionCount = batch.getNumberOfTransactions();
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
         int txns = 0;
         // iterate over all transactions in the file with a custom response
@@ -1228,7 +1228,7 @@ public class TestBatchFile {
         updatePlan.setActive(true);
         batch.addTransaction(updatePlan);
 
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse
                 .getNextCnpBatchResponse();
         int txns = 0;
@@ -1300,7 +1300,7 @@ public class TestBatchFile {
 
         batch.addTransaction(accountUpdate);
 
-        CnpBatchFileResponse fileResponse = request.sendToCnp();
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
         CnpBatchResponse batchResponse = fileResponse
                 .getNextCnpBatchResponse();
         int txns = 0;

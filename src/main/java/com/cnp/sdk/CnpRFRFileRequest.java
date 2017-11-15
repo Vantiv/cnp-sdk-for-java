@@ -198,8 +198,8 @@ public class CnpRFRFileRequest {
         boolean propertiesReadFromFile = false;
         try {
             String[] allProperties = { "username", "password", "proxyHost",
-                    "proxyPort", "batchHost", "batchPort",
-                    "batchTcpTimeout", "batchUseSSL",
+                    "proxyPort", "batchHost", "batchTcpTimeout",
+                    //"batchPort", "batchUseSSL",
                     "maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
                     "batchRequestFolder", "batchResponseFolder" };
             for (String prop : allProperties) {
