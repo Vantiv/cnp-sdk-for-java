@@ -45,7 +45,7 @@ public class MultiCurrencyExample {
  
         Properties yenProps = new Properties();
         yenProps.setProperty("merchantId","1003"); //Notice that 1003 is a different merchant.  In our system, they could be setup for YEN purchases
-        yenProps.setProperty("url","https://www.testvantivcnp.com/sandbox/communicator/online");
+        yenProps.setProperty("url","https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online");
         yenProps.setProperty("username","username");
         yenProps.setProperty("password","topsecret");    
         yenProps.setProperty("proxyHost","websenseproxy");  
