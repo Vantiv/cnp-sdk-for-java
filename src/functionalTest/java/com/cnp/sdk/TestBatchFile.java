@@ -79,6 +79,7 @@ public class TestBatchFile {
         Properties configOverrides = new Properties();
         configOverrides.setProperty("batchHost", "prelive.litle.com");
         //configOverrides.setProperty("batchPort", "15000");
+        configOverrides.setProperty("sftpTimeout", "15000");
 
         configOverrides.setProperty("batchRequestFolder", workingDirRequests);
         configOverrides.setProperty("batchResponseFolder", workingDirResponses);

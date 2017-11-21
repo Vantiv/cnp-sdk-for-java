@@ -282,6 +282,7 @@ public class Communication {
 					"error in session.openChannel/channel.connect", e);
         }
 
+        
         ChannelSftp sftp = (ChannelSftp) channel;
 
         Long start = System.currentTimeMillis();
