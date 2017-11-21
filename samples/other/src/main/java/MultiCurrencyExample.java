@@ -28,7 +28,7 @@ public class MultiCurrencyExample {
  
         Properties cdnProps = new Properties();
         cdnProps.setProperty("merchantId","1002");
-        cdnProps.setProperty("url","https://www.testvantivcnp.com/sandbox/communicator/online");
+        cdnProps.setProperty("url","https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online");
         cdnProps.setProperty("username","username");
         cdnProps.setProperty("password","topsecret"); 
         cdnProps.setProperty("proxyHost","websenseproxy");  
