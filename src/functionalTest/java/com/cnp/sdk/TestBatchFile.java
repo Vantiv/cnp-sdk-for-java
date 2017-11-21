@@ -78,16 +78,15 @@ public class TestBatchFile {
 
         Properties configOverrides = new Properties();
         configOverrides.setProperty("batchHost", "prelive.litle.com");
-        //configOverrides.setProperty("batchPort", "15000");
-        configOverrides.setProperty("sftpTimeout", "15000");
+        configOverrides.setProperty("sftpTimeout", "720000");
 
         configOverrides.setProperty("batchRequestFolder", workingDirRequests);
         configOverrides.setProperty("batchResponseFolder", workingDirResponses);
 
-        String requestFileName = "cnpSdk-testBatchFile-configOverrides-" + TIME_STAMP + ".xml";
+        String requestFileName = "cnpSdk-testBatchFile-configOverridesSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName, configOverrides);
-
+       
         // request file is being set in the constructor
         assertNotNull(request.getFile());
 
