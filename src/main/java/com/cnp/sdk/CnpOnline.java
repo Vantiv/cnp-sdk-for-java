@@ -994,10 +994,14 @@ public class CnpOnline {
 			}
 		//	System.out.println("config-------------"+config+"\n\n\n");
 			String xmlResponse = communication.requestToServer(xmlRequest, config);
-			
-			if(xmlResponse.contains("http://www.vantivcnp.com/schema")){
-			    xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com");
-			}
+			/**
+			 * This was added to accommodate an issue with OpenAccess and possibly VAP where the XML namespace returned
+			 * contains the extra "/online".
+			 * This issue will be fixed for OpenAccess in Jan 2018
+			 */
+//			if(xmlResponse.contains("http://www.vantivcnp.com/schema/online")){
+//			    xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
+//			}
 
 			CnpOnlineResponse response = (CnpOnlineResponse)CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
 			// non-zero responses indicate a problem

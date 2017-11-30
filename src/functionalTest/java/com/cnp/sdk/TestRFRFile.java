@@ -2,6 +2,7 @@ package com.cnp.sdk;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.Calendar;
@@ -9,8 +10,6 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import com.cnp.sdk.CnpRFRFileRequest;
-import com.cnp.sdk.CnpRFRFileResponse;
 import com.cnp.sdk.generate.AccountUpdateFileRequestData;
 import com.cnp.sdk.generate.RFRRequest;
 
@@ -33,8 +32,8 @@ public class TestRFRFile {
 
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com", configFromFile.getProperty("batchHost"));
-        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile.getProperty("batchRequestFolder");
         prepDir(workingDirRequests);
@@ -51,43 +50,7 @@ public class TestRFRFile {
             // assert request and response files were created properly
             assertGeneratedFiles(workingDirRequests, workingDirResponses, requestFileName, request, response);
         } catch (Exception e) {
-
-        }
-    }
-
-	@Test
-    public void testSendToCnpStream() throws Exception {
-        String requestFileName = "cnpSdk-testRFRFile-fileConfig.xml";
-        RFRRequest rfrRequest = new RFRRequest();
-        CnpRFRFileRequest request = new CnpRFRFileRequest(requestFileName, rfrRequest);
-
-        Properties configFromFile = request.getConfig();
-
-        // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com", configFromFile.getProperty("batchHost"));
-        //assertEquals("15000", configFromFile.getProperty("batchPort"));
-
-        String workingDirRequests = configFromFile.getProperty("batchRequestFolder");
-        prepDir(workingDirRequests);
-
-        String workingDirResponses = configFromFile.getProperty("batchResponseFolder");
-        prepDir(workingDirResponses);
-
-        AccountUpdateFileRequestData data = new AccountUpdateFileRequestData();
-        System.out.println("asdfsdf" + configFromFile.getProperty("merchantId"));
-        data.setMerchantId(configFromFile.getProperty("merchantId"));
-        data.setPostDay(Calendar.getInstance());
-        rfrRequest.setAccountUpdateFileRequestData(data);
-
-        /* call method under test */
-
-        try {
-            CnpRFRFileResponse response = request.sendToCnpSFTP();
-
-            // assert request and response files were created properly
-            assertGeneratedFiles(workingDirRequests, workingDirResponses, requestFileName, request, response);
-        } catch (Exception e) {
-
+            fail("Unexpected Exception!");
         }
     }
 

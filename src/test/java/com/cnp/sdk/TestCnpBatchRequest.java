@@ -14,10 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.cnp.sdk.CnpBatchException;
-import com.cnp.sdk.CnpBatchFileRequest;
-import com.cnp.sdk.CnpBatchRequest;
-import com.cnp.sdk.TransactionCodeEnum;
 import com.cnp.sdk.generate.AccountUpdate;
 import com.cnp.sdk.generate.ApplepayHeaderType;
 import com.cnp.sdk.generate.ApplepayType;
@@ -54,18 +50,18 @@ public class TestCnpBatchRequest {
 
     private static CnpBatchFileRequest cnpBatchFileRequest;
     private static CnpBatchRequest cnpBatchRequest;
-    Properties property;
+    private Properties property;
 
     @Before
     public void before() throws Exception {
         property = new Properties();
-        property.setProperty("username", "PHXMLTEST");
+        property.setProperty("username", "USERNAME");
         property.setProperty("password", "password");
         property.setProperty("version", "8.18");
         property.setProperty("maxAllowedTransactionsPerFile", "13");
         property.setProperty("maxTransactionsPerBatch", "11");
         property.setProperty("batchHost", "localhost");
-        property.setProperty("batchPort", "2104");
+        property.setProperty("batchPort", "");
         property.setProperty("batchTcpTimeout", "10000");
         property.setProperty("batchUseSSL", "false");
         property.setProperty("merchantId", "101");

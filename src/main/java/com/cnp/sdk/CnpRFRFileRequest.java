@@ -142,22 +142,22 @@ public class CnpRFRFileRequest {
     }
 
 
-/**
- * Sends the RFR File via the streaming method.
- * @return An RFR Response File
- * @throws CnpBatchException
- */
-    @Deprecated
-    public CnpRFRFileResponse sendToCnpStream() throws CnpBatchException{
-        try {
-            communication.sendCnpBatchFileToIBC(requestFile, responseFile, properties);
-            CnpRFRFileResponse retObj = new CnpRFRFileResponse(responseFile);
-            return retObj;
-
-        } catch (IOException e) {
-            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
-        }
-    }
+//    /**
+//     * Sends the RFR File via the streaming method.
+//     * @return An RFR Response File
+//     * @throws CnpBatchException
+//     */
+//    @Deprecated
+//    public CnpRFRFileResponse sendToCnpStream() throws CnpBatchException{
+//        try {
+//            communication.sendCnpBatchFileToIBC(requestFile, responseFile, properties);
+//            CnpRFRFileResponse retObj = new CnpRFRFileResponse(responseFile);
+//            return retObj;
+//
+//        } catch (IOException e) {
+//            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+//        }
+//    }
 
     /**
      * Sends the RFR file via sFTP
@@ -198,8 +198,8 @@ public class CnpRFRFileRequest {
         boolean propertiesReadFromFile = false;
         try {
             String[] allProperties = { "username", "password", "proxyHost",
-                    "proxyPort", "batchHost", "batchTcpTimeout",
-                    //"batchPort", "batchUseSSL",
+                    "proxyPort", "batchHost", "batchPort",
+                    "batchTcpTimeout", "batchUseSSL",
                     "maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
                     "batchRequestFolder", "batchResponseFolder" };
             for (String prop : allProperties) {
