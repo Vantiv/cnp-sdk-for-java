@@ -141,24 +141,6 @@ public class CnpRFRFileRequest {
         return cnpRequest;
     }
 
-
-//    /**
-//     * Sends the RFR File via the streaming method.
-//     * @return An RFR Response File
-//     * @throws CnpBatchException
-//     */
-//    @Deprecated
-//    public CnpRFRFileResponse sendToCnpStream() throws CnpBatchException{
-//        try {
-//            communication.sendCnpBatchFileToIBC(requestFile, responseFile, properties);
-//            CnpRFRFileResponse retObj = new CnpRFRFileResponse(responseFile);
-//            return retObj;
-//
-//        } catch (IOException e) {
-//            throw new CnpBatchException("There was an exception while creating the Cnp Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
-//        }
-//    }
-
     /**
      * Sends the RFR file via sFTP
      * @return An RFR Response File
@@ -193,6 +175,7 @@ public class CnpRFRFileRequest {
 
         return fileToReturn;
     }
+
     private void fillInMissingFieldsFromConfig(Properties config) throws CnpBatchException{
         Properties localConfig = new Properties();
         boolean propertiesReadFromFile = false;

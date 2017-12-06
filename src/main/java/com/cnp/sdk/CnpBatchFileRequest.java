@@ -263,36 +263,6 @@ public class CnpBatchFileRequest{
 		return totalNumberOfTransactions;
 	}
 
-//	/**
-//	 * Deprecated delivery method, this delivery method may be removed at anytime!
-//	 * @throws CnpBatchException
-//	 */
-//	@Deprecated
-//	public CnpBatchFileResponse sendToCnp() throws CnpBatchException {
-//	    return sendToCnpStream();
-//	}
-
-//	/**
-//	 * Deprecated delivery method, this delivery method may be removed at anytime!
-//	 * @return A response object for the batch file
-//	 * @throws CnpBatchException
-//	 */
-//	@Deprecated
-//	public CnpBatchFileResponse sendToCnpStream() throws CnpBatchException{
-//	    try {
-//            prepareForDelivery();
-//
-//            communication.sendCnpBatchFileToIBC(requestFile, responseFile, properties);
-//            CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
-//            return retObj;
-//
-//        } catch (IOException e) {
-//            throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
-//					"Check to see if the current user has permission to read and write to " +
-//					this.properties.getProperty("batchRequestFolder"), e);
-//        }
-//	}
-
 	/**
      * Sends the file to Vantiv over sFTP, the preferred method of sending batches to Vantiv eCommerce.
      * @return A response object for the batch file

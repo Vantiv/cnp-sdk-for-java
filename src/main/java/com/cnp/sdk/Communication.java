@@ -42,7 +42,6 @@ public class Communication {
 
     private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.1", "TLSv1.2"};
     private CloseableHttpClient httpClient;
-//    private StreamData streamData;
     private final int KEEP_ALIVE_DURATION = 8000;
 
 	public Communication() {
@@ -75,7 +74,6 @@ public class Communication {
 					.setKeepAliveStrategy(keepAliveStrategy)
 					.build();
 
-			//streamData = new StreamData();
 		} catch (GeneralSecurityException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -154,30 +152,6 @@ public class Communication {
 		}
 		return xmlResponse;
 	}
-
-//	/**
-//	 *
-//	 * This method is exclusively used for sending batch file to the communicator.
-//	 * @param requestFile
-//	 * @param responseFile
-//	 * @param configuration
-//	 * @throws IOException
-//	 */
-//	@Deprecated
-//	public void sendCnpBatchFileToIBC(File requestFile, File responseFile, Properties configuration) throws IOException {
-//		String hostName = configuration.getProperty("batchHost");
-//		String hostPort = configuration.getProperty("batchPort");
-//		int tcpTimeout = Integer.parseInt(configuration.getProperty("batchTcpTimeout"));
-//		boolean useSSL = configuration.getProperty("batchUseSSL") != null
-//				&& configuration.getProperty("batchUseSSL").equalsIgnoreCase("true");
-//		streamData.init(hostName, hostPort, tcpTimeout, useSSL);
-//
-//		streamData.dataOut(requestFile);
-//
-//		streamData.dataIn(responseFile);
-//
-//		streamData.closeSocket();
-//	}
 
 	/**
 	 * This method sends the request file to Vantiv eCommerce's sFTP server
@@ -284,7 +258,6 @@ public class Communication {
 					"error in session.openChannel/channel.connect", e);
         }
 
-        
         ChannelSftp sftp = (ChannelSftp) channel;
 
         Long start = System.currentTimeMillis();
@@ -329,9 +302,4 @@ public class Communication {
         channel.disconnect();
         session.disconnect();
 	}
-
-
-//	void setStreamData(StreamData streamData) {
-//		this.streamData = streamData;
-//	}
 }
