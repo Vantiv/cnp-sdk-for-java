@@ -33,7 +33,6 @@ public class MultiCurrencyExample {
         cdnProps.setProperty("password","topsecret"); 
         cdnProps.setProperty("proxyHost","websenseproxy");  
         cdnProps.setProperty("proxyPort","8080");      
-        cdnProps.setProperty("version","8.10");
         cdnProps.setProperty("timeout","5000");
         CnpOnline cdnCurrency = new CnpOnline(cdnProps); //Override the default merchant setup in .cnp_SDK_config.properties to force purchase in CDN
  
@@ -50,7 +49,6 @@ public class MultiCurrencyExample {
         yenProps.setProperty("password","topsecret");    
         yenProps.setProperty("proxyHost","websenseproxy");  
         yenProps.setProperty("proxyPort","8080");     
-        yenProps.setProperty("version","8.10");
         yenProps.setProperty("timeout","5000");
         CnpOnline yenCurrency = new CnpOnline(yenProps); //Override the default merchant setup in .cnp_SDK_config.properties to force purchase in YEN
         

@@ -30,7 +30,6 @@ public class TestCnpBatchFileRequest {
         Properties property = new Properties();
         property.setProperty("username", "PHXMLTEST");
         property.setProperty("password", "password");
-        property.setProperty("version", "8.18");
         property.setProperty("maxAllowedTransactionsPerFile", "1000");
         property.setProperty("maxTransactionsPerBatch", "500");
         property.setProperty("batchHost", "localhost");
@@ -116,7 +115,6 @@ public class TestCnpBatchFileRequest {
         Properties property = new Properties();
         property.setProperty("username", "PHXMLTEST");
         property.setProperty("password", "password");
-        property.setProperty("version", "8.18");
         property.setProperty("maxAllowedTransactionsPerFile", "4");
         property.setProperty("maxTransactionsPerBatch", "4");
         property.setProperty("batchHost", "localhost");

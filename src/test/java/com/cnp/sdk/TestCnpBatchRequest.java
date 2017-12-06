@@ -57,7 +57,6 @@ public class TestCnpBatchRequest {
         property = new Properties();
         property.setProperty("username", "USERNAME");
         property.setProperty("password", "password");
-        property.setProperty("version", "8.18");
         property.setProperty("maxAllowedTransactionsPerFile", "13");
         property.setProperty("maxTransactionsPerBatch", "11");
         property.setProperty("batchHost", "localhost");
