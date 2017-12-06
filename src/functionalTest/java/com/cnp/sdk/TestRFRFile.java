@@ -9,13 +9,12 @@ import java.util.Calendar;
 import java.util.Properties;
 
 import org.junit.Test;
-
 import com.cnp.sdk.generate.AccountUpdateFileRequestData;
 import com.cnp.sdk.generate.RFRRequest;
 
 public class TestRFRFile {
 
-	@Test
+    @Test
     public void testSendToCnpSFTP() throws Exception {
         String requestFileName = "cnpSdk-testRFRFile-fileConfigSFTP.xml";
         RFRRequest rfrRequest = new RFRRequest();
@@ -29,19 +28,14 @@ public class TestRFRFile {
         data.setPostDay(Calendar.getInstance());
         rfrRequest.setAccountUpdateFileRequestData(data);
 
-
-
         // pre-assert the config file has required param values
         assertEquals("prelive.litle.com", configFromFile.getProperty("batchHost"));
-        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile.getProperty("batchRequestFolder");
         prepDir(workingDirRequests);
 
         String workingDirResponses = configFromFile.getProperty("batchResponseFolder");
         prepDir(workingDirResponses);
-
-
 
         /* call method under test */
         try {
@@ -54,22 +48,22 @@ public class TestRFRFile {
         }
     }
 
-	private void assertGeneratedFiles(String workingDirRequests, String workingDirResponses, String requestFileName,
-		CnpRFRFileRequest request, CnpRFRFileResponse response) throws Exception {
-		File fRequest = request.getFile();
-		assertEquals(workingDirRequests + File.separator + requestFileName, fRequest.getAbsolutePath());
-		assertTrue(fRequest.exists());
-		assertTrue(fRequest.length() > 0);
+    private void assertGeneratedFiles(String workingDirRequests, String workingDirResponses, String requestFileName,
+                                      CnpRFRFileRequest request, CnpRFRFileResponse response) throws Exception {
+        File fRequest = request.getFile();
+        assertEquals(workingDirRequests + File.separator + requestFileName, fRequest.getAbsolutePath());
+        assertTrue(fRequest.exists());
+        assertTrue(fRequest.length() > 0);
 
-		File fResponse = response.getFile();
-		assertEquals(workingDirResponses + File.separator + requestFileName, fResponse.getAbsolutePath());
-		assertTrue(fResponse.exists());
-		assertTrue(fResponse.length() > 0);
+        File fResponse = response.getFile();
+        assertEquals(workingDirResponses + File.separator + requestFileName, fResponse.getAbsolutePath());
+        assertTrue(fResponse.exists());
+        assertTrue(fResponse.length() > 0);
 
-	}
+    }
 
-	private void prepDir(String dirName) {
-		File fRequestDir = new File(dirName);
-		fRequestDir.mkdirs();
-	}
+    private void prepDir(String dirName) {
+        File fRequestDir = new File(dirName);
+        fRequestDir.mkdirs();
+    }
 }
