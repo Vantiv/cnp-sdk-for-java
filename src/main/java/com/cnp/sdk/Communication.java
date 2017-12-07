@@ -81,7 +81,6 @@ public class Communication {
 
     private static String getBestProtocol(final String[] availableProtocols) {
         for (String availableProtocol: availableProtocols) {
-            // Assuming best protocol is at end
             for (String supportedProtocol: SUPPORTED_PROTOCOLS) {
                 if (supportedProtocol.equals(availableProtocol)) {
                     return availableProtocol;
@@ -155,9 +154,9 @@ public class Communication {
 
 	/**
 	 * This method sends the request file to Vantiv eCommerce's sFTP server
-	 * @param requestFile
-	 * @param configuration
-	 * @throws IOException
+	 * @param requestFile request file to be sent to Vantiv
+	 * @param configuration configuration Properties to use for processing
+	 * @throws IOException exceptions coming out of the sFTP actions
 	 */
 	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration) throws IOException{
 	    String username = configuration.getProperty("sftpUsername");
@@ -166,8 +165,8 @@ public class Communication {
 
 	    java.util.Properties config = new java.util.Properties();
 	    config.put("StrictHostKeyChecking", "no");
-	    JSch jsch = null;
-	    Session session = null;
+	    JSch jsch;
+	    Session session;
 	    try{
     	    jsch = new JSch();
     	    session = jsch.getSession(username, hostname);
@@ -179,7 +178,7 @@ public class Communication {
 	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
 	    }
 
-	    Channel channel = null;
+	    Channel channel;
 
 	    try{
 	        channel = session.openChannel("sftp");
@@ -196,7 +195,7 @@ public class Communication {
 
 	    if(printxml){
             BufferedReader reader = new BufferedReader(new FileReader(requestFile));
-            String line = "";
+            String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
             }
@@ -218,10 +217,10 @@ public class Communication {
 	/**
 	 * Grabs the response file from Vantiv eCommerce's sFTP server. This method is blocking!
 	 * It will continue to poll until the timeout has elapsed or the file has been retrieved!
-	 * @param requestFile
-	 * @param responseFile
-	 * @param configuration
-	 * @throws IOException
+	 * @param requestFile request file associated with the response
+	 * @param responseFile response file to be retrieved
+	 * @param configuration configuration Properties
+	 * @throws IOException exceptions coming out of the sFTP actions
 	 */
 	public void receiveCnpRequestResponseFileFromSFTP(File requestFile, File responseFile, Properties configuration) throws IOException{
 	    String username = configuration.getProperty("sftpUsername");
@@ -230,8 +229,8 @@ public class Communication {
 
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
-        JSch jsch = null;
-        Session session = null;
+        JSch jsch;
+        Session session;
 
         try{
             jsch = new JSch();
@@ -244,7 +243,7 @@ public class Communication {
             throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
         }
 
-        Channel channel = null;
+        Channel channel;
 
         try{
             channel = session.openChannel("sftp");
@@ -271,7 +270,7 @@ public class Communication {
                 sftp.get("outbound/" + requestFile.getName() + ".asc", responseFile.getAbsolutePath());
             } catch(SftpException e){
                 success = false;
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             if(success) {
@@ -289,7 +288,7 @@ public class Communication {
                         "true");
         if(printxml){
             BufferedReader reader = new BufferedReader(new FileReader(responseFile));
-            String line = "";
+            String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
             }
