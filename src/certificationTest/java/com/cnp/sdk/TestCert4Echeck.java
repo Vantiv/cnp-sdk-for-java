@@ -1,26 +1,14 @@
 package com.cnp.sdk;
 
 
-import static org.junit.Assert.assertEquals;
+import com.cnp.sdk.generate.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.Configuration;
-import com.cnp.sdk.generate.Contact;
-import com.cnp.sdk.generate.EcheckAccountTypeEnum;
-import com.cnp.sdk.generate.EcheckCredit;
-import com.cnp.sdk.generate.EcheckCreditResponse;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckSalesResponse;
-import com.cnp.sdk.generate.EcheckType;
-import com.cnp.sdk.generate.EcheckVerification;
-import com.cnp.sdk.generate.EcheckVerificationResponse;
-import com.cnp.sdk.generate.OrderSourceType;
+import static org.junit.Assert.assertEquals;
 
 public class TestCert4Echeck {
 

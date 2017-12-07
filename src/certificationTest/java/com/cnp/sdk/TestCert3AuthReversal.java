@@ -1,28 +1,14 @@
 package com.cnp.sdk;
 
 
-import static org.junit.Assert.assertEquals;
+import com.cnp.sdk.generate.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.Configuration;
-import com.cnp.sdk.generate.AuthReversal;
-import com.cnp.sdk.generate.AuthReversalResponse;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureResponse;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.Contact;
-import com.cnp.sdk.generate.CountryTypeEnum;
-import com.cnp.sdk.generate.FraudCheckType;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
+import static org.junit.Assert.assertEquals;
 
 public class TestCert3AuthReversal {
 

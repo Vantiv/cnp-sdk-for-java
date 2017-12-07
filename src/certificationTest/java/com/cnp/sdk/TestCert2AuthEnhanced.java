@@ -1,17 +1,14 @@
 package com.cnp.sdk;
 
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.FileInputStream;
-import java.util.Properties;
-
 import com.cnp.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.Configuration;
+import java.io.FileInputStream;
+import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestCert2AuthEnhanced {
 

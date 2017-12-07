@@ -1,30 +1,13 @@
 package com.cnp.sdk;
 
-import static kotlin.text.Typography.registered;
-import static org.junit.Assert.assertEquals;
+import com.cnp.sdk.generate.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.Configuration;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.CardTokenType;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.Contact;
-import com.cnp.sdk.generate.EcheckAccountTypeEnum;
-import com.cnp.sdk.generate.EcheckForTokenType;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckSalesResponse;
-import com.cnp.sdk.generate.EcheckType;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
-import com.cnp.sdk.generate.RegisterTokenRequestType;
-import com.cnp.sdk.generate.RegisterTokenResponse;
+import static org.junit.Assert.assertEquals;
 
 public class TestCert5Token {
 
