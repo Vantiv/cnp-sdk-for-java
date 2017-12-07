@@ -1,118 +1,21 @@
 package com.cnp.sdk;
 
+import com.cnp.sdk.generate.*;
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.xml.bind.JAXBElement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Properties;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Properties;
-
-import javax.xml.bind.JAXBElement;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.CnpOnlineException;
-import com.cnp.sdk.Communication;
-import com.cnp.sdk.generate.ActionTypeEnum;
-import com.cnp.sdk.generate.Activate;
-import com.cnp.sdk.generate.ActivateResponse;
-import com.cnp.sdk.generate.ActivateReversal;
-import com.cnp.sdk.generate.ActivateReversalResponse;
-import com.cnp.sdk.generate.AdvancedFraudChecksType;
-import com.cnp.sdk.generate.AdvancedFraudResultsType;
-import com.cnp.sdk.generate.ApplepayHeaderType;
-import com.cnp.sdk.generate.ApplepayType;
-import com.cnp.sdk.generate.AuthInformation;
-import com.cnp.sdk.generate.AuthReversal;
-import com.cnp.sdk.generate.AuthReversalResponse;
-import com.cnp.sdk.generate.Authentication;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.BalanceInquiry;
-import com.cnp.sdk.generate.BalanceInquiryResponse;
-import com.cnp.sdk.generate.CancelSubscription;
-import com.cnp.sdk.generate.CancelSubscriptionResponse;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureGivenAuth;
-import com.cnp.sdk.generate.CaptureGivenAuthResponse;
-import com.cnp.sdk.generate.CaptureResponse;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.Contact;
-import com.cnp.sdk.generate.CountryTypeEnum;
-import com.cnp.sdk.generate.CreateAddOnType;
-import com.cnp.sdk.generate.CreatePlan;
-import com.cnp.sdk.generate.CreatePlanResponse;
-import com.cnp.sdk.generate.Credit;
-import com.cnp.sdk.generate.CreditResponse;
-import com.cnp.sdk.generate.CustomerInfo;
-import com.cnp.sdk.generate.Deactivate;
-import com.cnp.sdk.generate.DeactivateResponse;
-import com.cnp.sdk.generate.DeactivateReversal;
-import com.cnp.sdk.generate.DeactivateReversalResponse;
-import com.cnp.sdk.generate.DepositReversal;
-import com.cnp.sdk.generate.DepositReversalResponse;
-import com.cnp.sdk.generate.EcheckAccountTypeEnum;
-import com.cnp.sdk.generate.EcheckCredit;
-import com.cnp.sdk.generate.EcheckCreditResponse;
-import com.cnp.sdk.generate.EcheckRedeposit;
-import com.cnp.sdk.generate.EcheckRedepositResponse;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckSalesResponse;
-import com.cnp.sdk.generate.EcheckType;
-import com.cnp.sdk.generate.EcheckVerification;
-import com.cnp.sdk.generate.EcheckVerificationResponse;
-import com.cnp.sdk.generate.EcheckVoid;
-import com.cnp.sdk.generate.EcheckVoidResponse;
-import com.cnp.sdk.generate.ForceCapture;
-import com.cnp.sdk.generate.ForceCaptureResponse;
-import com.cnp.sdk.generate.FraudCheck;
-import com.cnp.sdk.generate.FraudCheckResponse;
-import com.cnp.sdk.generate.GiftCardAuthReversal;
-import com.cnp.sdk.generate.GiftCardAuthReversalResponse;
-import com.cnp.sdk.generate.GiftCardCapture;
-import com.cnp.sdk.generate.GiftCardCaptureResponse;
-import com.cnp.sdk.generate.GiftCardCardType;
-import com.cnp.sdk.generate.GiftCardCredit;
-import com.cnp.sdk.generate.GiftCardCreditResponse;
-import com.cnp.sdk.generate.CnpOnlineRequest;
-import com.cnp.sdk.generate.Load;
-import com.cnp.sdk.generate.LoadResponse;
-import com.cnp.sdk.generate.LoadReversal;
-import com.cnp.sdk.generate.LoadReversalResponse;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
-import com.cnp.sdk.generate.PayFacCredit;
-import com.cnp.sdk.generate.PayFacCreditResponse;
-import com.cnp.sdk.generate.QueryTransaction;
-import com.cnp.sdk.generate.QueryTransactionResponse;
-import com.cnp.sdk.generate.QueryTransactionUnavailableResponse;
-import com.cnp.sdk.generate.RecurringRequestType;
-import com.cnp.sdk.generate.RecurringSubscriptionType;
-import com.cnp.sdk.generate.RefundReversal;
-import com.cnp.sdk.generate.RefundReversalResponse;
-import com.cnp.sdk.generate.RegisterTokenRequestType;
-import com.cnp.sdk.generate.RegisterTokenResponse;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.SaleResponse;
-import com.cnp.sdk.generate.SepaDirectDebitType;
-import com.cnp.sdk.generate.TransactionTypeWithReportGroup;
-import com.cnp.sdk.generate.Unload;
-import com.cnp.sdk.generate.UnloadResponse;
-import com.cnp.sdk.generate.UnloadReversal;
-import com.cnp.sdk.generate.UnloadReversalResponse;
-import com.cnp.sdk.generate.UpdatePlan;
-import com.cnp.sdk.generate.UpdatePlanResponse;
-import com.cnp.sdk.generate.UpdateSubscription;
-import com.cnp.sdk.generate.UpdateSubscriptionResponse;
-import com.cnp.sdk.generate.Wallet;
-import com.cnp.sdk.generate.WalletSourceType;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class TestCnpOnline {
 
@@ -152,7 +55,6 @@ public class TestCnpOnline {
 	
 	@Test
     public void testAuthWithApplepayAndSecondaryAmountAndWallet() throws Exception {
-
         Authorization authorization = new Authorization();
         authorization.setReportGroup("Planets");
         authorization.setOrderId("12344");
@@ -193,7 +95,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testAuthWithOverrides() throws Exception {
-
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
 		authorization.setOrderId("12344");
@@ -222,7 +123,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testAuthReversal() throws Exception {
-
 		AuthReversal reversal = new AuthReversal();
 		reversal.setCnpTxnId(12345678000L);
 		reversal.setAmount(106L);
@@ -244,7 +144,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testAuthReversalWithOverrides() throws Exception {
-
 		AuthReversal reversal = new AuthReversal();
 		reversal.setCnpTxnId(12345678000L);
 		reversal.setAmount(106L);
@@ -269,7 +168,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testCapture() throws Exception {
-
 		Capture capture = new Capture();
 		capture.setCnpTxnId(123456000L);
 		capture.setAmount(106L);
@@ -290,7 +188,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testCaptureWithOverrides() throws Exception {
-
 		Capture capture = new Capture();
 		capture.setCnpTxnId(123456000L);
 		capture.setAmount(106L);
@@ -315,7 +212,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testCaptureGivenAuth() throws Exception {
-
 		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
 		capturegivenauth.setAmount(106L);
 		capturegivenauth.setSecondaryAmount(10L);
@@ -349,7 +245,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testCaptureGivenAuthWithOverrides() throws Exception {
-
 		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
 		capturegivenauth.setAmount(106L);
 		capturegivenauth.setOrderId("12344");
@@ -386,7 +281,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testCredit() throws Exception {
-
 		Credit credit = new Credit();
 		credit.setAmount(106L);
         credit.setSecondaryAmount(10L);
@@ -770,7 +664,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testJAXBException() throws Exception {
-
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
 		authorization.setOrderId("12344");
@@ -801,8 +694,6 @@ public class TestCnpOnline {
 
 	@Test
 	public void testDefaultReportGroup() throws Exception {
-
-
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("12344");
 		authorization.setAmount(106L);
@@ -952,7 +843,6 @@ public class TestCnpOnline {
 
     @Test
     public void testCancelSubscriptionWithOverrides() throws Exception {
-
         CancelSubscription cancel = new CancelSubscription();
         cancel.setSubscriptionId(12345L);
 
@@ -1425,8 +1315,7 @@ public class TestCnpOnline {
     @Test
     public void testDeActivateReversalWithOverrides() throws Exception {
         DeactivateReversal deactivateReversal = new DeactivateReversal();
-        deactivateReversal.setCnpTxnId(123l);
-
+        deactivateReversal.setCnpTxnId(123L);
 
         Communication mockedCommunication = mock(Communication.class);
         when(
@@ -1460,7 +1349,7 @@ public class TestCnpOnline {
         loadReversal.setCnpTxnId(123L);
         loadReversal.setCard(giftCard);
         loadReversal.setId("id");
-        loadReversal.setOriginalAmount(45l);
+        loadReversal.setOriginalAmount(45L);
         loadReversal.setOriginalRefCode("3");
         loadReversal.setOriginalSequenceNumber("999999");
         loadReversal.setOriginalSystemTraceId(5);
@@ -1604,7 +1493,7 @@ public class TestCnpOnline {
         refundReversal.setReportGroup("rptGrp");
         refundReversal.setCard(giftCard);
         refundReversal.setOriginalRefCode("ref");
-        refundReversal.setOriginalAmount(44455l);
+        refundReversal.setOriginalAmount(44455L);
         refundReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         refundReversal.setOriginalSystemTraceId(3);
         refundReversal.setOriginalSequenceNumber("222222");
@@ -1677,7 +1566,7 @@ public class TestCnpOnline {
         depositReversal.setReportGroup("Planets");
         depositReversal.setCard(giftCard);
         depositReversal.setOriginalRefCode("101");
-        depositReversal.setOriginalAmount(3456l);
+        depositReversal.setOriginalAmount(3456L);
         depositReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         depositReversal.setOriginalSystemTraceId(33);
         depositReversal.setOriginalSequenceNumber("111111");
@@ -1750,7 +1639,7 @@ public class TestCnpOnline {
         gcAuthReversal.setReportGroup("rptGrp");
         gcAuthReversal.setCard(giftCard);
         gcAuthReversal.setOriginalRefCode("ref");
-        gcAuthReversal.setOriginalAmount(44455l);
+        gcAuthReversal.setOriginalAmount(44455L);
         gcAuthReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         gcAuthReversal.setOriginalSystemTraceId(3);
         gcAuthReversal.setOriginalSequenceNumber("222222");
@@ -1810,7 +1699,7 @@ public class TestCnpOnline {
         gcAuthReversal.setReportGroup("rptGrp");
         gcAuthReversal.setCard(giftCard);
         gcAuthReversal.setOriginalRefCode("ref");
-        gcAuthReversal.setOriginalAmount(44455l);
+        gcAuthReversal.setOriginalAmount(44455L);
         gcAuthReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         gcAuthReversal.setOriginalSystemTraceId(3);
         gcAuthReversal.setOriginalSequenceNumber("222222");
@@ -1871,10 +1760,10 @@ public class TestCnpOnline {
         gcCapture.setCnpTxnId(123L);
         gcCapture.setId("id");
         gcCapture.setReportGroup("rptGrp");
-        gcCapture.setCaptureAmount(2434l);
+        gcCapture.setCaptureAmount(2434L);
         gcCapture.setCard(giftCard);
         gcCapture.setOriginalRefCode("ref");
-        gcCapture.setOriginalAmount(44455l);
+        gcCapture.setOriginalAmount(44455L);
         gcCapture.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         
         Communication mockedCommunication = mock(Communication.class);
@@ -1929,10 +1818,10 @@ public class TestCnpOnline {
         gcCapture.setCnpTxnId(123L);
         gcCapture.setId("id");
         gcCapture.setReportGroup("rptGrp");
-        gcCapture.setCaptureAmount(2434l);
+        gcCapture.setCaptureAmount(2434L);
         gcCapture.setCard(giftCard);
         gcCapture.setOriginalRefCode("ref");
-        gcCapture.setOriginalAmount(44455l);
+        gcCapture.setOriginalAmount(44455L);
         gcCapture.setOriginalTxnTime(new XMLGregorianCalendarImpl());
         
         Communication mockedCommunication = mock(Communication.class);
@@ -1990,7 +1879,7 @@ public class TestCnpOnline {
         gcCredit.setCnpTxnId(123L);
         gcCredit.setId("id");
         gcCredit.setReportGroup("rptGrp");
-        gcCredit.setCreditAmount(3399l);
+        gcCredit.setCreditAmount(3399L);
         gcCredit.setCard(giftCard);
         
         Communication mockedCommunication = mock(Communication.class);
@@ -2042,7 +1931,7 @@ public class TestCnpOnline {
         gcCredit.setCnpTxnId(123L);
         gcCredit.setId("id");
         gcCredit.setReportGroup("rptGrp");
-        gcCredit.setCreditAmount(3399l);
+        gcCredit.setCreditAmount(3399L);
         gcCredit.setCard(giftCard);
         
         Communication mockedCommunication = mock(Communication.class);
@@ -2154,9 +2043,7 @@ public class TestCnpOnline {
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("org1");
         queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        
-        
-        
+
         Communication mockedComm = mock (Communication.class); 
         when(mockedComm.requestToServer(matches(".*?<cnpOnlineRequest.*?<queryTransaction.*id=\"findId\".*?customerId=\"customerId\".*?<origId>org1</origId>.*?<origActionType>A</origActionType>.*?"),
                 any(Properties.class))).thenReturn("<cnpOnlineResponse version='12.0' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><queryTransactionResponse id='findId' customerId='customerId'> <response>150</response> <responseTime>2015-04-14T12:37:26</responseTime> " +
@@ -2195,7 +2082,7 @@ public class TestCnpOnline {
         assertEquals("Sample message", unavailableResponse.getMessage());
     }
     
-
+	@Test
     public void testFraudCheck() throws Exception{
         FraudCheck fraudCheck = new FraudCheck();
         AdvancedFraudChecksType advancedFraudChecks = new AdvancedFraudChecksType();
@@ -2204,8 +2091,7 @@ public class TestCnpOnline {
         advancedFraudChecks.setCustomAttribute2("42");
         advancedFraudChecks.setCustomAttribute3("5");
         fraudCheck.setAdvancedFraudChecks(advancedFraudChecks);
-        
-        
+
         Communication mockedCommunication = mock(Communication.class);
         when(
                 mockedCommunication

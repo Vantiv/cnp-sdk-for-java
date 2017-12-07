@@ -36,12 +36,10 @@ public class TestRefundReversal {
         refundReversal.setReportGroup("rptGrp");
         refundReversal.setId("id");
 
-
-
-        refundReversal.setCnpTxnId(369852147l);
+        refundReversal.setCnpTxnId(369852147L);
         refundReversal.setCard(giftCard);
         refundReversal.setOriginalRefCode("ref");
-        refundReversal.setOriginalAmount(44455l);
+        refundReversal.setOriginalAmount(44455L);
         refundReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl(new GregorianCalendar()));
         refundReversal.setOriginalSystemTraceId(0);
         refundReversal.setOriginalSequenceNumber("333333");
@@ -51,7 +49,5 @@ public class TestRefundReversal {
 
 
     }
-
-
 
 }

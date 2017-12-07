@@ -42,7 +42,6 @@ abstract class CnpFileResponse {
         }
     }
 
-
     public File getFile() {
         return xmlFile;
     }
@@ -67,11 +66,9 @@ abstract class CnpFileResponse {
         return this.cnpResponse.getId();
     }
 
-
     public ResponseFileParser getResponseFileParser() {
         return responseFileParser;
     }
-
 
     public void setResponseFileParser(ResponseFileParser responseFileParser) {
         this.responseFileParser = responseFileParser;

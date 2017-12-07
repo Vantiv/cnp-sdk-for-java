@@ -66,14 +66,10 @@ public class CnpBatchRequest {
 	TransactionType txn;
 	String filePath;
 	OutputStream osWrttxn;
-
 	int numOfTxn;
-
-
 	private final int maxTransactionsPerBatch;
 	protected int cnpLimit_maxTransactionsPerBatch = 100000;
 	private final CnpBatchFileRequest lbfr;
-
 
 	/**
 	 * This method initializes the batch level attributes of the XML and checks if the maxTransactionsPerBatch is not more than the value provided in the properties file
@@ -93,7 +89,8 @@ public class CnpBatchRequest {
 			tmpFile.mkdir();
 		}
 		String dateString = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss.SSS").format(new java.util.Date());
-		filePath = new String(lbfr.getConfig().getProperty("batchRequestFolder")+ "/tmp/Transactions" + merchantId + dateString);
+		filePath = new String(lbfr.getConfig().getProperty("batchRequestFolder") +
+                "/tmp/Transactions" + merchantId + dateString);
 		numOfTxn = 0;
 		try {
 			this.jc = JAXBContext.newInstance("com.cnp.sdk.generate");
@@ -377,8 +374,7 @@ public class CnpBatchRequest {
             transaction = objFac.createGiftCardCredit((GiftCardCredit)transactionType);
             transactionAdded = true;
             numOfTxn ++;
-        }
-        else {
+        } else {
             transaction = objFac.createTransaction(new TransactionType());
         }
 
@@ -389,6 +385,7 @@ public class CnpBatchRequest {
         }
 
         batchFileStatus = verifyFileThresholds();
+
         if( batchFileStatus == TransactionCodeEnum.FILEFULL){
             return TransactionCodeEnum.FILEFULL;
         } else if( batchFileStatus == TransactionCodeEnum.BATCHFULL ){
@@ -464,7 +461,5 @@ public class CnpBatchRequest {
     public void setNumOfTxn(int numOfTxn) {
         this.numOfTxn = numOfTxn;
     }
-
-
 
 }

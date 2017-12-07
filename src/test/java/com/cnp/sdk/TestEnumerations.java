@@ -59,16 +59,19 @@ public class TestEnumerations {
 		CustomerInfo info = new CustomerInfo();
 		info.setCustomerType(CustomerType.EXISTING);
 	}
+
 	@Test
 	public void residenceStatus() {
 		CustomerInfo info = new CustomerInfo();
 		info.setResidenceStatus(ResidenceStatus.OWN);
 	}
+
 	@Test
 	public void deliveryType() {
 		EnhancedData info = new EnhancedData();
 		info.setDeliveryType(DeliveryType.CNC);
 	}
+
 	@Test
 	public void taxTypeIdentifier() throws Exception {
 		DetailTax info = new DetailTax();
@@ -79,6 +82,7 @@ public class TestEnumerations {
 		marshaller.marshal(info, sw);
 		assertTrue(sw.toString(), sw.toString().contains("<taxTypeIdentifier>22</taxTypeIdentifier>"));
 	}
+
 	@Test
 	public void pos() {
 		Pos info = new Pos();
@@ -86,21 +90,25 @@ public class TestEnumerations {
 		info.setCardholderId(PosCardholderIdTypeEnum.PIN);
 		info.setEntryMode(PosEntryModeTypeEnum.TRACK_1);
 	}
+
 	@Test
 	public void orderSource() {
 		EcheckSale info = new EcheckSale();
 		info.setOrderSource(OrderSourceType.TELEPHONE);
 	}
+
 	@Test
     public void orderSourceWithApplepay() {
         EcheckSale info = new EcheckSale();
         info.setOrderSource(OrderSourceType.APPLEPAY);
     }
+
 	@Test
     public void orderSourceWithAndroidpay() {
         Sale info = new Sale();
         info.setOrderSource(OrderSourceType.ANDROIDPAY);
     }
+
 	@Test
     public void orderSourceWithEcheckppd() {
         EcheckSale info = new EcheckSale();
@@ -111,24 +119,29 @@ public class TestEnumerations {
 		CardType info = new CardType();
 		info.setType(MethodOfPaymentTypeEnum.VI);
 	}
+
 	@Test
 	public void taxType() {
 		Authorization info = new Authorization();
 		info.setTaxType(GovtTaxTypeEnum.PAYMENT);
 	}
+
 	@Test
 	public void currency() {
 		CustomerInfo info = new CustomerInfo();
 		info.setIncomeCurrency(CurrencyCodeEnum.USD);
 	}
+
 	@Test
 	public void country() {
 		EnhancedData info = new EnhancedData();
 		info.setDestinationCountryCode(CountryTypeEnum.US);
 	}
+
 	@Test
 	public void iias() {
 		HealthcareIIAS info = new HealthcareIIAS();
 		info.setIIASFlag(IIASFlagType.Y);
 	}
+
 }

@@ -12,20 +12,19 @@ public class Configuration {
 			if(System.getProperty("CNP_CONFIG_DIR") != null) {
 				file = new File(System.getProperty("CNP_CONFIG_DIR") + File.separator + CNP_SDK_CONFIG);
 			}
-		}
-		else {
+		} else {
 			if(System.getenv("CNP_CONFIG_DIR") != null) {
 				if(System.getenv("CNP_CONFIG_DIR").equals("classpath:" + CNP_SDK_CONFIG)) {
 					if (getClass().getClassLoader().getResource(CNP_SDK_CONFIG) != null) {
 						String filePath = getClass().getClassLoader().getResource(CNP_SDK_CONFIG).getPath();
 						file = new File(filePath);
 					}
-				}
-				else {
+				} else {
 					file = new File(System.getenv("CNP_CONFIG_DIR") + File.separator + CNP_SDK_CONFIG);
 				}
 			}
 		}
+
 		return file;
 	}
 }

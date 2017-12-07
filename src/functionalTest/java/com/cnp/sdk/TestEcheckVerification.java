@@ -91,7 +91,6 @@ public class TestEcheckVerification {
 		} catch(CnpOnlineException e) {
 			assertTrue(e.getMessage(),e.getMessage().startsWith("Error validating xml data against the schema"));
 		}
-		
 	}
 
 }

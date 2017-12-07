@@ -33,9 +33,9 @@ public class TestCert3AuthReversal {
         Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
-        config.setProperty("proxyHost", "");
-        config.setProperty("proxyPort", "");
+		config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+		config.setProperty("proxyHost", "websenseproxy");
+		config.setProperty("proxyPort", "8080");
         cnp = new CnpOnline(config);
 	}
 
@@ -107,8 +107,7 @@ public class TestCert3AuthReversal {
 		auth.setCard(card);
 		FraudCheckType fraud = new FraudCheckType();
 		fraud.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-		//TODO 3-D Secure transaction not supported by merchant
-		//auth.setCardholderAuthentication(fraud);
+		auth.setCardholderAuthentication(fraud);
 		auth.setId("id");
 
 		AuthorizationResponse authorizeResponse = cnp.authorize(auth);
@@ -185,11 +184,11 @@ public class TestCert3AuthReversal {
 		auth.setId("id");
 
 		AuthorizationResponse authorizeResponse = cnp.authorize(auth);
-		//TODO Processing Network Unavailable
-		//assertEquals(authorizeResponse.getMessage(), "000", authorizeResponse.getResponse());
-		//assertEquals(authorizeResponse.getMessage(), "Approved", authorizeResponse.getMessage());
-		//assertEquals(authorizeResponse.getMessage(), "44444 ", authorizeResponse.getAuthCode());
-		//assertEquals(authorizeResponse.getMessage(), "12", authorizeResponse.getFraudResult().getAvsResult());
+		assertEquals(authorizeResponse.getMessage(), "000", authorizeResponse.getResponse());
+		assertEquals(authorizeResponse.getMessage(), "Approved", authorizeResponse.getMessage());
+		assertEquals(authorizeResponse.getMessage(), "44444 ", authorizeResponse.getAuthCode());
+		//TODO: '13' is returned
+//		assertEquals(authorizeResponse.getMessage(), "12", authorizeResponse.getFraudResult().getAvsResult());
 
 		Capture capture = new Capture();
 		capture.setCnpTxnId(authorizeResponse.getCnpTxnId());
@@ -222,9 +221,8 @@ public class TestCert3AuthReversal {
 		auth.setId("id");
 
 		AuthorizationResponse authorizeResponse = cnp.authorize(auth);
-		//TODO Processing Network Unavailable
-		//assertEquals(authorizeResponse.getMessage(), "000", authorizeResponse.getResponse());
-		//assertEquals(authorizeResponse.getMessage(), "Approved", authorizeResponse.getMessage());
+		assertEquals(authorizeResponse.getMessage(), "000", authorizeResponse.getResponse());
+		assertEquals(authorizeResponse.getMessage(), "Approved", authorizeResponse.getMessage());
 
 		AuthReversal reversal = new AuthReversal();
 		reversal.setCnpTxnId(authorizeResponse.getCnpTxnId());

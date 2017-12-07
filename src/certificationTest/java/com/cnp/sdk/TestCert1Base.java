@@ -1,31 +1,13 @@
 package com.cnp.sdk;
 
-
-import static org.junit.Assert.assertEquals;
+import com.cnp.sdk.generate.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.Configuration;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureResponse;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.Contact;
-import com.cnp.sdk.generate.CountryTypeEnum;
-import com.cnp.sdk.generate.Credit;
-import com.cnp.sdk.generate.CreditResponse;
-import com.cnp.sdk.generate.FraudCheckType;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.SaleResponse;
-import com.cnp.sdk.generate.VoidResponse;
+import static org.junit.Assert.assertEquals;
 
 public class TestCert1Base {
 
@@ -36,9 +18,9 @@ public class TestCert1Base {
 	    Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
-        config.setProperty("proxyHost", "");
-        config.setProperty("proxyPort", "");
+        config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+        config.setProperty("proxyHost", "websenseproxy");
+        config.setProperty("proxyPort", "8080");
 		cnp = new CnpOnline(config);
 	}
 
@@ -121,7 +103,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "11111 ",response.getAuthCode());
 		assertEquals(response.getMessage(), "01",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -191,8 +172,7 @@ public class TestCert1Base {
 		authorization.setCard(card);
 		FraudCheckType authenticationvalue = new FraudCheckType();
 		authenticationvalue.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-		//TODO 3-D Secure transaction not supported by merchant
-		//authorization.setCardholderAuthentication(authenticationvalue);
+		authorization.setCardholderAuthentication(authenticationvalue);
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
@@ -247,8 +227,7 @@ public class TestCert1Base {
 		authorization.setCard(card);
 		FraudCheckType authenticationvalue = new FraudCheckType();
 		authenticationvalue.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-	    //TODO 3-D Secure transaction not supported by merchant
-		//authorization.setCardholderAuthentication(authenticationvalue);
+		authorization.setCardholderAuthentication(authenticationvalue);
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
@@ -257,7 +236,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "22222",response.getAuthCode().trim());
 		assertEquals(response.getMessage(), "10",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -387,7 +365,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "33333",response.getAuthCode().trim());
 		assertEquals(response.getMessage(), "10",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -452,16 +429,15 @@ public class TestCert1Base {
 		card.setType(MethodOfPaymentTypeEnum.AX);
 		card.setNumber("375001000000005");
 		card.setExpDate("0412");
-		card.setCardValidationNum("758");
 		authorization.setCard(card);
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "000",response.getResponse());
-		//assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//assertEquals(response.getMessage(), "44444",response.getAuthCode());
-		//assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
+        // TODO: '13' is returned
+//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
 
 		Capture capture = new Capture();
 		capture.setCnpTxnId(response.getCnpTxnId());
@@ -508,11 +484,11 @@ public class TestCert1Base {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "000",response.getResponse());
-		//assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//assertEquals(response.getMessage(), "44444",response.getAuthCode());
-		//assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
+        // TODO: '13' is being returned
+//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
 
 	}
 
@@ -534,16 +510,15 @@ public class TestCert1Base {
 		card.setType(MethodOfPaymentTypeEnum.AX);
 		card.setNumber("375001000000005");
 		card.setExpDate("0412");
-		card.setCardValidationNum("758");
 		sale.setCard(card);
 		sale.setId("id");
 
 		SaleResponse response = cnp.sale(sale);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "000",response.getResponse());
-		//assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//assertEquals(response.getMessage(), "44444",response.getAuthCode());
-		//assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
+		// TODO: '13' is being returned
+//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
 
 		Credit credit = new Credit();
 		credit.setCnpTxnId(response.getCnpTxnId());
@@ -574,16 +549,15 @@ public class TestCert1Base {
 		authorization.setCard(card);
 		FraudCheckType authenticationvalue = new FraudCheckType();
 		authenticationvalue.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-		//TODO 3-D Secure transaction not supported by merchant
-		//authorization.setCardholderAuthentication(authenticationvalue);
+		authorization.setCardholderAuthentication(authenticationvalue);
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "55555 ",response.getAuthCode());
-		//assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
-		//assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
+		assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
 
 		Capture capture = new Capture();
 		capture.setCnpTxnId(response.getCnpTxnId());
@@ -621,17 +595,17 @@ public class TestCert1Base {
 		authorization.setCard(card);
 		FraudCheckType authenticationvalue = new FraudCheckType();
 		authenticationvalue.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-		//TODO 3-D Secure transaction not supported by merchant
-		//authorization.setCardholderAuthentication(authenticationvalue);
+		authorization.setCardholderAuthentication(authenticationvalue);
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "55555 ",response.getAuthCode());
-		//assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
-		//assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
 
+		assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
+		// TODO: 'M' is being returned
+//		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
 	}
 
 	@Test
@@ -648,16 +622,17 @@ public class TestCert1Base {
 		sale.setCard(card);
 		FraudCheckType authenticationvalue = new FraudCheckType();
 		authenticationvalue.setAuthenticationValue("BwABBJQ1AgAAAAAgJDUCAAAAAAA=");
-		//TODO 3-D Secure transaction not supported by merchant
-		//sale.setCardholderAuthentication(authenticationvalue);
+		sale.setCardholderAuthentication(authenticationvalue);
 		sale.setId("id");
 
 		SaleResponse response = cnp.sale(sale);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "55555 ",response.getAuthCode());
-		//assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
-		//assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
+
+		assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
+		// TODO: 'M' is being retuend
+//		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
 
 		Credit credit = new Credit();
 		credit.setCnpTxnId(response.getCnpTxnId());
@@ -701,7 +676,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Insufficient Funds",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "P",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -767,7 +741,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Invalid Account Number",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -797,7 +770,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Invalid Account Number",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -827,7 +799,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Invalid Account Number",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -857,7 +828,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Call Discover",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "P",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -887,7 +857,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Call Discover",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "P",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -917,7 +886,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Call Discover",response.getMessage());
 		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 		assertEquals(response.getMessage(), "P",response.getFraudResult().getCardValidationResult());
-
 	}
 
 	@Test
@@ -943,11 +911,9 @@ public class TestCert1Base {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "303",response.getResponse());
-		//assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
-		//assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
-
+		assertEquals(response.getMessage(), "303",response.getResponse());
+		assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
+		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 	}
 
 	@Test
@@ -973,11 +939,9 @@ public class TestCert1Base {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "303",response.getResponse());
-		//assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
-		//assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
-
+		assertEquals(response.getMessage(), "303",response.getResponse());
+		assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
+		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 	}
 
 	@Test
@@ -1003,11 +967,9 @@ public class TestCert1Base {
 		sale.setId("id");
 
 		SaleResponse response = cnp.sale(sale);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "303",response.getResponse());
-		//assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
-		//assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
-
+		assertEquals(response.getMessage(), "303",response.getResponse());
+		assertEquals(response.getMessage(), "Pick Up Card",response.getMessage());
+		assertEquals(response.getMessage(), "34",response.getFraudResult().getAvsResult());
 	}
 
 	@Test
@@ -1028,7 +990,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "010",response.getResponse());
 		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
 		assertEquals(response.getMessage(), 32000L,response.getApprovedAmount().longValue());
-
 	}
 
 	@Test
@@ -1049,7 +1010,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "010",response.getResponse());
 		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
 		assertEquals(response.getMessage(), 48000L,response.getApprovedAmount().longValue());
-
 	}
 
 	@Test
@@ -1067,11 +1027,9 @@ public class TestCert1Base {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		//TODO Processing Network Unavailable
-		//assertEquals(response.getMessage(), "010",response.getResponse());
-		//assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
-		//assertEquals(response.getMessage(), 40000L,response.getApprovedAmount().longValue());
-
+		assertEquals(response.getMessage(), "010",response.getResponse());
+		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
+		assertEquals(response.getMessage(), 40000L,response.getApprovedAmount().longValue());
 	}
 
 	@Test
@@ -1092,9 +1050,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "010",response.getResponse());
 		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
 		assertEquals(response.getMessage(), 12000L,response.getApprovedAmount().longValue());
-
 	}
-
 
 }
 

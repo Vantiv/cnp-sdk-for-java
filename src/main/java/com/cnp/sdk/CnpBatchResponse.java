@@ -104,12 +104,13 @@ public class CnpBatchResponse {
 
 		String txnXML = "";
 
-		try{
+		try {
 			txnXML = responseFileParser.getNextTag("transactionResponse");
 		} catch (Exception e) {
 			allTransactionsRetrieved = true;
 			throw new CnpBatchNoMoreBatchTransactionException("All transactions from this batch have already been retrieved");
 		}
+
 		try {
 			@SuppressWarnings("unchecked")
 			TransactionType objToRet = ((JAXBElement<TransactionType>)unmarshaller.unmarshal(new StringReader(txnXML))).getValue();
@@ -129,13 +130,14 @@ public class CnpBatchResponse {
 	public boolean processNextTransaction(CnpResponseProcessor processor){
 	    String txnXml = "";
 	    CnpTransactionInterface objToRet;
-	    try {
+
+        try {
             txnXml = responseFileParser.getNextTag("transactionResponse");
         } catch (Exception e) {
             return false;
         }
         
-	    try{
+	    try {
 	        objToRet = ((JAXBElement<TransactionType>)unmarshaller.unmarshal(new StringReader(txnXml))).getValue();
 	    } catch (JAXBException e){
 	        throw new CnpBatchException("There was an exception while trying to unmarshall transactionResponse: " + txnXml, e);

@@ -94,7 +94,6 @@ public class TestCnpBatchRequest {
             cnpBatchRequest.addTransaction(createTestSale(100L, "100"));
         }
         assertTrue(cnpBatchRequest.isFull());
-
     }
 
     @Test
@@ -225,7 +224,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest().getNumAuths()
                 .intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -246,7 +244,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest().getNumCredits()
                 .intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -264,7 +261,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumTokenRegistrations().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -285,7 +281,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumCaptureGivenAuths().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -306,7 +301,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumForceCaptures().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -326,7 +320,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumAuthReversals().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -346,7 +339,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest().getNumCaptures()
                 .intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -366,7 +358,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumEcheckVerification().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -387,7 +378,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumEcheckCredit().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -404,7 +394,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumEcheckRedeposit().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -425,7 +414,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest().getNumEcheckSales()
                 .intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -442,7 +430,6 @@ public class TestCnpBatchRequest {
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumUpdateCardValidationNumOnTokens().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -461,7 +448,6 @@ public class TestCnpBatchRequest {
         assertEquals(2, cnpBatchRequest.getBatchRequest()
                 .getNumAccountUpdates().intValue());
         assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test
@@ -540,7 +526,6 @@ public class TestCnpBatchRequest {
         physicalCheckDebit.setFundsTransferId("1234567");
         physicalCheckDebit.setAmount(110L);
         cnpBatchRequest.addTransaction(physicalCheckDebit);
-      
 
         assertEquals(1, cnpBatchRequest.getBatchRequest()
                 .getNumSubmerchantCredit().intValue());
@@ -584,12 +569,10 @@ public class TestCnpBatchRequest {
                 .getPhysicalCheckDebitAmount().intValue());
 
         assertEquals(11, cnpBatchRequest.getNumberOfTransactions());
-
     }
 
     @Test(expected = CnpBatchException.class)
     public void testAddAUBlock_AU_side() {
-
         cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
         cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
 
@@ -614,7 +597,6 @@ public class TestCnpBatchRequest {
 
     @Test(expected = CnpBatchException.class)
     public void testAddAUBlock_Sale_side() {
-
         cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
         cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
         Sale sale = new Sale();

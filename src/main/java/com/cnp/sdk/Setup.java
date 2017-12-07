@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public class Setup {
-
-
 	@SuppressWarnings("serial")
 	private static final HashMap<String,String> URL_MAP = new HashMap<String,String>() {
 		{
@@ -24,18 +22,9 @@ public class Setup {
 		}
 	};
 
-	@SuppressWarnings("serial")
-	private static final HashMap<String,String> PORT_MAP = new HashMap<String,String>() {
-		{
-			put("batchprelive","15000");
-			put("batchpostlive", "15000");
-			put("batchproduction", "15000");
-		}
-	};
-
 	/**
-	 * @param args
-	 * @throws IOException
+	 * @param args main args
+	 * @throws IOException IO exception during setup
 	 */
 	public static void main(String[] args) throws IOException {
 		File file = (new Configuration()).location();
@@ -73,17 +62,14 @@ public class Setup {
 				// standard predefined cases
 				config.put("url", URL_MAP.get(lastUserInput.toLowerCase()));
 				config.put("batchHost", URL_MAP.get(("batchprelive")));
-				config.put("batchPort", PORT_MAP.get(("batchprelive")));
 				badInput = false;
 			} else if(lastUserInput.compareToIgnoreCase("other") == 0) {
 				// user wants to enter custom values
 				System.out.println("Please input the URL for online transactions " +
-                        "(ex: https://www.testcnp.com/sandbox/communicator/online):");
+                        "(ex: https://www.testantivcnp.com/sandbox/communicator/online):");
 				config.put("url", stdin.readLine());
 				System.out.println("Please input the Host name for batch transactions (ex: payments.vantivcnp.com):");
 				config.put("batchHost", stdin.readLine());
-				System.out.println("Please input the port number for batch transactions (ex: 15000):");
-				config.put("batchPort", stdin.readLine());
 				badInput = false;
 			} else {
 				// error condition
@@ -102,8 +88,8 @@ public class Setup {
 		config.put("batchTcpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
 
 		System.out.print("\nBatch SDK generates files for Requests and Responses. " +
-                "You may leave these blank if you do not plan to use \nbatch processing. " +
-                "Please input the absolute path to the folder with write permissions for: \n");
+                "You may leave these blank if you do not plan to use " +
+				"\nbatch processing. Please input the absolute path to the folder with write permissions for: \n");
 		System.out.print("\tRequests: ");
 		config.put("batchRequestFolder", stdin.readLine());
 
@@ -127,7 +113,7 @@ public class Setup {
 		lastUserInput = stdin.readLine();
 		config.put("proxyPort", (lastUserInput == null ? "" : lastUserInput));
 		//default http timeout set to 500 ms
-		config.put("timeout", "500");
+		config.put("timeout", "5000");
 		config.put("reportGroup", "Default Report Group");
 		config.put("printxml", "false");
 

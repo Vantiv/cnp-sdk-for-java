@@ -31,9 +31,9 @@ public class TestCert4Echeck {
         Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
-        config.setProperty("proxyHost", "");
-        config.setProperty("proxyPort", "");
+		config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+		config.setProperty("proxyHost", "websenseproxy");
+		config.setProperty("proxyPort", "8080");
         cnp = new CnpOnline(config);
 	}
 
@@ -76,7 +76,6 @@ public class TestCert4Echeck {
 		echeck.setRoutingNum("053000219");
 		verification.setEcheck(echeck);
 		verification.setId("id");
-
 
 		EcheckVerificationResponse response = cnp.echeckVerification(verification);
 		assertEquals(response.getMessage(),"000", response.getResponse());
@@ -148,7 +147,6 @@ public class TestCert4Echeck {
 		echeck.setRoutingNum("053100300");
 		sale.setEcheck(echeck);
 		sale.setId("id");
-
 
 		EcheckSalesResponse response = cnp.echeckSale(sale);
 		assertEquals(response.getMessage(),"301", response.getResponse());
@@ -241,9 +239,8 @@ public class TestCert4Echeck {
 		credit.setId("id");
 
 		EcheckCreditResponse response = cnp.echeckCredit(credit);
-		//TODO response is wrong.
-		//assertEquals(response.getMessage(),"301", response.getResponse());
-		//assertEquals(response.getMessage(),"Invalid Account Number", response.getMessage());
+		assertEquals(response.getMessage(),"301", response.getResponse());
+		assertEquals(response.getMessage(),"Invalid Account Number", response.getMessage());
 	}
 
 	@Test

@@ -120,7 +120,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("prelive.litle.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -504,7 +504,6 @@ public class TestBatchFile {
         echeckSuccess.setRoutingNum("011075150");
         echeckSuccess.setCheckNum("123455");
 
-
         EcheckType echeckAccErr = new EcheckType();
         echeckAccErr.setAccNum("10@2969901");
         echeckAccErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
@@ -760,7 +759,6 @@ public class TestBatchFile {
 
         Properties configFromFile = request.getConfig();
 
-
         // pre-assert the config file has required param values
         assertEquals("prelive.litle.com",
                 configFromFile.getProperty("batchHost"));
@@ -962,8 +960,6 @@ public class TestBatchFile {
         balanceInquiry.setId("id");
         batch.addTransaction(balanceInquiry);
 
-
-
         GiftCardAuthReversal gcAuthReversal = new GiftCardAuthReversal();
         gcAuthReversal.setId("979797");
         gcAuthReversal.setCustomerId("customer_23");
@@ -1010,7 +1006,6 @@ public class TestBatchFile {
                         assertNotNull(authorizationResponse.getCnpTxnId());
                     }
 
-
                     public void processCaptureResponse(
                             CaptureResponse captureResponse) {
                         assertNotNull(captureResponse.getCnpTxnId());
@@ -1047,8 +1042,7 @@ public class TestBatchFile {
 
                     public void processEcheckVerificationResponse(
                             EcheckVerificationResponse echeckVerificationResponse) {
-                        assertNotNull(echeckVerificationResponse
-                                .getCnpTxnId());
+                        assertNotNull(echeckVerificationResponse.getCnpTxnId());
                     }
 
                     public void processEcheckRedepositResponse(
@@ -1068,20 +1062,17 @@ public class TestBatchFile {
 
                     public void processUpdateSubscriptionResponse(
                             UpdateSubscriptionResponse updateSubscriptionResponse) {
-                        assertNotNull(updateSubscriptionResponse
-                                .getCnpTxnId());
+                        assertNotNull(updateSubscriptionResponse.getCnpTxnId());
                     }
 
                     public void processCancelSubscriptionResponse(
                             CancelSubscriptionResponse cancelSubscriptionResponse) {
-                        assertNotNull(cancelSubscriptionResponse
-                                .getCnpTxnId());
+                        assertNotNull(cancelSubscriptionResponse.getCnpTxnId());
                     }
 
                     public void processUpdateCardValidationNumOnTokenResponse(
                             UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
-                        assertNotNull(updateCardValidationNumOnTokenResponse
-                                .getCnpTxnId());
+                        assertNotNull(updateCardValidationNumOnTokenResponse.getCnpTxnId());
                     }
 
                     public void processAccountUpdate(
@@ -1191,7 +1182,6 @@ public class TestBatchFile {
         }
 
         assertEquals(5, txns);
-
     }
 
     @Test
@@ -1266,7 +1256,6 @@ public class TestBatchFile {
         }
 
         assertEquals(4, txns);
-
     }
 
     @Test
@@ -1469,7 +1458,6 @@ public class TestBatchFile {
         }
 
         assertEquals(1, txns);
-
     }
 
     private void assertJavaApi(CnpBatchFileRequest request,
@@ -1478,8 +1466,7 @@ public class TestBatchFile {
         assertNotNull(response.getCnpSessionId());
         assertEquals("0", response.getResponse());
         assertEquals("Valid Format", response.getMessage());
-        //TODO: uncomment this assertion when prelive responds with XML v11.0
-//        assertEquals(Versions.XML_VERSION, response.getVersion());
+        assertEquals(Versions.XML_VERSION, response.getVersion());
 
         CnpBatchResponse batchResponse1 = response
                 .getNextCnpBatchResponse();
@@ -1496,12 +1483,6 @@ public class TestBatchFile {
         assertNotNull(saleResponse11.getCnpTxnId());
         assertEquals("orderId11", saleResponse11.getOrderId());
         assertEquals("reportGroup11", saleResponse11.getReportGroup());
-
-        // assertNull("expected no more than one transaction in batchResponse1",
-        // batchResponse1.getNextTransaction());
-        //
-        // assertNull("expected no more than one batch in file",
-        // response.getNextCnpBatchResponse());
     }
 
     private void assertGeneratedFiles(String workingDirRequests,
@@ -1640,8 +1621,7 @@ public class TestBatchFile {
 
         public void processUpdateCardValidationNumOnTokenResponse(
                 UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
-            assertNotNull(updateCardValidationNumOnTokenResponse
-                    .getCnpTxnId());
+            assertNotNull(updateCardValidationNumOnTokenResponse.getCnpTxnId());
             responseCount++;
         }
 
@@ -1790,4 +1770,5 @@ public class TestBatchFile {
         t.testSendToCnp_WithFileConfig();
         t.testSendToCnp_WithConfigOverrides();
     }
+
 }

@@ -6,12 +6,10 @@ import javax.xml.bind.JAXBException;
 
 
 public class CnpBatchFileResponse extends CnpFileResponse{
-
-
 	/**
 	 * This constructor initializes the CnpBatchResponseList to the Response values.
-	 * @param xmlFile
-	 * @throws JAXBException
+	 * @param xmlFile XML file
+	 * @throws CnpBatchException Vantiv batch exception
 	 */
 
 	public CnpBatchFileResponse(File xmlFile) throws CnpBatchException{
@@ -20,10 +18,10 @@ public class CnpBatchFileResponse extends CnpFileResponse{
 
 	/**
 	 * Retrieves the response object for the next batch in the response file
-	 * @return
+	 * @return the next CnpBatchResponse fom the file
 	 */
 	public CnpBatchResponse getNextCnpBatchResponse(){
-		CnpBatchResponse retObj = null;
+		CnpBatchResponse retObj;
 		retObj = new CnpBatchResponse(super.responseFileParser);
 		return retObj;
 	}

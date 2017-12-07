@@ -80,11 +80,11 @@ public class Communication {
 	}
 
     private static String getBestProtocol(final String[] availableProtocols) {
-        for (int i = 0; i < availableProtocols.length; ++i) {
+        for (String availableProtocol: availableProtocols) {
             // Assuming best protocol is at end
-            for (int j = SUPPORTED_PROTOCOLS.length - 1; j >= 0; --j) {
-                if (SUPPORTED_PROTOCOLS[j].equals(availableProtocols[i])) {
-                    return availableProtocols[i];
+            for (String supportedProtocol: SUPPORTED_PROTOCOLS) {
+                if (supportedProtocol.equals(availableProtocol)) {
+                    return availableProtocol;
                 }
             }
         }
@@ -175,8 +175,7 @@ public class Communication {
     	    session.setPassword(password);
 
     	    session.connect();
-	    }
-	    catch(JSchException e){
+	    } catch(JSchException e){
 	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
 	    }
 
@@ -185,8 +184,7 @@ public class Communication {
 	    try{
 	        channel = session.openChannel("sftp");
 	        channel.connect();
-	    }
-	    catch(JSchException e){
+	    } catch(JSchException e){
 	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : " +
 					"error in session.openChannel/channel.connect", e);
 	    }
@@ -209,8 +207,7 @@ public class Communication {
             sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
             sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" +
 					requestFile.getName() + ".asc");
-        }
-	    catch (SftpException e) {
+        } catch (SftpException e) {
             throw new CnpBatchException("Exception in sFTP operation", e);
         }
 
@@ -235,6 +232,7 @@ public class Communication {
         config.put("StrictHostKeyChecking", "no");
         JSch jsch = null;
         Session session = null;
+
         try{
             jsch = new JSch();
             session = jsch.getSession(username, hostname);
@@ -242,8 +240,7 @@ public class Communication {
             session.setPassword(password);
 
             session.connect();
-        }
-        catch(JSchException e){
+        } catch(JSchException e){
             throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
         }
 
@@ -252,8 +249,7 @@ public class Communication {
         try{
             channel = session.openChannel("sftp");
             channel.connect();
-        }
-        catch(JSchException e){
+        } catch(JSchException e){
             throw new CnpBatchException("Exception connection to Vantiv eCommerce : " +
 					"error in session.openChannel/channel.connect", e);
         }
@@ -270,13 +266,14 @@ public class Communication {
                 e.printStackTrace();
             }
             boolean success = true;
+
             try{
                 sftp.get("outbound/" + requestFile.getName() + ".asc", responseFile.getAbsolutePath());
-            }
-            catch(SftpException e){
+            } catch(SftpException e){
                 success = false;
                 System.out.println(e);
             }
+
             if(success) {
                 try {
                     sftp.rm("outbound/" + requestFile.getName() + ".asc");

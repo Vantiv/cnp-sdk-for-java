@@ -13,10 +13,9 @@ import com.cnp.sdk.generate.RFRResponse;
  */
 public class CnpRFRResponse {
 	private RFRResponse rfrResponse;
-	ResponseFileParser responseFileParser;
+	private ResponseFileParser responseFileParser;
 	private JAXBContext jc;
 	private Unmarshaller unmarshaller;
-
 
 	CnpRFRResponse(RFRResponse rfrResponse) {
 		setRFRResponse(rfrResponse);

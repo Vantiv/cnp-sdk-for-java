@@ -36,12 +36,10 @@ public class TestLoadReversal {
         loadReversal.setReportGroup("rptGrp");
         loadReversal.setId("id");
 
-
-
-        loadReversal.setCnpTxnId(369852147l);
+        loadReversal.setCnpTxnId(369852147L);
         loadReversal.setCard(giftCard);
         loadReversal.setOriginalRefCode("ref");
-        loadReversal.setOriginalAmount(44455l);
+        loadReversal.setOriginalAmount(44455L);
         loadReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl(new GregorianCalendar()));
         loadReversal.setOriginalSystemTraceId(0);
         loadReversal.setOriginalSequenceNumber("333333");
@@ -52,7 +50,5 @@ public class TestLoadReversal {
 
 
     }
-
-
 
 }

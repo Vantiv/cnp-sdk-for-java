@@ -32,8 +32,6 @@ public class TestCreatePlan {
        CreatePlanResponse response=cnp.createPlan(createPlan);
       
          assertEquals("Approved", response.getMessage());
-
     }
-
 
 }

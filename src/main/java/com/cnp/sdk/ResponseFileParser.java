@@ -11,9 +11,9 @@ import java.io.Reader;
 
 public class ResponseFileParser {
 	private File fileToParse = null;
-	InputStream in = null;
-	Reader reader = null;
-	Reader buffer = null;
+	private InputStream in = null;
+	private Reader reader = null;
+	private Reader buffer = null;
 
 	public ResponseFileParser(File responseFile) {
 		try {
@@ -27,9 +27,9 @@ public class ResponseFileParser {
 	}
 
 	public String getNextTag(String tagToLookFor) throws Exception {
-		StringBuffer currentStartingTagInFile = new StringBuffer();
-		StringBuffer retStringBuf = new StringBuffer();
-		StringBuffer currentEndingTagInFile = new StringBuffer();
+		StringBuilder currentStartingTagInFile = new StringBuilder();
+		StringBuilder retStringBuf = new StringBuilder();
+		StringBuilder currentEndingTagInFile = new StringBuilder();
 
 		boolean startRecordingStartingTag = false;
 		boolean startRecordingEndingTag = false;
@@ -40,7 +40,7 @@ public class ResponseFileParser {
 		String openingTagToLookFor = "<" + tagToLookFor;
 		String closingTagToLookFor = "</" + tagToLookFor + ">";
 
-		int r = 0;
+		int r;
 		while ((r = buffer.read()) != -1) {
 			char ch = (char) r;
 
@@ -51,7 +51,6 @@ public class ResponseFileParser {
 					startRecordingEndingTag = true;
 					currentEndingTagInFile.append(lastChar);
 				}
-
 				// override process for elements like cnpResponse and
 				// batchResponse
 				if ((tagToLookFor.compareToIgnoreCase("batchResponse") == 0 || tagToLookFor
@@ -61,7 +60,6 @@ public class ResponseFileParser {
 					break;
 				}
 			}
-
 			// We want to look for startingTag only if we aren't already
 			// recording the string to return.
 			if (ch == '<' && !startRecordingRetString) {
@@ -82,7 +80,6 @@ public class ResponseFileParser {
 					currentStartingTagInFile.delete(0,
 							currentStartingTagInFile.length());
 				}
-
 				// tag declaration has ended. Safe to discard.
 				if (ch == '>') {
 					if (tagToLookFor.compareToIgnoreCase("transactionResponse") == 0
@@ -107,9 +104,9 @@ public class ResponseFileParser {
 					startRecordingEndingTag = false;
 					if (okToStopRecordingString(closingTagToLookFor,
 							currentEndingTagInFile.toString())) {
-						startRecordingRetString = false;
-						// currentEndingTagInFile.delete(0,
-						// currentEndingTagInFile.length());
+//						startRecordingRetString = false;
+//						currentEndingTagInFile.delete(0,
+//						currentEndingTagInFile.length());
 						break;
 					}
 					currentEndingTagInFile.delete(0,

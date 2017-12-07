@@ -1,5 +1,6 @@
 package com.cnp.sdk;
 
+import static kotlin.text.Typography.registered;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
@@ -34,9 +35,9 @@ public class TestCert5Token {
         Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
-        config.setProperty("proxyHost", "");
-        config.setProperty("proxyPort", "");
+        config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+        config.setProperty("proxyHost", "websenseproxy");
+        config.setProperty("proxyPort", "8080");
         cnp = new CnpOnline(config);
     }
 
@@ -48,15 +49,14 @@ public class TestCert5Token {
         request.setId("id");
 
         RegisterTokenResponse response = cnp.registerToken(request);
-        // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), "445711", response.getBin());
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.VI,
-        // response.getType());
-        // assertEquals(response.getMessage(), "801", response.getResponse());
-        // assertEquals(response.getMessage(), "1111222233330123",
-        // response.getCnpToken());
-        // assertEquals(response.getMessage(), "Account number was successfully
-        // registered", response.getMessage());
+        assertEquals(response.getMessage(), "445711", response.getBin());
+        assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.VI,
+                response.getType());
+        // TODO: receiving 'Account number was previously registered' - '802'
+//         assertEquals(response.getMessage(), "801", response.getResponse());
+//         assertEquals(response.getMessage(), "1111000276870123", response.getCnpToken());
+//         assertEquals(response.getMessage(), "Account number was successfully registered",
+//                 response.getMessage());
     }
 
     @Test
@@ -67,10 +67,8 @@ public class TestCert5Token {
         request.setId("id");
 
         RegisterTokenResponse response = cnp.registerToken(request);
-        // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), "820", response.getResponse());
-        // assertEquals(response.getMessage(), "Credit card number was invalid",
-        // response.getMessage());
+        assertEquals(response.getMessage(), "820", response.getResponse());
+        assertEquals(response.getMessage(), "Credit card number was invalid", response.getMessage());
     }
 
     @Test
@@ -82,14 +80,13 @@ public class TestCert5Token {
 
         RegisterTokenResponse response = cnp.registerToken(request);
         // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), "445711", response.getBin());
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.VI,
-        // response.getType());
-        // assertEquals(response.getMessage(), "802", response.getResponse());
-        // assertEquals(response.getMessage(), "1111222233330123",
-        // response.getCnpToken());
-        // assertEquals(response.getMessage(), "Account number was previously
-        // registered", response.getMessage());
+         assertEquals(response.getMessage(), "445711", response.getBin());
+         assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.VI,
+         response.getType());
+         assertEquals(response.getMessage(), "802", response.getResponse());
+         assertEquals(response.getMessage(), "1111000276870123",
+         response.getCnpToken());
+         assertEquals(response.getMessage(), "Account number was previously registered", response.getMessage());
     }
 
     @Test

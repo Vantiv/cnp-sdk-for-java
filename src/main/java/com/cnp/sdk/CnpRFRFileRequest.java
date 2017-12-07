@@ -20,7 +20,7 @@ import com.cnp.sdk.generate.RFRRequest;
 
 public class CnpRFRFileRequest {
 
-    RFRRequest rfrRequest;
+    private RFRRequest rfrRequest;
 
     private JAXBContext jc;
     private Properties properties;
@@ -32,7 +32,6 @@ public class CnpRFRFileRequest {
     private String requestId;
     private Marshaller marshaller;
     private Configuration config = null;
-
 
     public CnpRFRFileRequest(String requestFileName, RFRRequest request, Properties properties){
         rfrRequest = request;
@@ -89,7 +88,6 @@ public class CnpRFRFileRequest {
                     "Unable to load jaxb dependencies.  Perhaps a classpath issue?", e);
         }
     }
-
 
     private void addRFRRequest(RFRRequest request){
         try {

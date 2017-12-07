@@ -23,12 +23,10 @@ public class TestUpdatePlan {
        UpdatePlan updatePlan=new UpdatePlan();
        updatePlan.setActive(true);
        updatePlan.setPlanCode("Monthly");
-      
 
        UpdatePlanResponse response=cnp.updatePlan(updatePlan);
          assertEquals("Approved", response.getMessage());
 
     }
-
 
 }

@@ -20,7 +20,6 @@ import com.cnp.sdk.generate.OrderSourceType;
 import com.cnp.sdk.generate.ProcessingInstructions;
 import com.cnp.sdk.generate.ProcessingTypeEnum;
 
-
 public class TestCaptureGivenAuth {
 
 	private static CnpOnline cnp;

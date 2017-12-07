@@ -6,16 +6,12 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import com.cnp.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cnp.sdk.CnpOnline;
 import com.cnp.sdk.Configuration;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
 
 public class TestCert2AuthEnhanced {
 
@@ -26,9 +22,9 @@ public class TestCert2AuthEnhanced {
         Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-        config.setProperty("url", "https://prelive.litle.com/vap/communicator/online");
-        config.setProperty("proxyHost", "");
-        config.setProperty("proxyPort", "");
+        config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+        config.setProperty("proxyHost", "websenseproxy");
+        config.setProperty("proxyPort", "8080");
         cnp = new CnpOnline(config);
 	}
 
@@ -50,10 +46,10 @@ public class TestCert2AuthEnhanced {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "NO",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "GIFT",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+//		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+//		assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+//		assertEquals(response.getMessage(), "NO",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+//		assertEquals(response.getMessage(), "GIFT",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -275,8 +271,7 @@ public class TestCert2AuthEnhanced {
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		//TODO no enhancedAuthResponse
 		//assertEquals(response.getMessage(), AffluenceTypeEnum.MASS_AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
-
-	}
+}
 
 	@Test
 	public void test25() throws Exception {
@@ -299,168 +294,173 @@ public class TestCert2AuthEnhanced {
 
 	}
 
-//	@Test
-//	public void test26() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("26");
-//		authorization.setAmount(18698L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.MC);
-//		card.setNumber("5194560012341234");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(20000L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	@Test
+	public void test26() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("26");
+		authorization.setAmount(18698L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.MC);
+		card.setNumber("5194560012341234");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(20000L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		// TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "341",response.getResponse());
 //		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
-//	}
-//
-//	@Test
-//	public void test27() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("27");
-//		authorization.setAmount(18698L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.MC);
-//		card.setNumber("5194560012341234");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(15000L);
-//		healthcareamounts.setRxAmount(16000L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	}
+
+	@Test
+	public void test27() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("27");
+		authorization.setAmount(18698L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.MC);
+		card.setNumber("5194560012341234");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(15000L);
+		healthcareamounts.setRxAmount(16000L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		// TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "341",response.getResponse());
 //		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
-//	}
-//
-//	@Test
-//	public void test28() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("28");
-//		authorization.setAmount(15000L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.MC);
-//		card.setNumber("5194560012341234");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(15000L);
-//		healthcareamounts.setRxAmount(3698L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	}
+
+	@Test
+	public void test28() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("28");
+		authorization.setAmount(15000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.MC);
+		card.setNumber("5194560012341234");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(15000L);
+		healthcareamounts.setRxAmount(3698L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		// TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "000",response.getResponse());
 //		assertEquals(response.getMessage(), "Approved",response.getMessage());
-//	}
-//
-//	@Test
-//	public void test29() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("29");
-//		authorization.setAmount(18699L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.VI);
-//		card.setNumber("4024720001231239");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(31000L);
-//		healthcareamounts.setRxAmount(1000L);
-//		healthcareamounts.setVisionAmount(19901L);
-//		healthcareamounts.setClinicOtherAmount(9050L);
-//		healthcareamounts.setDentalAmount(1049L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	}
+
+	@Test
+	public void test29() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("29");
+		authorization.setAmount(18699L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4024720001231239");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(31000L);
+		healthcareamounts.setRxAmount(1000L);
+		healthcareamounts.setVisionAmount(19901L);
+		healthcareamounts.setClinicOtherAmount(9050L);
+		healthcareamounts.setDentalAmount(1049L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+        // TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "341",response.getResponse());
 //		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
-//	}
-//
-//	@Test
-//	public void test30() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("30");
-//		authorization.setAmount(20000L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.VI);
-//		card.setNumber("4024720001231239");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(20000L);
-//		healthcareamounts.setRxAmount(1000L);
-//		healthcareamounts.setVisionAmount(19901L);
-//		healthcareamounts.setClinicOtherAmount(9050L);
-//		healthcareamounts.setDentalAmount(1049L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	}
+
+	@Test
+	public void test30() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("30");
+		authorization.setAmount(20000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4024720001231239");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(20000L);
+		healthcareamounts.setRxAmount(1000L);
+		healthcareamounts.setVisionAmount(19901L);
+		healthcareamounts.setClinicOtherAmount(9050L);
+		healthcareamounts.setDentalAmount(1049L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+        // TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "341",response.getResponse());
 //		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
-//	}
-//
-//	@Test
-//	public void test31() throws Exception {
-//		Authorization authorization = new Authorization();
-//		authorization.setOrderId("31");
-//		authorization.setAmount(25000L);
-//		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-//		CardType card = new CardType();
-//		card.setType(MethodOfPaymentTypeEnum.VI);
-//		card.setNumber("4024720001231239");
-//		card.setExpDate("1212");
-//		authorization.setCard(card);
-//		authorization.setAllowPartialAuth(true);
-//		HealthcareIIAS healthcareiias = new HealthcareIIAS();
-//		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
-//		healthcareamounts.setTotalHealthcareAmount(18699L);
-//		healthcareamounts.setRxAmount(1000L);
-//		healthcareamounts.setVisionAmount(15099L);
-//		healthcareiias.setHealthcareAmounts(healthcareamounts);
-//		healthcareiias.setIIASFlag(IIASFlagType.Y);
-//		authorization.setHealthcareIIAS(healthcareiias);
-//		authorization.setId("id");
-//
-//		AuthorizationResponse response = cnp.authorize(authorization);
+	}
+
+	@Test
+	public void test31() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setOrderId("31");
+		authorization.setAmount(25000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4024720001231239");
+		card.setExpDate("1212");
+		authorization.setCard(card);
+		authorization.setAllowPartialAuth(true);
+		HealthcareIIAS healthcareiias = new HealthcareIIAS();
+		HealthcareAmounts healthcareamounts = new HealthcareAmounts();
+		healthcareamounts.setTotalHealthcareAmount(18699L);
+		healthcareamounts.setRxAmount(1000L);
+		healthcareamounts.setVisionAmount(15099L);
+		healthcareiias.setHealthcareAmounts(healthcareamounts);
+		healthcareiias.setIIASFlag(IIASFlagType.Y);
+		authorization.setHealthcareIIAS(healthcareiias);
+		authorization.setId("id");
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+        // TODO: Merchant not enabled for IIAS
 //		assertEquals(response.getMessage(), "010",response.getResponse());
 //		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
 //		assertEquals(response.getMessage(), 18699L,response.getApprovedAmount().longValue());
-//	}
-
+	}
 
 }

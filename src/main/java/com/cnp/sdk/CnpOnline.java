@@ -143,7 +143,6 @@ public class CnpOnline {
 		}
 	}
 
-
 	public CnpOnline(Properties config) {
 		this.config = config;
 		communication = new Communication();
@@ -502,7 +501,6 @@ public class CnpOnline {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
         fillInReportGroup(activate);
 
-
         request.setTransaction(CnpContext.getObjectFactory().createActivate(activate));
         CnpOnlineResponse response = sendToCnp(request);
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
@@ -517,7 +515,6 @@ public class CnpOnline {
     public DeactivateResponse deactivate(Deactivate deactivate, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
         fillInReportGroup(deactivate);
-
 
         request.setTransaction(CnpContext.getObjectFactory().createDeactivate(deactivate));
         CnpOnlineResponse response = sendToCnp(request);
@@ -720,9 +717,6 @@ public class CnpOnline {
         return (GiftCardCreditResponse)newresponse.getValue();
     }
 
-    
-    
-    
     public PayFacCreditResponse payFacCredit(PayFacCredit payFacCredit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return payFacCredit(payFacCredit, request);
@@ -737,8 +731,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (PayFacCreditResponse)newresponse.getValue();
     }
-    
-    
+
     public PayFacDebitResponse payFacDebit(PayFacDebit payFacDebit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return payFacDebit(payFacDebit, request);
@@ -753,9 +746,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (PayFacDebitResponse)newresponse.getValue();
     }
-    
-    
-    
+
     public SubmerchantCreditResponse submerchantCredit(SubmerchantCredit submerchantCredit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return submerchantCredit(submerchantCredit, request);
@@ -770,8 +761,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (SubmerchantCreditResponse)newresponse.getValue();
     }
-    
-    
+
     public SubmerchantDebitResponse submerchantDebit(SubmerchantDebit submerchantDebit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return submerchantDebit(submerchantDebit, request);
@@ -801,10 +791,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (ReserveCreditResponse)newresponse.getValue();
     }
-    
-    
-    
-    
+
     public ReserveDebitResponse submerchantDebit(ReserveDebit reserveDebit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return reserveDebit(reserveDebit, request);
@@ -819,9 +806,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (ReserveDebitResponse)newresponse.getValue();
     }
-    
-    
-    
+
     public FundingInstructionVoidResponse fundingInstructionVoid(FundingInstructionVoid fundingInstructionVoid) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return fundingInstructionVoid(fundingInstructionVoid, request);
@@ -837,15 +822,6 @@ public class CnpOnline {
         return (FundingInstructionVoidResponse)newresponse.getValue();
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public VendorCreditResponse vendorCredit(VendorCredit vendorCredit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return vendorCredit(vendorCredit, request);
@@ -860,10 +836,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (VendorCreditResponse)newresponse.getValue();
     }
-    
-    
-    
-    
+
     public VendorDebitResponse physicalCheckDebit(VendorDebit vendorDebit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return vendorDebit(vendorDebit, request);
@@ -878,19 +851,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (VendorDebitResponse)newresponse.getValue();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public PhysicalCheckCreditResponse physicalCheckCredit(PhysicalCheckCredit physicalCheckCredit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return physicalCheckCredit(physicalCheckCredit, request);
@@ -906,9 +867,6 @@ public class CnpOnline {
         return (PhysicalCheckCreditResponse)newresponse.getValue();
     }
     
-    
-    
-    
     public PhysicalCheckDebitResponse physicalCheckDebit(PhysicalCheckDebit physicalCheckDebit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return physicalCheckDebit(physicalCheckDebit, request);
@@ -923,10 +881,7 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (PhysicalCheckDebitResponse)newresponse.getValue();
     }
-    
-    
-    
-    
+
 	private CnpOnlineRequest createCnpOnlineRequest() {
 		CnpOnlineRequest request = new CnpOnlineRequest();
 		request.setMerchantId(config.getProperty("merchantId"));
@@ -942,19 +897,21 @@ public class CnpOnline {
 	private CnpOnlineRequest fillInMissingFieldsFromConfig(CnpOnlineRequest request) {
 		CnpOnlineRequest retVal = new CnpOnlineRequest();
 		retVal.setAuthentication(new Authentication());
+
 		if(request.getAuthentication() == null) {
 			Authentication authentication = new Authentication();
 			authentication.setPassword(config.getProperty("password"));
 			authentication.setUser(config.getProperty("username"));
 			retVal.setAuthentication(authentication);
-		}
-		else {
-			if(request.getAuthentication().getUser() == null) {
+		} else {
+
+		    if(request.getAuthentication().getUser() == null) {
 				retVal.getAuthentication().setUser(config.getProperty("username"));
 			}
 			else {
 				retVal.getAuthentication().setUser(request.getAuthentication().getUser());
 			}
+
 			if(request.getAuthentication().getPassword() == null) {
 				retVal.getAuthentication().setPassword(config.getProperty("password"));
 			}
@@ -962,17 +919,17 @@ public class CnpOnline {
 				retVal.getAuthentication().setPassword(request.getAuthentication().getPassword());
 			}
 		}
+
 		if(request.getMerchantId() == null) {
 			retVal.setMerchantId(config.getProperty("merchantId"));
-		}
-		else {
+		} else {
 			retVal.setMerchantId(request.getMerchantId());
 		}
         retVal.setVersion(Versions.XML_VERSION);
+
 		if(request.getMerchantSdk() == null) {
 			retVal.setMerchantSdk(Versions.SDK_VERSION);
-		}
-		else {
+		} else {
 			retVal.setMerchantSdk(request.getMerchantSdk());
 		}
 
@@ -999,9 +956,9 @@ public class CnpOnline {
 			 * contains the extra "/online".
 			 * This issue will be fixed for OpenAccess in Jan 2018
 			 */
-//			if(xmlResponse.contains("http://www.vantivcnp.com/schema/online")){
-//			    xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
-//			}
+			if(xmlResponse.contains("http://www.vantivcnp.com/schema/online")){
+			    xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
+			}
 
 			CnpOnlineResponse response = (CnpOnlineResponse)CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
 			// non-zero responses indicate a problem

@@ -32,8 +32,7 @@ public class performanceTestMerchantSDKWhole {
     	date.set(Calendar.DAY_OF_MONTH, 26);
     	Contact ct = new Contact();
 
-    	for (int i =0; i < 50 ; i++)
-		{
+    	for (int i =0; i < 50 ; i++) {
     		Sale sale = new Sale();
     		sale.setReportGroup("1111111111111111111111111");
     		sale.setId("1234567890123456789012345");
@@ -61,22 +60,14 @@ public class performanceTestMerchantSDKWhole {
     	    sale.setCustomerInfo(ci);
     	    sale.setAllowPartialAuth(true);
 
-
-
-    	    ct.setAddressLine1("aaaaaAAAAABBBBBGGGGGGGGGGKKKKKKKKKK");
+			ct.setAddressLine1("aaaaaAAAAABBBBBGGGGGGGGGGKKKKKKKKKK");
     	    ct.setAddressLine2("aaaaaAAAAABBBBBGGGGGGGGGGKKKKKKKKKK");
     	    ct.setAddressLine3("aaaaaAAAAABBBBBGGGGGGGGGGKKKKKKKKKK");
     	    ct.setCity("aaaaaAAAAABBBBBGGGGGGGGGGKKKKKKKKKKXXXXX");
     	    ct.setCompanyName("AAAAABBBBBNNNNNMMMMMLLLLLLLLLLUUUUUTTTTT");
     	    ct.setCountry(CountryTypeEnum.AD);
-    	    ct.setEmail("ssssssssssssssssssssssssssssssssssssssssssssssstest@emailcsdfafdasdf.com");
-    	   /* ct.setFirstName(value);
-    	    ct.setlas
+    	    ct.setEmail("LEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEROY_JENKINS!!!@emailcsdfafdasdf.com");
 
-
-    	    sale.setBillToAddress(value)
-
-    	    */
     		CardType card = new CardType();
     		card.setType(MethodOfPaymentTypeEnum.VI);
     		card.setNumber("4100000000000002");

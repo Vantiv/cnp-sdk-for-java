@@ -62,5 +62,4 @@ public class TestEcheckRedeposit {
 		assertEquals("Approved", response.getMessage());
 	}
 
-
 }

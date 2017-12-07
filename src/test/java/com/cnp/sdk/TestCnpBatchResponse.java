@@ -47,4 +47,5 @@ public class TestCnpBatchResponse {
 		sale.setReportGroup("test");
 		return sale;
 	}
+
 }

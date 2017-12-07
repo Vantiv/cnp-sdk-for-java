@@ -76,7 +76,6 @@ public class TestCapture {
 		assertEquals("Approved", response.getMessage());
 	}
 
-
 }
 
 

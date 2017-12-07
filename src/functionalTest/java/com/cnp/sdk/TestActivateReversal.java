@@ -24,8 +24,7 @@ public class TestActivateReversal {
 
     @Test
     public void simpleActivate() throws Exception {
-
-       ActivateReversal activateReversal=new ActivateReversal();
+        ActivateReversal activateReversal=new ActivateReversal();
         GiftCardCardType giftCard = new GiftCardCardType();
         giftCard.setType(MethodOfPaymentTypeEnum.GC);
         giftCard.setCardValidationNum("411");
@@ -36,22 +35,15 @@ public class TestActivateReversal {
         activateReversal.setReportGroup("rptGrp");
         activateReversal.setId("id");
 
-
-
-       // activateReversal.setCnpTxnId(369852147l);
         activateReversal.setCard(giftCard);
         activateReversal.setOriginalRefCode("ref");
-        activateReversal.setOriginalAmount(44455l);
+        activateReversal.setOriginalAmount(44455L);
         activateReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl(new GregorianCalendar()));
         activateReversal.setOriginalSystemTraceId(0);
         activateReversal.setOriginalSequenceNumber("333333");
 
         ActivateReversalResponse response=cnp.activateReversal(activateReversal);
         assertEquals("Approved", response.getMessage());
-
     }
-
-
-
 
 }

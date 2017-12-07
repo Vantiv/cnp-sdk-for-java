@@ -37,22 +37,16 @@ public class TestDepositReversal {
         depositReversal.setReportGroup("rptGrp");
         depositReversal.setId("id");
 
-
-
-        depositReversal.setCnpTxnId(369852147l);
+        depositReversal.setCnpTxnId(369852147L);
         depositReversal.setCard(giftCard);
         depositReversal.setOriginalRefCode("ref");
-        depositReversal.setOriginalAmount(44455l);
+        depositReversal.setOriginalAmount(44455L);
         depositReversal.setOriginalTxnTime(new XMLGregorianCalendarImpl(new GregorianCalendar()));
         depositReversal.setOriginalSystemTraceId(0);
         depositReversal.setOriginalSequenceNumber("333333");
 
         DepositReversalResponse response=cnp.depositReversal(depositReversal);
         assertEquals("Approved", response.getMessage());
-
-
     }
-
-
 
 }
