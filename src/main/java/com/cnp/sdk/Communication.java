@@ -262,7 +262,7 @@ public class Communication {
             try {
                 Thread.sleep(45000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
             boolean success = true;
 
@@ -270,7 +270,7 @@ public class Communication {
                 sftp.get("outbound/" + requestFile.getName() + ".asc", responseFile.getAbsolutePath());
             } catch(SftpException e){
                 success = false;
-                e.printStackTrace();
+                System.out.println(e);
             }
 
             if(success) {
