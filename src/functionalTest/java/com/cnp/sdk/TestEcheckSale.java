@@ -154,7 +154,7 @@ public class TestEcheckSale {
 	}
 	
 	@Test
-    public void echeckSaleWithSecoundaryAmountAndCCD() throws Exception {
+    public void echeckSaleWithSecondaryAmountAndCCD() throws Exception {
         EcheckSale echecksale = new EcheckSale();
         echecksale.setReportGroup("Planets");
         echecksale.setAmount(123456L);
