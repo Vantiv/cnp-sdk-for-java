@@ -43,6 +43,7 @@ public class Communication {
     private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.1", "TLSv1.2"};
     private CloseableHttpClient httpClient;
     private final int KEEP_ALIVE_DURATION = 8000;
+	private static final String NEUTER_STR = "NEUTERED";
 
 	public Communication() {
 		try {
@@ -121,9 +122,12 @@ public class Communication {
 		post.setConfig(requestConfig);
 		HttpEntity entity = null;
 		try {
-			boolean printxml = configuration.getProperty("printxml") != null
-					&& configuration.getProperty("printxml").equalsIgnoreCase("true");
+			boolean printxml = "true".equalsIgnoreCase(configuration.getProperty("printxml"));
+			boolean neuterXml = "true".equalsIgnoreCase(configuration.getProperty("neuterXml"));
 			if (printxml) {
+				if (neuterXml) {
+					xmlRequest = neuterXml(xmlRequest);
+				}
 				System.out.println("Request XML: " + xmlRequest);
 			}
 			
@@ -139,6 +143,10 @@ public class Communication {
 			xmlResponse = EntityUtils.toString(entity,"UTF-8");
 
 			if (printxml) {
+				if (neuterXml) {
+					xmlResponse = neuterXml(xmlResponse);
+				}
+
 				System.out.println("Response XML: " + xmlResponse);
 			}
 		} catch (IOException e) {
@@ -298,4 +306,20 @@ public class Communication {
         channel.disconnect();
         session.disconnect();
 	}
+
+	/* Method to neuter out sensitive information from xml */
+	public String neuterXml(String xml) {
+		if (xml == null) {
+			return xml;
+		}
+
+		xml = xml.replaceAll("<accNum>.*</accNum>", "<accNum>" + NEUTER_STR + "</accNum>");
+		xml = xml.replaceAll("<user>.*</user>", "<user>" + NEUTER_STR + "</user>");
+		xml = xml.replaceAll("<password>.*</password>", "<password>" + NEUTER_STR + "</password>");
+		xml = xml.replaceAll("<track>.*</track>", "<track>" + NEUTER_STR + "</track>");
+		xml = xml.replaceAll("<number>.*</number>", "<number>" + NEUTER_STR + "</number>");
+		return xml;
+
+	}
+
 }
