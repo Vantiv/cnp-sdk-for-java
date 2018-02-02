@@ -134,7 +134,7 @@ public class Communication {
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
 			//System.out.println("POST    "+post);
 			HttpResponse response = httpClient.execute(post);
-			System.out.println("RESPONSE    "+response); 
+//			System.out.println("RESPONSE    "+response);
 			entity = response.getEntity();
 			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new CnpOnlineException(response.getStatusLine().getStatusCode() + ":" +
