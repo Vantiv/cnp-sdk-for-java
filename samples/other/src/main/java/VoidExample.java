@@ -7,7 +7,7 @@ public class VoidExample {
         com.cnp.sdk.generate.Void theVoid = new com.cnp.sdk.generate.Void();
         theVoid.setId("id");
         //cnpTxnId contains the Cnp Transaction Id returned on the deposit
-        theVoid.setCnpTxnId(100000000000000011L);
+        theVoid.setCnpTxnId(100000000000000000L);
         VoidResponse response = new CnpOnline().dovoid(theVoid);
         //Display Results
         System.out.println("Response: " + response.getResponse());
