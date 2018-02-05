@@ -35,7 +35,7 @@ public class TestQueryTransaction {
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
-        assertEquals("000", queryTransactionResponse.getResponse());
+        assertEquals("150", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
 	}
@@ -53,9 +53,9 @@ public class TestQueryTransaction {
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
-        assertEquals("000", queryTransactionResponse.getResponse());
+        assertEquals("150", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
-        assertEquals(2, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+        assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
     }
 	
 	@Test

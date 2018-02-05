@@ -25,6 +25,6 @@ public class TestVoid {
         voidTxn.setCustomerId("my_customer");
 
         VoidResponse response = cnp.dovoid(voidTxn);
-        assertEquals("000",response.getResponse());
+        assertEquals("643",response.getResponse());
     }
 }
