@@ -167,6 +167,14 @@ public class Communication {
 	 * @throws IOException exceptions coming out of the sFTP actions
 	 */
 	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration) throws IOException{
+		sendCnpRequestFileToSFTP(requestFile, configuration, false);
+	}
+
+	public void sendCnpRequestFileToSFTPWithencryption(File requestFile, Properties configuration) throws IOException{
+		sendCnpRequestFileToSFTP(requestFile, configuration, true);
+	}
+
+	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration, Boolean PgpEncryption) throws IOException{
 	    String username = configuration.getProperty("sftpUsername");
 	    String password = configuration.getProperty("sftpPassword");
 	    String hostname = configuration.getProperty("batchHost");
@@ -211,9 +219,14 @@ public class Communication {
 	    }
 
 	    try {
-            sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
-            sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" +
-					requestFile.getName() + ".asc");
+			if(PgpEncryption){
+				sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName());
+				sftp.rename("inbound/" + requestFile.getName(), "inbound/" + requestFile.getName().replace(".prg", ".asc"));
+			}
+			else{
+				sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
+				sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" + requestFile.getName() + ".asc");
+			}
         } catch (SftpException e) {
             throw new CnpBatchException("Exception in sFTP operation", e);
         }
@@ -273,9 +286,10 @@ public class Communication {
                 System.out.println(e);
             }
             boolean success = true;
-
+			String requestFilename = requestFile.getName().replace(".prg", "");
+			requestFilename = requestFilename + ".asc";
             try{
-                sftp.get("outbound/" + requestFile.getName() + ".asc", responseFile.getAbsolutePath());
+                sftp.get("outbound/" + requestFilename, responseFile.getAbsolutePath());
             } catch(SftpException e){
                 success = false;
                 System.out.println(e);
@@ -283,7 +297,7 @@ public class Communication {
 
             if(success) {
                 try {
-                    sftp.rm("outbound/" + requestFile.getName() + ".asc");
+                    sftp.rm("outbound/" + requestFilename);
                 } catch (SftpException e) {
                     throw new CnpBatchException("Exception in sFTP operation", e);
                 }

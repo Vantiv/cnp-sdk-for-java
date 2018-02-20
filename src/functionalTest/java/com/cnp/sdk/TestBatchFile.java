@@ -192,7 +192,7 @@ public class TestBatchFile {
         // --- Send the batch to Cnp's SFTP ---
 
         // Move request file to temporary location
-        File requestFile2 = File.createTempFile("cnp", "xml");
+        File requestFile2 = File.createTempFile("cnp", ".xml");
         copyFile(requestFile1, requestFile2);
 
         Properties configForRequest2 = (Properties) configFromFile.clone();
