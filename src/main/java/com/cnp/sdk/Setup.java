@@ -129,6 +129,11 @@ public class Setup {
 			System.out.print("Passphrase for decryption : ");
 			config.put("passphrase", stdin.readLine());
 		}
+		else {
+			config.put("publicKey", "");
+			config.put("privateKey", "");
+			config.put("passphrase", "");
+		}
 
 		System.out.print("\nPlease input the proxy host, if no proxy hit enter: ");
 		lastUserInput = stdin.readLine();

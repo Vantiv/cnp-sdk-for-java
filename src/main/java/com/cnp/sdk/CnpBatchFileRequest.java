@@ -229,7 +229,7 @@ public class CnpBatchFileRequest{
 					"batchTcpTimeout", "batchUseSSL",
 					"maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
 					"batchRequestFolder", "batchResponseFolder", "sftpUsername", "sftpPassword", "sftpTimeout",
-					"merchantId", "publicKey", "privateKey", "passphrase", "printxml","useEncryption"};
+					"merchantId", "printxml", "publicKey", "privateKey", "passphrase", "useEncryption"};
 
 			for (String prop : allProperties) {
 				// if the value of a property is not set, look at the Properties member of the class first, and the .properties file next.
@@ -241,10 +241,13 @@ public class CnpBatchFileRequest{
 							localConfig.load(new FileInputStream((new Configuration()).location()));
 							propertiesReadFromFile = true;
 						}
-						config.setProperty(prop, localConfig.getProperty(prop));
+						if(localConfig.getProperty(prop) == null){
+							config.setProperty(prop, localConfig.getProperty(prop));
+						}
 					}
 				}
 			}
+
 		} catch (FileNotFoundException e) {
 			throw new CnpBatchException("File .cnp_SDK_config.properties was not found. Please run the " +
 					"Setup.java application to create the file at location "+ (new Configuration()).location(), e);
