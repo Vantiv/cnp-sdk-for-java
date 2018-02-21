@@ -241,7 +241,7 @@ public class CnpBatchFileRequest{
 							localConfig.load(new FileInputStream((new Configuration()).location()));
 							propertiesReadFromFile = true;
 						}
-						if(localConfig.getProperty(prop) == null){
+						if(localConfig.getProperty(prop) != null){
 							config.setProperty(prop, localConfig.getProperty(prop));
 						}
 					}
