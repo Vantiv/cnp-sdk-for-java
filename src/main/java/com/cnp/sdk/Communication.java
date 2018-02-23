@@ -40,7 +40,7 @@ import com.jcraft.jsch.SftpException;
 
 public class Communication {
 
-    private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.1", "TLSv1.2"};
+    private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.2","TLSv1.1"};
     private CloseableHttpClient httpClient;
     private final int KEEP_ALIVE_DURATION = 8000;
 	private static final String NEUTER_STR = "NEUTERED";
