@@ -118,23 +118,6 @@ public class Setup {
 		lastUserInput = stdin.readLine();
 		config.put("sftpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
 
-		System.out.print("Use PGP encryption for batch files(true/false) (No encryption by default): ");
-		lastUserInput = stdin.readLine();
-		config.put("useEncryption", ((lastUserInput.length() == 0) ? "false" : lastUserInput));
-		if("true".equals(lastUserInput)){
-			System.out.print("Path to Vantiv's public key (for encryption of batch requests) : ");
-			config.put("publicKey", stdin.readLine());
-			System.out.print("Path to your private key (for decryption of batch responses): ");
-			config.put("privateKey", stdin.readLine());
-			System.out.print("Passphrase for decryption : ");
-			config.put("passphrase", stdin.readLine());
-		}
-		else {
-			config.put("publicKey", "");
-			config.put("privateKey", "");
-			config.put("passphrase", "");
-		}
-
 		System.out.print("\nPlease input the proxy host, if no proxy hit enter: ");
 		lastUserInput = stdin.readLine();
 		config.put("proxyHost", (lastUserInput == null ? "" : lastUserInput));

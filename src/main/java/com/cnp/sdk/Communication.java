@@ -166,15 +166,8 @@ public class Communication {
 	 * @param configuration configuration Properties to use for processing
 	 * @throws IOException exceptions coming out of the sFTP actions
 	 */
+
 	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration) throws IOException{
-		sendCnpRequestFileToSFTP(requestFile, configuration, false);
-	}
-
-	public void sendCnpRequestFileToSFTPWithencryption(File requestFile, Properties configuration) throws IOException{
-		sendCnpRequestFileToSFTP(requestFile, configuration, true);
-	}
-
-	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration, Boolean PgpEncryption) throws IOException{
 	    String username = configuration.getProperty("sftpUsername");
 	    String password = configuration.getProperty("sftpPassword");
 	    String hostname = configuration.getProperty("batchHost");
@@ -219,14 +212,8 @@ public class Communication {
 	    }
 
 	    try {
-			if(PgpEncryption){
-				sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName());
-				sftp.rename("inbound/" + requestFile.getName(), "inbound/" + requestFile.getName().replace(".prg", ".asc"));
-			}
-			else{
-				sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
-				sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" + requestFile.getName() + ".asc");
-			}
+		sftp.put(requestFile.getAbsolutePath(), "inbound/" + requestFile.getName() + ".prg");
+		sftp.rename("inbound/" + requestFile.getName() + ".prg", "inbound/" + requestFile.getName() + ".asc");
         } catch (SftpException e) {
             throw new CnpBatchException("Exception in sFTP operation", e);
         }
