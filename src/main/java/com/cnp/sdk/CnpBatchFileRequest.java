@@ -19,7 +19,7 @@ import javax.xml.bind.Marshaller;
 
 import com.cnp.sdk.generate.Authentication;
 import com.cnp.sdk.generate.CnpRequest;
-import org.bouncycastle.openpgp.PGPException;
+
 
 public class CnpBatchFileRequest{
 
