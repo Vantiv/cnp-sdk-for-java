@@ -1,5 +1,11 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.0.2
+* Feature: Give TLSv1.2 priority
+
+==Version 12.0.1
+* BugFix: Remove additional logging of response xml that was not controlled by printxml flag
+
 ==Version 12.0.0 (Dec. 7, 2017)
 * Feature: implement XML v12
 * Feature: remove option of using TLSv1.0
