@@ -80,15 +80,19 @@ public class Communication {
 		}
 	}
 
-    private static String getBestProtocol(final String[] availableProtocols) {
-        for (String availableProtocol: availableProtocols) {
-            for (String supportedProtocol: SUPPORTED_PROTOCOLS) {
-                if (supportedProtocol.equals(availableProtocol)) {
-                    return availableProtocol;
-                }
-            }
-        }
-        return null;
+    public static String getBestProtocol(final String[] availableProtocols) {
+		String bestProtocol = null;
+		if (availableProtocols == null || availableProtocols.length == 0) {
+			return bestProtocol;
+		}
+		List<String> availableProtocolsList = Arrays.asList(availableProtocols);
+		for (String supportedProtocol: SUPPORTED_PROTOCOLS) {
+			if (availableProtocolsList.contains(supportedProtocol)) {
+				bestProtocol = supportedProtocol;
+				break;
+			}
+		}
+        return bestProtocol;
     }
 
 	public String requestToServer(String xmlRequest, Properties configuration) {
