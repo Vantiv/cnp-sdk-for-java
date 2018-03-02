@@ -66,12 +66,10 @@ public class Setup {
 			System.out.println("\tproduction => payments.vantivcnp.com");
 			System.out.println("\tother => You will be asked for all the values");
 			lastUserInput = stdin.readLine();
-			if(
-					lastUserInput.compareToIgnoreCase("cert") == 0 ||
-							lastUserInput.compareToIgnoreCase("sandbox") == 0 ||
-							lastUserInput.compareToIgnoreCase("precert") == 0 ||
-							lastUserInput.compareToIgnoreCase("production") == 0
-					) {
+			if(lastUserInput.compareToIgnoreCase("prelive") == 0 ||
+					lastUserInput.compareToIgnoreCase("sandbox") == 0 ||
+					lastUserInput.compareToIgnoreCase("postlive") == 0 ||
+					lastUserInput.compareToIgnoreCase("production") == 0){
 				// standard predefined cases
 				config.put("url", URL_MAP.get(lastUserInput.toLowerCase()));
 				config.put("batchHost", URL_MAP.get(("batch" + lastUserInput).toLowerCase()));
