@@ -158,9 +158,6 @@ public class CnpOnline {
 		this.communication = communication;
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139120.js"></script>
-	 */
 	public AuthorizationResponse authorize(Authorization auth) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return authorize(auth, request);
@@ -176,9 +173,6 @@ public class CnpOnline {
 		return (AuthorizationResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2174863.js"></script>
-	 */
 	public AuthReversalResponse authReversal(AuthReversal reversal) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return authReversal(reversal, request);
@@ -194,9 +188,6 @@ public class CnpOnline {
 		return (AuthReversalResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139736.js"></script>
-	 */
 	public CaptureResponse capture(Capture capture) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return capture(capture, request);
@@ -212,9 +203,6 @@ public class CnpOnline {
 		return (CaptureResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139803.js"></script>
-	 */
 	public CaptureGivenAuthResponse captureGivenAuth(CaptureGivenAuth captureGivenAuth) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return captureGivenAuth(captureGivenAuth, request);
@@ -229,9 +217,7 @@ public class CnpOnline {
 		JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
 		return (CaptureGivenAuthResponse)newresponse.getValue();
 	}
-	/**
-	 * <script src="https://gist.github.com/2139739.js"></script>
-	 */
+
 	public CreditResponse credit(Credit credit) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return credit(credit, request);
@@ -247,9 +233,6 @@ public class CnpOnline {
 		return (CreditResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139831.js"></script>
-	 */
 	public EcheckCreditResponse echeckCredit(EcheckCredit echeckcredit) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return echeckCredit(echeckcredit, request);
@@ -265,9 +248,6 @@ public class CnpOnline {
 		return (EcheckCreditResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139852.js"></script>
-	 */
 	public EcheckRedepositResponse echeckRedeposit(EcheckRedeposit echeckRedeposit) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return echeckRedeposit(echeckRedeposit, request);
@@ -283,9 +263,6 @@ public class CnpOnline {
 		return (EcheckRedepositResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139856.js"></script>
-	 */
 	public EcheckSalesResponse echeckSale(EcheckSale echeckSale) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return echeckSale(echeckSale, request);
@@ -301,9 +278,6 @@ public class CnpOnline {
 		return (EcheckSalesResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139863.js"></script>
-	 */
 	public EcheckVerificationResponse echeckVerification(EcheckVerification echeckVerification) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return echeckVerification(echeckVerification, request);
@@ -319,9 +293,6 @@ public class CnpOnline {
 		return (EcheckVerificationResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2174943.js"></script>
-	 */
 	public ForceCaptureResponse forceCapture(ForceCapture forceCapture) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return forceCapture(forceCapture, request);
@@ -337,9 +308,6 @@ public class CnpOnline {
 		return (ForceCaptureResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139304.js"></script>
-	 */
 	public SaleResponse sale(Sale sale) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return sale(sale, request);
@@ -370,9 +338,6 @@ public class CnpOnline {
 	    return (FraudCheckResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139877.js"></script>
-	 */
 	public RegisterTokenResponse registerToken(RegisterTokenRequestType tokenRequest) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return registerToken(tokenRequest, request);
@@ -388,9 +353,6 @@ public class CnpOnline {
 		return (RegisterTokenResponse)newresponse.getValue();
 	}
 
-	/**
-	 * <script src="https://gist.github.com/2139880.js"></script>
-	 */
 	public VoidResponse dovoid(com.cnp.sdk.generate.Void v) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return dovoid(v, request);
