@@ -300,7 +300,15 @@ public class CnpBatchFileRequest{
             communication.sendCnpRequestFileToSFTP(requestFile, properties);
             communication.receiveCnpRequestResponseFileFromSFTP(requestFile, responseFile, properties);
 
-            return new CnpBatchFileResponse(responseFile);
+			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				requestFile.delete();
+				responseFile.delete();
+			}
+
+            return retObj;
         } catch (IOException e) {
             throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
 					"Check to see if the current user has permission to read and write to "
@@ -325,6 +333,14 @@ public class CnpBatchFileRequest{
 			PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), passwd);
 
 			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				requestFile.delete();
+				encRequestFile.delete();
+				encResponseFile.delete();
+				responseFile.delete();
+			}
 			return retObj;
 		} catch (Exception e) {
 			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
@@ -358,6 +374,11 @@ public class CnpBatchFileRequest{
 			}
 
             communication.sendCnpRequestFileToSFTP(requestFile, properties);
+
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				requestFile.delete();
+			}
         } catch (IOException e) {
             throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
 					"Check to see if the current user has permission to read and write to " +
@@ -374,6 +395,11 @@ public class CnpBatchFileRequest{
 
 			communication.sendCnpRequestFileToSFTP(encRequestFile, properties);
 
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				requestFile.delete();
+				encRequestFile.delete();
+			}
 		} catch (Exception e) {
 			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
 		}
@@ -394,6 +420,10 @@ public class CnpBatchFileRequest{
 
             communication.receiveCnpRequestResponseFileFromSFTP(requestFile, responseFile, properties);
             CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				responseFile.delete();
+			}
             return retObj;
         } catch (IOException e) {
             throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
@@ -415,6 +445,12 @@ public class CnpBatchFileRequest{
 			PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), passwd);
 
 			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+
+			String deleteBatchFiles = properties.getProperty("deleteBatchFiles");
+			if ("true".equals(deleteBatchFiles)){
+				responseFile.delete();
+				encResponseFile.delete();
+			}
 			return retObj;
 		} catch (Exception e) {
 			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
