@@ -84,9 +84,4 @@ public class PgpHelper {
         success = success.split(" ")[2].replace(":","");
         return success;
     }
-
-    public static void main(String[] args) {
-        String keyFile = "/usr/local/litle-home/hvora/VantiveCommerce2017TestPublicKey.asc";
-        System.out.println(PgpHelper.importKey(keyFile));
-    }
 }
