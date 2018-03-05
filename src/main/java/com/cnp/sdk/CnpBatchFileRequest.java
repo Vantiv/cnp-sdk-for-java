@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.math.BigInteger;
-import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -229,7 +228,7 @@ public class CnpBatchFileRequest{
 					"batchTcpTimeout", "batchUseSSL",
 					"maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
 					"batchRequestFolder", "batchResponseFolder", "sftpUsername", "sftpPassword", "sftpTimeout",
-					"merchantId", "printxml"};
+					"merchantId", "printxml", "useEncryption", "vantivPublicKeyID", "gpgPassphrase", "deleteBatchFiles"};
 
 			for (String prop : allProperties) {
 				// if the value of a property is not set, look at the Properties member of the class first, and the .properties file next.
@@ -293,6 +292,11 @@ public class CnpBatchFileRequest{
 	            prepareForDelivery();
 	        }
 
+			String useEncryption = properties.getProperty("useEncryption");
+			if ("true".equals(useEncryption)){
+				return sendToCnpSFTPWithEncryption();
+			}
+
             communication.sendCnpRequestFileToSFTP(requestFile, properties);
             communication.receiveCnpRequestResponseFileFromSFTP(requestFile, responseFile, properties);
 
@@ -302,6 +306,29 @@ public class CnpBatchFileRequest{
 					"Check to see if the current user has permission to read and write to "
 					+ this.properties.getProperty("batchRequestFolder"), e);
         }
+	}
+
+	private CnpBatchFileResponse sendToCnpSFTPWithEncryption() throws CnpBatchException{
+		try {
+			String encRequestFilename = requestFile.getAbsolutePath() + ".encrypted";
+			String publicKey = properties.getProperty("vantivPublicKeyID");
+			PgpHelper.encrypt(requestFile.getAbsolutePath(), encRequestFilename, publicKey);
+			File encRequestFile = new File(encRequestFilename);
+
+			String encResponseFilename = responseFile.getAbsolutePath() + ".encrypted";
+			File encResponseFile = new File(encResponseFilename);
+
+			communication.sendCnpRequestFileToSFTP(encRequestFile, properties);
+			communication.receiveCnpRequestResponseFileFromSFTP(encRequestFile, encResponseFile, properties);
+
+			String passwd = properties.getProperty("gpgPassphrase");
+			PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), passwd);
+
+			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+			return retObj;
+		} catch (Exception e) {
+			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+		}
 	}
 
 	/**
@@ -324,6 +351,12 @@ public class CnpBatchFileRequest{
                 prepareForDelivery();
             }
 
+			String useEncryption = properties.getProperty("useEncryption");
+			if ("true".equals(useEncryption)){
+				sendOnlyToCnpSFTPWithEncryption();
+				return;
+			}
+
             communication.sendCnpRequestFileToSFTP(requestFile, properties);
         } catch (IOException e) {
             throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
@@ -332,6 +365,20 @@ public class CnpBatchFileRequest{
         }
     }
 
+	private void sendOnlyToCnpSFTPWithEncryption() throws CnpBatchException{
+		try {
+			String encRequestFilename = requestFile.getAbsolutePath() + ".encrypted";
+			String publicKey = properties.getProperty("vantivPublicKeyID");
+			PgpHelper.encrypt(requestFile.getAbsolutePath(), encRequestFilename, publicKey);
+			File encRequestFile = new File(encRequestFilename);
+
+			communication.sendCnpRequestFileToSFTP(encRequestFile, properties);
+
+		} catch (Exception e) {
+			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+		}
+	}
+
 	/**
 	 * Only retrieves the file from Vantiv over sFTP. This method requires separate invocation of the send method.
 	 * @return A response object for the file
@@ -339,6 +386,12 @@ public class CnpBatchFileRequest{
 	 */
 	public CnpBatchFileResponse retrieveOnlyFromCnpSFTP() throws CnpBatchException {
         try {
+
+			String useEncryption = properties.getProperty("useEncryption");
+			if ("true".equals(useEncryption)){
+				return retrieveOnlyFromCnpSFTPWithEncryption();
+			}
+
             communication.receiveCnpRequestResponseFileFromSFTP(requestFile, responseFile, properties);
             CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
             return retObj;
@@ -348,6 +401,25 @@ public class CnpBatchFileRequest{
 					this.properties.getProperty("batchRequestFolder"), e);
         }
     }
+
+	private CnpBatchFileResponse retrieveOnlyFromCnpSFTPWithEncryption() throws CnpBatchException{
+		try {
+			String encRequestFilename = requestFile.getAbsolutePath() + ".encrypted";
+			File encRequestFile = new File(encRequestFilename);
+			String encResponseFilename = responseFile.getAbsolutePath() + ".encrypted";
+			File encResponseFile = new File(encResponseFilename);
+
+			communication.receiveCnpRequestResponseFileFromSFTP(encRequestFile, encResponseFile, properties);
+
+			String passwd = properties.getProperty("gpgPassphrase");
+			PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), passwd);
+
+			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
+			return retObj;
+		} catch (Exception e) {
+			throw new CnpBatchException("There was an exception while creating the Litle Request file. Check to see if the current user has permission to read and write to " + this.properties.getProperty("batchRequestFolder"), e);
+		}
+	}
 
 	/**
 	 * Prepare the batch file to be submitted and generate it in the request folder.
