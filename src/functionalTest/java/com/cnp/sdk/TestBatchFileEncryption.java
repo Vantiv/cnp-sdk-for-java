@@ -18,6 +18,7 @@ public class TestBatchFileEncryption {
         String encPassword = System.getenv("encPassword");
         String encSftpUsername = System.getenv("encSftpUsername");
         String encSftpPassword = System.getenv("encSftpPassword");
+        String encMerchantId = System.getenv("encMerchantId");
 
         config = new Properties();
         config.setProperty("username", encUsername);
@@ -25,6 +26,7 @@ public class TestBatchFileEncryption {
         config.setProperty("sftpUsername", encSftpUsername);
         config.setProperty("sftpPassword", encSftpPassword);
         config.setProperty("useEncryption", "true");
+        config.setProperty("merchantId", encMerchantId);
     }
 
     @Test
