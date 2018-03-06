@@ -279,10 +279,9 @@ public class Communication {
                 System.out.println(e);
             }
             boolean success = true;
-			String requestFilename = requestFile.getName().replace(".prg", "");
-			requestFilename = requestFilename + ".asc";
+
             try{
-                sftp.get("outbound/" + requestFilename, responseFile.getAbsolutePath());
+                sftp.get("outbound/" + requestFile.getName()+".asc", responseFile.getAbsolutePath());
             } catch(SftpException e){
                 success = false;
                 System.out.println(e);
@@ -290,7 +289,7 @@ public class Communication {
 
             if(success) {
                 try {
-                    sftp.rm("outbound/" + requestFilename);
+                    sftp.rm("outbound/" + requestFile.getName()+".asc");
                 } catch (SftpException e) {
                     throw new CnpBatchException("Exception in sFTP operation", e);
                 }
