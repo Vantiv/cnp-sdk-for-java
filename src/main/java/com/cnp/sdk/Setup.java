@@ -10,7 +10,7 @@ import java.util.Properties;
 public class Setup {
     /* List of environments for the configuration. */
     private enum EnvironmentConfiguration {
-        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "unknown", "15000"),
+        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "prelive.litle.com", "15000"),
         PRELIVE("prelive", "https://payments.vantivprelive.com/vap/communicator/online", "payments.vantivprelive.com", "15000"),
         POSTLIVE("postlive", "https://payments.vantivpostlive.com/vap/communicator/online", "payments.vantivpostlive.com", "15000"),
         PRODUCTION("production", "https://payments.vantivcnp.com/vap/communicator/online", "payments.vantivcnp.com", "15000"),
