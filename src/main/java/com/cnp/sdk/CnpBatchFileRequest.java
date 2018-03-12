@@ -377,7 +377,7 @@ public class CnpBatchFileRequest{
 				decryptResponseFile();
 			}
 
-			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFileToRecieve);
+			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
 
 			checkDeleteBatchResponseFiles(responseFileToRecieve);
 
