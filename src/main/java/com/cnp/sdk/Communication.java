@@ -131,7 +131,7 @@ public class Communication {
 			boolean printxml = "true".equalsIgnoreCase(configuration.getProperty("printxml"));
 			boolean neuterXml = "true".equalsIgnoreCase(configuration.getProperty("neuterXml"));
 			if (printxml) {
-				ing xmlToLog = xmlRequest;
+				String xmlToLog = xmlRequest;
 				if (neuterXml) {
 					xmlToLog = neuterXml(xmlToLog);
 				}
