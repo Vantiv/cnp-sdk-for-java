@@ -84,8 +84,8 @@ public class TestSale {
         sale.setApplepay(applepayType);
         sale.setId("id");
         SaleResponse response = cnp.sale(sale);
-        assertEquals("Approved", response.getMessage());
-        assertEquals(new Long(0),response.getApplepayResponse().getTransactionAmount());
+        assertEquals("Insufficient Funds", response.getMessage());
+        assertEquals(new Long(110),response.getApplepayResponse().getTransactionAmount());
     }
 	
 	@Test
