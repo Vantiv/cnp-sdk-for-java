@@ -7,30 +7,12 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import com.cnp.sdk.generate.*;
 import org.junit.Test;
 
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.CurrencyCodeEnum;
-import com.cnp.sdk.generate.CustomerInfo;
 import com.cnp.sdk.generate.CustomerInfo.CustomerType;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.CountryTypeEnum;
 import com.cnp.sdk.generate.CustomerInfo.ResidenceStatus;
-import com.cnp.sdk.generate.DetailTax;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EnhancedData;
 import com.cnp.sdk.generate.EnhancedData.DeliveryType;
-import com.cnp.sdk.generate.GovtTaxTypeEnum;
-import com.cnp.sdk.generate.HealthcareIIAS;
-import com.cnp.sdk.generate.IIASFlagType;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
-import com.cnp.sdk.generate.Pos;
-import com.cnp.sdk.generate.PosCapabilityTypeEnum;
-import com.cnp.sdk.generate.PosCardholderIdTypeEnum;
-import com.cnp.sdk.generate.PosEntryModeTypeEnum;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.TaxTypeIdentifierEnum;
 
 /**
  * The tests in this file are to ensure that the generated code maintains
@@ -142,6 +124,14 @@ public class TestEnumerations {
 	public void iias() {
 		HealthcareIIAS info = new HealthcareIIAS();
 		info.setIIASFlag(IIASFlagType.Y);
+	}
+
+	@Test
+	public void processingType() {
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setProcessingType(ProcessingTypeEnum.INITIAL_COF);
+		capturegivenauth.setProcessingType(ProcessingTypeEnum.MERCHANT_INITIATED_COF);
+		capturegivenauth.setProcessingType(ProcessingTypeEnum.CARDHOLDER_INITIATED_COF);
 	}
 
 }
