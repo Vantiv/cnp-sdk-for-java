@@ -13,49 +13,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import com.cnp.sdk.generate.AccountUpdate;
-import com.cnp.sdk.generate.Activate;
-import com.cnp.sdk.generate.AuthReversal;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.BalanceInquiry;
-import com.cnp.sdk.generate.BatchRequest;
-import com.cnp.sdk.generate.CancelSubscription;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureGivenAuth;
-import com.cnp.sdk.generate.CreatePlan;
-import com.cnp.sdk.generate.Credit;
-import com.cnp.sdk.generate.Deactivate;
-import com.cnp.sdk.generate.EcheckCredit;
-import com.cnp.sdk.generate.EcheckPreNoteCredit;
-import com.cnp.sdk.generate.EcheckPreNoteSale;
-import com.cnp.sdk.generate.EcheckRedeposit;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckVerification;
-import com.cnp.sdk.generate.ForceCapture;
-import com.cnp.sdk.generate.FundingInstructionVoid;
-import com.cnp.sdk.generate.GiftCardAuthReversal;
-import com.cnp.sdk.generate.GiftCardCapture;
-import com.cnp.sdk.generate.GiftCardCredit;
-import com.cnp.sdk.generate.CnpTransactionInterface;
-import com.cnp.sdk.generate.Load;
-import com.cnp.sdk.generate.ObjectFactory;
-import com.cnp.sdk.generate.PayFacCredit;
-import com.cnp.sdk.generate.PayFacDebit;
-import com.cnp.sdk.generate.PhysicalCheckCredit;
-import com.cnp.sdk.generate.PhysicalCheckDebit;
-import com.cnp.sdk.generate.RegisterTokenRequestType;
-import com.cnp.sdk.generate.ReserveCredit;
-import com.cnp.sdk.generate.ReserveDebit;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.SubmerchantCredit;
-import com.cnp.sdk.generate.SubmerchantDebit;
-import com.cnp.sdk.generate.TransactionType;
-import com.cnp.sdk.generate.Unload;
-import com.cnp.sdk.generate.UpdateCardValidationNumOnToken;
-import com.cnp.sdk.generate.UpdatePlan;
-import com.cnp.sdk.generate.UpdateSubscription;
-import com.cnp.sdk.generate.VendorCredit;
-import com.cnp.sdk.generate.VendorDebit;
+import com.cnp.sdk.generate.*;
 
 public class CnpBatchRequest {
 	private BatchRequest batchRequest;
@@ -372,6 +330,12 @@ public class CnpBatchRequest {
         	batchRequest.setGiftCardCreditAmount((batchRequest.getGiftCardCreditAmount()
         			.add(BigInteger.valueOf(((GiftCardCredit) transactionType).getCreditAmount()))));
             transaction = objFac.createGiftCardCredit((GiftCardCredit)transactionType);
+            transactionAdded = true;
+            numOfTxn ++;
+        } else if(transactionType instanceof FastAccessFunding) {
+            batchRequest.setNumFastAccessFunding(batchRequest.getNumFastAccessFunding().add(BigInteger.valueOf(1)));
+            batchRequest.setFastAccessFundingAmount((batchRequest.getFastAccessFundingAmount().add(BigInteger.valueOf(((FastAccessFunding) transactionType).getAmount()))));
+            transaction = objFac.createFastAccessFunding((FastAccessFunding)transactionType);
             transactionAdded = true;
             numOfTxn ++;
         } else {

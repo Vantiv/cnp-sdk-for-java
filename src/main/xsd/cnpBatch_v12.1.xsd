@@ -2,7 +2,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.0.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.1.xsd" />
 
     <xs:element name="cnpRequest">
         <xs:complexType>
@@ -91,6 +91,7 @@
             <xs:attribute name="numPhysicalCheckDebit" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="numPhysicalCheckCredit" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="numFundingInstructionVoid" type="xs:integer" use="optional"  default="0"/>
+            <xs:attribute name="numFastAccessFunding" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="payFacCreditAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="payFacDebitAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="submerchantCreditAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
@@ -101,65 +102,12 @@
             <xs:attribute name="vendorCreditAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="physicalCheckDebitAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="physicalCheckCreditAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
+            <xs:attribute name="fastAccessFundingAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="sameDayFunding" type="xs:boolean" use="optional"  default="0"/>
 
             <xs:attribute name="merchantId" type="xp:merchantIdentificationType" use="required" />
         </xs:complexType>
     </xs:element>
-
-    <!-- Leaving this element here for reference only.  Note fraudCheckType has been removed and it never gets mapped in Castor, therefore the online version is used in common
-
-        <xs:element name="authorization"
-        substitutionGroup="xp:transaction">
-        <xs:complexType>
-        <xs:complexContent>
-        <xs:extension
-        base="xp:transactionTypeWithReportGroup">
-        <xs:choice>
-        <xs:sequence>
-        <xs:element name="litleTxnId"
-        type="xp:litleIdType" />
-        </xs:sequence>
-        <xs:sequence>
-        <xs:element name="orderId"
-        type="xp:orderIdType" />
-        <xs:element name="amount"
-        type="xp:transactionAmountType" />
-        <xs:element name="orderSource"
-        type="xp:orderSourceType" minOccurs="0" />
-        <xs:element ref="xp:customerInfo"
-        minOccurs="0" />
-        <xs:element ref="xp:billToAddress"
-        minOccurs="0" />
-        <xs:element ref="xp:shipToAddress"
-        minOccurs="0" />
-        <xs:choice>
-        <xs:element name="card"
-        type="xp:cardType" />
-        <xs:element name="paypal"
-        type="xp:payPal" />
-        </xs:choice>
-        <xs:element ref="xp:billMeLaterRequest"
-        minOccurs="0" />
-        <xs:choice>
-        <xs:element name="fraudCheckType"
-        type="xp:fraudCheckType" minOccurs="0" />
-        #  The following element is for 3DS, ECI and transaction id are Visa specific
-        <xs:element
-        name="cardholderAuthentication"
-        type="xp:fraudCheckType" minOccurs="0" />
-        </xs:choice>
-        <xs:element ref="xp:processingInstructions"
-        minOccurs="0" />
-        <xs:element ref="xp:pos" minOccurs="0" />
-        <xs:element ref="xp:enhancedData"
-        minOccurs="0" />
-        </xs:sequence>
-        </xs:choice>
-        </xs:extension>
-        </xs:complexContent>
-        </xs:complexType>
-        </xs:element> -->
 
     <xs:element name="cardOrToken" abstract="true"/>
     <xs:element name="card" substitutionGroup="xp:cardOrToken" type="xp:cardType"/>

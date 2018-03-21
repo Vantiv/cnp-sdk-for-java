@@ -131,15 +131,16 @@ public class Communication {
 			boolean printxml = "true".equalsIgnoreCase(configuration.getProperty("printxml"));
 			boolean neuterXml = "true".equalsIgnoreCase(configuration.getProperty("neuterXml"));
 			if (printxml) {
-				String xmlToLog = xmlRequest;
 				if (neuterXml) {
-					xmlToLog = neuterXml(xmlToLog);
+					xmlRequest = neuterXml(xmlRequest);
 				}
-				System.out.println("Request XML: " + xmlToLog);
+				System.out.println("Request XML: " + xmlRequest);
 			}
 			
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
+			//System.out.println("POST    "+post);
 			HttpResponse response = httpClient.execute(post);
+//			System.out.println("RESPONSE    "+response);
 			entity = response.getEntity();
 			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new CnpOnlineException(response.getStatusLine().getStatusCode() + ":" +
@@ -148,11 +149,11 @@ public class Communication {
 			xmlResponse = EntityUtils.toString(entity,"UTF-8");
 
 			if (printxml) {
-				String xmlToLog = xmlResponse;
 				if (neuterXml) {
-					xmlToLog = neuterXml(xmlToLog);
+					xmlResponse = neuterXml(xmlResponse);
 				}
-				System.out.println("Response XML: " + xmlToLog);
+
+				System.out.println("Response XML: " + xmlResponse);
 			}
 		} catch (IOException e) {
 			throw new CnpOnlineException("Exception connection to Vantiv eCommerce", e);

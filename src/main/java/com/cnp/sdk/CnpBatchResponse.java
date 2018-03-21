@@ -7,38 +7,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import com.cnp.sdk.generate.AccountUpdateResponse;
-import com.cnp.sdk.generate.AuthReversalResponse;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.BatchResponse;
-import com.cnp.sdk.generate.CancelSubscriptionResponse;
-import com.cnp.sdk.generate.CaptureGivenAuthResponse;
-import com.cnp.sdk.generate.CaptureResponse;
-import com.cnp.sdk.generate.CreditResponse;
-import com.cnp.sdk.generate.EcheckCreditResponse;
-import com.cnp.sdk.generate.EcheckPreNoteCreditResponse;
-import com.cnp.sdk.generate.EcheckPreNoteSaleResponse;
-import com.cnp.sdk.generate.EcheckRedepositResponse;
-import com.cnp.sdk.generate.EcheckSalesResponse;
-import com.cnp.sdk.generate.EcheckVerificationResponse;
-import com.cnp.sdk.generate.ForceCaptureResponse;
-import com.cnp.sdk.generate.FundingInstructionVoidResponse;
-import com.cnp.sdk.generate.CnpTransactionInterface;
-import com.cnp.sdk.generate.PayFacCreditResponse;
-import com.cnp.sdk.generate.PayFacDebitResponse;
-import com.cnp.sdk.generate.PhysicalCheckCreditResponse;
-import com.cnp.sdk.generate.PhysicalCheckDebitResponse;
-import com.cnp.sdk.generate.RegisterTokenResponse;
-import com.cnp.sdk.generate.ReserveCreditResponse;
-import com.cnp.sdk.generate.ReserveDebitResponse;
-import com.cnp.sdk.generate.SaleResponse;
-import com.cnp.sdk.generate.SubmerchantCreditResponse;
-import com.cnp.sdk.generate.SubmerchantDebitResponse;
-import com.cnp.sdk.generate.TransactionType;
-import com.cnp.sdk.generate.UpdateCardValidationNumOnTokenResponse;
-import com.cnp.sdk.generate.UpdateSubscriptionResponse;
-import com.cnp.sdk.generate.VendorCreditResponse;
-import com.cnp.sdk.generate.VendorDebitResponse;
+import com.cnp.sdk.generate.*;
 
 /**
  * Wrapper class to initialize the batch Responses
@@ -201,7 +170,9 @@ public class CnpBatchResponse {
             processor.processPhysicalCheckDebitResponse((PhysicalCheckDebitResponse)objToRet);
         } else if (objToRet instanceof FundingInstructionVoidResponse) {
             processor.processFundingInstructionVoidResponse((FundingInstructionVoidResponse)objToRet);
-        } 
+        } else if (objToRet instanceof FastAccessFundingResponse) {
+			processor.processFastAccessFundingResponse((FastAccessFundingResponse)objToRet);
+		}
 	    return true;
 	}
 

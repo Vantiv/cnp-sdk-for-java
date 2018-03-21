@@ -135,4 +135,8 @@ public class CnpResponseProcessorAdapter implements CnpResponseProcessor {
     public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
     }
 
+    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
+    }
+
+
 }

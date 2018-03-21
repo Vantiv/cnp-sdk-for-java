@@ -1,9 +1,5 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.0.3 (March 16, 2017)
-*Feature: Added PGP encryption/decryption support in batches
-*BugFix : Fixed neutering of xml request and responses
-
 ==Version 12.0.2
 * Feature: Give TLSv1.2 priority
 

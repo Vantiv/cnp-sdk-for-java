@@ -10,102 +10,7 @@ import java.util.Properties;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 
-import com.cnp.sdk.generate.Activate;
-import com.cnp.sdk.generate.ActivateResponse;
-import com.cnp.sdk.generate.ActivateReversal;
-import com.cnp.sdk.generate.ActivateReversalResponse;
-import com.cnp.sdk.generate.AuthReversal;
-import com.cnp.sdk.generate.AuthReversalResponse;
-import com.cnp.sdk.generate.Authentication;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.AuthorizationResponse;
-import com.cnp.sdk.generate.BalanceInquiry;
-import com.cnp.sdk.generate.BalanceInquiryResponse;
-import com.cnp.sdk.generate.CancelSubscription;
-import com.cnp.sdk.generate.CancelSubscriptionResponse;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureGivenAuth;
-import com.cnp.sdk.generate.CaptureGivenAuthResponse;
-import com.cnp.sdk.generate.CaptureResponse;
-import com.cnp.sdk.generate.CreatePlan;
-import com.cnp.sdk.generate.CreatePlanResponse;
-import com.cnp.sdk.generate.Credit;
-import com.cnp.sdk.generate.CreditResponse;
-import com.cnp.sdk.generate.Deactivate;
-import com.cnp.sdk.generate.DeactivateResponse;
-import com.cnp.sdk.generate.DeactivateReversal;
-import com.cnp.sdk.generate.DeactivateReversalResponse;
-import com.cnp.sdk.generate.DepositReversal;
-import com.cnp.sdk.generate.DepositReversalResponse;
-import com.cnp.sdk.generate.EcheckCredit;
-import com.cnp.sdk.generate.EcheckCreditResponse;
-import com.cnp.sdk.generate.EcheckRedeposit;
-import com.cnp.sdk.generate.EcheckRedepositResponse;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckSalesResponse;
-import com.cnp.sdk.generate.EcheckVerification;
-import com.cnp.sdk.generate.EcheckVerificationResponse;
-import com.cnp.sdk.generate.EcheckVoid;
-import com.cnp.sdk.generate.EcheckVoidResponse;
-import com.cnp.sdk.generate.ForceCapture;
-import com.cnp.sdk.generate.ForceCaptureResponse;
-import com.cnp.sdk.generate.FraudCheck;
-import com.cnp.sdk.generate.FraudCheckResponse;
-import com.cnp.sdk.generate.FundingInstructionVoid;
-import com.cnp.sdk.generate.FundingInstructionVoidResponse;
-import com.cnp.sdk.generate.GiftCardAuthReversal;
-import com.cnp.sdk.generate.GiftCardAuthReversalResponse;
-import com.cnp.sdk.generate.GiftCardCapture;
-import com.cnp.sdk.generate.GiftCardCaptureResponse;
-import com.cnp.sdk.generate.GiftCardCredit;
-import com.cnp.sdk.generate.GiftCardCreditResponse;
-import com.cnp.sdk.generate.CnpOnlineRequest;
-import com.cnp.sdk.generate.CnpOnlineResponse;
-import com.cnp.sdk.generate.Load;
-import com.cnp.sdk.generate.LoadResponse;
-import com.cnp.sdk.generate.LoadReversal;
-import com.cnp.sdk.generate.LoadReversalResponse;
-import com.cnp.sdk.generate.PayFacCredit;
-import com.cnp.sdk.generate.PayFacCreditResponse;
-import com.cnp.sdk.generate.PayFacDebit;
-import com.cnp.sdk.generate.PayFacDebitResponse;
-import com.cnp.sdk.generate.PhysicalCheckCredit;
-import com.cnp.sdk.generate.PhysicalCheckCreditResponse;
-import com.cnp.sdk.generate.PhysicalCheckDebit;
-import com.cnp.sdk.generate.PhysicalCheckDebitResponse;
-import com.cnp.sdk.generate.QueryTransaction;
-import com.cnp.sdk.generate.RecurringTransactionResponseType;
-import com.cnp.sdk.generate.RefundReversal;
-import com.cnp.sdk.generate.RefundReversalResponse;
-import com.cnp.sdk.generate.RegisterTokenRequestType;
-import com.cnp.sdk.generate.RegisterTokenResponse;
-import com.cnp.sdk.generate.ReserveCredit;
-import com.cnp.sdk.generate.ReserveCreditResponse;
-import com.cnp.sdk.generate.ReserveDebit;
-import com.cnp.sdk.generate.ReserveDebitResponse;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.SaleResponse;
-import com.cnp.sdk.generate.SubmerchantCredit;
-import com.cnp.sdk.generate.SubmerchantCreditResponse;
-import com.cnp.sdk.generate.SubmerchantDebit;
-import com.cnp.sdk.generate.SubmerchantDebitResponse;
-import com.cnp.sdk.generate.TransactionTypeWithReportGroup;
-import com.cnp.sdk.generate.TransactionTypeWithReportGroupAndPartial;
-import com.cnp.sdk.generate.Unload;
-import com.cnp.sdk.generate.UnloadResponse;
-import com.cnp.sdk.generate.UnloadReversal;
-import com.cnp.sdk.generate.UnloadReversalResponse;
-import com.cnp.sdk.generate.UpdateCardValidationNumOnToken;
-import com.cnp.sdk.generate.UpdateCardValidationNumOnTokenResponse;
-import com.cnp.sdk.generate.UpdatePlan;
-import com.cnp.sdk.generate.UpdatePlanResponse;
-import com.cnp.sdk.generate.UpdateSubscription;
-import com.cnp.sdk.generate.UpdateSubscriptionResponse;
-import com.cnp.sdk.generate.VendorCredit;
-import com.cnp.sdk.generate.VendorCreditResponse;
-import com.cnp.sdk.generate.VendorDebit;
-import com.cnp.sdk.generate.VendorDebitResponse;
-import com.cnp.sdk.generate.VoidResponse;
+import com.cnp.sdk.generate.*;
 
 public class CnpOnline {
 
@@ -843,6 +748,21 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (PhysicalCheckDebitResponse)newresponse.getValue();
     }
+
+	public FastAccessFundingResponse fastAccessFunding(FastAccessFunding fastAccessFunding) {
+		CnpOnlineRequest request = createCnpOnlineRequest();
+		return fastAccessFunding(fastAccessFunding, request);
+	}
+
+	public FastAccessFundingResponse fastAccessFunding(FastAccessFunding fastAccessFunding, CnpOnlineRequest overrides) {
+		CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+		fillInReportGroup(fastAccessFunding);
+
+		request.setTransaction(CnpContext.getObjectFactory().createFastAccessFunding(fastAccessFunding));
+		CnpOnlineResponse response = sendToCnp(request);
+		JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+		return (FastAccessFundingResponse)newresponse.getValue();
+	}
 
 	private CnpOnlineRequest createCnpOnlineRequest() {
 		CnpOnlineRequest request = new CnpOnlineRequest();

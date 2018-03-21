@@ -157,7 +157,6 @@
             <xs:enumeration value="DI" />
             <xs:enumeration value="PP" />
             <xs:enumeration value="JC" />
-            <xs:enumeration value="BL" />
             <xs:enumeration value="EC" />
             <xs:enumeration value="GC" />
             <xs:enumeration value="" />

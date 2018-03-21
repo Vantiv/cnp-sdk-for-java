@@ -173,7 +173,10 @@ public class Test {
 				
 				public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
 				}
-                	
+
+                public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
+                }
+
             })){
                 System.out.println("Processed another txn!");
             }
