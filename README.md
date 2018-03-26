@@ -11,7 +11,7 @@ About this SDK
 --------------
 The Vantiv eCommerce Java SDK is a Java implementation of the [Vantiv eCommerce](https://developer.vantiv.com/community/ecommerce) XML API. This SDK was created to make it as easy as possible to process your payments with Vantiv eCommerce. This SDK utilizes the HTTPS protocol to securely connect to Vantiv eCommerce. Using the SDK requires coordination with the Vantiv eCommerce team in order to be provided with credentials for accessing our systems.
 
-Each Java SDK release supports all of the functionality present in the associated Vantiv eCommerce XML version (e.g., SDK v12.0.0 supports Vantiv eCommerce XML v12.0). Please see the online copy of our XSD for Vantiv eCommerce XML to get more details on what the Vantiv eCommerce payments engine supports.
+Each Java SDK release supports all of the functionality present in the associated Vantiv eCommerce XML version (e.g., SDK v12.0.3 supports Vantiv eCommerce XML v12.0). Please see the online copy of our XSD for Vantiv eCommerce XML to get more details on what the Vantiv eCommerce payments engine supports.
 
 This SDK was implemented to support the Java programming language and was created by Vantiv eCommerce. Its intended use is for online and batch transaction processing utilizing your account on the Vantiv eCommerce payments engine.
 
@@ -32,9 +32,9 @@ Setup
 
         
 
-                <groupId>com.litle</groupId>
+                <groupId>com.cnp</groupId>
                 <artifactId>cnp-sdk-for-java</artifactId>
-                <version>12.0.0</version>
+                <version>12.0.3</version>
 
             </dependency>
         ```
@@ -42,7 +42,7 @@ Setup
     2. For Gradle:
         ```groovy
 
-            compile(group: 'com.litle', name: 'cnp-sdk-for-java', version: '12.0.0')
+            compile(group: 'com.cnp', name: 'cnp-sdk-for-java', version: '12.0.3')
 
         ```
         
@@ -58,9 +58,9 @@ import com.cnp.sdk.generated.*
 
 public class SampleCnpTxn {
 
-import com.litle.sdk.*;
-import com.litle.sdk.generated.*;
-public class SampleLitleTxn {
+import com.cnp.sdk.*;
+import com.cnp.sdk.generated.*;
+public class SampleCnpTxn {
 
 
 	public static void main(String[] args) {
