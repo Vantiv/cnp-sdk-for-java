@@ -436,8 +436,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
-        // TODO: '13' is returned
-//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "13",response.getFraudResult().getAvsResult());
 
 		Capture capture = new Capture();
 		capture.setCnpTxnId(response.getCnpTxnId());
@@ -487,8 +486,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
-        // TODO: '13' is being returned
-//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "13",response.getFraudResult().getAvsResult());
 
 	}
 
@@ -518,7 +516,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
 		// TODO: '13' is being returned
-//		assertEquals(response.getMessage(), "12",response.getFraudResult().getAvsResult());
+		assertEquals(response.getMessage(), "13",response.getFraudResult().getAvsResult());
 
 		Credit credit = new Credit();
 		credit.setCnpTxnId(response.getCnpTxnId());

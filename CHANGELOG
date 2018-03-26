@@ -1,5 +1,12 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.1.0 (March 26, 2018)
+* Feature: Added support for Visa card on file transactions
+* Feature: Added fastAccessFunding transaction
+
+==Version 12.0.2
+* Feature: Give TLSv1.2 priority
+
 ==Version 12.0.2
 * Feature: Give TLSv1.2 priority
 

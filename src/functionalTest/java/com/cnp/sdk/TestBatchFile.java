@@ -1471,222 +1471,207 @@ public class TestBatchFile {
         assertEquals(1, txns);
     }
 
-    @Test
-    public void testBatch_FastAccessFunding() {
-        String requestFileName = "cnpSdk-testBatchFile_fastAccessFunding-" + TIME_STAMP + ".xml";
-        CnpBatchFileRequest request = new CnpBatchFileRequest(
-                requestFileName);
-
-        Properties configFromFile = request.getConfig();
-
-        // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com",
-                configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
-
-        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
-
-        // card
-//        CardType card = new CardType();
-//        card.setNumber("4100000000000001");
-//        card.setExpDate("1210");
-//        card.setType(MethodOfPaymentTypeEnum.VI);
+//    @Test
+//    public void testBatch_FastAccessFunding() {
+//        String requestFileName = "cnpSdk-testBatchFile_fastAccessFunding-" + TIME_STAMP + ".xml";
+//        CnpBatchFileRequest request = new CnpBatchFileRequest(
+//                requestFileName);
+//
+//        Properties configFromFile = request.getConfig();
+//
+//        // pre-assert the config file has required param values
+//        assertEquals("prelive.litle.com",
+//                configFromFile.getProperty("batchHost"));
+//        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+//
+//        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 //
 //        FastAccessFunding fastAccessFunding = new FastAccessFunding();
 //        fastAccessFunding.setId("id");
 //        fastAccessFunding.setReportGroup("Planets");
-//        fastAccessFunding.setFundingSubmerchantId("12345");
-//        fastAccessFunding.setSubmerchantName("submerchant");
-//        fastAccessFunding.setFundsTransferId("1234567890000000");
-//        fastAccessFunding.setAmount(1000L);
+//        fastAccessFunding.setCustomerId("0987");
+//        fastAccessFunding.setFundingSubmerchantId("2111");
+//        fastAccessFunding.setSubmerchantName("001");
+//        fastAccessFunding.setFundsTransferId("1234567891111111");
+//        fastAccessFunding.setAmount(20L);
+//        CardType card = new CardType();
+//        card.setType(MethodOfPaymentTypeEnum.VI);
+//        card.setNumber("4457010000000009");
+//        card.setExpDate("0114");
 //        fastAccessFunding.setCard(card);
-
-        FastAccessFunding fastAccessFunding = new FastAccessFunding();
-        fastAccessFunding.setId("id");
-        fastAccessFunding.setReportGroup("Planets");
-        fastAccessFunding.setCustomerId("0987");
-        fastAccessFunding.setFundingSubmerchantId("2111");
-        fastAccessFunding.setSubmerchantName("001");
-        fastAccessFunding.setFundsTransferId("1234567891111111");
-        fastAccessFunding.setAmount(20L);
-        CardType card = new CardType();
-        card.setType(MethodOfPaymentTypeEnum.VI);
-        card.setNumber("4457010000000009");
-        card.setExpDate("0114");
-        fastAccessFunding.setCard(card);
-
-        batch.addTransaction(fastAccessFunding);
-
-        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-        CnpBatchResponse batchResponse = fileResponse
-                .getNextCnpBatchResponse();
-        int txns = 0;
-        // iterate over all transactions in the file with a custom response
-        // processor
-        while (batchResponse
-                .processNextTransaction(new CnpResponseProcessor() {
-                    public void processAuthorizationResponse(
-                            AuthorizationResponse authorizationResponse) {
-
-                    }
-
-                    public void processCaptureResponse(
-                            CaptureResponse captureResponse) {
-                    }
-
-                    public void processForceCaptureResponse(
-                            ForceCaptureResponse forceCaptureResponse) {
-                    }
-
-                    public void processCaptureGivenAuthResponse(
-                            CaptureGivenAuthResponse captureGivenAuthResponse) {
-                    }
-
-                    public void processSaleResponse(SaleResponse saleResponse) {
-                    }
-
-                    public void processCreditResponse(
-                            CreditResponse creditResponse) {
-                    }
-
-                    public void processEcheckSalesResponse(
-                            EcheckSalesResponse echeckSalesResponse) {
-                    }
-
-                    public void processEcheckCreditResponse(
-                            EcheckCreditResponse echeckCreditResponse) {
-                    }
-
-                    public void processEcheckVerificationResponse(
-                            EcheckVerificationResponse echeckVerificationResponse) {
-                    }
-
-                    public void processEcheckRedepositResponse(
-                            EcheckRedepositResponse echeckRedepositResponse) {
-                    }
-
-                    public void processAuthReversalResponse(
-                            AuthReversalResponse authReversalResponse) {
-                    }
-
-                    public void processRegisterTokenResponse(
-                            RegisterTokenResponse registerTokenResponse) {
-                    }
-
-                    public void processAccountUpdate(
-                            AccountUpdateResponse accountUpdateResponse) {
-                    }
-
-                    public void processUpdateSubscriptionResponse(
-                            UpdateSubscriptionResponse updateSubscriptionResponse) {
-                    }
-
-                    public void processCancelSubscriptionResponse(
-                            CancelSubscriptionResponse cancelSubscriptionResponse) {
-                    }
-
-                    public void processUpdateCardValidationNumOnTokenResponse(
-                            UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
-                    }
-
-                    public void processCreatePlanResponse(
-                            CreatePlanResponse createPlanResponse) {
-                    }
-
-                    public void processUpdatePlanResponse(
-                            UpdatePlanResponse updatePlanResponse) {
-                    }
-
-                    public void processActivateResponse(
-                            ActivateResponse activateResponse) {
-                    }
-
-                    public void processDeactivateResponse(
-                            DeactivateResponse deactivateResponse) {
-                    }
-
-                    public void processLoadResponse(LoadResponse loadResponse) {
-                    }
-
-                    public void processUnloadResponse(
-                            UnloadResponse unloadResponse) {
-                    }
-
-                    public void processBalanceInquiryResponse(
-                            BalanceInquiryResponse balanceInquiryResponse) {
-                    }
-
-                    public void processEcheckPreNoteSaleResponse(
-                            EcheckPreNoteSaleResponse echeckPreNoteSaleResponse) {
-                    }
-
-                    public void processEcheckPreNoteCreditResponse(
-                            EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
-                    }
-
-                    public void processSubmerchantCreditResponse(
-                            SubmerchantCreditResponse submerchantCreditResponse) {
-                    }
-
-                    public void processPayFacCreditResponse(
-                            PayFacCreditResponse payFacCreditResponse) {
-                    }
-
-                    public void processVendorCreditRespsonse(
-                            VendorCreditResponse vendorCreditResponse) {
-                    }
-
-                    public void processReserveCreditResponse(
-                            ReserveCreditResponse reserveCreditResponse) {
-                    }
-
-                    public void processPhysicalCheckCreditResponse(
-                            PhysicalCheckCreditResponse checkCreditResponse) {
-                    }
-
-                    public void processSubmerchantDebitResponse(
-                            SubmerchantDebitResponse submerchantDebitResponse) {
-                    }
-
-                    public void processPayFacDebitResponse(
-                            PayFacDebitResponse payFacDebitResponse) {
-                    }
-
-                    public void processVendorDebitResponse(
-                            VendorDebitResponse vendorDebitResponse) {
-                    }
-
-                    public void processReserveDebitResponse(
-                            ReserveDebitResponse reserveDebitResponse) {
-                    }
-
-                    public void processPhysicalCheckDebitResponse(
-                            PhysicalCheckDebitResponse checkDebitResponse) {
-                    }
-
-                    public void processFundingInstructionVoidResponse(
-                            FundingInstructionVoidResponse fundingInstructionVoidResponse) {
-                    }
-
-                    public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-                    }
-
-                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-                    }
-
-                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-                    }
-
-                    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
-                        assertEquals("Planets",
-                                fastAccessFundingResponse.getReportGroup());
-                    }
-                })) {
-            txns++;
-        }
-
-        assertEquals(1, txns);
-    }
+//
+//        batch.addTransaction(fastAccessFunding);
+//
+//        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+//        CnpBatchResponse batchResponse = fileResponse
+//                .getNextCnpBatchResponse();
+//        int txns = 0;
+//        // iterate over all transactions in the file with a custom response
+//        // processor
+//        while (batchResponse
+//                .processNextTransaction(new CnpResponseProcessor() {
+//                    public void processAuthorizationResponse(
+//                            AuthorizationResponse authorizationResponse) {
+//
+//                    }
+//
+//                    public void processCaptureResponse(
+//                            CaptureResponse captureResponse) {
+//                    }
+//
+//                    public void processForceCaptureResponse(
+//                            ForceCaptureResponse forceCaptureResponse) {
+//                    }
+//
+//                    public void processCaptureGivenAuthResponse(
+//                            CaptureGivenAuthResponse captureGivenAuthResponse) {
+//                    }
+//
+//                    public void processSaleResponse(SaleResponse saleResponse) {
+//                    }
+//
+//                    public void processCreditResponse(
+//                            CreditResponse creditResponse) {
+//                    }
+//
+//                    public void processEcheckSalesResponse(
+//                            EcheckSalesResponse echeckSalesResponse) {
+//                    }
+//
+//                    public void processEcheckCreditResponse(
+//                            EcheckCreditResponse echeckCreditResponse) {
+//                    }
+//
+//                    public void processEcheckVerificationResponse(
+//                            EcheckVerificationResponse echeckVerificationResponse) {
+//                    }
+//
+//                    public void processEcheckRedepositResponse(
+//                            EcheckRedepositResponse echeckRedepositResponse) {
+//                    }
+//
+//                    public void processAuthReversalResponse(
+//                            AuthReversalResponse authReversalResponse) {
+//                    }
+//
+//                    public void processRegisterTokenResponse(
+//                            RegisterTokenResponse registerTokenResponse) {
+//                    }
+//
+//                    public void processAccountUpdate(
+//                            AccountUpdateResponse accountUpdateResponse) {
+//                    }
+//
+//                    public void processUpdateSubscriptionResponse(
+//                            UpdateSubscriptionResponse updateSubscriptionResponse) {
+//                    }
+//
+//                    public void processCancelSubscriptionResponse(
+//                            CancelSubscriptionResponse cancelSubscriptionResponse) {
+//                    }
+//
+//                    public void processUpdateCardValidationNumOnTokenResponse(
+//                            UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
+//                    }
+//
+//                    public void processCreatePlanResponse(
+//                            CreatePlanResponse createPlanResponse) {
+//                    }
+//
+//                    public void processUpdatePlanResponse(
+//                            UpdatePlanResponse updatePlanResponse) {
+//                    }
+//
+//                    public void processActivateResponse(
+//                            ActivateResponse activateResponse) {
+//                    }
+//
+//                    public void processDeactivateResponse(
+//                            DeactivateResponse deactivateResponse) {
+//                    }
+//
+//                    public void processLoadResponse(LoadResponse loadResponse) {
+//                    }
+//
+//                    public void processUnloadResponse(
+//                            UnloadResponse unloadResponse) {
+//                    }
+//
+//                    public void processBalanceInquiryResponse(
+//                            BalanceInquiryResponse balanceInquiryResponse) {
+//                    }
+//
+//                    public void processEcheckPreNoteSaleResponse(
+//                            EcheckPreNoteSaleResponse echeckPreNoteSaleResponse) {
+//                    }
+//
+//                    public void processEcheckPreNoteCreditResponse(
+//                            EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
+//                    }
+//
+//                    public void processSubmerchantCreditResponse(
+//                            SubmerchantCreditResponse submerchantCreditResponse) {
+//                    }
+//
+//                    public void processPayFacCreditResponse(
+//                            PayFacCreditResponse payFacCreditResponse) {
+//                    }
+//
+//                    public void processVendorCreditRespsonse(
+//                            VendorCreditResponse vendorCreditResponse) {
+//                    }
+//
+//                    public void processReserveCreditResponse(
+//                            ReserveCreditResponse reserveCreditResponse) {
+//                    }
+//
+//                    public void processPhysicalCheckCreditResponse(
+//                            PhysicalCheckCreditResponse checkCreditResponse) {
+//                    }
+//
+//                    public void processSubmerchantDebitResponse(
+//                            SubmerchantDebitResponse submerchantDebitResponse) {
+//                    }
+//
+//                    public void processPayFacDebitResponse(
+//                            PayFacDebitResponse payFacDebitResponse) {
+//                    }
+//
+//                    public void processVendorDebitResponse(
+//                            VendorDebitResponse vendorDebitResponse) {
+//                    }
+//
+//                    public void processReserveDebitResponse(
+//                            ReserveDebitResponse reserveDebitResponse) {
+//                    }
+//
+//                    public void processPhysicalCheckDebitResponse(
+//                            PhysicalCheckDebitResponse checkDebitResponse) {
+//                    }
+//
+//                    public void processFundingInstructionVoidResponse(
+//                            FundingInstructionVoidResponse fundingInstructionVoidResponse) {
+//                    }
+//
+//                    public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+//                    }
+//
+//                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+//                    }
+//
+//                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+//                    }
+//
+//                    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
+//                        assertEquals("Planets",
+//                                fastAccessFundingResponse.getReportGroup());
+//                    }
+//                })) {
+//            txns++;
+//        }
+//
+//        assertEquals(1, txns);
+//    }
 
     private void assertJavaApi(CnpBatchFileRequest request,
             CnpBatchFileResponse response) {
