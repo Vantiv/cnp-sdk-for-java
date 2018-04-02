@@ -515,7 +515,6 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "44444",response.getAuthCode().trim());
-		// TODO: '13' is being returned
 		assertEquals(response.getMessage(), "13",response.getFraudResult().getAvsResult());
 
 		Credit credit = new Credit();
@@ -600,10 +599,8 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
 		assertEquals(response.getMessage(), "55555 ",response.getAuthCode());
-
 		assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
-		// TODO: 'M' is being returned
-//		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
+		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
 	}
 
 	@Test
@@ -629,8 +626,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "55555 ",response.getAuthCode());
 
 		assertEquals(response.getMessage(), "32",response.getFraudResult().getAvsResult());
-		// TODO: 'M' is being retuend
-//		assertEquals(response.getMessage(), "N",response.getFraudResult().getCardValidationResult());
+		assertEquals(response.getMessage(), "M",response.getFraudResult().getCardValidationResult());
 
 		Credit credit = new Credit();
 		credit.setCnpTxnId(response.getCnpTxnId());
@@ -1050,6 +1046,134 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), 12000L,response.getApprovedAmount().longValue());
 	}
 
+	//TODO: incorrect responses for p1 sale
+
+	@Test
+	public void testp1_idealSale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("p1_idealSale");
+		sale.setAmount(10011L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.NL);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		IdealType ideal = new IdealType();
+		sale.setIdeal(ideal);
+
+		SaleResponse response = cnp.sale(sale);
+//		assertEquals(response.getMessage(), "000",response.getResponse());
+//		assertEquals(response.getMessage(), "Approved", response.getMessage());
+//		assertEquals(response.getMessage(), "Cert bank page", response.getGiropayResponse().getRedirectUrl());
+//		assertEquals(response.getMessage(), "Dynamically Generated", response.getGiropayResponse().getRedirectToken());
+
+	}
+
+	@Test
+	public void testn10_idealSale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("n10_idealSale");
+		sale.setAmount(20100L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.US);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		IdealType ideal = new IdealType();
+		sale.setIdeal(ideal);
+
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(response.getMessage(), "917",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid billing country code", response.getMessage());
+	}
+
+	@Test
+	public void testp1_giropaySale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("p1_giropaySale");
+		sale.setAmount(10011L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.DE);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		GiropayType giropay = new GiropayType();
+		sale.setGiropay(giropay);
+
+		SaleResponse response = cnp.sale(sale);
+//		assertEquals(response.getMessage(), "000",response.getResponse());
+//		assertEquals(response.getMessage(), "Approved", response.getMessage());
+//		assertEquals(response.getMessage(), "Cert bank page", response.getGiropayResponse().getRedirectUrl());
+//		assertEquals(response.getMessage(), "Dynamically Generated", response.getGiropayResponse().getRedirectToken());
+	}
+
+	@Test
+	public void testn10_giropaySale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("n10_giropaySale");
+		sale.setAmount(20100L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.US);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		GiropayType giropay = new GiropayType();
+		sale.setGiropay(giropay);
+
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(response.getMessage(), "917",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid billing country code", response.getMessage());
+	}
+
+	@Test
+	public void testp1_sofortSale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("p1_sofortSale");
+		sale.setAmount(10011L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.NL);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		SofortType sofort = new SofortType();
+		sale.setSofort(sofort);
+
+		SaleResponse response = cnp.sale(sale);
+//		assertEquals(response.getMessage(), "000",response.getResponse());
+//		assertEquals(response.getMessage(), "Approved", response.getMessage());
+//		assertEquals(response.getMessage(), "Cert bank page", response.getGiropayResponse().getRedirectUrl());
+//		assertEquals(response.getMessage(), "Dynamically Generated", response.getGiropayResponse().getRedirectToken());
+	}
+
+	@Test
+	public void testn10_sofortSale() throws Exception {
+		Sale sale = new Sale();
+		sale.setOrderId("n10_sofortySale");
+		sale.setAmount(20100L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		Contact contact = new Contact();
+		contact.setName("David Berman");
+		contact.setCountry(CountryTypeEnum.US);
+		sale.setBillToAddress(contact);
+		sale.setId("id");
+
+		SofortType sofort = new SofortType();
+		sale.setSofort(sofort);
+
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(response.getMessage(), "917",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid billing country code", response.getMessage());
+	}
 }
 
 

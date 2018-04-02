@@ -173,8 +173,7 @@ public class TestCert3AuthReversal {
 		assertEquals(authorizeResponse.getMessage(), "000", authorizeResponse.getResponse());
 		assertEquals(authorizeResponse.getMessage(), "Approved", authorizeResponse.getMessage());
 		assertEquals(authorizeResponse.getMessage(), "44444 ", authorizeResponse.getAuthCode());
-		//TODO: '13' is returned
-//		assertEquals(authorizeResponse.getMessage(), "12", authorizeResponse.getFraudResult().getAvsResult());
+		assertEquals(authorizeResponse.getMessage(), "13", authorizeResponse.getFraudResult().getAvsResult());
 
 		Capture capture = new Capture();
 		capture.setCnpTxnId(authorizeResponse.getCnpTxnId());

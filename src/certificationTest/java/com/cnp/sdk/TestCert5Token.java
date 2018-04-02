@@ -62,7 +62,6 @@ public class TestCert5Token {
         request.setId("id");
 
         RegisterTokenResponse response = cnp.registerToken(request);
-        // TODO Merchant is not authorized for tokens
          assertEquals(response.getMessage(), "445711", response.getBin());
          assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.VI,
          response.getType());
@@ -78,21 +77,17 @@ public class TestCert5Token {
         request.setOrderId("53");
         EcheckForTokenType echeck = new EcheckForTokenType();
         echeck.setAccNum("1099999998");
-        echeck.setRoutingNum("114567895");
+        echeck.setRoutingNum("011100012");
         request.setEcheckForToken(echeck);
         request.setId("id");
 
         RegisterTokenResponse response = cnp.registerToken(request);
         // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.EC,
-        // response.getType());
-        // assertEquals(response.getMessage(), "998",
-        // response.getECheckAccountSuffix());
-        // assertEquals(response.getMessage(), "801", response.getResponse());
-        // assertEquals(response.getMessage(), "Account number was successfully
-        // registered", response.getMessage());
-        // assertEquals(response.getMessage(), "111922223333000998",
-        // response.getCnpToken());
+//         assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.EC, response.getType());
+//         assertEquals(response.getMessage(), "998", response.getECheckAccountSuffix());
+//         assertEquals(response.getMessage(), "801", response.getResponse());
+//         assertEquals(response.getMessage(), "Account number was successfully registered", response.getMessage());
+//         assertEquals(response.getMessage(), "111922223333000998", response.getCnpToken());
     }
 
     @Test
@@ -118,7 +113,7 @@ public class TestCert5Token {
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         CardType card = new CardType();
         card.setNumber("5435101234510196");
-        card.setExpDate("1112");
+        card.setExpDate("1121");
         card.setCardValidationNum("987");
         card.setType(MethodOfPaymentTypeEnum.MC);
         auth.setCard(card);
@@ -127,16 +122,10 @@ public class TestCert5Token {
         AuthorizationResponse response = cnp.authorize(auth);
         assertEquals(response.getMessage(), "000", response.getResponse());
         assertEquals(response.getMessage(), "Approved", response.getMessage());
-        // TODO no getTokenResponse
-        // assertEquals(response.getMessage(), "801",
-        // response.getTokenResponse().getTokenResponseCode());
-        // assertEquals(response.getMessage(), "Account number was successfully
-        // registered",
-        // response.getTokenResponse().getTokenMessage());
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.MC,
-        // response.getTokenResponse().getType());
-        // assertEquals(response.getMessage(), "543510",
-        // response.getTokenResponse().getBin());
+//         assertEquals(response.getMessage(), "801", response.getTokenResponse().getTokenResponseCode());
+//         assertEquals(response.getMessage(), "Account number was successfully registered", response.getTokenResponse().getTokenMessage());
+//         assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.MC, response.getTokenResponse().getType());
+//         assertEquals(response.getMessage(), "543510", response.getTokenResponse().getBin());
     }
 
     @Test
@@ -175,16 +164,14 @@ public class TestCert5Token {
         AuthorizationResponse response = cnp.authorize(auth);
         assertEquals(response.getMessage(), "000", response.getResponse());
         assertEquals(response.getMessage(), "Approved", response.getMessage());
-        // TODO no getTokenResponse
-        // assertEquals(response.getMessage(), "802",
-        // response.getTokenResponse().getTokenResponseCode());
-        // assertEquals(response.getMessage(), "Account number was previously
-        // registered",
-        // response.getTokenResponse().getTokenMessage());
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.MC,
-        // response.getTokenResponse().getType());
-        // assertEquals(response.getMessage(), "543510",
-        // response.getTokenResponse().getBin());
+         assertEquals(response.getMessage(), "802",
+         response.getTokenResponse().getTokenResponseCode());
+         assertEquals(response.getMessage(), "Account number was previously registered",
+         response.getTokenResponse().getTokenMessage());
+         assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.MC,
+         response.getTokenResponse().getType());
+         assertEquals(response.getMessage(), "543510",
+         response.getTokenResponse().getBin());
     }
 
     @Test
@@ -194,16 +181,15 @@ public class TestCert5Token {
         auth.setAmount(15000L);
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         CardTokenType token = new CardTokenType();
-        token.setCnpToken("1712990000040196");
-        token.setExpDate("1112");
+        token.setCnpToken("1111000100092332");
+        token.setExpDate("1121");
         auth.setToken(token);
         auth.setId("id");
 
         AuthorizationResponse response = cnp.authorize(auth);
-        // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), "822", response.getResponse());
-        // assertEquals(response.getMessage(), "Token was not found",
-        // response.getMessage());
+         assertEquals(response.getMessage(), "822", response.getResponse());
+         assertEquals(response.getMessage(), "Token was not found",
+         response.getMessage());
     }
 
     @Test
@@ -213,16 +199,15 @@ public class TestCert5Token {
         auth.setAmount(15000L);
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         CardTokenType token = new CardTokenType();
-        token.setCnpToken("1712999999999999");
-        token.setExpDate("1112");
+        token.setCnpToken("1112000100000085");
+        token.setExpDate("1121");
         auth.setToken(token);
         auth.setId("id");
 
         AuthorizationResponse response = cnp.authorize(auth);
-        // TODO Merchant is not authorized for tokens
-        // assertEquals(response.getMessage(), "823", response.getResponse());
-        // assertEquals(response.getMessage(), "Token was invalid",
-        // response.getMessage());
+         assertEquals(response.getMessage(), "823", response.getResponse());
+         assertEquals(response.getMessage(), "Token was invalid",
+         response.getMessage());
     }
 
     @Test
@@ -244,15 +229,10 @@ public class TestCert5Token {
 
         EcheckSalesResponse response = cnp.echeckSale(sale);
         // TODO no tokenResponse
-        // assertEquals(response.getMessage(), "801",
-        // response.getTokenResponse().getTokenResponseCode());
-        // assertEquals(response.getMessage(), "Account number was successfully
-        // registered",
-        // response.getTokenResponse().getTokenMessage());
-        // assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.EC,
-        // response.getTokenResponse().getType());
-        // assertEquals(response.getMessage(), "111922223333444003",
-        // response.getTokenResponse().getCnpToken());
+//         assertEquals(response.getMessage(), "801", response.getTokenResponse().getTokenResponseCode());
+//         assertEquals(response.getMessage(), "Account number was successfully registered", response.getTokenResponse().getTokenMessage());
+//         assertEquals(response.getMessage(), MethodOfPaymentTypeEnum.EC, response.getTokenResponse().getType());
+//         assertEquals(response.getMessage(), "111922223333444003", response.getTokenResponse().getCnpToken());
     }
 
     @Test

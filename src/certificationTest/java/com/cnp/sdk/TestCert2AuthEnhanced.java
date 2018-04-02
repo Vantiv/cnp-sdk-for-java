@@ -42,11 +42,10 @@ public class TestCert2AuthEnhanced {
 
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-//		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-//		assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-//		assertEquals(response.getMessage(), "NO",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-//		assertEquals(response.getMessage(), "GIFT",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "NO",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "GIFT",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -65,11 +64,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "2000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -88,11 +86,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "0",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "0",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -111,11 +108,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "6500",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "6500",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -134,11 +130,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "12200",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "12200",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -157,11 +152,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "20000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "20000",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -180,11 +174,10 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
-		//assertEquals(response.getMessage(), "10050",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
-		//assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
-		//assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
+		assertEquals(response.getMessage(), FundingSourceTypeEnum.PREPAID,response.getEnhancedAuthResponse().getFundingSource().getType());
+		assertEquals(response.getMessage(), "10050",response.getEnhancedAuthResponse().getFundingSource().getAvailableBalance());
+		assertEquals(response.getMessage(), "YES",response.getEnhancedAuthResponse().getFundingSource().getReloadable());
+		assertEquals(response.getMessage(), "PAYROLL",response.getEnhancedAuthResponse().getFundingSource().getPrepaidCardType());
 	}
 
 	@Test
@@ -203,8 +196,7 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), AffluenceTypeEnum.AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
+		assertEquals(response.getMessage(), AffluenceTypeEnum.AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
 
 	}
 
@@ -224,8 +216,7 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), AffluenceTypeEnum.MASS_AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
+		assertEquals(response.getMessage(), AffluenceTypeEnum.MASS_AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
 
 	}
 
@@ -245,8 +236,7 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), AffluenceTypeEnum.AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
+		assertEquals(response.getMessage(), AffluenceTypeEnum.AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
 
 	}
 
@@ -266,8 +256,7 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), AffluenceTypeEnum.MASS_AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
+		assertEquals(response.getMessage(), AffluenceTypeEnum.MASS_AFFLUENT,response.getEnhancedAuthResponse().getAffluence());
 }
 
 	@Test
@@ -286,8 +275,7 @@ public class TestCert2AuthEnhanced {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
-		//TODO no enhancedAuthResponse
-		//assertEquals(response.getMessage(), "BRA",response.getEnhancedAuthResponse().getIssuerCountry());
+		assertEquals(response.getMessage(), "BRA",response.getEnhancedAuthResponse().getIssuerCountry());
 
 	}
 
@@ -312,9 +300,8 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		// TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "341",response.getResponse());
-//		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
+		assertEquals(response.getMessage(), "341",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
 	}
 
 	@Test
@@ -339,9 +326,8 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		// TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "341",response.getResponse());
-//		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
+		assertEquals(response.getMessage(), "341",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
 	}
 
 	@Test
@@ -366,9 +352,8 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-		// TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "000",response.getResponse());
-//		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals(response.getMessage(), "Approved",response.getMessage());
 	}
 
 	@Test
@@ -396,9 +381,8 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-        // TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "341",response.getResponse());
-//		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
+		assertEquals(response.getMessage(), "341",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
 	}
 
 	@Test
@@ -426,9 +410,8 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-        // TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "341",response.getResponse());
-//		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
+		assertEquals(response.getMessage(), "341",response.getResponse());
+		assertEquals(response.getMessage(), "Invalid healthcare amounts",response.getMessage());
 	}
 
 	@Test
@@ -454,10 +437,9 @@ public class TestCert2AuthEnhanced {
 		authorization.setId("id");
 
 		AuthorizationResponse response = cnp.authorize(authorization);
-        // TODO: Merchant not enabled for IIAS
-//		assertEquals(response.getMessage(), "010",response.getResponse());
-//		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
-//		assertEquals(response.getMessage(), 18699L,response.getApprovedAmount().longValue());
+		assertEquals(response.getMessage(), "010",response.getResponse());
+		assertEquals(response.getMessage(), "Partially Approved",response.getMessage());
+		assertEquals(response.getMessage(), 18699L,response.getApprovedAmount().longValue());
 	}
 
 }
