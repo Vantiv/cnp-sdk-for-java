@@ -160,41 +160,13 @@ public class TestSale {
 		sale.setProcessingType(ProcessingTypeEnum.INITIAL_COF);
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
-	}
 
-	@Test
-	public void testSaleWithProcessingTypeCOF1() throws Exception{
-		Sale sale = new Sale();
-		sale.setAmount(106L);
-		sale.setCnpTxnId(123456L);
-		sale.setOrderId("12344");
-		sale.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardType card = new CardType();
-		card.setType(MethodOfPaymentTypeEnum.VI);
-		card.setNumber("4100000000000000");
-		card.setExpDate("1210");
-		sale.setCard(card);
-		sale.setId("id");
 		sale.setProcessingType(ProcessingTypeEnum.MERCHANT_INITIATED_COF);
-		SaleResponse response = cnp.sale(sale);
+		response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
-	}
 
-	@Test
-	public void testSaleWithProcessingTypeCOF2() throws Exception{
-		Sale sale = new Sale();
-		sale.setAmount(106L);
-		sale.setCnpTxnId(123456L);
-		sale.setOrderId("12344");
-		sale.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardType card = new CardType();
-		card.setType(MethodOfPaymentTypeEnum.VI);
-		card.setNumber("4100000000000000");
-		card.setExpDate("1210");
-		sale.setCard(card);
-		sale.setId("id");
 		sale.setProcessingType(ProcessingTypeEnum.CARDHOLDER_INITIATED_COF);
-		SaleResponse response = cnp.sale(sale);
+		response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
 	}
 }
