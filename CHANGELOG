@@ -1,5 +1,7 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+* BugFix: Set content-type to text/xml; charset=UTF-8
+
 ==Version 12.1.0 (March 26, 2018)
 * Feature: Added support for Visa card on file transactions
 * Feature: Added fastAccessFunding transaction

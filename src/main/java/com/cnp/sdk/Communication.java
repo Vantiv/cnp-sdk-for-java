@@ -43,6 +43,7 @@ import com.jcraft.jsch.SftpException;
 public class Communication {
 
     private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.2","TLSv1.1"};
+	public static final String CONTENT_TYPE_TEXT_XML_UTF8 = "text/xml; charset=UTF-8";
     private CloseableHttpClient httpClient;
     private final int KEEP_ALIVE_DURATION = 8000;
 	private static final String NEUTER_STR = "NEUTERED";
@@ -120,7 +121,7 @@ public class Communication {
 		}
 
 		HttpPost post = new HttpPost(configuration.getProperty("url"));
-		post.setHeader("Content-Type", "application/xml;charset=\"UTF-8\"");
+		post.setHeader("Content-Type", CONTENT_TYPE_TEXT_XML_UTF8);
 		if(!httpKeepAlive) {
 			post.setHeader("Connection", "close");
 		}
@@ -138,9 +139,7 @@ public class Communication {
 			}
 			
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
-			//System.out.println("POST    "+post);
 			HttpResponse response = httpClient.execute(post);
-//			System.out.println("RESPONSE    "+response);
 			entity = response.getEntity();
 			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new CnpOnlineException(response.getStatusLine().getStatusCode() + ":" +
