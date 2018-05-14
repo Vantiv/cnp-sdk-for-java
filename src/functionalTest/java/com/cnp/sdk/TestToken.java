@@ -1,14 +1,11 @@
 package com.cnp.sdk;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.CnpOnlineException;
 import com.cnp.sdk.generate.ApplepayHeaderType;
 import com.cnp.sdk.generate.ApplepayType;
 import com.cnp.sdk.generate.EcheckForTokenType;

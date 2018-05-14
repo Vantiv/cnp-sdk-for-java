@@ -162,7 +162,8 @@ public class ResponseFileParser {
                         || currentStartingTagInFile.compareToIgnoreCase("<reserveDebitResponse") == 0
                         || currentStartingTagInFile.compareToIgnoreCase("<vendorDebitResponse") == 0
                         || currentStartingTagInFile.compareToIgnoreCase("<physicalCheckDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<fundingInstructionVoidResponse") == 0)) {
+                        || currentStartingTagInFile.compareToIgnoreCase("<fundingInstructionVoidResponse") == 0)
+						|| currentStartingTagInFile.compareToIgnoreCase("<translateToLowValueTokenResponse") == 0) {
 			retVal = true;
 		} else if (openingTagToLookFor
 				.compareToIgnoreCase(currentStartingTagInFile) == 0) {
@@ -214,7 +215,8 @@ public class ResponseFileParser {
                     || currentStartingTagInFile.compareToIgnoreCase("</reserveDebitResponse>") == 0
                     || currentStartingTagInFile.compareToIgnoreCase("</vendorDebitResponse>") == 0
                     || currentStartingTagInFile.compareToIgnoreCase("</physicalCheckDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("<fundingInstructionVoidResponse") == 0)) {
+                    || currentStartingTagInFile.compareToIgnoreCase("</fundingInstructionVoidResponse>") == 0)
+					|| currentStartingTagInFile.compareToIgnoreCase("</translateToLowValueTokenResponse>") == 0) {
 
 			retVal = true;
 		} else if (closingTagToLookFor

@@ -94,6 +94,31 @@ public class TestSale {
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
 	}
+
+
+	@Test
+	public void simpleSaleWithPinlessDebitRequest() throws Exception {
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardTokenType token = new CardTokenType();
+		token.setCardValidationNum("349");
+		token.setExpDate("1214");
+		token.setCnpToken("1111222233334000");
+		token.setType(MethodOfPaymentTypeEnum.VI);
+		sale.setToken(token);
+		sale.setId("id");
+		PinlessDebitRequestType pinlessDebitRequest = new PinlessDebitRequestType();
+		pinlessDebitRequest.setRoutingPreference(RoutingPreferenceEnum.REGULAR);
+		PreferredDebitNetworksType preferredDebitNetwork = new PreferredDebitNetworksType();
+		preferredDebitNetwork.getDebitNetworkNames().add("Visa");
+		pinlessDebitRequest.setPreferredDebitNetworks(preferredDebitNetwork);
+		sale.setPinlessDebitRequest(pinlessDebitRequest);
+
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+	}
 	
 	@Test
 	public void testSaleWithSEPA() throws Exception{

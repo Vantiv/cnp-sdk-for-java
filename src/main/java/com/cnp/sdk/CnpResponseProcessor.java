@@ -88,4 +88,6 @@ public interface CnpResponseProcessor {
     void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse);
 
     void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse);
+
+    void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse);
 }

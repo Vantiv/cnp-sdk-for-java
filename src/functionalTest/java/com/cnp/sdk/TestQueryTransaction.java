@@ -3,15 +3,11 @@ package com.cnp.sdk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.cnp.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.generate.ActionTypeEnum;
-import com.cnp.sdk.generate.QueryTransaction;
-import com.cnp.sdk.generate.QueryTransactionResponse;
-import com.cnp.sdk.generate.QueryTransactionUnavailableResponse;
-import com.cnp.sdk.generate.TransactionTypeWithReportGroup;
 
 public class TestQueryTransaction {
 
@@ -39,6 +35,25 @@ public class TestQueryTransaction {
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
 	}
+
+    @Test
+    public void simpleQueryTransaction_showStatusOnly() throws Exception {
+        QueryTransaction queryTransaction = new QueryTransaction();
+        queryTransaction.setId("findId");
+        queryTransaction.setCustomerId("customerId");
+        queryTransaction.setOrigId("orgId1");
+        queryTransaction.setOrigActionType(ActionTypeEnum.A);
+        queryTransaction.setReportGroup("default");
+        queryTransaction.setShowStatusOnly(YesNoType.Y);
+
+        TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        assertEquals("findId", queryTransactionResponse.getId());
+        assertEquals("customerId", queryTransactionResponse.getCustomerId());
+        assertEquals("150", queryTransactionResponse.getResponse());
+        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+    }
 
 	@Test
     public void simpleQueryTransaction_multipleResponses() throws Exception {

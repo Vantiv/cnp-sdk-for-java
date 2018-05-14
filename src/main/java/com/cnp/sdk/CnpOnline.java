@@ -764,6 +764,22 @@ public class CnpOnline {
 		return (FastAccessFundingResponse)newresponse.getValue();
 	}
 
+	public TranslateToLowValueTokenResponse TranslateToLowValueTokenRequest(TranslateToLowValueTokenRequestType translateToLowValueTokenRequest){
+	    CnpOnlineRequest request = createCnpOnlineRequest();
+	    return TranslateToLowValueTokenRequest(translateToLowValueTokenRequest, request);
+    }
+
+    public TranslateToLowValueTokenResponse TranslateToLowValueTokenRequest(TranslateToLowValueTokenRequestType translateToLowValueTokenRequest,
+                                                                            CnpOnlineRequest overridingRequestHeader){
+	    CnpOnlineRequest request = fillInMissingFieldsFromConfig(overridingRequestHeader);
+	    fillInReportGroup(translateToLowValueTokenRequest);
+
+        request.setTransaction(CnpContext.getObjectFactory().createTranslateToLowValueTokenRequest(translateToLowValueTokenRequest));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (TranslateToLowValueTokenResponse)newresponse.getValue();
+    }
+
 	private CnpOnlineRequest createCnpOnlineRequest() {
 		CnpOnlineRequest request = new CnpOnlineRequest();
 		request.setMerchantId(config.getProperty("merchantId"));

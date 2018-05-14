@@ -338,6 +338,11 @@ public class CnpBatchRequest {
             transaction = objFac.createFastAccessFunding((FastAccessFunding)transactionType);
             transactionAdded = true;
             numOfTxn ++;
+        } else if(transactionType instanceof TranslateToLowValueTokenRequestType){
+		    batchRequest.setNumTranslateToLowValueTokenRequests(batchRequest.getNumTranslateToLowValueTokenRequests().add(BigInteger.valueOf(1)));
+		    transaction = objFac.createTranslateToLowValueTokenRequest((TranslateToLowValueTokenRequestType) transactionType);
+		    transactionAdded = true;
+		    numOfTxn++;
         } else {
             transaction = objFac.createTransaction(new TransactionType());
         }

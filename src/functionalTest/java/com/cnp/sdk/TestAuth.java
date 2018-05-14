@@ -53,7 +53,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
-		assertEquals("63225578415568556365452427825", response.getNetworkTransactionId());
+		assertEquals("Approved", response.getMessage());
 	}
 
 	@Test
@@ -203,6 +203,33 @@ public class TestAuth {
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals(new Long(110),response.getApplepayResponse().getTransactionAmount());
     }
+
+    @Test
+	public void simpleAuthWithLodgingInfo(){
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("123456");
+		authorization.setAmount(110L);
+		authorization.setSecondaryAmount(50L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		LodgingInfo lodgingInfo = new LodgingInfo();
+		lodgingInfo.setRoomRate(110L);
+		lodgingInfo.setRoomTax(50L);
+		LodgingCharge lodgingCharge = new LodgingCharge();
+		lodgingCharge.setName(LodgingExtraChargeEnum.RESTAURANT);
+		lodgingInfo.getLodgingCharges().add(lodgingCharge);
+		authorization.setLodgingInfo(lodgingInfo);
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("000", response.getResponse());
+		assertEquals("Approved", response.getMessage());
+	}
 
 	@Test
 	public void posWithoutCapabilityAndEntryMode() throws Exception {

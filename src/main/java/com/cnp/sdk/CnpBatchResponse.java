@@ -172,6 +172,8 @@ public class CnpBatchResponse {
             processor.processFundingInstructionVoidResponse((FundingInstructionVoidResponse)objToRet);
         } else if (objToRet instanceof FastAccessFundingResponse) {
 			processor.processFastAccessFundingResponse((FastAccessFundingResponse)objToRet);
+		} else if (objToRet instanceof TranslateToLowValueTokenResponse) {
+        	processor.processTranslateToLowValueTokenResponse((TranslateToLowValueTokenResponse) objToRet);
 		}
 	    return true;
 	}

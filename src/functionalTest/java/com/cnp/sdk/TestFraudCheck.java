@@ -11,6 +11,8 @@ import com.cnp.sdk.generate.AdvancedFraudResultsType;
 import com.cnp.sdk.generate.FraudCheck;
 import com.cnp.sdk.generate.FraudCheckResponse;
 
+import java.util.Random;
+
 public class TestFraudCheck {
 
     private static CnpOnline cnp;
@@ -29,7 +31,16 @@ public class TestFraudCheck {
         advancedFraudChecks.setCustomAttribute1("pass");
         advancedFraudChecks.setCustomAttribute2("42");
         advancedFraudChecks.setCustomAttribute3("5");
+//        advancedFraudChecks.setWebSessionId("abcd1234");
         fraudCheck.setAdvancedFraudChecks(advancedFraudChecks);
+//        fraudCheck.setEventType("payment");
+        fraudCheck.setAccountLogin("Java");
+        String hash = "";
+        Random rand = new Random();
+        for (int i = 0; i < 56; i++){
+            hash += rand.nextInt(10);
+        }
+        fraudCheck.setAccountPasshash(hash);
         FraudCheckResponse fraudCheckResponse = cnp.fraudCheck(fraudCheck);
         
         //System.out.println(fraudCheckResponse.getMessage());

@@ -302,6 +302,12 @@ public class TestBatchFile {
         sale11.setAmount(1099L);
         sale11.setOrderSource(OrderSourceType.ECOMMERCE);
         sale11.setId("id");
+//        PinlessDebitRequestType pinlessDebitRequest = new PinlessDebitRequestType();
+//        pinlessDebitRequest.setRoutingPreference(RoutingPreferenceEnum.REGULAR);
+//        PreferredDebitNetworksType preferredDebitNetwork = new PreferredDebitNetworksType();
+//        preferredDebitNetwork.getDebitNetworkNames().add("Visa");
+//        pinlessDebitRequest.setPreferredDebitNetworks(preferredDebitNetwork);
+//        sale11.setPinlessDebitRequest(pinlessDebitRequest);
 
         CardType card = new CardType();
         card.setType(MethodOfPaymentTypeEnum.VI);
@@ -355,6 +361,13 @@ public class TestBatchFile {
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         auth.setCard(card);
         auth.setId("id");
+        LodgingInfo lodgingInfo = new LodgingInfo();
+        lodgingInfo.setRoomRate(106L);
+        lodgingInfo.setRoomTax(0L);
+        LodgingCharge lodgingCharge = new LodgingCharge();
+        lodgingCharge.setName(LodgingExtraChargeEnum.RESTAURANT);
+        lodgingInfo.getLodgingCharges().add(lodgingCharge);
+        auth.setLodgingInfo(lodgingInfo);
         batch.addTransaction(auth);
 
         Sale sale = new Sale();
@@ -577,6 +590,14 @@ public class TestBatchFile {
         echeckPreNoteCreditRoutErr.setId("Id");
         batch.addTransaction(echeckPreNoteCreditRoutErr);
 
+        TranslateToLowValueTokenRequestType translateToLowValueTokenRequest = new TranslateToLowValueTokenRequestType();
+        translateToLowValueTokenRequest.setOrderId("123456789");
+        translateToLowValueTokenRequest.setToken("qwe7895sdffd78598dsed8");
+        translateToLowValueTokenRequest.setId("Id");
+        translateToLowValueTokenRequest.setReportGroup("Planets");
+        translateToLowValueTokenRequest.setCustomerId("12234");
+        batch.addTransaction(translateToLowValueTokenRequest);
+
         int transactionCount = batch.getNumberOfTransactions();
 
         CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
@@ -746,6 +767,9 @@ public class TestBatchFile {
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
 
+                    }
+
+                    public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
                     }
                 })) {
 
@@ -1185,6 +1209,9 @@ public class TestBatchFile {
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
                     }
+
+                    public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
+                    }
                 })) {
             txns++;
         }
@@ -1463,6 +1490,9 @@ public class TestBatchFile {
 					}
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
+                    }
+
+                    public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse){
                     }
                 })) {
             txns++;
@@ -1978,6 +2008,12 @@ public class TestBatchFile {
 
         public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
             assertNotNull(fastAccessFundingResponse.getCnpTxnId());
+            responseCount++;
+        }
+
+        public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse){
+            assertNotNull(translateToLowValueTokenResponse.getResponse());
+            assertNotNull(translateToLowValueTokenResponse.getMessage());
             responseCount++;
         }
     }

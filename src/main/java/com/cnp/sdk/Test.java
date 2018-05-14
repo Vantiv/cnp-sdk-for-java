@@ -176,6 +176,8 @@ public class Test {
 
                 public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
                 }
+                public void processTranslateToLowValueTokenResponse (TranslateToLowValueTokenResponse  translateToLowValueTokenResponse){
+                }
 
             })){
                 System.out.println("Processed another txn!");
