@@ -19,12 +19,12 @@ public class TestVoid {
     @Test
     public void simpleVoid() throws Exception {
         Void voidTxn = new Void();
-        voidTxn.setCnpTxnId(102948757348543643L);
+        voidTxn.setCnpTxnId(102948757348543822L);
         voidTxn.setReportGroup("Planets");
         voidTxn.setId("new_ID");
         voidTxn.setCustomerId("my_customer");
 
         VoidResponse response = cnp.dovoid(voidTxn);
-        assertEquals("643",response.getResponse());
+        assertEquals("822",response.getResponse());
     }
 }
