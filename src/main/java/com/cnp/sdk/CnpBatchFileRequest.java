@@ -1,15 +1,7 @@
 package com.cnp.sdk;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -20,6 +12,7 @@ import javax.xml.bind.Marshaller;
 
 import com.cnp.sdk.generate.Authentication;
 import com.cnp.sdk.generate.CnpRequest;
+import org.bouncycastle.openpgp.PGPException;
 
 
 public class CnpBatchFileRequest{
@@ -36,7 +29,7 @@ public class CnpBatchFileRequest{
 	private Marshaller marshaller;
 	private Configuration config = null;
 
-	private int maxAllowedTransactionsPerFile;
+    protected int maxAllowedTransactionsPerFile;
 
 	/**
 	 * Recommend NOT to change this value.
@@ -90,9 +83,9 @@ public class CnpBatchFileRequest{
 		initializeMembers(requestFileName, null);
 	}
 
-	private void initializeMembers(String requestFileName) {
-		initializeMembers(requestFileName, null);
-	}
+    private void initializeMembers(String requestFileName) {
+        initializeMembers(requestFileName, null);
+    }
 
 	public void initializeMembers(String requestFileName, Properties in_properties) throws CnpBatchException{
 		try {
@@ -109,13 +102,13 @@ public class CnpBatchFileRequest{
 			// Proper formatting of XML purely for aesthetic purposes.
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-			if (in_properties == null || in_properties.isEmpty()) {
-				this.properties = new Properties();
-				this.properties.load(new FileInputStream(config.location()));
-			} else {
-				fillInMissingFieldsFromConfig(in_properties);
-				this.properties = in_properties;
-			}
+            if (in_properties == null || in_properties.isEmpty()) {
+                this.properties = new Properties();
+                this.properties.load(new FileInputStream(config.location()));
+            } else {
+                fillInMissingFieldsFromConfig(in_properties);
+                this.properties = in_properties;
+            }
 
 			this.maxAllowedTransactionsPerFile = Integer.parseInt(properties.getProperty("maxAllowedTransactionsPerFile", "1000"));
 			if (maxAllowedTransactionsPerFile > CNP_LIMIT_MAX_ALLOWED_TNXS_PER_FILE) {
@@ -123,8 +116,8 @@ public class CnpBatchFileRequest{
 						+ String.valueOf(CNP_LIMIT_MAX_ALLOWED_TNXS_PER_FILE));
 			}
 
-			requestFile = getFileToWrite("batchRequestFolder");
-			responseFile = getFileToWrite("batchResponseFolder");
+            requestFile = getFileToWrite("batchRequestFolder");
+            responseFile = getFileToWrite("batchResponseFolder");
 
 		} catch (FileNotFoundException e) {
 			throw new CnpBatchException(
@@ -144,13 +137,13 @@ public class CnpBatchFileRequest{
 		}
 	}
 
-	protected void setCommunication(Communication communication) {
-		this.communication = communication;
-	}
+    protected void setCommunication(Communication communication) {
+        this.communication = communication;
+    }
 
-	public Properties getConfig() {
-		return this.properties;
-	}
+    public Properties getConfig() {
+        return this.properties;
+    }
 
 	/**
 	 * Returns a CnpBatchRequest object, the container for transactions.
@@ -213,49 +206,53 @@ public class CnpBatchFileRequest{
 		}
 	}
 
-	public File getFile() {
-		return requestFile;
-	}
+    public File getFile() {
+        return requestFile;
+    }
 
-	public int getMaxAllowedTransactionsPerFile() {
-		return this.maxAllowedTransactionsPerFile;
-	}
 
-	void fillInMissingFieldsFromConfig(Properties config) throws CnpBatchException{
-		Properties localConfig = new Properties();
-		boolean propertiesReadFromFile = false;
-		try {
-			String[] allProperties = { "username", "password", "proxyHost",
-					"proxyPort", "batchHost", "batchPort",
-					"batchTcpTimeout", "batchUseSSL",
-					"maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
-					"batchRequestFolder", "batchResponseFolder", "sftpUsername", "sftpPassword", "sftpTimeout",
-					"merchantId", "printxml", "useEncryption", "vantivPublicKeyID", "gpgPassphrase", "deleteBatchFiles"};
+    public int getMaxAllowedTransactionsPerFile() {
+        return this.maxAllowedTransactionsPerFile;
+    }
 
-			for (String prop : allProperties) {
-				// if the value of a property is not set, look at the Properties member of the class first, and the .properties file next.
-				if (config.getProperty(prop) == null) {
-					if ( this.properties != null && this.properties.get(prop) != null ){
-						config.setProperty(prop, this.properties.getProperty(prop));
-					} else {
-						if (!propertiesReadFromFile) {
-							localConfig.load(new FileInputStream((new Configuration()).location()));
-							propertiesReadFromFile = true;
-						}
-						if(localConfig.getProperty(prop) != null){
-							config.setProperty(prop, localConfig.getProperty(prop));
-						}
-					}
-				}
-			}
 
-		} catch (FileNotFoundException e) {
-			throw new CnpBatchException("File .cnp_SDK_config.properties was not found. Please run the " +
-					"Setup.java application to create the file at location "+ (new Configuration()).location(), e);
-		} catch (IOException e) {
-			throw new CnpBatchException("There was an exception while reading the .cnp_SDK_config.properties file.", e);
-		}
-	}
+    void fillInMissingFieldsFromConfig(Properties config) throws CnpBatchException {
+        Properties localConfig = new Properties();
+        boolean propertiesReadFromFile = false;
+        try {
+            String[] allProperties = {"username", "password", "proxyHost",
+                    "proxyPort", "batchHost", "batchPort",
+                    "batchTcpTimeout", "batchUseSSL",
+                    "maxAllowedTransactionsPerFile", "maxTransactionsPerBatch",
+                    "batchRequestFolder", "batchResponseFolder", "sftpUsername", "sftpPassword", "sftpTimeout",
+                    "merchantId", "printxml", "useEncryption", "VantivPublicKeyPath", "PrivateKeyPath", "PublicKeyPath", "gpgPassphrase", "deleteBatchFiles"};
+
+            for (String prop : allProperties) {
+                // if the value of a property is not set,
+                // look at the Properties member of the class first, and the .properties file next.
+                if (config.getProperty(prop) == null) {
+                    if (this.properties != null && this.properties.get(prop) != null) {
+                        config.setProperty(prop, this.properties.getProperty(prop));
+                    } else {
+                        if (!propertiesReadFromFile) {
+                            localConfig.load(new FileInputStream((new Configuration()).location()));
+                            propertiesReadFromFile = true;
+                        }
+                        if (localConfig.getProperty(prop) != null) {
+                            config.setProperty(prop, localConfig.getProperty(prop));
+                        }
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new CnpBatchException("File .cnp_SDK_config.properties was not found. " +
+                    "Please run the Setup.java application to create the file at location " +
+                    (new Configuration()).location(), e);
+        } catch (IOException e) {
+            throw new CnpBatchException(
+                    "There was an exception while reading the .cnp_SDK_config.properties file.", e);
+        }
+    }
 
 	public int getNumberOfBatches() {
 		return this.cnpBatchRequestList.size();
@@ -317,17 +314,9 @@ public class CnpBatchFileRequest{
 				prepareForDelivery();
 			}
 
-			File requestFileToSend = requestFile;
+            communication.sendCnpRequestFileToSFTP(requestFile, properties);
 
-			boolean useEncryption = "true".equalsIgnoreCase(properties.getProperty("useEncryption"));
-
-			if(useEncryption) {
-				requestFileToSend = encryptRequestFile();
-			}
-
-			communication.sendCnpRequestFileToSFTP(requestFileToSend, properties);
-
-			checkDeleteBatchRequestFiles(requestFileToSend);
+            checkDeleteBatchRequestFiles();
 
 		} catch (IOException e) {
 			throw new CnpBatchException("There was an exception while creating the Cnp Request file. " +
@@ -336,22 +325,14 @@ public class CnpBatchFileRequest{
 		}
 	}
 
-	private File encryptRequestFile(){
-		String encRequestFilename = requestFile.getAbsolutePath() + ".encrypted";
-		String publicKey = properties.getProperty("vantivPublicKeyID");
-		PgpHelper.encrypt(requestFile.getAbsolutePath(), encRequestFilename, publicKey);
-		File encRequestFile = new File(encRequestFilename);
-		return encRequestFile;
-	}
 
-	private void checkDeleteBatchRequestFiles(File fileToBeDeleted){
-		boolean deleteBatchFiles = "true".equalsIgnoreCase(properties.getProperty("deleteBatchFiles"));
+    private void checkDeleteBatchRequestFiles() {
+        boolean deleteBatchFiles = "true".equalsIgnoreCase(properties.getProperty("deleteBatchFiles"));
 
-		if (deleteBatchFiles){
-			requestFile.delete();
-			fileToBeDeleted.delete();
-		}
-	}
+        if (deleteBatchFiles) {
+            requestFile.delete();
+        }
+    }
 
 	/**
 	 * Only retrieves the file from Vantiv over sFTP. This method requires separate invocation of the send method.
@@ -361,25 +342,25 @@ public class CnpBatchFileRequest{
 	public CnpBatchFileResponse retrieveOnlyFromCnpSFTP() throws CnpBatchException {
 		try {
 
-			boolean useEncryption = "true".equalsIgnoreCase(properties.getProperty("useEncryption"));
+            boolean useEncryption = "true".equalsIgnoreCase(properties.getProperty("useEncryption"));
 
-			File requestFileToFetch = requestFile;
-			File responseFileToRecieve = responseFile;
+            File requestFileToFetch = requestFile;
+            File responseFileToRecieve = responseFile;
 
-			if(useEncryption) {
-				requestFileToFetch = new File(requestFile.getAbsolutePath() + ".encrypted");
-				responseFileToRecieve = new File(responseFile.getAbsolutePath() + ".encrypted");
-			}
+            if (useEncryption) {
+                requestFileToFetch = new File(requestFile.getAbsolutePath());
+                responseFileToRecieve = new File(responseFile.getAbsolutePath() + ".encrypted");
+            }
 
 			communication.receiveCnpRequestResponseFileFromSFTP(requestFileToFetch, responseFileToRecieve, properties);
 
-			if(useEncryption) {
-				decryptResponseFile();
-			}
+            if (useEncryption) {
+                decryptResponseFile();
+            }
 
 			CnpBatchFileResponse retObj = new CnpBatchFileResponse(responseFile);
 
-			checkDeleteBatchResponseFiles(responseFileToRecieve);
+            checkDeleteBatchResponseFiles(responseFileToRecieve);
 
 			return retObj;
 		} catch (IOException e) {
@@ -389,91 +370,188 @@ public class CnpBatchFileRequest{
 		}
 	}
 
-	private void decryptResponseFile(){
-		String encResponseFilename = responseFile.getAbsolutePath() + ".encrypted";
-		String passwd = properties.getProperty("gpgPassphrase");
-		PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), passwd);
-	}
+    private void decryptResponseFile() {
+        String encResponseFilename = responseFile.getAbsolutePath() + ".encrypted";
+        String passwd = properties.getProperty("gpgPassphrase");
+        String privateKeyPath = properties.getProperty("PrivateKeyPath");
+        try {
+            PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), privateKeyPath, passwd);
+        } catch (PGPException pgpe) {
+            throw new CnpBatchException("Error while decrypting response file. Check if " + privateKeyPath + " contains correct private key." +
+                    "and that the gpgPassphrase provided in config file is correct.", pgpe);
+        } catch (IOException ioe) {
+            throw new CnpBatchException("Error in decrypting response file. Check to see if the current user has permission to read and write to" +
+                    this.properties.getProperty("batchRequestFolder") + "." +
+                    "Also check if " + privateKeyPath + " contains the private key.");
+        }
+    }
 
-	private void checkDeleteBatchResponseFiles(File fileToBeDeleted){
-		boolean deleteBatchFiles = "true".equalsIgnoreCase(properties.getProperty("deleteBatchFiles"));
 
-		if (deleteBatchFiles){
-			responseFile.delete();
-			fileToBeDeleted.delete();
-		}
-	}
+    private void checkDeleteBatchResponseFiles(File fileToBeDeleted) {
+        boolean deleteBatchFiles = "true".equalsIgnoreCase(properties.getProperty("deleteBatchFiles"));
+        if (deleteBatchFiles) {
+            responseFile.delete();
+            fileToBeDeleted.delete();
+        }
+    }
 
-	/**
-	 * Prepare the batch file to be submitted and generate it in the request folder.
-	 */
-	public void prepareForDelivery() {
-		try {
-			String writeFolderPath = this.properties.getProperty("batchRequestFolder");
+    /**
+     * Prepare final batch request file to be submitted in batch request folder.
+     */
+    public void prepareForDelivery() {
+        if ("true".equalsIgnoreCase(properties.getProperty("useEncryption"))) {
+            prepareForEncryptedDelivery();
+        }
+        else {
+            try {
+                String writeFolderPath = this.properties.getProperty("batchRequestFolder");
 
-			tempBatchRequestFile = new File(writeFolderPath + "/tmp/tempBatchFileTesting");
-			OutputStream batchReqWriter = new FileOutputStream(tempBatchRequestFile.getAbsoluteFile());
-			// close the all the batch files
-			byte[] readData = new byte[1024];
-			for (CnpBatchRequest batchReq : cnpBatchRequestList) {
-				batchReq.closeFile();
-				StringWriter sw = new StringWriter();
-				marshaller.marshal(batchReq.getBatchRequest(), sw);
-				String xmlRequest = sw.toString();
+                tempBatchRequestFile = new File(writeFolderPath + "/tmp/tempBatchFileTesting");
+                OutputStream batchReqWriter = new FileOutputStream(tempBatchRequestFile.getAbsoluteFile());
+                // close the all the batch files
+                byte[] readData = new byte[1024];
+                for (CnpBatchRequest batchReq : cnpBatchRequestList) {
+                    batchReq.closeFile();
+                    String batchRequestXml = buildBatchRequestXml(batchReq);
+                    batchRequestXml = batchRequestXml.replaceFirst("/>", ">");
 
-				xmlRequest = xmlRequest.replaceFirst("/>", ">");
+                    FileInputStream fis = new FileInputStream(batchReq.getFile());
 
-				FileInputStream fis = new FileInputStream(batchReq.getFile());
+                    batchReqWriter.write(batchRequestXml.getBytes());
+                    int i = fis.read(readData);
 
-				batchReqWriter.write(xmlRequest.getBytes());
-				int i = fis.read(readData);
+                    while (i != -1) {
+                        batchReqWriter.write(readData, 0, i);
+                        i = fis.read(readData);
+                    }
 
-				while (i != -1) {
-					batchReqWriter.write(readData, 0, i);
-					i = fis.read(readData);
-				}
+                    batchReqWriter.write(("</batchRequest>\n").getBytes());
+                    fis.close();
+                    batchReq.getFile().delete();
+                }
+                // close the file
+                batchReqWriter.close();
+                generateRequestFile();
+                File tmpFile = new File(writeFolderPath + "/tmp");
+                if (tmpFile.exists()) {
+                    tmpFile.delete();
+                }
+            }
+            catch (IOException ioe) {
+                throw new CnpBatchException(
+                        "There was an exception while creating the Cnp Request file. " +
+                                "Check to see if the current user has permission to read and write to " +
+                                this.properties.getProperty("batchRequestFolder"), ioe);
+            }
+        }
+    }
 
-				batchReqWriter.write(("</batchRequest>\n").getBytes());
-				fis.close();
-				batchReq.getFile().delete();
-			}
-			// close the file
-			batchReqWriter.close();
-			generateRequestFile();
-			File tmpFile = new File(writeFolderPath + "/tmp");
-			if (tmpFile.exists()) {
-				tmpFile.delete();
-			}
-		} catch (JAXBException e) {
-			throw new CnpBatchException(
-					"There was an exception while marshalling BatchRequest or CnpRequest objects.", e);
-		} catch (IOException e) {
-			throw new CnpBatchException(
-					"There was an exception while creating the Cnp Request file. " +
-							"Check to see if the current user has permission to read and write to "
-							+ this.properties.getProperty("batchRequestFolder"), e);
-		}
-	}
 
-	void setResponseFile(File inFile) {
-		this.responseFile = inFile;
-	}
+    /**
+     * Prepare final encrypted batch request file to be submitted in batch request folder.
+     */
+    private void prepareForEncryptedDelivery() {
 
-	void setId(String id) {
-		this.requestId = id;
-	}
+        String privateKeyPath = properties.getProperty("PrivateKeyPath");
+        String gpgPassphrase = properties.getProperty("gpgPassphrase");
+        String vantivPubKeyPath = properties.getProperty("VantivPublicKeyPath");
+        String cnpRequestXml = buildCnpRequestXml();
+        try {
+            cnpRequestXml = cnpRequestXml.replace("</cnpRequest>", " ");
+            OutputStream encryptedCnpRequestWriter = PgpHelper.encryptionStream(requestFile.getAbsolutePath(), vantivPubKeyPath);
+            encryptedCnpRequestWriter.write(cnpRequestXml.getBytes());
 
-	/**
-	 * This method initializes the high level properties for the XML(ex:
-	 * initializes the user name and password for the presenter)
-	 *
-	 * @return
-	 */
-	private CnpRequest buildCnpRequest() {
-		Authentication authentication = new Authentication();
-		authentication.setPassword(this.properties.getProperty("password"));
-		authentication.setUser(this.properties.getProperty("username"));
-		CnpRequest cnpRequest = new CnpRequest();
+            byte[] clearData = new byte[2097152];
+            for (CnpBatchRequest batchReq : cnpBatchRequestList) {
+                batchReq.closeFile();
+                String batchRequestXml = buildBatchRequestXml(batchReq);
+                batchRequestXml = batchRequestXml.replaceFirst("/>", ">");
+                encryptedCnpRequestWriter.write(batchRequestXml.getBytes());
+                InputStream decryptionStream = PgpHelper.decryptionStream(batchReq.getFile().getAbsolutePath(),
+                        privateKeyPath,
+                        gpgPassphrase);
+                int len;
+                while ((len = decryptionStream.read(clearData)) > 0) {
+                    encryptedCnpRequestWriter.write(clearData, 0, len);
+                }
+                decryptionStream.close();
+                encryptedCnpRequestWriter.write("</batchRequest>\n".getBytes());
+                batchReq.getFile().delete();
+            }
+            encryptedCnpRequestWriter.write(("</cnpRequest>\n").getBytes());
+            encryptedCnpRequestWriter.close();
+        }
+        catch (IOException e) {
+            throw new CnpBatchException(
+                    "There was an exception while creating the Cnp Request file. " +
+                            "Check to see if the current user has permission to read and write to " +
+                            this.properties.getProperty("batchRequestFolder"), e);
+        }
+        catch (PGPException pgpe) {
+            throw new CnpBatchException("Error in creating encrypted request file. Check if " + privateKeyPath + " contains correct private key." +
+                    "and that the gpgPassphrase provided in config file is correct." +
+                    "\nAlso check if " + vantivPubKeyPath + " contains correct public key.", pgpe);
+        }
+    }
+
+
+    /**
+     *
+     * @param batchRequest
+     * @return BatchRequest header xml containing the summary of the transactions within the  given batch request.
+     */
+    private String buildBatchRequestXml(CnpBatchRequest batchRequest) {
+        try {
+            StringWriter sw = new StringWriter();
+            marshaller.marshal(batchRequest.getBatchRequest(), sw);
+            return sw.toString();
+        } catch (JAXBException e) {
+            throw new CnpBatchException(
+                    "There was an exception while marshalling BatchRequest or CnpRequest objects.", e);
+        }
+    }
+
+    void setResponseFile(File inFile) {
+        this.responseFile = inFile;
+    }
+
+    void setId(String id) {
+        this.requestId = id;
+    }
+
+
+    /**
+     *
+     * @return CnpRequest xml header containing authentication information for the presenter.
+     */
+    private String buildCnpRequestXml() {
+        CnpRequest cnpRequest = buildCnpRequest();
+
+        // Code to write to the file directly
+        StringWriter sw = new StringWriter();
+        Marshaller marshaller;
+        try {
+            marshaller = jc.createMarshaller();
+            marshaller.marshal(cnpRequest, sw);
+        } catch (JAXBException e) {
+            throw new CnpBatchException("Unable to load jaxb dependencies.  Perhaps a classpath issue?");
+        }
+        return sw.toString();
+    }
+
+
+
+    /**
+     * This method initializes the high level properties for the XML(ex:
+     * initializes the user name and password for the presenter)
+     *
+     * @return
+     */
+    private CnpRequest buildCnpRequest() {
+        Authentication authentication = new Authentication();
+        authentication.setPassword(this.properties.getProperty("password"));
+        authentication.setUser(this.properties.getProperty("username"));
+        CnpRequest cnpRequest = new CnpRequest();
 
 		if(requestId != null && requestId.length() != 0) {
 			cnpRequest.setId(requestId);
@@ -486,31 +564,31 @@ public class CnpBatchFileRequest{
 		return cnpRequest;
 	}
 
-	/**
-	 * This method gets the file of either the request or response. It will also
-	 * make sure that the folder structure where the file lives will be there.
-	 *
-	 * @param locationKey Key to use to get the path to the folder.
-	 * @return File ready to be written to.
-	 */
-	File getFileToWrite(String locationKey) {
-		String fileName = this.requestFileName;
-		String writeFolderPath = this.properties.getProperty(locationKey);
-		File fileToReturn = new File(writeFolderPath, fileName);
+    /**
+     * This method gets the file of either the request or response. It will also
+     * make sure that the folder structure where the file lives will be there.
+     *
+     * @param locationKey Key to use to get the path to the folder.
+     * @return File ready to be written to.
+     */
+    File getFileToWrite(String locationKey) {
+        String fileName = this.requestFileName;
+        String writeFolderPath = this.properties.getProperty(locationKey);
+        File fileToReturn = new File(writeFolderPath, fileName);
 
-		if (!fileToReturn.getParentFile().exists()) {
-			fileToReturn.getParentFile().mkdirs();
-		}
+        if (!fileToReturn.getParentFile().exists()) {
+            fileToReturn.getParentFile().mkdirs();
+        }
 
-		return fileToReturn;
-	}
+        return fileToReturn;
+    }
 
-	public boolean isEmpty() {
-		return (getNumberOfTransactionInFile() == 0) ? true : false;
-	}
+    public boolean isEmpty() {
+        return (getNumberOfTransactionInFile() == 0) ? true : false;
+    }
 
-	public boolean isFull() {
-		return (getNumberOfTransactionInFile() == this.maxAllowedTransactionsPerFile);
-	}
+    public boolean isFull() {
+        return (getNumberOfTransactionInFile() == this.maxAllowedTransactionsPerFile);
+    }
 
 }

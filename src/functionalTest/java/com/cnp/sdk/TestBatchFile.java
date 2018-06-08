@@ -15,12 +15,6 @@ import java.util.Properties;
 
 import javax.xml.bind.JAXBException;
 
-import com.cnp.sdk.CnpBatchFileRequest;
-import com.cnp.sdk.CnpBatchFileResponse;
-import com.cnp.sdk.CnpBatchRequest;
-import com.cnp.sdk.CnpBatchResponse;
-import com.cnp.sdk.CnpResponseProcessor;
-import com.cnp.sdk.CnpResponseProcessorAdapter;
 import com.cnp.sdk.generate.*;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import org.junit.Test;

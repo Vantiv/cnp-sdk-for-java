@@ -138,6 +138,7 @@ public class TestCnpBatchFileRequest {
         Marshaller mockMarshaller = Mockito.mock(Marshaller.class);
         testBatch.setMarshaller(mockMarshaller);
 
+
         testBatch.addTransaction(createTestSale(101L,"101"));
         testBatch.addTransaction(createTestSale(102L,"102"));
         testBatch.addTransaction(createTestSaleWithApplepayAndSecondaryAmount(103L, 10L, "user", "103"));
@@ -179,5 +180,4 @@ public class TestCnpBatchFileRequest {
         sale.setReportGroup("test");
         return sale;
     }
-
 }

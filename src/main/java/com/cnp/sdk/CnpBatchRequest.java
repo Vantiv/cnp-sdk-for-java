@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Properties;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -14,6 +16,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import com.cnp.sdk.generate.*;
+import org.bouncycastle.openpgp.PGPException;
 
 public class CnpBatchRequest {
 	private BatchRequest batchRequest;
@@ -24,7 +27,11 @@ public class CnpBatchRequest {
 	TransactionType txn;
 	String filePath;
 	OutputStream osWrttxn;
+
+
 	int numOfTxn;
+
+
 	private final int maxTransactionsPerBatch;
 	protected int cnpLimit_maxTransactionsPerBatch = 100000;
 	private final CnpBatchFileRequest lbfr;
@@ -47,8 +54,7 @@ public class CnpBatchRequest {
 			tmpFile.mkdir();
 		}
 		String dateString = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss.SSS").format(new java.util.Date());
-		filePath = new String(lbfr.getConfig().getProperty("batchRequestFolder") +
-                "/tmp/Transactions" + merchantId + dateString);
+		filePath = new String(lbfr.getConfig().getProperty("batchRequestFolder")+ "/tmp/Transactions" + merchantId + dateString);
 		numOfTxn = 0;
 		try {
 			this.jc = JAXBContext.newInstance("com.cnp.sdk.generate");
@@ -79,11 +85,26 @@ public class CnpBatchRequest {
 	 */
 	public TransactionCodeEnum addTransaction(CnpTransactionInterface transactionType) throws CnpBatchException, CnpBatchFileFullException, CnpBatchBatchFullException {
 		if (numOfTxn == 0) {
+            Properties properties = lbfr.getConfig();
             this.file = new File(filePath);
             try {
-                osWrttxn = new FileOutputStream(file.getAbsolutePath());
-            } catch (FileNotFoundException e) {
-                throw new CnpBatchException("There was an exception while trying to create a Request file. Please check if the folder: " + lbfr.getConfig().getProperty("batchRequestFolder") +" has read and write access. ");
+                if ("true".equalsIgnoreCase(properties.getProperty("useEncryption"))){
+                    osWrttxn = PgpHelper.encryptionStream(filePath, properties.getProperty("PublicKeyPath"));
+                }
+                else{
+                    osWrttxn = new FileOutputStream(file.getAbsolutePath());
+                }
+            }
+            catch (FileNotFoundException e) {
+                throw new CnpBatchException("There was an exception while trying to create a Request file. Please check if the folder: " + properties.getProperty("batchRequestFolder") +" has read and write access. ");
+            }
+            catch (IOException ioe){
+                throw new CnpBatchException("Could not read merchant public key at " + properties.getProperty("PublicKeyPath") +
+                        "\nMake sure that the provided public key path is correct",  ioe);
+            }
+            catch (PGPException pgpe){
+                throw new CnpBatchException("There was an error while trying to read merchant public key at " + properties.getProperty("PublicKeyPath") +
+                        "\nMake sure that the provided public key path contains a valid public key", pgpe);
             }
         }
 
@@ -104,6 +125,8 @@ public class CnpBatchRequest {
             throw new CnpBatchBatchFullException("Batch is already full -- it has reached the maximum number of transactions allowed per batch.", e);
         }
 
+        //Adding 1 to the number of transaction. This is on the assumption that we are adding one transaction to the batch at a time.
+        BigInteger numToAdd = new BigInteger("1");
         boolean transactionAdded = false;
 
 		JAXBElement<?> transaction;
@@ -354,7 +377,6 @@ public class CnpBatchRequest {
         }
 
         batchFileStatus = verifyFileThresholds();
-
         if( batchFileStatus == TransactionCodeEnum.FILEFULL){
             return TransactionCodeEnum.FILEFULL;
         } else if( batchFileStatus == TransactionCodeEnum.BATCHFULL ){
@@ -430,5 +452,7 @@ public class CnpBatchRequest {
     public void setNumOfTxn(int numOfTxn) {
         this.numOfTxn = numOfTxn;
     }
+
+
 
 }

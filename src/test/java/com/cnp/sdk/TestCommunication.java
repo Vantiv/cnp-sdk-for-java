@@ -26,7 +26,7 @@ public class TestCommunication {
 		assertEquals("", communication.neuterXml(xml));
 
 		xml = "<?xml version=1.0 encoding=UTF-8 standalone=yes?>" +
-				"<litleOnlineRequest merchantId=123456 merchantSdk=Java;11.3.0 version=11.3 xmlns=http://www.litle.com/schema>" +
+				"<cnpOnlineRequest merchantId=123456 merchantSdk=Java;11.3.0 version=11.3 xmlns=http://www.litle.com/schema>" +
 				"<authentication>" +
 				"<user>DummyUser</user>" +
 				"<password>DummyPass</password>" +
@@ -46,9 +46,9 @@ public class TestCommunication {
 				"<accNum>1234567890</accNum>" +
 				"</echeck>" +
 				"</authorization>" +
-				"</litleOnlineRequest>";
+				"</cnpOnlineRequest>";
 		String neuteredXml = "<?xml version=1.0 encoding=UTF-8 standalone=yes?>" +
-				"<litleOnlineRequest merchantId=123456 merchantSdk=Java;11.3.0 version=11.3 xmlns=http://www.litle.com/schema>" +
+				"<cnpOnlineRequest merchantId=123456 merchantSdk=Java;11.3.0 version=11.3 xmlns=http://www.litle.com/schema>" +
 				"<authentication>" +
 				"<user>NEUTERED</user>" +
 				"<password>NEUTERED</password>" +
@@ -68,7 +68,7 @@ public class TestCommunication {
 				"<accNum>NEUTERED</accNum>" +
 				"</echeck>" +
 				"</authorization>" +
-				"</litleOnlineRequest>";
+				"</cnpOnlineRequest>";
 		assertEquals(neuteredXml, communication.neuterXml(xml));
 	}
 

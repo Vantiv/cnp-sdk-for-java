@@ -1,10 +1,7 @@
 package com.cnp.sdk;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class Setup {
@@ -134,6 +131,7 @@ public class Setup {
         lastUserInput = stdin.readLine();
         config.put("sftpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
 
+
         System.out.print("\nPlease input the proxy host, if no proxy hit enter: ");
         lastUserInput = stdin.readLine();
         config.put("proxyHost", (lastUserInput == null ? "" : lastUserInput));
@@ -150,25 +148,27 @@ public class Setup {
 
         System.out.print("Use PGP encryption for batch files? (No encryption by default): ");
         lastUserInput = stdin.readLine();
-        if("true".equals(lastUserInput) || "yes".equals(lastUserInput) || "y".equals(lastUserInput)){
+        if ("true".equals(lastUserInput) || "yes".equals(lastUserInput) || "y".equals(lastUserInput)) {
             config.put("useEncryption", "true");
-            System.out.println("Import Vantiv's public key to gpg key ring?");
+
+            System.out.print("Please input path to Vantiv's public key (for encryption of batch requests) : ");
             lastUserInput = stdin.readLine();
-            if("true".equals(lastUserInput) || "yes".equals(lastUserInput) || "y".equals(lastUserInput)) {
-                System.out.print("Please input path to Vantiv's public key (for encryption of batch requests) : ");
-                String publicKey = PgpHelper.importKey(stdin.readLine());
-                config.put("vantivPublicKeyID", publicKey);
-            }
-            else{
-                System.out.print("Please input key ID for Vantiv's public key (imported to your key ring) : ");
-                config.put("vantivPublicKeyID", stdin.readLine());
-            }
+            config.put("VantivPublicKeyPath", lastUserInput);
+
+            System.out.print("Please input path to your merchant public key (To keep temp file encrypted) : ");
+            lastUserInput = stdin.readLine();
+            config.put("PublicKeyPath", lastUserInput);
+
+            System.out.print("Please input path to your merchant private key (for decryption of batch responses) : ");
+            lastUserInput = stdin.readLine();
+            config.put("PrivateKeyPath", lastUserInput);
+
             System.out.print("Passphrase for decryption : ");
             config.put("gpgPassphrase", stdin.readLine());
-        }
-        else {
+        } else {
             config.put("useEncryption", "false");
-            config.put("vantivPublicKeyID", "");
+            config.put("PublicKeyPath", "");
+            config.put("PrivateKeyPath", "");
             config.put("gpgPassphrase", "");
         }
 
