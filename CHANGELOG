@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.3.2 (June 20. 2018)
+* Feature: Added option for specifying sftp port in config
+
 ==Version 12.3.1 (June 8. 2018)
 * Feature: Using BouncyCastle for PGP
 
