@@ -1,7 +1,12 @@
 package com.cnp.sdk;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -76,6 +81,20 @@ public class TestCommunication {
 	public void testGetBestProtocol() {
 		assertEquals("TLSv1.2", com.cnp.sdk.Communication.getBestProtocol(new String[] {"TLSv1.1", "TLSv1.2"}));
 	}
+
+
+
+    @Test
+    public void testSendCnpRequestFileToSFTP() throws IOException {
+        Properties props = new Properties();
+        props.setProperty("sftpPort", "abc");
+        try {
+            communication.sendCnpRequestFileToSFTP(new File("test.txt"), props);
+            fail("Must throw exception");
+        } catch (CnpBatchException e) {
+            assertEquals("Exception parsing sftpPort from config", e.getMessage());
+        }
+    }
 
 }
 

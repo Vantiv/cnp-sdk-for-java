@@ -176,6 +176,15 @@ public class Communication {
 	    String username = configuration.getProperty("sftpUsername");
 	    String password = configuration.getProperty("sftpPassword");
 	    String hostname = configuration.getProperty("batchHost");
+	    String portStr = configuration.getProperty("sftpPort");
+	    int port = -1;
+	    if (portStr != null && portStr != "") {
+			try {
+				port = Integer.parseInt(portStr);
+			} catch (NumberFormatException e) {
+				throw new CnpBatchException("Exception parsing sftpPort from config", e);
+			}
+		}
 
 	    java.util.Properties config = new java.util.Properties();
 	    config.put("StrictHostKeyChecking", "no");
@@ -183,7 +192,11 @@ public class Communication {
 	    Session session;
 	    try{
     	    jsch = new JSch();
-    	    session = jsch.getSession(username, hostname);
+    	    if (port != -1) {
+    	    	session = jsch.getSession(username, hostname, port);
+			} else {
+				session = jsch.getSession(username, hostname);
+			}
     	    session.setConfig(config);
     	    session.setPassword(password);
 
