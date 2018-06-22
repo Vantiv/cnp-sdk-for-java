@@ -173,37 +173,7 @@ public class Communication {
 	 */
 
 	public void sendCnpRequestFileToSFTP(File requestFile, Properties configuration) throws IOException{
-	    String username = configuration.getProperty("sftpUsername");
-	    String password = configuration.getProperty("sftpPassword");
-	    String hostname = configuration.getProperty("batchHost");
-	    String portStr = configuration.getProperty("sftpPort");
-	    int port = -1;
-	    if (portStr != null && portStr != "") {
-			try {
-				port = Integer.parseInt(portStr);
-			} catch (NumberFormatException e) {
-				throw new CnpBatchException("Exception parsing sftpPort from config", e);
-			}
-		}
-
-	    java.util.Properties config = new java.util.Properties();
-	    config.put("StrictHostKeyChecking", "no");
-	    JSch jsch;
-	    Session session;
-	    try{
-    	    jsch = new JSch();
-    	    if (port != -1) {
-    	    	session = jsch.getSession(username, hostname, port);
-			} else {
-				session = jsch.getSession(username, hostname);
-			}
-    	    session.setConfig(config);
-    	    session.setPassword(password);
-
-    	    session.connect();
-	    } catch(JSchException e){
-	        throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
-	    }
+		Session session = setupSession(configuration);
 
 	    Channel channel;
 
@@ -249,40 +219,7 @@ public class Communication {
 	 * @throws IOException exceptions coming out of the sFTP actions
 	 */
 	public void receiveCnpRequestResponseFileFromSFTP(File requestFile, File responseFile, Properties configuration) throws IOException{
-	    String username = configuration.getProperty("sftpUsername");
-        String password = configuration.getProperty("sftpPassword");
-        String hostname = configuration.getProperty("batchHost");
-		String portStr = configuration.getProperty("sftpPort");
-
-		int port = -1;
-		if (portStr != null && portStr != "") {
-			try {
-				port = Integer.parseInt(portStr);
-			} catch (NumberFormatException e) {
-				throw new CnpBatchException("Exception parsing sftpPort from config", e);
-			}
-		}
-
-        java.util.Properties config = new java.util.Properties();
-        config.put("StrictHostKeyChecking", "no");
-        JSch jsch;
-        Session session;
-
-        try{
-            jsch = new JSch();
-			if (port != -1) {
-				session = jsch.getSession(username, hostname, port);
-			} else {
-				session = jsch.getSession(username, hostname);
-			}
-
-            session.setConfig(config);
-            session.setPassword(password);
-
-            session.connect();
-        } catch(JSchException e){
-            throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
-        }
+	    Session session = setupSession(configuration);
 
         Channel channel;
 
@@ -338,6 +275,45 @@ public class Communication {
 
         channel.disconnect();
         session.disconnect();
+	}
+
+	private Session setupSession(Properties configuration) {
+		String username = configuration.getProperty("sftpUsername");
+		String password = configuration.getProperty("sftpPassword");
+		String hostname = configuration.getProperty("batchHost");
+		String portStr = configuration.getProperty("sftpPort");
+
+		int port = -1;
+		if (portStr != null && portStr != "") {
+			try {
+				port = Integer.parseInt(portStr);
+			} catch (NumberFormatException e) {
+				throw new CnpBatchException("Exception parsing sftpPort from config", e);
+			}
+		}
+
+		java.util.Properties config = new java.util.Properties();
+		config.put("StrictHostKeyChecking", "no");
+		JSch jsch;
+		Session session;
+
+		try{
+			jsch = new JSch();
+			if (port != -1) {
+				session = jsch.getSession(username, hostname, port);
+			} else {
+				session = jsch.getSession(username, hostname);
+			}
+
+			session.setConfig(config);
+			session.setPassword(password);
+
+			session.connect();
+		} catch(JSchException e){
+			throw new CnpBatchException("Exception connection to Vantiv eCommerce : error in session.connect", e);
+		}
+
+		return session;
 	}
 
 	/* Method to neuter out sensitive information from xml */
