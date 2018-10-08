@@ -464,7 +464,7 @@ public class TestCert1Base {
 	public void test4AVS() throws Exception {
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("4");
-		authorization.setAmount(000L);
+		authorization.setAmount(10100L);
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		Contact contact = new Contact();
 		contact.setName("Bob Black");
@@ -478,7 +478,6 @@ public class TestCert1Base {
 		card.setType(MethodOfPaymentTypeEnum.AX);
 		card.setNumber("375001000000005");
 		card.setExpDate("0412");
-		card.setCardValidationNum("758");
 		authorization.setCard(card);
 		authorization.setId("id");
 

@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.5.0 (Oct 04, 2018)
+* Feature: Full functions for XML v12.5
+
 ==Version 12.3.2 (June 20. 2018)
 * Feature: Added option for specifying sftp port in config
 

@@ -159,7 +159,7 @@ public class TestCnpBatchFileRequest {
         sale.setReportGroup("test");
         return sale;
     }
-    
+
     public Sale createTestSaleWithApplepayAndSecondaryAmount(Long amount, Long secAmount, String applepayData, String orderId){
         Sale sale = new Sale();
         sale.setAmount(amount);

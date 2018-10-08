@@ -80,7 +80,7 @@ public class TestBatchFile {
         String requestFileName = "cnpSdk-testBatchFile-configOverridesSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName, configOverrides);
-       
+
         // request file is being set in the constructor
         assertNotNull(request.getFile());
 
