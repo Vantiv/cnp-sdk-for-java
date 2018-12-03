@@ -14,6 +14,7 @@ import javax.net.ssl.SSLContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -120,7 +121,8 @@ public class Communication {
 					.build();
 		}
 
-		HttpPost post = new HttpPost(configuration.getProperty("url"));
+		RequestTarget reqTarget = CommManager.instance(configuration).findUrl();
+		HttpPost post = new HttpPost(reqTarget.getUrl());
 		post.setHeader("Content-Type", CONTENT_TYPE_TEXT_XML_UTF8);
 		if(!httpKeepAlive) {
 			post.setHeader("Connection", "close");
@@ -141,6 +143,7 @@ public class Communication {
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
 			HttpResponse response = httpClient.execute(post);
 			entity = response.getEntity();
+            CommManager.instance(configuration).reportResult(reqTarget,  CommManager.REQUEST_RESULT_RESPONSE_RECEIVED, response.getStatusLine().getStatusCode());
 			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new CnpOnlineException(response.getStatusLine().getStatusCode() + ":" +
 						response.getStatusLine().getReasonPhrase());
@@ -155,6 +158,11 @@ public class Communication {
 				System.out.println("Response XML: " + xmlResponse);
 			}
 		} catch (IOException e) {
+		    int result = CommManager.REQUEST_RESULT_CONNECTION_FAILED;
+		    if ( e instanceof NoHttpResponseException ) {
+		        result = CommManager.REQUEST_RESULT_RESPONSE_TIMEOUT;
+		    }
+		    CommManager.instance(configuration).reportResult(reqTarget, result, 0);
 			throw new CnpOnlineException("Exception connection to Vantiv eCommerce", e);
 		} finally {
 			if (entity != null) {

@@ -22,6 +22,7 @@ public class TestCert2AuthEnhanced {
         config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
         config.setProperty("proxyHost", "websenseproxy");
         config.setProperty("proxyPort", "8080");
+        config.setProperty("multiSite", "false");
         cnp = new CnpOnline(config);
 	}
 

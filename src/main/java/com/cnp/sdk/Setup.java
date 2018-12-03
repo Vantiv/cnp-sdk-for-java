@@ -7,22 +7,30 @@ import java.util.Properties;
 public class Setup {
     /* List of environments for the configuration. */
     private enum EnvironmentConfiguration {
-        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "prelive.litle.com", "15000"),
-        PRELIVE("prelive", "https://payments.vantivprelive.com/vap/communicator/online", "payments.vantivprelive.com", "15000"),
-        POSTLIVE("postlive", "https://payments.vantivpostlive.com/vap/communicator/online", "payments.vantivpostlive.com", "15000"),
-        PRODUCTION("production", "https://payments.vantivcnp.com/vap/communicator/online", "payments.vantivcnp.com", "15000"),
-        OTHER("other", "You will be asked for all the values", null, null);
+        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "prelive.litle.com", "15000",
+                "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online","https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online"),
+        PRELIVE("prelive", "https://payments.vantivprelive.com/vap/communicator/online", "payments.vantivprelive.com", "15000",
+                "https://payments.east.vantivprelive.com/vap/communicator/online","https://payments.west.vantivprelive.com/vap/communicator/online"),
+        POSTLIVE("postlive", "https://payments.vantivpostlive.com/vap/communicator/online", "payments.vantivpostlive.com", "15000",
+                "https://payments.east.vantivpostlive.com/vap/communicator/online", "https://payments.west.vantivpostlive.com/vap/communicator/online"),
+        PRODUCTION("production", "https://payments.vantivcnp.com/vap/communicator/online", "payments.vantivcnp.com", "15000",
+                "https://payments.east.vantivcnp.com/vap/communicator/online", "https://payments.west.vantivcnp.com/vap/communicator/online"),
+        OTHER("other", "You will be asked for all the values", null, null, null, null);
 
         private final String key;
         private final String onlineUrl;
         private final String batchUrl;
         private final String batchPort;
+        private final String multiSiteUrl1;
+        private final String multiSiteUrl2;
 
-        private EnvironmentConfiguration(final String key, final String online, final String batch, final String port) {
+        private EnvironmentConfiguration(final String key, final String online, final String batch, final String port, final String multiSiteUrl1, final String multiSiteUrl2) {
             this.key = key;
             this.onlineUrl = online;
             this.batchUrl = batch;
             this.batchPort = port;
+            this.multiSiteUrl1 = multiSiteUrl1;
+            this.multiSiteUrl2 = multiSiteUrl2;
         }
 
         public final String getKey() {
@@ -39,6 +47,14 @@ public class Setup {
 
         public final String getBatchPort() {
             return this.batchPort;
+        }
+        
+        public final String getMultiSiteUrl1() {
+            return this.multiSiteUrl1;
+        }
+
+        public final String getMultiSiteUrl2() {
+            return this.multiSiteUrl2;
         }
 
         public static final EnvironmentConfiguration fromValue(final String value) {
@@ -95,12 +111,21 @@ public class Setup {
                 config.put("batchHost", stdin.readLine());
                 System.out.println("Please input the port number for batch transactions (ex: 15000):");
                 config.put("batchPort", stdin.readLine());
+                config.put("multiSite", false);
+                config.put("printMultiSiteDebug", false);
                 badInput = false;
             } else {
                 // standard predefined cases
                 config.put("url", environSelected.getOnlineUrl());
                 config.put("batchHost", environSelected.getBatchUrl());
                 config.put("batchPort", environSelected.getBatchPort());
+                
+                config.put("multiSiteUrl1", environSelected.getMultiSiteUrl1());
+                config.put("multiSiteUrl2", environSelected.getMultiSiteUrl2());
+                config.put("multiSite", false);
+                config.put("multiSiteErrorThreshold", 5);
+                config.put("maxHoursWithoutSwitch",  48);
+                config.put("printMultiSiteDebug", false);
                 badInput = false;
             }
         } while( badInput );
@@ -173,6 +198,7 @@ public class Setup {
         }
 
         config.put("deleteBatchFiles", "false");
+        
 
         config.store(configFile, "");
         System.out.println("The Cnp configuration file has been generated, the file is located at " + file.getAbsolutePath());
