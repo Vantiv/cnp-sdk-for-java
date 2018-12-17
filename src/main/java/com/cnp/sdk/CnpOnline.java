@@ -708,7 +708,12 @@ public class CnpOnline {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return vendorDebit(vendorDebit, request);
     }
-    
+
+    public VendorDebitResponse vendorDebit(VendorDebit vendorDebit) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return vendorDebit(vendorDebit, request);
+    }
+
     public VendorDebitResponse vendorDebit(VendorDebit vendorDebit, CnpOnlineRequest overrides) {
         CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
         fillInReportGroup(vendorDebit);

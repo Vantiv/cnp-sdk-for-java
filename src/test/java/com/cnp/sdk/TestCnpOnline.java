@@ -1321,7 +1321,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"12.5\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
+                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"12.7\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
                                 		+ "<deactivateReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
@@ -1329,7 +1329,7 @@ public class TestCnpOnline {
                                 		+ "></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='12.5' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><deactivateReversalResponse><cnpTxnId>123456</cnpTxnId></deactivateReversalResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='12.7' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><deactivateReversalResponse><cnpTxnId>123456</cnpTxnId></deactivateReversalResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CnpOnlineRequest overrides = new CnpOnlineRequest();
         overrides.setMerchantId("905");
