@@ -17,6 +17,7 @@ import javax.xml.bind.JAXBException;
 
 import com.cnp.sdk.generate.*;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestBatchFile {
@@ -1494,6 +1495,252 @@ public class TestBatchFile {
 
         assertEquals(1, txns);
     }
+
+
+    @Ignore
+    @Test
+    public void testCtxAll(){
+        String requestFileName = "cnpSdk-testBatchFile-CtxAll-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(
+                requestFileName);
+
+        Properties configFromFile = request.getConfig();
+
+        // pre-assert the config file has required param values
+        assertEquals("prelive.litle.com",
+                configFromFile.getProperty("batchHost"));
+        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
+        echeck.setAccNum("1092969901");
+        echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
+        echeck.setRoutingNum("011075150");
+        echeck.setCheckNum("123455");
+
+        VendorCreditCtx vcredit = new VendorCreditCtx();
+        vcredit.setReportGroup("vendorCredit");
+        vcredit.setId("111");
+        vcredit.setFundingSubmerchantId("vendorCredit");
+        vcredit.setVendorName("Vendor101");
+        vcredit.setFundsTransferId("1001");
+        vcredit.setAmount(500l);
+        vcredit.setAccountInfo(echeck);
+        batch.addTransaction(vcredit);
+
+        VendorDebitCtx vdebit = new VendorDebitCtx();
+        vdebit.setReportGroup("vendorDebit");
+        vdebit.setId("111");
+        vdebit.setFundingSubmerchantId("vendorDebit");
+        vdebit.setVendorName("Vendor101");
+        vdebit.setFundsTransferId("1001");
+        vdebit.setAmount(500l);
+        vdebit.setAccountInfo(echeck);
+        batch.addTransaction(vdebit);
+
+        SubmerchantCreditCtx smcredit = new SubmerchantCreditCtx();
+        smcredit.setReportGroup("submerchantCredit");
+        smcredit.setId("111");
+        smcredit.setFundingSubmerchantId("submerchantCredit");
+        smcredit.setSubmerchantName("submerchant101");
+        smcredit.setFundsTransferId("1001");
+        smcredit.setAmount(500l);
+        smcredit.setAccountInfo(echeck);
+        batch.addTransaction(smcredit);
+
+        SubmerchantDebitCtx smdebit = new SubmerchantDebitCtx();
+        smdebit.setReportGroup("submerchantDebit");
+        smdebit.setId("111");
+        smdebit.setFundingSubmerchantId("submerchantDebit");
+        smdebit.setSubmerchantName("submerchant101");
+        smdebit.setFundsTransferId("1001");
+        smdebit.setAmount(500l);
+        smdebit.setAccountInfo(echeck);
+        batch.addTransaction(smdebit);
+
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
+        int txns = 0;
+
+//        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse
+                .processNextTransaction(new CnpResponseProcessor() {
+
+                    public void processVendorDebitResponse(
+                            VendorDebitResponse vendorDebitResponse) {
+                    }
+
+                    public void processVendorCreditRespsonse(
+                            VendorCreditResponse vendorCreditResponse) {
+                    }
+
+                    public void processUpdateSubscriptionResponse(
+                            UpdateSubscriptionResponse updateSubscriptionResponse) {
+                    }
+
+                    public void processUpdatePlanResponse(
+                            UpdatePlanResponse updatePlanResponse) {
+                    }
+
+                    public void processUpdateCardValidationNumOnTokenResponse(
+                            UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
+                    }
+
+                    public void processUnloadResponse(
+                            UnloadResponse unloadResponse) {
+                    }
+
+                    public void processSubmerchantDebitResponse(
+                            SubmerchantDebitResponse submerchantDebitResponse) {
+                    }
+
+                    public void processSubmerchantCreditResponse(
+                            SubmerchantCreditResponse submerchantCreditResponse) {
+                    }
+
+                    public void processSaleResponse(SaleResponse saleResponse) {
+                    }
+
+                    public void processReserveDebitResponse(
+                            ReserveDebitResponse reserveDebitResponse) {
+                    }
+
+                    public void processReserveCreditResponse(
+                            ReserveCreditResponse reserveCreditResponse) {
+                    }
+
+                    public void processRegisterTokenResponse(
+                            RegisterTokenResponse registerTokenResponse) {
+                    }
+
+                    public void processPhysicalCheckDebitResponse(
+                            PhysicalCheckDebitResponse checkDebitResponse) {
+                    }
+
+                    public void processPhysicalCheckCreditResponse(
+                            PhysicalCheckCreditResponse checkCreditResponse) {
+                    }
+
+                    public void processPayFacDebitResponse(
+                            PayFacDebitResponse payFacDebitResponse) {
+                    }
+
+                    public void processPayFacCreditResponse(
+                            PayFacCreditResponse payFacCreditResponse) {
+                    }
+
+                    public void processLoadResponse(LoadResponse loadResponse) {
+                    }
+
+                    public void processForceCaptureResponse(
+                            ForceCaptureResponse forceCaptureResponse) {
+                    }
+
+                    public void processEcheckVerificationResponse(
+                            EcheckVerificationResponse echeckVerificationResponse) {
+                    }
+
+                    public void processEcheckSalesResponse(
+                            EcheckSalesResponse echeckSalesResponse) {
+                    }
+
+                    public void processEcheckRedepositResponse(
+                            EcheckRedepositResponse echeckRedepositResponse) {
+                    }
+
+                    public void processEcheckPreNoteSaleResponse(
+                            EcheckPreNoteSaleResponse echeckPreNoteSaleResponse) {
+
+                    }
+
+                    public void processEcheckPreNoteCreditResponse(
+                            EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
+
+                    }
+
+                    public void processEcheckCreditResponse(
+                            EcheckCreditResponse echeckCreditResponse) {
+                    }
+
+                    public void processDeactivateResponse(
+                            DeactivateResponse deactivateResponse) {
+                    }
+
+                    public void processCreditResponse(
+                            CreditResponse creditResponse) {
+                    }
+
+                    public void processCreatePlanResponse(
+                            CreatePlanResponse createPlanResponse) {
+                    }
+
+                    public void processCaptureResponse(
+                            CaptureResponse captureResponse) {
+                    }
+
+                    public void processCaptureGivenAuthResponse(
+                            CaptureGivenAuthResponse captureGivenAuthResponse) {
+                    }
+
+                    public void processCancelSubscriptionResponse(
+                            CancelSubscriptionResponse cancelSubscriptionResponse) {
+                    }
+
+                    public void processBalanceInquiryResponse(
+                            BalanceInquiryResponse balanceInquiryResponse) {
+                    }
+
+                    public void processAuthorizationResponse(
+                            AuthorizationResponse authorizationResponse) {
+                    }
+
+                    public void processAuthReversalResponse(
+                            AuthReversalResponse authReversalResponse) {
+                    }
+
+                    public void processActivateResponse(
+                            ActivateResponse activateResponse) {
+                    }
+
+                    public void processAccountUpdate(
+                            AccountUpdateResponse accountUpdateResponse) {
+                    }
+
+                    public void processFundingInstructionVoidResponse(
+                            FundingInstructionVoidResponse fundingInstructionVoidResponse) {
+
+                    }
+
+                    public void processGiftCardAuthReversalResponse(
+                            GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+                    }
+
+                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+                    }
+
+                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+                    }
+
+                    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
+
+                    }
+
+                    public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
+                    }
+                })) {
+
+            txns++;
+        }
+
+        assertEquals(transactionCount, txns);
+
+    }
+
 
 //    @Test
 //    public void testBatch_FastAccessFunding() {
