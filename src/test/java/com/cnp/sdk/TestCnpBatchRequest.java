@@ -10,41 +10,10 @@ import java.util.Properties;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import com.cnp.sdk.generate.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import com.cnp.sdk.generate.AccountUpdate;
-import com.cnp.sdk.generate.ApplepayHeaderType;
-import com.cnp.sdk.generate.ApplepayType;
-import com.cnp.sdk.generate.AuthReversal;
-import com.cnp.sdk.generate.Authorization;
-import com.cnp.sdk.generate.Capture;
-import com.cnp.sdk.generate.CaptureGivenAuth;
-import com.cnp.sdk.generate.CardType;
-import com.cnp.sdk.generate.Credit;
-import com.cnp.sdk.generate.EcheckCredit;
-import com.cnp.sdk.generate.EcheckPreNoteSale;
-import com.cnp.sdk.generate.EcheckRedeposit;
-import com.cnp.sdk.generate.EcheckSale;
-import com.cnp.sdk.generate.EcheckType;
-import com.cnp.sdk.generate.EcheckVerification;
-import com.cnp.sdk.generate.ForceCapture;
-import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
-import com.cnp.sdk.generate.OrderSourceType;
-import com.cnp.sdk.generate.PayFacCredit;
-import com.cnp.sdk.generate.PayFacDebit;
-import com.cnp.sdk.generate.PhysicalCheckCredit;
-import com.cnp.sdk.generate.PhysicalCheckDebit;
-import com.cnp.sdk.generate.RegisterTokenRequestType;
-import com.cnp.sdk.generate.ReserveCredit;
-import com.cnp.sdk.generate.ReserveDebit;
-import com.cnp.sdk.generate.Sale;
-import com.cnp.sdk.generate.SubmerchantCredit;
-import com.cnp.sdk.generate.SubmerchantDebit;
-import com.cnp.sdk.generate.UpdateCardValidationNumOnToken;
-import com.cnp.sdk.generate.VendorCredit;
-import com.cnp.sdk.generate.VendorDebit;
 
 public class TestCnpBatchRequest {
 

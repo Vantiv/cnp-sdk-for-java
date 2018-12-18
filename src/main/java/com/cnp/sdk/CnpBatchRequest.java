@@ -80,44 +80,40 @@ public class CnpBatchRequest {
 	 * @throws FileNotFoundException
 	 * @throws JAXBException
 	 */
-	public TransactionCodeEnum addTransaction(CnpTransactionInterface transactionType) throws CnpBatchException{
-		if (numOfTxn == 0) {
+	public TransactionCodeEnum addTransaction(CnpTransactionInterface transactionType) throws CnpBatchException {
+        if (numOfTxn == 0) {
             Properties properties = lbfr.getConfig();
             this.file = new File(filePath);
             try {
-                if ("true".equalsIgnoreCase(properties.getProperty("useEncryption"))){
+                if ("true".equalsIgnoreCase(properties.getProperty("useEncryption"))) {
                     osWrttxn = PgpHelper.encryptionStream(filePath, properties.getProperty("PublicKeyPath"));
-                }
-                else{
+                } else {
                     osWrttxn = new FileOutputStream(file.getAbsolutePath());
                 }
-            }
-            catch (FileNotFoundException e) {
-                throw new CnpBatchException("There was an exception while trying to create a Request file. Please check if the folder: " + properties.getProperty("batchRequestFolder") +" has read and write access. ");
-            }
-            catch (IOException ioe){
+            } catch (FileNotFoundException e) {
+                throw new CnpBatchException("There was an exception while trying to create a Request file. Please check if the folder: " + properties.getProperty("batchRequestFolder") + " has read and write access. ");
+            } catch (IOException ioe) {
                 throw new CnpBatchException("Could not read merchant public key at " + properties.getProperty("PublicKeyPath") +
-                        "\nMake sure that the provided public key path is correct",  ioe);
-            }
-            catch (PGPException pgpe){
+                        "\nMake sure that the provided public key path is correct", ioe);
+            } catch (PGPException pgpe) {
                 throw new CnpBatchException("There was an error while trying to read merchant public key at " + properties.getProperty("PublicKeyPath") +
                         "\nMake sure that the provided public key path contains a valid public key", pgpe);
             }
         }
 
-		if(numOfTxn > 0 && batchRequest.getNumAccountUpdates().intValue() != numOfTxn
-		        && (transactionType instanceof AccountUpdate)){
+        if (numOfTxn > 0 && batchRequest.getNumAccountUpdates().intValue() != numOfTxn
+                && (transactionType instanceof AccountUpdate)) {
             throw new CnpBatchException("An account update cannot be added to a batch containing transactions other than other AccountUpdates.");
-        } else if(numOfTxn > 0 && batchRequest.getNumAccountUpdates().intValue() == numOfTxn &&
-                !(transactionType instanceof AccountUpdate)){
+        } else if (numOfTxn > 0 && batchRequest.getNumAccountUpdates().intValue() == numOfTxn &&
+                !(transactionType instanceof AccountUpdate)) {
             throw new CnpBatchException("Transactions that are not AccountUpdates cannot be added to a batch containing AccountUpdates.");
         }
 
-		TransactionCodeEnum batchFileStatus = verifyFileThresholds();
-        if( batchFileStatus == TransactionCodeEnum.FILEFULL){
+        TransactionCodeEnum batchFileStatus = verifyFileThresholds();
+        if (batchFileStatus == TransactionCodeEnum.FILEFULL) {
             Exception e = new Exception();
             throw new CnpBatchFileFullException("Batch File is already full -- it has reached the maximum number of transactions allowed per batch file.", e);
-        } else if( batchFileStatus == TransactionCodeEnum.BATCHFULL ){
+        } else if (batchFileStatus == TransactionCodeEnum.BATCHFULL) {
             Exception e = new Exception();
             throw new CnpBatchBatchFullException("Batch is already full -- it has reached the maximum number of transactions allowed per batch.", e);
         }
@@ -126,153 +122,161 @@ public class CnpBatchRequest {
         BigInteger numToAdd = new BigInteger("1");
         boolean transactionAdded = false;
 
-		JAXBElement<?> transaction;
+        JAXBElement<?> transaction;
 
-		if(transactionType instanceof Sale){
+        if (transactionType instanceof Sale) {
             batchRequest.setNumSales(batchRequest.getNumSales().add(BigInteger.valueOf(1)));
             batchRequest.setSaleAmount(batchRequest.getSaleAmount().add(BigInteger.valueOf(((Sale) transactionType).getAmount())));
-            transaction = objFac.createSale((Sale)transactionType);
+            transaction = objFac.createSale((Sale) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof Authorization){
+            numOfTxn++;
+        } else if (transactionType instanceof Authorization) {
             batchRequest.setNumAuths(batchRequest.getNumAuths().add(BigInteger.valueOf(1)));
             batchRequest.setAuthAmount(batchRequest.getAuthAmount().add(BigInteger.valueOf(((Authorization) transactionType).getAmount())));
-            transaction = objFac.createAuthorization((Authorization)transactionType);
+            transaction = objFac.createAuthorization((Authorization) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof Credit){
+            numOfTxn++;
+        } else if (transactionType instanceof Credit) {
             batchRequest.setNumCredits(batchRequest.getNumCredits().add(BigInteger.valueOf(1)));
             batchRequest.setCreditAmount(batchRequest.getCreditAmount().add(BigInteger.valueOf(((Credit) transactionType).getAmount())));
-            transaction = objFac.createCredit((Credit)transactionType);
+            transaction = objFac.createCredit((Credit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof RegisterTokenRequestType){
+            numOfTxn++;
+        } else if (transactionType instanceof RegisterTokenRequestType) {
             batchRequest.setNumTokenRegistrations(batchRequest.getNumTokenRegistrations().add(BigInteger.valueOf(1)));
-            transaction = objFac.createRegisterTokenRequest((RegisterTokenRequestType)transactionType);
+            transaction = objFac.createRegisterTokenRequest((RegisterTokenRequestType) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof CaptureGivenAuth){
+            numOfTxn++;
+        } else if (transactionType instanceof CaptureGivenAuth) {
             batchRequest.setNumCaptureGivenAuths(batchRequest.getNumCaptureGivenAuths().add(BigInteger.valueOf(1)));
             batchRequest.setCaptureGivenAuthAmount(batchRequest.getCaptureGivenAuthAmount().add(BigInteger.valueOf(((CaptureGivenAuth) transactionType).getAmount())));
-            transaction = objFac.createCaptureGivenAuth((CaptureGivenAuth)transactionType);
+            transaction = objFac.createCaptureGivenAuth((CaptureGivenAuth) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof ForceCapture){
+            numOfTxn++;
+        } else if (transactionType instanceof ForceCapture) {
             batchRequest.setNumForceCaptures(batchRequest.getNumForceCaptures().add(BigInteger.valueOf(1)));
             batchRequest.setForceCaptureAmount(batchRequest.getForceCaptureAmount().add(BigInteger.valueOf(((ForceCapture) transactionType).getAmount())));
-            transaction = objFac.createForceCapture((ForceCapture)transactionType);
+            transaction = objFac.createForceCapture((ForceCapture) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof AuthReversal){
+            numOfTxn++;
+        } else if (transactionType instanceof AuthReversal) {
             batchRequest.setNumAuthReversals(batchRequest.getNumAuthReversals().add(BigInteger.valueOf(1)));
             batchRequest.setAuthReversalAmount(batchRequest.getAuthReversalAmount().add(BigInteger.valueOf(((AuthReversal) transactionType).getAmount())));
-            transaction = objFac.createAuthReversal((AuthReversal)transactionType);
+            transaction = objFac.createAuthReversal((AuthReversal) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof Capture){
+            numOfTxn++;
+        } else if (transactionType instanceof Capture) {
             batchRequest.setNumCaptures(batchRequest.getNumCaptures().add(BigInteger.valueOf(1)));
             batchRequest.setCaptureAmount(batchRequest.getCaptureAmount().add(BigInteger.valueOf(((Capture) transactionType).getAmount())));
-            transaction = objFac.createCapture((Capture)transactionType);
+            transaction = objFac.createCapture((Capture) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof EcheckVerification){
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckVerification) {
             batchRequest.setNumEcheckVerification(batchRequest.getNumEcheckVerification().add(BigInteger.valueOf(1)));
             batchRequest.setEcheckVerificationAmount(batchRequest.getEcheckVerificationAmount().add(BigInteger.valueOf(((EcheckVerification) transactionType).getAmount())));
-            transaction = objFac.createEcheckVerification((EcheckVerification)transactionType);
+            transaction = objFac.createEcheckVerification((EcheckVerification) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof EcheckCredit){
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckCredit) {
             batchRequest.setNumEcheckCredit(batchRequest.getNumEcheckCredit().add(BigInteger.valueOf(1)));
             batchRequest.setEcheckCreditAmount(batchRequest.getEcheckCreditAmount().add(BigInteger.valueOf(((EcheckCredit) transactionType).getAmount())));
-            transaction = objFac.createEcheckCredit((EcheckCredit)transactionType);
+            transaction = objFac.createEcheckCredit((EcheckCredit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof EcheckRedeposit){
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckRedeposit) {
             batchRequest.setNumEcheckRedeposit(batchRequest.getNumEcheckRedeposit().add(BigInteger.valueOf(1)));
-            transaction = objFac.createEcheckRedeposit((EcheckRedeposit)transactionType);
+            transaction = objFac.createEcheckRedeposit((EcheckRedeposit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof EcheckSale){
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckSale) {
             batchRequest.setNumEcheckSales(batchRequest.getNumEcheckSales().add(BigInteger.valueOf(1)));
             batchRequest.setEcheckSalesAmount(batchRequest.getEcheckSalesAmount().add(BigInteger.valueOf(((EcheckSale) transactionType).getAmount())));
-            transaction = objFac.createEcheckSale((EcheckSale)transactionType);
+            transaction = objFac.createEcheckSale((EcheckSale) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if (transactionType instanceof UpdateCardValidationNumOnToken){
+            numOfTxn++;
+        } else if (transactionType instanceof UpdateCardValidationNumOnToken) {
             batchRequest.setNumUpdateCardValidationNumOnTokens(batchRequest.getNumUpdateCardValidationNumOnTokens().add(BigInteger.valueOf(1)));
-            transaction = objFac.createUpdateCardValidationNumOnToken((UpdateCardValidationNumOnToken)transactionType);
+            transaction = objFac.createUpdateCardValidationNumOnToken((UpdateCardValidationNumOnToken) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
+            numOfTxn++;
         } else if (transactionType instanceof UpdateSubscription) {
             batchRequest.setNumUpdateSubscriptions(batchRequest.getNumUpdateSubscriptions().add(BigInteger.valueOf(1)));
-            transaction = objFac.createUpdateSubscription((UpdateSubscription)transactionType);
+            transaction = objFac.createUpdateSubscription((UpdateSubscription) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof CancelSubscription) {
+            numOfTxn++;
+        } else if (transactionType instanceof CancelSubscription) {
             batchRequest.setNumCancelSubscriptions(batchRequest.getNumCancelSubscriptions().add(BigInteger.valueOf(1)));
-            transaction = objFac.createCancelSubscription((CancelSubscription)transactionType);
+            transaction = objFac.createCancelSubscription((CancelSubscription) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof CreatePlan) {
+            numOfTxn++;
+        } else if (transactionType instanceof CreatePlan) {
             batchRequest.setNumCreatePlans(batchRequest.getNumCreatePlans().add(BigInteger.valueOf(1)));
-            transaction = objFac.createCreatePlan((CreatePlan)transactionType);
+            transaction = objFac.createCreatePlan((CreatePlan) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof UpdatePlan) {
+            numOfTxn++;
+        } else if (transactionType instanceof UpdatePlan) {
             batchRequest.setNumUpdatePlans(batchRequest.getNumUpdatePlans().add(BigInteger.valueOf(1)));
-            transaction = objFac.createUpdatePlan((UpdatePlan)transactionType);
+            transaction = objFac.createUpdatePlan((UpdatePlan) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof Activate) {
+            numOfTxn++;
+        } else if (transactionType instanceof Activate) {
             batchRequest.setNumActivates(batchRequest.getNumActivates().add(BigInteger.valueOf(1)));
             batchRequest.setActivateAmount(batchRequest.getActivateAmount().add(BigInteger.valueOf(((Activate) transactionType).getAmount())));
-            transaction = objFac.createActivate((Activate)transactionType);
+            transaction = objFac.createActivate((Activate) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof Deactivate) {
+            numOfTxn++;
+        } else if (transactionType instanceof Deactivate) {
             batchRequest.setNumDeactivates(batchRequest.getNumDeactivates().add(BigInteger.valueOf(1)));
-            transaction = objFac.createDeactivate((Deactivate)transactionType);
+            transaction = objFac.createDeactivate((Deactivate) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof Load) {
+            numOfTxn++;
+        } else if (transactionType instanceof Load) {
             batchRequest.setNumLoads(batchRequest.getNumLoads().add(BigInteger.valueOf(1)));
             batchRequest.setLoadAmount(batchRequest.getLoadAmount().add(BigInteger.valueOf(((Load) transactionType).getAmount())));
-            transaction = objFac.createLoad((Load)transactionType);
+            transaction = objFac.createLoad((Load) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof Unload) {
+            numOfTxn++;
+        } else if (transactionType instanceof Unload) {
             batchRequest.setNumUnloads(batchRequest.getNumUnloads().add(BigInteger.valueOf(1)));
             batchRequest.setUnloadAmount(batchRequest.getUnloadAmount().add(BigInteger.valueOf(((Unload) transactionType).getAmount())));
-            transaction = objFac.createUnload((Unload)transactionType);
+            transaction = objFac.createUnload((Unload) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof BalanceInquiry) {
+            numOfTxn++;
+        } else if (transactionType instanceof BalanceInquiry) {
             batchRequest.setNumBalanceInquirys(batchRequest.getNumBalanceInquirys().add(BigInteger.valueOf(1)));
-            transaction = objFac.createBalanceInquiry((BalanceInquiry)transactionType);
+            transaction = objFac.createBalanceInquiry((BalanceInquiry) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof EcheckPreNoteSale) {
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckPreNoteSale) {
             batchRequest.setNumEcheckPreNoteSale(batchRequest.getNumEcheckPreNoteSale().add(BigInteger.valueOf(1)));
-            transaction = objFac.createEcheckPreNoteSale((EcheckPreNoteSale)transactionType);
+            transaction = objFac.createEcheckPreNoteSale((EcheckPreNoteSale) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof EcheckPreNoteCredit) {
+            numOfTxn++;
+        } else if (transactionType instanceof EcheckPreNoteCredit) {
             batchRequest.setNumEcheckPreNoteCredit(batchRequest.getNumEcheckPreNoteCredit().add(BigInteger.valueOf(1)));
-            transaction = objFac.createEcheckPreNoteCredit((EcheckPreNoteCredit)transactionType);
+            transaction = objFac.createEcheckPreNoteCredit((EcheckPreNoteCredit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof PayFacCredit) {
+            numOfTxn++;
+        } else if (transactionType instanceof PayFacCredit) {
             batchRequest.setNumPayFacCredit(batchRequest.getNumPayFacCredit().add(BigInteger.valueOf(1)));
             batchRequest.setPayFacCreditAmount((batchRequest.getPayFacCreditAmount().add(BigInteger.valueOf(((PayFacCredit) transactionType).getAmount()))));
-            transaction = objFac.createPayFacCredit((PayFacCredit)transactionType);
+            transaction = objFac.createPayFacCredit((PayFacCredit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof SubmerchantCredit) {
+            numOfTxn++;
+        } else if (transactionType instanceof SubmerchantCredit) {
             batchRequest.setNumSubmerchantCredit(batchRequest.getNumSubmerchantCredit().add(BigInteger.valueOf(1)));
             batchRequest.setSubmerchantCreditAmount((batchRequest.getSubmerchantCreditAmount().add(BigInteger.valueOf(((SubmerchantCredit) transactionType).getAmount()))));
-            transaction = objFac.createSubmerchantCredit((SubmerchantCredit)transactionType);
+            transaction = objFac.createSubmerchantCredit((SubmerchantCredit) transactionType);
             transactionAdded = true;
-            numOfTxn ++;
+            numOfTxn++;
+
+        } else if (transactionType instanceof VendorCredit) {
+            batchRequest.setNumVendorCredit(batchRequest.getNumVendorCredit().add(BigInteger.valueOf(1)));
+            batchRequest.setVendorCreditAmount((batchRequest.getVendorCreditAmount().add(BigInteger.valueOf(((VendorCredit) transactionType).getAmount()))));
+            transaction = objFac.createVendorCredit((VendorCredit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+
         } else if(transactionType instanceof VendorCreditCtx) {
             batchRequest.setNumVendorCredit(batchRequest.getNumVendorCredit().add(BigInteger.valueOf(1)));
             batchRequest.setVendorCreditAmount((batchRequest.getVendorCreditAmount().add(BigInteger.valueOf(((VendorCreditCtx) transactionType).getAmount()))));
