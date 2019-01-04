@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Properties;
 
 import javax.xml.bind.JAXBException;
@@ -498,6 +499,8 @@ public class TestBatchFile {
 
         Properties configFromFile = request.getConfig();
 
+
+
         // pre-assert the config file has required param values
         assertEquals("prelive.litle.com",
                 configFromFile.getProperty("batchHost"));
@@ -513,7 +516,7 @@ public class TestBatchFile {
         echeckSuccess.setCheckNum("123455");
 
         EcheckType echeckAccErr = new EcheckType();
-        echeckAccErr.setAccNum("10@2969901");
+        echeckAccErr.setAccNum("102969901");
         echeckAccErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
         echeckAccErr.setRoutingNum("011100012");
         echeckAccErr.setCheckNum("123455");
@@ -1497,7 +1500,7 @@ public class TestBatchFile {
     }
 
 
-    @Ignore
+
     @Test
     public void testCtxAll(){
         String requestFileName = "cnpSdk-testBatchFile-CtxAll-" + TIME_STAMP + ".xml";
@@ -1506,6 +1509,12 @@ public class TestBatchFile {
 
         Properties configFromFile = request.getConfig();
 
+        configFromFile.setProperty("merchantId", configFromFile.getProperty("payfacMerchantId_v12_7"));
+        configFromFile.setProperty("username", configFromFile.getProperty("payfacUsername_v12_7"));
+        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("payfacSftpUsername_v12_7"));
+        configFromFile.setProperty("password", configFromFile.getProperty("payfacPassword_v12_7"));
+        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("payfacSftpPassword_v12_7"));
+
         // pre-assert the config file has required param values
         assertEquals("prelive.litle.com",
                 configFromFile.getProperty("batchHost"));
@@ -1513,18 +1522,25 @@ public class TestBatchFile {
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
+        String fundsTransferIdString = ""+System.currentTimeMillis();
+
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccNum("1092969901");
         echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
         echeck.setRoutingNum("011075150");
         echeck.setCheckNum("123455");
 
+        CtxPaymentInformationType echekPayInfo = new CtxPaymentInformationType();
+        List<String> payDetails = echekPayInfo.getCtxPaymentDetails();
+        payDetails.add("ctx1 for submerchantcredit");
+        echeck.setCtxPaymentInformation(echekPayInfo);
+
         VendorCreditCtx vcredit = new VendorCreditCtx();
         vcredit.setReportGroup("vendorCredit");
         vcredit.setId("111");
-        vcredit.setFundingSubmerchantId("vendorCredit");
+        vcredit.setFundingSubmerchantId("vendorCreditTest");
         vcredit.setVendorName("Vendor101");
-        vcredit.setFundsTransferId("1001");
+        vcredit.setFundsTransferId(fundsTransferIdString);
         vcredit.setAmount(500l);
         vcredit.setAccountInfo(echeck);
         batch.addTransaction(vcredit);
@@ -1534,7 +1550,7 @@ public class TestBatchFile {
         vdebit.setId("111");
         vdebit.setFundingSubmerchantId("vendorDebit");
         vdebit.setVendorName("Vendor101");
-        vdebit.setFundsTransferId("1001");
+        vdebit.setFundsTransferId(fundsTransferIdString);
         vdebit.setAmount(500l);
         vdebit.setAccountInfo(echeck);
         batch.addTransaction(vdebit);
@@ -1544,7 +1560,7 @@ public class TestBatchFile {
         smcredit.setId("111");
         smcredit.setFundingSubmerchantId("submerchantCredit");
         smcredit.setSubmerchantName("submerchant101");
-        smcredit.setFundsTransferId("1001");
+        smcredit.setFundsTransferId(fundsTransferIdString);
         smcredit.setAmount(500l);
         smcredit.setAccountInfo(echeck);
         batch.addTransaction(smcredit);
@@ -1554,7 +1570,7 @@ public class TestBatchFile {
         smdebit.setId("111");
         smdebit.setFundingSubmerchantId("submerchantDebit");
         smdebit.setSubmerchantName("submerchant101");
-        smdebit.setFundsTransferId("1001");
+        smdebit.setFundsTransferId(fundsTransferIdString);
         smdebit.setAmount(500l);
         smdebit.setAccountInfo(echeck);
         batch.addTransaction(smdebit);
