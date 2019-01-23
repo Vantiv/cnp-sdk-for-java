@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.7.0 (Jan 04, 2019)
+* Feature: XML 12.7 Support along with Hot-Hot config can be found [here](https://gist.github.com/VantivSDK/58565a089c0623ad94aa1cb10801630c#gistcomment-2805345)
+
 ==Version 12.5.0 (Oct 04, 2018)
 * Feature: Full functions for XML v12.5
 
