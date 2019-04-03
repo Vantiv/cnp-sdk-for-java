@@ -75,20 +75,30 @@ public class Setup {
 
     public static void main(String[] args) throws IOException {
         File file = (new Configuration()).location();
-        Properties config = new Properties();
         PrintStream configFile = new PrintStream(file);
-        String lastUserInput;
+
 
         BufferedReader stdin = new BufferedReader
                 (new InputStreamReader(System.in));
 
+        Properties config = initializeConfigFile(stdin);
+
+        config.store(configFile, "");
+        configFile.close();
+        System.out.println("The Cnp configuration file has been generated, the file is located at " + file.getAbsolutePath());
+    }
+
+    static Properties initializeConfigFile(BufferedReader input) throws IOException {
+        String lastUserInput;
+        Properties config = new Properties();
+
         System.out.println("Welcome to Vantiv eCommerce Java_SDK");
         System.out.print("Please input your presenter user name: ");
-        config.put("username", stdin.readLine());
+        config.setProperty("username", input.readLine());
         System.out.print("Please input your presenter password: ");
-        config.put("password", stdin.readLine());
+        config.setProperty("password", input.readLine());
         System.out.print("Please input your merchantId: ");
-        config.put("merchantId", stdin.readLine());
+        config.setProperty("merchantId", input.readLine());
         boolean badInput = false;
         do{
             if( badInput ){
@@ -98,7 +108,7 @@ public class Setup {
             for (final EnvironmentConfiguration environConfig : EnvironmentConfiguration.values()) {
                 System.out.println(String.format("\t%s => %s", environConfig.getKey(), environConfig.getOnlineUrl()));
             }
-            lastUserInput = stdin.readLine();
+            lastUserInput = input.readLine();
             EnvironmentConfiguration environSelected = EnvironmentConfiguration.fromValue(lastUserInput);
             if (environSelected == null) {
                 // error condition
@@ -106,26 +116,26 @@ public class Setup {
             } else if (EnvironmentConfiguration.OTHER.equals(environSelected)) {
                 // user wants to enter custom values
                 System.out.println("Please input the URL for online transactions (ex: https://www.testantivcnp.com/sandbox/communicator/online):");
-                config.put("url", stdin.readLine());
+                config.setProperty("url", input.readLine());
                 System.out.println("Please input the Host name for batch transactions (ex: payments.vantivcnp.com):");
-                config.put("batchHost", stdin.readLine());
+                config.setProperty("batchHost", input.readLine());
                 System.out.println("Please input the port number for batch transactions (ex: 15000):");
-                config.put("batchPort", stdin.readLine());
-                config.put("multiSite", false);
-                config.put("printMultiSiteDebug", false);
+                config.setProperty("batchPort", input.readLine());
+                config.setProperty("multiSite", "false");
+                config.setProperty("printMultiSiteDebug", "false");
                 badInput = false;
             } else {
                 // standard predefined cases
-                config.put("url", environSelected.getOnlineUrl());
-                config.put("batchHost", environSelected.getBatchUrl());
-                config.put("batchPort", environSelected.getBatchPort());
-                
-                config.put("multiSiteUrl1", environSelected.getMultiSiteUrl1());
-                config.put("multiSiteUrl2", environSelected.getMultiSiteUrl2());
-                config.put("multiSite", false);
-                config.put("multiSiteErrorThreshold", 5);
-                config.put("maxHoursWithoutSwitch",  48);
-                config.put("printMultiSiteDebug", false);
+                config.setProperty("url", environSelected.getOnlineUrl());
+                config.setProperty("batchHost", environSelected.getBatchUrl());
+                config.setProperty("batchPort", environSelected.getBatchPort());
+
+                config.setProperty("multiSiteUrl1", environSelected.getMultiSiteUrl1());
+                config.setProperty("multiSiteUrl2", environSelected.getMultiSiteUrl2());
+                config.setProperty("multiSite", "false");
+                config.setProperty("multiSiteErrorThreshold", "5");
+                config.setProperty("maxHoursWithoutSwitch",  "48");
+                config.setProperty("printMultiSiteDebug", "false");
                 badInput = false;
             }
         } while( badInput );
@@ -135,75 +145,71 @@ public class Setup {
         System.out.print("\n\tHost for batch transactions: " + config.getProperty("batchHost"));
         System.out.print("\n\tPort for batch transactions: " + config.getProperty("batchPort") + "\n");
 
-        config.put("batchUseSSL", "true");
+        config.setProperty("batchUseSSL", "true");
         System.out.print("Please input the batch TCP timeout in milliseconds (leave blank for default (7200000)): ");
-        lastUserInput = stdin.readLine();
-        config.put("batchTcpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
+        lastUserInput = input.readLine();
+        config.setProperty("batchTcpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
 
         System.out.print("\nBatch SDK generates files for Requests and Responses. You may leave these blank if you do not plan to use \nbatch processing. Please input the absolute path to the folder with write permissions for: \n");
         System.out.print("\tRequests: ");
-        config.put("batchRequestFolder", stdin.readLine());
+        config.setProperty("batchRequestFolder", input.readLine());
 
         System.out.print("\tResponses: ");
-        config.put("batchResponseFolder", stdin.readLine());
+        config.setProperty("batchResponseFolder", input.readLine());
 
         System.out.print("\nPlease input your credentials for sFTP access for batch delivery. You may leave these blank if you do not plan to use sFTP.\n");
         System.out.print("\tUsername: ");
-        config.put("sftpUsername", stdin.readLine());
+        config.setProperty("sftpUsername", input.readLine());
         System.out.print("\tPassword: ");
-        config.put("sftpPassword", stdin.readLine());
+        config.setProperty("sftpPassword", input.readLine());
         System.out.print("Please input the sFTP timeout in milliseconds (leave blank for default (7200000)): ");
-        lastUserInput = stdin.readLine();
-        config.put("sftpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
+        lastUserInput = input.readLine();
+        config.setProperty("sftpTimeout", ((lastUserInput.length() == 0) ? "7200000" : lastUserInput));
 
 
         System.out.print("\nPlease input the proxy host, if no proxy hit enter: ");
-        lastUserInput = stdin.readLine();
-        config.put("proxyHost", (lastUserInput == null ? "" : lastUserInput));
+        lastUserInput = input.readLine();
+        config.setProperty("proxyHost", (lastUserInput == null ? "" : lastUserInput));
         System.out.print("Please input the proxy port, if no proxy hit enter: ");
-        lastUserInput = stdin.readLine();
-        config.put("proxyPort", (lastUserInput == null ? "" : lastUserInput));
+        lastUserInput = input.readLine();
+        config.setProperty("proxyPort", (lastUserInput == null ? "" : lastUserInput));
         //default http timeout set to 500 ms
-        config.put("timeout", "500");
-        config.put("reportGroup", "Default Report Group");
-        config.put("printxml", "false");
+        config.setProperty("timeout", "500");
+        config.setProperty("reportGroup", "Default Report Group");
+        config.setProperty("printxml", "false");
 
-        config.put("maxAllowedTransactionsPerFile", "500000");
-        config.put("maxTransactionsPerBatch", "100000");
+        config.setProperty("maxAllowedTransactionsPerFile", "500000");
+        config.setProperty("maxTransactionsPerBatch", "100000");
 
         System.out.print("Use PGP encryption for batch files? (No encryption by default): ");
-        lastUserInput = stdin.readLine();
+        lastUserInput = input.readLine();
         if ("true".equals(lastUserInput) || "yes".equals(lastUserInput) || "y".equals(lastUserInput)) {
-            config.put("useEncryption", "true");
+            config.setProperty("useEncryption", "true");
 
             System.out.print("Please input path to Vantiv's public key (for encryption of batch requests) : ");
-            lastUserInput = stdin.readLine();
-            config.put("VantivPublicKeyPath", lastUserInput);
+            lastUserInput = input.readLine();
+            config.setProperty("VantivPublicKeyPath", lastUserInput);
 
             System.out.print("Please input path to your merchant public key (To keep temp file encrypted) : ");
-            lastUserInput = stdin.readLine();
-            config.put("PublicKeyPath", lastUserInput);
+            lastUserInput = input.readLine();
+            config.setProperty("PublicKeyPath", lastUserInput);
 
             System.out.print("Please input path to your merchant private key (for decryption of batch responses) : ");
-            lastUserInput = stdin.readLine();
-            config.put("PrivateKeyPath", lastUserInput);
+            lastUserInput = input.readLine();
+            config.setProperty("PrivateKeyPath", lastUserInput);
 
             System.out.print("Passphrase for decryption : ");
-            config.put("gpgPassphrase", stdin.readLine());
+            config.setProperty("gpgPassphrase", input.readLine());
         } else {
-            config.put("useEncryption", "false");
-            config.put("PublicKeyPath", "");
-            config.put("PrivateKeyPath", "");
-            config.put("gpgPassphrase", "");
+            config.setProperty("useEncryption", "false");
+            config.setProperty("PublicKeyPath", "");
+            config.setProperty("PrivateKeyPath", "");
+            config.setProperty("gpgPassphrase", "");
         }
 
-        config.put("deleteBatchFiles", "false");
-        
+        config.setProperty("deleteBatchFiles", "false");
 
-        config.store(configFile, "");
-        System.out.println("The Cnp configuration file has been generated, the file is located at " + file.getAbsolutePath());
-
-        configFile.close();
+        return config;
     }
 
 }
