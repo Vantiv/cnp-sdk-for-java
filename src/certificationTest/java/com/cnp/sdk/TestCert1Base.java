@@ -1047,7 +1047,8 @@ public class TestCert1Base {
 	}
 
 	//TODO: incorrect responses for p1 sale
-
+	/**
+	  * We do not support ideal, giropay and sofort in our SDKs
 	@Test
 	public void testp1_idealSale() throws Exception {
 		Sale sale = new Sale();
@@ -1174,6 +1175,7 @@ public class TestCert1Base {
 		assertEquals(response.getMessage(), "917",response.getResponse());
 		assertEquals(response.getMessage(), "Invalid billing country code", response.getMessage());
 	}
+	*/
 }
 
 
