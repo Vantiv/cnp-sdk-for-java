@@ -1,9 +1,7 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.7.1(Apr 05, 2019)
+==Version 12.7.1(Apr 09, 2019)
 * BugFix: Removing unit tests for giropay, ideal and sofort as they are not supported anymore
-
-==Version 12.7.1 (Apr 03, 2019)
 * BugFix: Setup process no longer throws class cast exception
 
 ==Version 12.7.0 (Jan 04, 2019)
