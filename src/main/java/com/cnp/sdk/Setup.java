@@ -7,17 +7,12 @@ import java.util.Properties;
 public class Setup {
     /* List of environments for the configuration. */
     private enum EnvironmentConfiguration {
-        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "nufloprftp01.litle.com", "15000",
+        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online", "prelive.litle.com", "15000",
                 "https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online","https://www.testvantivcnp.com/sandbox/new/sandbox/communicator/online"),
-//        PRELIVE("prelive", "https://payments.vantivprelive.com/vap/communicator/online", "payments.vantivprelive.com", "15000",
-//                "https://payments.east.vantivprelive.com/vap/communicator/online","https://payments.west.vantivprelive.com/vap/communicator/online"),
-//        POSTLIVE("postlive", "https://payments.vantivpostlive.com/vap/communicator/online", "payments.vantivpostlive.com", "15000",
-//                "https://payments.east.vantivpostlive.com/vap/communicator/online", "https://payments.west.vantivpostlive.com/vap/communicator/online"),
-        
-        PRELIVE("prelive", "nufloprftp01.litle.com", "payments.vantivprelive.com", "15000",
-                 "https://payments.east.vantivprelive.com/vap/communicator/online","https://payments.west.vantivprelive.com/vap/communicator/online"),
-        POSTLIVE("postlive", "nufloprftp01.litle.com", "payments.vantivpostlive.com", "15000",
-                  "https://payments.east.vantivpostlive.com/vap/communicator/online", "https://payments.west.vantivpostlive.com/vap/communicator/online"),
+        PRELIVE("prelive", "https://payments.vantivprelive.com/vap/communicator/online", "payments.vantivprelive.com", "15000",
+                "https://payments.east.vantivprelive.com/vap/communicator/online","https://payments.west.vantivprelive.com/vap/communicator/online"),
+        POSTLIVE("postlive", "https://payments.vantivpostlive.com/vap/communicator/online", "payments.vantivpostlive.com", "15000",
+                "https://payments.east.vantivpostlive.com/vap/communicator/online", "https://payments.west.vantivpostlive.com/vap/communicator/online"),
         PRODUCTION("production", "https://payments.vantivcnp.com/vap/communicator/online", "payments.vantivcnp.com", "15000",
                 "https://payments.east.vantivcnp.com/vap/communicator/online", "https://payments.west.vantivcnp.com/vap/communicator/online"),
         OTHER("other", "You will be asked for all the values", null, null, null, null);
