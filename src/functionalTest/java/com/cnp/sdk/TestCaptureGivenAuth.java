@@ -157,6 +157,30 @@ public class TestCaptureGivenAuth {
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
 	}
+
+	@Test
+	public void simpleCaptureGivenAuthWithTokenWithTokenURL() throws Exception{
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardTokenType cardtoken = new CardTokenType();
+		cardtoken.setTokenURL("http://token.com/sales");
+		cardtoken.setExpDate("1210");
+		cardtoken.setCardValidationNum("555");
+		cardtoken.setType(MethodOfPaymentTypeEnum.VI);
+		capturegivenauth.setToken(cardtoken);
+		capturegivenauth.setId("id");
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals("Approved", response.getMessage());
+	}
 	
 	@Test
 	public void complexCaptureGivenAuth() throws Exception{
