@@ -90,7 +90,7 @@ public class CnpResponseProcessorAdapter implements CnpResponseProcessor {
             PayFacCreditResponse payFacCreditResponse) {
     }
 
-    public void processVendorCreditRespsonse(
+    public void processVendorCreditResponse(
             VendorCreditResponse vendorCreditResponse) {
     }
 

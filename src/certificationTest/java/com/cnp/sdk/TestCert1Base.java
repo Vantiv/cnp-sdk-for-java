@@ -18,10 +18,9 @@ public class TestCert1Base {
 	    Properties config = new Properties();
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
-		config.setProperty("url", "nufloprftp01.litle.com");
-        //config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
-        config.setProperty("proxyHost", "websenseproxy");
-        config.setProperty("proxyPort", "8080");
+        config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
+        //config.setProperty("proxyHost", "websenseproxy");
+        //config.setProperty("proxyPort", "8080");
         config.setProperty("multiSite", "true");
 		cnp = new CnpOnline(config);
 	}

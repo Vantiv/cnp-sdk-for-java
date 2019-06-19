@@ -35,7 +35,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         //assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -73,7 +73,7 @@ public class TestBatchFile {
         prepDir(workingDirResponses);
 
         Properties configOverrides = new Properties();
-        configOverrides.setProperty("batchHost", "nufloprftp01.litle.com ");
+        configOverrides.setProperty("batchHost", "payments.vantivprelive.com ");
         configOverrides.setProperty("sftpTimeout", "720000");
 
         configOverrides.setProperty("batchRequestFolder", workingDirRequests);
@@ -114,7 +114,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive",
                 configFromFile.getProperty("batchHost"));
         // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -163,7 +163,7 @@ public class TestBatchFile {
         Properties configFromFile = request1.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -224,7 +224,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -262,7 +262,7 @@ public class TestBatchFile {
         prepDir(workingDirResponses);
 
         Properties configOverrides = new Properties();
-        configOverrides.setProperty("batchHost", "nufloprftp01.litle.com");
+        configOverrides.setProperty("batchHost", "payments.vantivprelive.com");
         configOverrides.setProperty("sftpTimeout", "720000");
 
         configOverrides.setProperty("batchRequestFolder", workingDirRequests);
@@ -324,7 +324,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -502,7 +502,7 @@ public class TestBatchFile {
 
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         //assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -515,17 +515,17 @@ public class TestBatchFile {
         echeckSuccess.setRoutingNum("011075150");
         echeckSuccess.setCheckNum("123455");
 
-        EcheckType echeckAccErr = new EcheckType();
-        echeckAccErr.setAccNum("102969901");
-        echeckAccErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
-        echeckAccErr.setRoutingNum("011100012");
-        echeckAccErr.setCheckNum("123455");
-
         EcheckType echeckRoutErr = new EcheckType();
-        echeckRoutErr.setAccNum("6099999992");
-        echeckRoutErr.setAccType(EcheckAccountTypeEnum.CHECKING);
-        echeckRoutErr.setRoutingNum("053133052");
+        echeckRoutErr.setAccNum("102969901");
+        echeckRoutErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
+        echeckRoutErr.setRoutingNum("011100012");
         echeckRoutErr.setCheckNum("123455");
+
+        EcheckType echeckAccErr = new EcheckType();
+        echeckAccErr.setAccNum("6099999992");
+        echeckAccErr.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeckAccErr.setRoutingNum("053133052");
+        echeckAccErr.setCheckNum("123455");
 
         // billto address
         Contact contact = new Contact();
@@ -612,7 +612,7 @@ public class TestBatchFile {
                             VendorDebitResponse vendorDebitResponse) {
                     }
 
-                    public void processVendorCreditRespsonse(
+                    public void processVendorCreditResponse(
                             VendorCreditResponse vendorCreditResponse) {
                     }
 
@@ -922,7 +922,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -1156,7 +1156,7 @@ public class TestBatchFile {
                             PayFacCreditResponse payFacCreditResponse) {
                     }
 
-                    public void processVendorCreditRespsonse(
+                    public void processVendorCreditResponse(
                             VendorCreditResponse vendorCreditResponse) {
                     }
 
@@ -1226,7 +1226,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -1300,7 +1300,7 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("nufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -1323,8 +1323,7 @@ public class TestBatchFile {
         batch.addTransaction(accountUpdate);
 
         CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-        CnpBatchResponse batchResponse = fileResponse
-                .getNextCnpBatchResponse();
+        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
         int txns = 0;
         // iterate over all transactions in the file with a custom response
         // processor
@@ -1338,7 +1337,7 @@ public class TestBatchFile {
                     public void processCaptureResponse(
                             CaptureResponse captureResponse) {
                     }
-
+                    
                     public void processForceCaptureResponse(
                             ForceCaptureResponse forceCaptureResponse) {
                     }
@@ -1442,7 +1441,7 @@ public class TestBatchFile {
                             PayFacCreditResponse payFacCreditResponse) {
                     }
 
-                    public void processVendorCreditRespsonse(
+                    public void processVendorCreditResponse(
                             VendorCreditResponse vendorCreditResponse) {
                     }
 
@@ -1509,14 +1508,14 @@ public class TestBatchFile {
 
         Properties configFromFile = request.getConfig();
 
-        configFromFile.setProperty("merchantId", configFromFile.getProperty("payfacMerchantId_v12_7"));
-        configFromFile.setProperty("username", configFromFile.getProperty("payfacUsername_v12_7"));
-        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("payfacSftpUsername_v12_7"));
-        configFromFile.setProperty("password", configFromFile.getProperty("payfacPassword_v12_7"));
-        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("payfacSftpPassword_v12_7"));
+        configFromFile.setProperty("merchantId", configFromFile.getProperty("merchantId"));
+        configFromFile.setProperty("username", configFromFile.getProperty("username"));
+        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("sftpUsername"));
+        configFromFile.setProperty("password", configFromFile.getProperty("password"));
+        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("sftpPassword"));
 
         // pre-assert the config file has required param values
-        assertEquals("pnufloprftp01.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         //assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -1526,14 +1525,14 @@ public class TestBatchFile {
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccNum("1092969901");
-        echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setRoutingNum("011075150");
         echeck.setCheckNum("123455");
 
-        CtxPaymentInformationType echekPayInfo = new CtxPaymentInformationType();
-        List<String> payDetails = echekPayInfo.getCtxPaymentDetails();
+        CtxPaymentInformationType echeckPayInfo = new CtxPaymentInformationType();
+        List<String> payDetails = echeckPayInfo.getCtxPaymentDetails();
         payDetails.add("ctx1 for submerchantcredit");
-        echeck.setCtxPaymentInformation(echekPayInfo);
+        echeck.setCtxPaymentInformation(echeckPayInfo);
 
         VendorCreditCtx vcredit = new VendorCreditCtx();
         vcredit.setReportGroup("vendorCredit");
@@ -1591,7 +1590,7 @@ public class TestBatchFile {
                             VendorDebitResponse vendorDebitResponse) {
                     }
 
-                    public void processVendorCreditRespsonse(
+                    public void processVendorCreditResponse(
                             VendorCreditResponse vendorCreditResponse) {
                     }
 
@@ -2194,7 +2193,7 @@ public class TestBatchFile {
             responseCount++;
         }
 
-        public void processVendorCreditRespsonse(
+        public void processVendorCreditResponse(
                 VendorCreditResponse vendorCreditResponse) {
             assertNotNull(vendorCreditResponse.getCnpTxnId());
             responseCount++;

@@ -153,7 +153,7 @@ public class CnpBatchResponse {
         } else if (objToRet instanceof PayFacCreditResponse) {
             processor.processPayFacCreditResponse((PayFacCreditResponse)objToRet);
         } else if (objToRet instanceof VendorCreditResponse) {
-            processor.processVendorCreditRespsonse((VendorCreditResponse)objToRet);
+            processor.processVendorCreditResponse((VendorCreditResponse)objToRet);
         } else if (objToRet instanceof ReserveCreditResponse) {
             processor.processReserveCreditResponse((ReserveCreditResponse)objToRet);
         } else if (objToRet instanceof PhysicalCheckCreditResponse) {
