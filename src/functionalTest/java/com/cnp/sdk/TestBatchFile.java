@@ -165,7 +165,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -226,7 +226,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -326,7 +326,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -515,17 +515,17 @@ public class TestBatchFile {
         echeckSuccess.setRoutingNum("011075150");
         echeckSuccess.setCheckNum("123455");
 
-        EcheckType echeckRoutErr = new EcheckType();
-        echeckRoutErr.setAccNum("102969901");
-        echeckRoutErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
-        echeckRoutErr.setRoutingNum("011100012");
-        echeckRoutErr.setCheckNum("123455");
-
         EcheckType echeckAccErr = new EcheckType();
-        echeckAccErr.setAccNum("6099999992");
-        echeckAccErr.setAccType(EcheckAccountTypeEnum.CHECKING);
-        echeckAccErr.setRoutingNum("053133052");
+        echeckAccErr.setAccNum("102969901");
+        echeckAccErr.setAccType(EcheckAccountTypeEnum.CORPORATE);
+        echeckAccErr.setRoutingNum("011100012");
         echeckAccErr.setCheckNum("123455");
+
+        EcheckType echeckRoutErr = new EcheckType();
+        echeckRoutErr.setAccNum("6099999992");
+        echeckRoutErr.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeckRoutErr.setRoutingNum("053133052");
+        echeckRoutErr.setCheckNum("123455");
 
         // billto address
         Contact contact = new Contact();
@@ -753,15 +753,15 @@ public class TestBatchFile {
 
                     }
 
-					public void processGiftCardAuthReversalResponse(
-					        GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-					}
+                    public void processGiftCardAuthReversalResponse(
+                            GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+                    }
 
-					public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-					}
+                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+                    }
 
-					public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-					}
+                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+                    }
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
 
@@ -924,7 +924,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -1192,17 +1192,17 @@ public class TestBatchFile {
                             FundingInstructionVoidResponse fundingInstructionVoidResponse) {
                     }
 
-					public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+                    public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
                         assertNotNull(giftCardAuthReversalResponse.getCnpTxnId());
-					}
+                    }
 
-					public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
                         assertNotNull(giftCardCaptureResponse.getCnpTxnId());
-					}
+                    }
 
-					public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
                         assertNotNull(giftCardCreditResponse.getCnpTxnId());
-					}
+                    }
 
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
@@ -1228,7 +1228,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
         CancelSubscription cancelSubscription = new CancelSubscription();
@@ -1302,7 +1302,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-       // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -1323,7 +1323,8 @@ public class TestBatchFile {
         batch.addTransaction(accountUpdate);
 
         CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
         int txns = 0;
         // iterate over all transactions in the file with a custom response
         // processor
@@ -1337,7 +1338,7 @@ public class TestBatchFile {
                     public void processCaptureResponse(
                             CaptureResponse captureResponse) {
                     }
-                    
+
                     public void processForceCaptureResponse(
                             ForceCaptureResponse forceCaptureResponse) {
                     }
@@ -1477,14 +1478,14 @@ public class TestBatchFile {
                             FundingInstructionVoidResponse fundingInstructionVoidResponse) {
                     }
 
-					public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-					}
+                    public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+                    }
 
-					public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-					}
+                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+                    }
 
-					public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-					}
+                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+                    }
 
                     public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
                     }
@@ -1508,11 +1509,11 @@ public class TestBatchFile {
 
         Properties configFromFile = request.getConfig();
 
-        configFromFile.setProperty("merchantId", configFromFile.getProperty("merchantId"));
-        configFromFile.setProperty("username", configFromFile.getProperty("username"));
-        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("sftpUsername"));
-        configFromFile.setProperty("password", configFromFile.getProperty("password"));
-        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("sftpPassword"));
+        configFromFile.setProperty("merchantId", configFromFile.getProperty("payfacMerchantId_v12_7"));
+        configFromFile.setProperty("username", configFromFile.getProperty("payfacUsername_v12_7"));
+        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("payfacSftpUsername_v12_7"));
+        configFromFile.setProperty("password", configFromFile.getProperty("payfacPassword_v12_7"));
+        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("payfacSftpPassword_v12_7"));
 
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
@@ -1525,7 +1526,7 @@ public class TestBatchFile {
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccNum("1092969901");
-        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
         echeck.setRoutingNum("011075150");
         echeck.setCheckNum("123455");
 
@@ -1903,7 +1904,7 @@ public class TestBatchFile {
 //                            PayFacCreditResponse payFacCreditResponse) {
 //                    }
 //
-//                    public void processVendorCreditRespsonse(
+//                    public void processVendorCreditResponse(
 //                            VendorCreditResponse vendorCreditResponse) {
 //                    }
 //
@@ -1960,7 +1961,7 @@ public class TestBatchFile {
 //    }
 
     private void assertJavaApi(CnpBatchFileRequest request,
-            CnpBatchFileResponse response) {
+                               CnpBatchFileResponse response) {
         assertNotNull(response);
         assertNotNull(response.getCnpSessionId());
         assertEquals("0", response.getResponse());
@@ -1985,8 +1986,8 @@ public class TestBatchFile {
     }
 
     private void assertGeneratedFiles(String workingDirRequests,
-            String workingDirResponses, String requestFileName,
-            CnpBatchFileRequest request, CnpBatchFileResponse response)
+                                      String workingDirResponses, String requestFileName,
+                                      CnpBatchFileRequest request, CnpBatchFileResponse response)
             throws Exception {
         File fRequest = request.getFile();
         assertEquals(workingDirRequests + File.separator + requestFileName,
@@ -2247,20 +2248,20 @@ public class TestBatchFile {
             responseCount++;
         }
 
-		public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-			assertNotNull(giftCardAuthReversalResponse.getCnpTxnId());
+        public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
+            assertNotNull(giftCardAuthReversalResponse.getCnpTxnId());
             responseCount++;
-		}
+        }
 
-		public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-			assertNotNull(giftCardCaptureResponse.getCnpTxnId());
+        public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
+            assertNotNull(giftCardCaptureResponse.getCnpTxnId());
             responseCount++;
-		}
+        }
 
-		public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-			assertNotNull(giftCardCreditResponse.getCnpTxnId());
+        public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
+            assertNotNull(giftCardCreditResponse.getCnpTxnId());
             responseCount++;
-		}
+        }
 
         public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
             assertNotNull(fastAccessFundingResponse.getCnpTxnId());
