@@ -19,8 +19,8 @@ public class TestCert5Token {
         FileInputStream fileInputStream = new FileInputStream((new Configuration()).location());
         config.load(fileInputStream);
         config.setProperty("url", "https://payments.vantivprelive.com/vap/communicator/online");
-        //config.setProperty("proxyHost", "websenseproxy");
-        //config.setProperty("proxyPort", "8080");
+        config.setProperty("proxyHost", "");
+        config.setProperty("proxyPort", "");
         config.setProperty("multiSite", "false");
         cnp = new CnpOnline(config);
     }
