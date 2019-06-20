@@ -73,7 +73,7 @@ public class TestBatchFile {
         prepDir(workingDirResponses);
 
         Properties configOverrides = new Properties();
-        configOverrides.setProperty("batchHost", "payments.vantivprelive.com ");
+        configOverrides.setProperty("batchHost", "payments.vantivprelive.com");
         configOverrides.setProperty("sftpTimeout", "720000");
 
         configOverrides.setProperty("batchRequestFolder", workingDirRequests);
