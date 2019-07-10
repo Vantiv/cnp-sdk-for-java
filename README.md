@@ -54,7 +54,7 @@ Setup
 ```java
 
 import com.cnp.sdk.*;
-import com.cnp.sdk.generated.*;
+import com.cnp.sdk.generate.*;
 public class SampleCnpTxn {
 
 
