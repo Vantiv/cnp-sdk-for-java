@@ -16,15 +16,110 @@ import java.util.Properties;
 
 import javax.xml.bind.JAXBException;
 
-import com.cnp.sdk.generate.*;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import org.junit.Ignore;
+import org.junit.Assume;
 import org.junit.Test;
+
+import com.cnp.sdk.generate.AccountUpdate;
+import com.cnp.sdk.generate.AccountUpdateResponse;
+import com.cnp.sdk.generate.Activate;
+import com.cnp.sdk.generate.ActivateResponse;
+import com.cnp.sdk.generate.AuthInformation;
+import com.cnp.sdk.generate.AuthReversal;
+import com.cnp.sdk.generate.AuthReversalResponse;
+import com.cnp.sdk.generate.Authorization;
+import com.cnp.sdk.generate.AuthorizationResponse;
+import com.cnp.sdk.generate.BalanceInquiry;
+import com.cnp.sdk.generate.BalanceInquiryResponse;
+import com.cnp.sdk.generate.CancelSubscription;
+import com.cnp.sdk.generate.CancelSubscriptionResponse;
+import com.cnp.sdk.generate.Capture;
+import com.cnp.sdk.generate.CaptureGivenAuth;
+import com.cnp.sdk.generate.CaptureGivenAuthResponse;
+import com.cnp.sdk.generate.CaptureResponse;
+import com.cnp.sdk.generate.CardType;
+import com.cnp.sdk.generate.CnpTransactionInterface;
+import com.cnp.sdk.generate.Contact;
+import com.cnp.sdk.generate.CreatePlan;
+import com.cnp.sdk.generate.CreatePlanResponse;
+import com.cnp.sdk.generate.Credit;
+import com.cnp.sdk.generate.CreditResponse;
+import com.cnp.sdk.generate.CtxPaymentInformationType;
+import com.cnp.sdk.generate.Deactivate;
+import com.cnp.sdk.generate.DeactivateResponse;
+import com.cnp.sdk.generate.EcheckAccountTypeEnum;
+import com.cnp.sdk.generate.EcheckCredit;
+import com.cnp.sdk.generate.EcheckCreditResponse;
+import com.cnp.sdk.generate.EcheckPreNoteCredit;
+import com.cnp.sdk.generate.EcheckPreNoteCreditResponse;
+import com.cnp.sdk.generate.EcheckPreNoteSale;
+import com.cnp.sdk.generate.EcheckPreNoteSaleResponse;
+import com.cnp.sdk.generate.EcheckRedeposit;
+import com.cnp.sdk.generate.EcheckRedepositResponse;
+import com.cnp.sdk.generate.EcheckSale;
+import com.cnp.sdk.generate.EcheckSalesResponse;
+import com.cnp.sdk.generate.EcheckType;
+import com.cnp.sdk.generate.EcheckTypeCtx;
+import com.cnp.sdk.generate.EcheckVerification;
+import com.cnp.sdk.generate.EcheckVerificationResponse;
+import com.cnp.sdk.generate.FastAccessFundingResponse;
+import com.cnp.sdk.generate.ForceCapture;
+import com.cnp.sdk.generate.ForceCaptureResponse;
+import com.cnp.sdk.generate.FundingInstructionVoidResponse;
+import com.cnp.sdk.generate.GiftCardAuthReversal;
+import com.cnp.sdk.generate.GiftCardAuthReversalResponse;
+import com.cnp.sdk.generate.GiftCardCapture;
+import com.cnp.sdk.generate.GiftCardCaptureResponse;
+import com.cnp.sdk.generate.GiftCardCardType;
+import com.cnp.sdk.generate.GiftCardCredit;
+import com.cnp.sdk.generate.GiftCardCreditResponse;
+import com.cnp.sdk.generate.IntervalTypeEnum;
+import com.cnp.sdk.generate.Load;
+import com.cnp.sdk.generate.LoadResponse;
+import com.cnp.sdk.generate.LodgingCharge;
+import com.cnp.sdk.generate.LodgingExtraChargeEnum;
+import com.cnp.sdk.generate.LodgingInfo;
+import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
+import com.cnp.sdk.generate.ObjectFactory;
+import com.cnp.sdk.generate.OrderSourceType;
+import com.cnp.sdk.generate.PayFacCreditResponse;
+import com.cnp.sdk.generate.PayFacDebitResponse;
+import com.cnp.sdk.generate.PhysicalCheckCreditResponse;
+import com.cnp.sdk.generate.PhysicalCheckDebitResponse;
+import com.cnp.sdk.generate.RegisterTokenRequestType;
+import com.cnp.sdk.generate.RegisterTokenResponse;
+import com.cnp.sdk.generate.ReserveCreditResponse;
+import com.cnp.sdk.generate.ReserveDebitResponse;
+import com.cnp.sdk.generate.Sale;
+import com.cnp.sdk.generate.SaleResponse;
+import com.cnp.sdk.generate.SubmerchantCreditCtx;
+import com.cnp.sdk.generate.SubmerchantCreditResponse;
+import com.cnp.sdk.generate.SubmerchantDebitCtx;
+import com.cnp.sdk.generate.SubmerchantDebitResponse;
+import com.cnp.sdk.generate.TranslateToLowValueTokenRequestType;
+import com.cnp.sdk.generate.TranslateToLowValueTokenResponse;
+import com.cnp.sdk.generate.Unload;
+import com.cnp.sdk.generate.UnloadResponse;
+import com.cnp.sdk.generate.UpdateCardValidationNumOnToken;
+import com.cnp.sdk.generate.UpdateCardValidationNumOnTokenResponse;
+import com.cnp.sdk.generate.UpdatePlan;
+import com.cnp.sdk.generate.UpdatePlanResponse;
+import com.cnp.sdk.generate.UpdateSubscription;
+import com.cnp.sdk.generate.UpdateSubscriptionResponse;
+import com.cnp.sdk.generate.VendorCreditCtx;
+import com.cnp.sdk.generate.VendorCreditResponse;
+import com.cnp.sdk.generate.VendorDebitCtx;
+import com.cnp.sdk.generate.VendorDebitResponse;
+import com.cnp.sdk.generate.VirtualGiftCardType;
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class TestBatchFile {
     private final long TIME_STAMP = System.currentTimeMillis();
+    private String preliveStatus = System.getenv("preliveStatus");
     @Test
     public void testSendToCnp_WithFileConfig() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-fileConfig-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -62,6 +157,9 @@ public class TestBatchFile {
 
     @Test
     public void testSendToCnp_WithConfigOverrides() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String workingDir = System.getProperty("java.io.tmpdir");
 
         String workingDirRequests = workingDir + File.separator
@@ -104,6 +202,9 @@ public class TestBatchFile {
     @Test
     public void testSendToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -152,6 +253,9 @@ public class TestBatchFile {
     @Test
     public void testSendOnlyToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         // --- Prepare the batch file ---
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request1 = new CnpBatchFileRequest(
@@ -214,6 +318,9 @@ public class TestBatchFile {
 
     @Test
     public void testSendToCnpSFTP_WithFileConfig() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -251,6 +358,9 @@ public class TestBatchFile {
 
     @Test
     public void testSendToCnpSFTP_WithConfigOverrides() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String workingDir = System.getProperty("java.io.tmpdir");
 
         String workingDirRequests = workingDir + File.separator
@@ -317,6 +427,9 @@ public class TestBatchFile {
 
     @Test
     public void testMechaBatchAndProcess() {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -493,6 +606,9 @@ public class TestBatchFile {
 
     @Test
     public void testEcheckPreNoteAll() {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-EcheckPreNoteAll-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -915,6 +1031,9 @@ public class TestBatchFile {
 
     @Test
     public void testGiftCardTransactions() {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-GiftCardTransactions-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1219,6 +1338,9 @@ public class TestBatchFile {
 
     @Test
     public void testMechaBatchAndProcess_RecurringDemonstratesUseOfProcessorAdapter() {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-RECURRING-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1293,6 +1415,9 @@ public class TestBatchFile {
 
     @Test
     public void testBatch_AU() {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile_AU-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1503,6 +1628,9 @@ public class TestBatchFile {
 
     @Test
     public void testCtxAll(){
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-CtxAll-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
