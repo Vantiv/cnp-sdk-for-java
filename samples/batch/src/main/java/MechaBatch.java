@@ -8,158 +8,164 @@ import java.util.Properties;
 An example of the batch functionality of Cnp Java SDK. We create one of each transaction type, add them to a batch, and then deliver the batch over sFTP to Cnp. Note the use of an anonymous class to process responses.
  */
 public class MechaBatch {
-    public static void main(String[] args) {    	
-    	String requestFileName = "cnpSdk-testBatchFile-MECHA.xml";
-	CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
-	Properties configFromFile = request.getConfig();
-	String merchantId = configFromFile.getProperty("merchantId");
-	
-	CnpBatchRequest batch = request.createBatch(merchantId);
-	 
-	//card
-	CardType card = new CardType();
-	card.setNumber("4100000000000000");
-	card.setExpDate("1210");
-	card.setType(MethodOfPaymentTypeEnum.VI);
-	 
-	//echeck
-	EcheckType echeck = new EcheckType();
-	echeck.setAccNum("1234567890");
-	echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
-	echeck.setRoutingNum("123456789");
-	echeck.setCheckNum("123455");
-	
-	 
-	//billto address
-	Contact contact = new Contact();
-	contact.setName("Bob");
-	contact.setCity("Lowell");
-	contact.setState("MA");
-	contact.setEmail("Bob@cnp.com");
-	 
-	Authorization auth = new Authorization();
-	auth.setReportGroup("Planets");
-	auth.setOrderId("12344");
-	auth.setAmount(106L);
-	auth.setOrderSource(OrderSourceType.ECOMMERCE);
-	auth.setCard(card);
-	auth.setId("id");
-	batch.addTransaction(auth);
-	 
-	Sale sale = new Sale();
-	sale.setReportGroup("Planets");
-	sale.setOrderId("12344");
-	sale.setAmount(6000L);
-	sale.setOrderSource(OrderSourceType.ECOMMERCE);
-	sale.setCard(card);
-	sale.setId("id");
-	batch.addTransaction(sale);
-	 
-	Credit credit = new Credit();
-	credit.setReportGroup("Planets");
-	credit.setOrderId("12344");
-	credit.setAmount(106L);
-	credit.setOrderSource(OrderSourceType.ECOMMERCE);
-	credit.setCard(card);
-	credit.setId("id");
-	batch.addTransaction(credit);
-	 
-	AuthReversal authReversal = new AuthReversal();
-	authReversal.setReportGroup("Planets");
-	authReversal.setCnpTxnId(12345678000L);
-	authReversal.setAmount(106L);
-	authReversal.setPayPalNotes("Notes");
-	authReversal.setId("id");
-	batch.addTransaction(authReversal);
-	 
-	RegisterTokenRequestType registerTokenRequestType = new RegisterTokenRequestType();
-	registerTokenRequestType.setReportGroup("Planets");
-	registerTokenRequestType.setOrderId("12344");
-	registerTokenRequestType.setAccountNumber("1233456789103801");
-	registerTokenRequestType.setId("id");
-	batch.addTransaction(registerTokenRequestType);
-	 
-	UpdateCardValidationNumOnToken cardValidationNumOnToken = new UpdateCardValidationNumOnToken();
-	cardValidationNumOnToken.setReportGroup("Planets");
-	cardValidationNumOnToken.setId("12345");
-	cardValidationNumOnToken.setCustomerId("0987");
-	cardValidationNumOnToken.setOrderId("12344");
-	cardValidationNumOnToken.setCnpToken("1233456789103801");
-	cardValidationNumOnToken.setCardValidationNum("123");
-	cardValidationNumOnToken.setId("id");
-	batch.addTransaction(cardValidationNumOnToken);
-	 
-	ForceCapture forceCapture = new ForceCapture();
-	forceCapture.setReportGroup("Planets");
-	forceCapture.setId("123456");
-	forceCapture.setOrderId("12344");
-	forceCapture.setAmount(106L);
-	forceCapture.setOrderSource(OrderSourceType.ECOMMERCE);
-	forceCapture.setCard(card);
-	forceCapture.setId("id");
-	batch.addTransaction(forceCapture);
-	 
-	Capture capture = new Capture();
-	capture.setReportGroup("Planets");
-	capture.setCnpTxnId(123456000L);
-	capture.setAmount(106L);
-	capture.setId("id");
-	batch.addTransaction(capture);
-	 
-	CaptureGivenAuth captureGivenAuth = new CaptureGivenAuth();
-	captureGivenAuth.setReportGroup("Planets");
-	captureGivenAuth.setOrderId("12344");
-	captureGivenAuth.setAmount(106L);
-	AuthInformation authInformation = new AuthInformation();
-	authInformation.setAuthDate(Calendar.getInstance());
-	authInformation.setAuthAmount(12345L);
-	authInformation.setAuthCode("543216");
-	captureGivenAuth.setAuthInformation(authInformation);
-	captureGivenAuth.setOrderSource(OrderSourceType.ECOMMERCE);
-	captureGivenAuth.setCard(card);
-	captureGivenAuth.setId("id");
-	batch.addTransaction(captureGivenAuth);
-	 
-	EcheckVerification echeckVerification = new EcheckVerification();
-	echeckVerification.setReportGroup("Planets");
-	echeckVerification.setAmount(123456L);
-	echeckVerification.setOrderId("12345");
-	echeckVerification.setOrderSource(OrderSourceType.ECOMMERCE);
-	echeckVerification.setBillToAddress(contact);
-	echeckVerification.setEcheck(echeck);
-	echeckVerification.setId("id");
-	batch.addTransaction(echeckVerification);
-	 
-	EcheckCredit echeckCredit = new EcheckCredit();
-	echeckCredit.setReportGroup("Planets");
-	echeckCredit.setCnpTxnId(1234567890L);
-	echeckCredit.setAmount(12L);
-	echeckCredit.setId("id");
-	batch.addTransaction(echeckCredit);
-	 
-	EcheckRedeposit echeckRedeposit = new EcheckRedeposit();
-	echeckRedeposit.setReportGroup("Planets");
-	echeckRedeposit.setCnpTxnId(124321341412L);
-	echeckRedeposit.setId("id");
-	batch.addTransaction(echeckRedeposit);
-	 
-	EcheckSale echeckSale = new EcheckSale();
-	echeckSale.setReportGroup("Planets");
-	echeckSale.setAmount(123456L);
-	echeckSale.setOrderId("12345");
-	echeckSale.setOrderSource(OrderSourceType.ECOMMERCE);
-	echeckSale.setBillToAddress(contact);
-	echeckSale.setEcheck(echeck);
-	echeckSale.setVerify(true);
-	echeckSale.setId("id");
-	batch.addTransaction(echeckSale);
-	 
-	CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-	CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
-        System.out.println("Response Message:"+fileResponse.getMessage());
-	 if(!fileResponse.getMessage().equals("Valid Format"))
-         throw new RuntimeException(" The MechaBatch does not give the right response");
+    public static void main(String[] args) {
 
-	}	
+		String preliveStatus = System.getenv("preliveStatus");
+
+		String requestFileName = "cnpSdk-testBatchFile-MECHA.xml";
+		CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+		Properties configFromFile = request.getConfig();
+		String merchantId = configFromFile.getProperty("merchantId");
+		
+		if(!preliveStatus.equalsIgnoreCase("down")) {
+		
+			CnpBatchRequest batch = request.createBatch(merchantId);
+			 
+			//card
+			CardType card = new CardType();
+			card.setNumber("4100000000000000");
+			card.setExpDate("1210");
+			card.setType(MethodOfPaymentTypeEnum.VI);
+			 
+			//echeck
+			EcheckType echeck = new EcheckType();
+			echeck.setAccNum("1234567890");
+			echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+			echeck.setRoutingNum("123456789");
+			echeck.setCheckNum("123455");
+			
+			 
+			//billto address
+			Contact contact = new Contact();
+			contact.setName("Bob");
+			contact.setCity("Lowell");
+			contact.setState("MA");
+			contact.setEmail("Bob@cnp.com");
+			 
+			Authorization auth = new Authorization();
+			auth.setReportGroup("Planets");
+			auth.setOrderId("12344");
+			auth.setAmount(106L);
+			auth.setOrderSource(OrderSourceType.ECOMMERCE);
+			auth.setCard(card);
+			auth.setId("id");
+			batch.addTransaction(auth);
+			 
+			Sale sale = new Sale();
+			sale.setReportGroup("Planets");
+			sale.setOrderId("12344");
+			sale.setAmount(6000L);
+			sale.setOrderSource(OrderSourceType.ECOMMERCE);
+			sale.setCard(card);
+			sale.setId("id");
+			batch.addTransaction(sale);
+			 
+			Credit credit = new Credit();
+			credit.setReportGroup("Planets");
+			credit.setOrderId("12344");
+			credit.setAmount(106L);
+			credit.setOrderSource(OrderSourceType.ECOMMERCE);
+			credit.setCard(card);
+			credit.setId("id");
+			batch.addTransaction(credit);
+			 
+			AuthReversal authReversal = new AuthReversal();
+			authReversal.setReportGroup("Planets");
+			authReversal.setCnpTxnId(12345678000L);
+			authReversal.setAmount(106L);
+			authReversal.setPayPalNotes("Notes");
+			authReversal.setId("id");
+			batch.addTransaction(authReversal);
+			 
+			RegisterTokenRequestType registerTokenRequestType = new RegisterTokenRequestType();
+			registerTokenRequestType.setReportGroup("Planets");
+			registerTokenRequestType.setOrderId("12344");
+			registerTokenRequestType.setAccountNumber("1233456789103801");
+			registerTokenRequestType.setId("id");
+			batch.addTransaction(registerTokenRequestType);
+			 
+			UpdateCardValidationNumOnToken cardValidationNumOnToken = new UpdateCardValidationNumOnToken();
+			cardValidationNumOnToken.setReportGroup("Planets");
+			cardValidationNumOnToken.setId("12345");
+			cardValidationNumOnToken.setCustomerId("0987");
+			cardValidationNumOnToken.setOrderId("12344");
+			cardValidationNumOnToken.setCnpToken("1233456789103801");
+			cardValidationNumOnToken.setCardValidationNum("123");
+			cardValidationNumOnToken.setId("id");
+			batch.addTransaction(cardValidationNumOnToken);
+			 
+			ForceCapture forceCapture = new ForceCapture();
+			forceCapture.setReportGroup("Planets");
+			forceCapture.setId("123456");
+			forceCapture.setOrderId("12344");
+			forceCapture.setAmount(106L);
+			forceCapture.setOrderSource(OrderSourceType.ECOMMERCE);
+			forceCapture.setCard(card);
+			forceCapture.setId("id");
+			batch.addTransaction(forceCapture);
+			 
+			Capture capture = new Capture();
+			capture.setReportGroup("Planets");
+			capture.setCnpTxnId(123456000L);
+			capture.setAmount(106L);
+			capture.setId("id");
+			batch.addTransaction(capture);
+			 
+			CaptureGivenAuth captureGivenAuth = new CaptureGivenAuth();
+			captureGivenAuth.setReportGroup("Planets");
+			captureGivenAuth.setOrderId("12344");
+			captureGivenAuth.setAmount(106L);
+			AuthInformation authInformation = new AuthInformation();
+			authInformation.setAuthDate(Calendar.getInstance());
+			authInformation.setAuthAmount(12345L);
+			authInformation.setAuthCode("543216");
+			captureGivenAuth.setAuthInformation(authInformation);
+			captureGivenAuth.setOrderSource(OrderSourceType.ECOMMERCE);
+			captureGivenAuth.setCard(card);
+			captureGivenAuth.setId("id");
+			batch.addTransaction(captureGivenAuth);
+			 
+			EcheckVerification echeckVerification = new EcheckVerification();
+			echeckVerification.setReportGroup("Planets");
+			echeckVerification.setAmount(123456L);
+			echeckVerification.setOrderId("12345");
+			echeckVerification.setOrderSource(OrderSourceType.ECOMMERCE);
+			echeckVerification.setBillToAddress(contact);
+			echeckVerification.setEcheck(echeck);
+			echeckVerification.setId("id");
+			batch.addTransaction(echeckVerification);
+			 
+			EcheckCredit echeckCredit = new EcheckCredit();
+			echeckCredit.setReportGroup("Planets");
+			echeckCredit.setCnpTxnId(1234567890L);
+			echeckCredit.setAmount(12L);
+			echeckCredit.setId("id");
+			batch.addTransaction(echeckCredit);
+			 
+			EcheckRedeposit echeckRedeposit = new EcheckRedeposit();
+			echeckRedeposit.setReportGroup("Planets");
+			echeckRedeposit.setCnpTxnId(124321341412L);
+			echeckRedeposit.setId("id");
+			batch.addTransaction(echeckRedeposit);
+			 
+			EcheckSale echeckSale = new EcheckSale();
+			echeckSale.setReportGroup("Planets");
+			echeckSale.setAmount(123456L);
+			echeckSale.setOrderId("12345");
+			echeckSale.setOrderSource(OrderSourceType.ECOMMERCE);
+			echeckSale.setBillToAddress(contact);
+			echeckSale.setEcheck(echeck);
+			echeckSale.setVerify(true);
+			echeckSale.setId("id");
+			batch.addTransaction(echeckSale);
+			 
+			CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+			CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+				System.out.println("Response Message:"+fileResponse.getMessage());
+			 if(!fileResponse.getMessage().equals("Valid Format"))
+				 throw new RuntimeException(" The MechaBatch does not give the right response");
+	
+		}	
+	}
 }
 
