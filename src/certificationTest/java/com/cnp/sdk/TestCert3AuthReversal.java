@@ -1,18 +1,33 @@
 package com.cnp.sdk;
 
 
-import com.cnp.sdk.generate.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Assume;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cnp.sdk.generate.AuthReversal;
+import com.cnp.sdk.generate.AuthReversalResponse;
+import com.cnp.sdk.generate.Authorization;
+import com.cnp.sdk.generate.AuthorizationResponse;
+import com.cnp.sdk.generate.Capture;
+import com.cnp.sdk.generate.CaptureResponse;
+import com.cnp.sdk.generate.CardType;
+import com.cnp.sdk.generate.Contact;
+import com.cnp.sdk.generate.CountryTypeEnum;
+import com.cnp.sdk.generate.FraudCheckType;
+import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
+import com.cnp.sdk.generate.OrderSourceType;
 
 public class TestCert3AuthReversal {
 
 	private static CnpOnline cnp;
+
+	private String preliveStatus = System.getenv("preliveStatus");
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -28,6 +43,7 @@ public class TestCert3AuthReversal {
 
 	@Test
 	public void test32() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization auth = new Authorization();
 		auth.setOrderId("32");
 		auth.setAmount(10010L);
@@ -73,6 +89,7 @@ public class TestCert3AuthReversal {
 
 	@Test
 	public void test33() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization auth = new Authorization();
 		auth.setOrderId("33");
 		auth.setAmount(20020L);
@@ -114,6 +131,7 @@ public class TestCert3AuthReversal {
 
 	@Test
 	public void test34() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization auth = new Authorization();
 		auth.setOrderId("34");
 		auth.setAmount(30030L);
@@ -151,6 +169,7 @@ public class TestCert3AuthReversal {
 
 	@Test
 	public void test35() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization auth = new Authorization();
 		auth.setOrderId("35");
 		auth.setAmount(40040L);
@@ -195,6 +214,7 @@ public class TestCert3AuthReversal {
 
 	@Test
 	public void test36() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization auth = new Authorization();
 		auth.setOrderId("36");
 		auth.setAmount(20500L);

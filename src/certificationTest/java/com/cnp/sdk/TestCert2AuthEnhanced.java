@@ -1,18 +1,31 @@
 package com.cnp.sdk;
 
 
-import com.cnp.sdk.generate.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Assume;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cnp.sdk.generate.AffluenceTypeEnum;
+import com.cnp.sdk.generate.Authorization;
+import com.cnp.sdk.generate.AuthorizationResponse;
+import com.cnp.sdk.generate.CardType;
+import com.cnp.sdk.generate.FundingSourceTypeEnum;
+import com.cnp.sdk.generate.HealthcareAmounts;
+import com.cnp.sdk.generate.HealthcareIIAS;
+import com.cnp.sdk.generate.IIASFlagType;
+import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
+import com.cnp.sdk.generate.OrderSourceType;
 
 public class TestCert2AuthEnhanced {
 
 	private static CnpOnline cnp;
+
+	private String preliveStatus = System.getenv("preliveStatus");
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
@@ -28,6 +41,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test14() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("14");
 		authorization.setAmount(3000L);
@@ -51,6 +65,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test15() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("15");
 		authorization.setAmount(3000L);
@@ -73,6 +88,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test16() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("16");
 		authorization.setAmount(3000L);
@@ -95,6 +111,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test17() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("17");
 		authorization.setAmount(3000L);
@@ -117,6 +134,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test18() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("18");
 		authorization.setAmount(3000L);
@@ -139,6 +157,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test19() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("19");
 		authorization.setAmount(3000L);
@@ -161,6 +180,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test20() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("20");
 		authorization.setAmount(3000L);
@@ -183,6 +203,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test21() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("21");
 		authorization.setAmount(5000L);
@@ -203,6 +224,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test22() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("22");
 		authorization.setAmount(5000L);
@@ -223,6 +245,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test23() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("23");
 		authorization.setAmount(5000L);
@@ -243,6 +266,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test24() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("24");
 		authorization.setAmount(5000L);
@@ -262,6 +286,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test25() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("25");
 		authorization.setAmount(5000L);
@@ -282,6 +307,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test26() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("26");
 		authorization.setAmount(18698L);
@@ -307,6 +333,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test27() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("27");
 		authorization.setAmount(18698L);
@@ -333,6 +360,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test28() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("28");
 		authorization.setAmount(15000L);
@@ -359,6 +387,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test29() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("29");
 		authorization.setAmount(18699L);
@@ -389,6 +418,7 @@ public class TestCert2AuthEnhanced {
 	/*
 	@Test
 	public void test30() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("30");
 		authorization.setAmount(20000L);
@@ -418,6 +448,7 @@ public class TestCert2AuthEnhanced {
 
 	@Test
 	public void test31() throws Exception {
+		Assume.assumeFalse(this.preliveStatus.equalsIgnoreCase("down"));
 		Authorization authorization = new Authorization();
 		authorization.setOrderId("31");
 		authorization.setAmount(25000L);
