@@ -14,8 +14,13 @@ import com.cnp.sdk.generate.RFRRequest;
 
 public class TestRFRFile {
 
+    private String preliveStatus = System.getenv("preliveStatus");
+    
     @Test
     public void testSendToCnpSFTP() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testRFRFile-fileConfigSFTP.xml";
         RFRRequest rfrRequest = new RFRRequest();
 
