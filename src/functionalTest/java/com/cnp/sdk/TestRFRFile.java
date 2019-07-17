@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Properties;
 
+import org.junit.Assume;
 import org.junit.Test;
 import com.cnp.sdk.generate.AccountUpdateFileRequestData;
 import com.cnp.sdk.generate.RFRRequest;
