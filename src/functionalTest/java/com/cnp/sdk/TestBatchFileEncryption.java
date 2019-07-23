@@ -1,16 +1,30 @@
 package com.cnp.sdk;
 
-import com.cnp.sdk.generate.*;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
-import static org.junit.Assert.*;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.cnp.sdk.generate.CardType;
+import com.cnp.sdk.generate.CnpTransactionInterface;
+import com.cnp.sdk.generate.MethodOfPaymentTypeEnum;
+import com.cnp.sdk.generate.OrderSourceType;
+import com.cnp.sdk.generate.Sale;
+import com.cnp.sdk.generate.SaleResponse;
 
 public class TestBatchFileEncryption {
 
     private Properties config;
+    private String preliveStatus;
 
     @Before
     public void setup() throws IOException {
@@ -29,13 +43,16 @@ public class TestBatchFileEncryption {
         config.setProperty("sftpPassword", encSftpPassword);
         config.setProperty("useEncryption", "true");
         config.setProperty("merchantId", encMerchantId);
+        
+        preliveStatus = System.getenv("preliveStatus");
     }
 
     @Test
     public void testSendToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
 
-
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP.xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName, config);
@@ -84,6 +101,9 @@ public class TestBatchFileEncryption {
     @Test
     public void testSendOnlyToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         // --- Prepare the batch file ---
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP.xml";
         CnpBatchFileRequest request1 = new CnpBatchFileRequest(
@@ -146,6 +166,9 @@ public class TestBatchFileEncryption {
 
     @Test
     public void testSendToCnpSFTP_WithFileConfig() throws Exception {
+
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP.xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName, config);
