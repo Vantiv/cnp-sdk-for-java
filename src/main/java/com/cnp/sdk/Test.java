@@ -128,7 +128,7 @@ public class Test {
                         PayFacCreditResponse payFacCreditResponse) {
                 }
 
-                public void processVendorCreditRespsonse(
+                public void processVendorCreditResponse(
                         VendorCreditResponse vendorCreditResponse) {
                 }
 

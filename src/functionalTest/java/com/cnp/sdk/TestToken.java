@@ -51,6 +51,7 @@ public class TestToken {
 		token.setEcheckForToken(echeck);
 	    token.setId("id");
 		RegisterTokenResponse response = cnp.registerToken(token);
+		System.out.println(response.getCnpToken());
 		assertEquals("Account number was successfully registered", response.getMessage());
 	}
 	

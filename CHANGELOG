@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.8.0 (June 06, 2019)
+* Feature: Added tokenUrl element
+
 ==Version 12.7.1(Apr 09, 2019)
 * BugFix: Removing unit tests for giropay, ideal and sofort as they are not supported anymore
 * BugFix: Setup process no longer throws class cast exception

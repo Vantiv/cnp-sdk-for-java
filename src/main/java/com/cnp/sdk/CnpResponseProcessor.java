@@ -63,7 +63,7 @@ public interface CnpResponseProcessor {
     
     void processPayFacCreditResponse(PayFacCreditResponse payFacCreditResponse);
     
-    void processVendorCreditRespsonse(VendorCreditResponse vendorCreditResponse);
+    void processVendorCreditResponse(VendorCreditResponse vendorCreditResponse);
     
     void processReserveCreditResponse(ReserveCreditResponse reserveCreditResponse);
     

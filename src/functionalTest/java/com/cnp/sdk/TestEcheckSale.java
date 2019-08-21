@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.cnp.sdk.CnpOnline;
 import com.cnp.sdk.CnpOnlineException;
 import com.cnp.sdk.generate.Contact;
+import com.cnp.sdk.generate.CountryTypeEnum;
 import com.cnp.sdk.generate.CustomBilling;
 import com.cnp.sdk.generate.EcheckAccountTypeEnum;
 import com.cnp.sdk.generate.EcheckSale;
@@ -25,6 +26,40 @@ public class TestEcheckSale {
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		cnp = new CnpOnline();
+	}
+
+	@Test
+	public void anotherEcheckSale() throws Exception{
+		EcheckSale echecksale = new EcheckSale();
+		echecksale.setAmount(1L);
+		echecksale.setOrderId("");
+		echecksale.setOrderSource(OrderSourceType.ECOMMERCE);
+		
+		EcheckType echeck = new EcheckType();
+		echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+		echeck.setAccNum("000123456578");
+		echeck.setRoutingNum("122235821");
+		echecksale.setEcheck(echeck);
+		
+		Contact contact = new Contact();
+		contact.setFirstName("Test");		
+		contact.setLastName("Test");
+		contact.setAddressLine1("201 - 123 Test Street");
+		contact.setCity("Toronto");
+		contact.setState("ID");
+		contact.setZip("11111");
+		contact.setCountry(CountryTypeEnum.USA);
+		contact.setEmail("gfdtest201906021435@globalfacesdirect.com");
+		contact.setPhone("(416) 111-1111");
+		echecksale.setBillToAddress(contact);
+		
+		echecksale.setId("GFD3V00000051954120190602085843");
+		echecksale.setCustomerId("GFD3V000000519541");
+		//echecksale.setReportGroup("Planets");
+		
+		EcheckSalesResponse response = cnp.echeckSale(echecksale);
+		//System.out.println(response.getVerificationCode());
+		assertEquals("Approved", response.getMessage());
 	}
 	
 	@Test

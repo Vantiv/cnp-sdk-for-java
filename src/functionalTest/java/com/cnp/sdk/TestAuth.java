@@ -18,6 +18,7 @@ public class TestAuth {
 	public static void beforeClass() throws Exception {
 		cnp = new CnpOnline();
 	}
+	
 
     @Test
     public void simpleAuthWithCardUTF8() throws Exception {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
     <xs:element name="authentication">
         <xs:complexType>
@@ -198,7 +198,7 @@
             <xs:totalDigits value="12" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="loanToValueEstimator">
         <xs:restriction base="xs:string">
             <xs:maxLength value="8" />
@@ -703,7 +703,10 @@
 
     <xs:complexType name="cardTokenType">
         <xs:sequence>
-            <xs:element name="cnpToken" type="xp:ccAccountNumberType"/>
+            <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:element name="cnpToken" type="xp:ccAccountNumberType"/>
+                <xs:element name="tokenURL" type="xp:awpTokenUrlType"/>
+            </xs:choice>
             <xs:element name="expDate" type="xp:expDateType" minOccurs="0" />
             <xs:element name="cardValidationNum" type="xp:cvNumType" minOccurs="0" />
             <xs:element name="type" type="xp:methodOfPaymentTypeEnum" minOccurs="0" />
@@ -792,6 +795,12 @@
             <xs:maxLength value="256" />
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="awpTokenUrlType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="http.?://.*/.*"/>
+            <xs:maxLength value="400"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="advancedFraudChecksType">
         <xs:sequence>
@@ -848,25 +857,25 @@
             <xs:pattern value="[A-Z,a-z,0-9]{16,16}"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="lodgingDurationType">
         <xs:restriction base="xs:integer">
             <xs:totalDigits value="4" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="csPhoneType">
         <xs:restriction base="xs:string">
             <xs:maxLength value="17" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="noOfAdultsType">
         <xs:restriction base="xs:integer">
             <xs:totalDigits value="2" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="lodgingExtraChargeEnum">
         <xs:restriction base="xs:string">
             <xs:enumeration value="RESTAURANT" />
@@ -877,7 +886,7 @@
             <xs:enumeration value="LAUNDRY" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:element name="lodgingCharge">
         <xs:complexType>
             <xs:sequence>
@@ -885,7 +894,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    
+
     <xs:simpleType name="lodgingProgramCodeType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="LODGING" />
@@ -900,5 +909,5 @@
             <xs:enumeration value="N" />
         </xs:restriction>
     </xs:simpleType>
-    
+
 </xs:schema>

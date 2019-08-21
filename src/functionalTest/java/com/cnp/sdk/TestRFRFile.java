@@ -35,7 +35,7 @@ public class TestRFRFile {
         rfrRequest.setAccountUpdateFileRequestData(data);
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com", configFromFile.getProperty("batchHost"));
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
 
         String workingDirRequests = configFromFile.getProperty("batchRequestFolder");
         prepDir(workingDirRequests);

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+           xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.7.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.8.xsd" />
 
     <xs:element name="cnpRequest">
         <xs:complexType>
@@ -32,7 +32,7 @@
                 <xs:element ref="xp:transaction" maxOccurs="unbounded" />
                 <xs:element ref="xp:recurringTransaction" maxOccurs="unbounded" />
             </xs:choice>
-                        <xs:attribute name="merchantSdk" type="xs:string" use="optional" />
+            <xs:attribute name="merchantSdk" type="xs:string" use="optional" />
             <xs:attribute name="id" type="xp:string25Type" use="optional" />
             <xs:attribute name="numAuths" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="authAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
@@ -272,8 +272,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    
-     <xs:element name="vendorCreditCtx" substitutionGroup="xp:transaction">
+
+    <xs:element name="vendorCreditCtx" substitutionGroup="xp:transaction">
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
@@ -308,8 +308,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    
-    
+
+
     <xs:element name="submerchantCreditCtx" substitutionGroup="xp:transaction">
         <xs:complexType>
             <xs:complexContent>
@@ -347,8 +347,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    
-    
-    
+
+
+
 </xs:schema>
 

@@ -63,7 +63,7 @@ public class TestBatchFileEncryption {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -115,7 +115,7 @@ public class TestBatchFileEncryption {
         Properties configFromFile = request1.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -179,7 +179,7 @@ public class TestBatchFileEncryption {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("prelive.litle.com",
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
