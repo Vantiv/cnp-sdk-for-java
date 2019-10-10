@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-
-import javax.security.auth.login.Configuration;
-
 import com.cnp.sdk.generate.Authorization;
 import com.cnp.sdk.generate.AuthorizationResponse;
 import com.cnp.sdk.generate.CardType;
