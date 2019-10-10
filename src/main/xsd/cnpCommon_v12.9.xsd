@@ -909,5 +909,4 @@
             <xs:enumeration value="N" />
         </xs:restriction>
     </xs:simpleType>
-
 </xs:schema>
