@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-
-import javax.security.auth.login.Configuration;
-
 import org.junit.Test;
 
 public class TestCommManagerMultiThreaded {
