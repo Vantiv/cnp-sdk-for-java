@@ -58,7 +58,6 @@ import com.cnp.sdk.generate.EcheckRedepositResponse;
 import com.cnp.sdk.generate.EcheckSale;
 import com.cnp.sdk.generate.EcheckSalesResponse;
 import com.cnp.sdk.generate.EcheckType;
-import com.cnp.sdk.generate.EcheckTypeCtx;
 import com.cnp.sdk.generate.EcheckVerification;
 import com.cnp.sdk.generate.EcheckVerificationResponse;
 import com.cnp.sdk.generate.FastAccessFundingResponse;
@@ -91,9 +90,7 @@ import com.cnp.sdk.generate.ReserveCreditResponse;
 import com.cnp.sdk.generate.ReserveDebitResponse;
 import com.cnp.sdk.generate.Sale;
 import com.cnp.sdk.generate.SaleResponse;
-import com.cnp.sdk.generate.SubmerchantCreditCtx;
 import com.cnp.sdk.generate.SubmerchantCreditResponse;
-import com.cnp.sdk.generate.SubmerchantDebitCtx;
 import com.cnp.sdk.generate.SubmerchantDebitResponse;
 import com.cnp.sdk.generate.TranslateToLowValueTokenRequestType;
 import com.cnp.sdk.generate.TranslateToLowValueTokenResponse;
@@ -105,9 +102,7 @@ import com.cnp.sdk.generate.UpdatePlan;
 import com.cnp.sdk.generate.UpdatePlanResponse;
 import com.cnp.sdk.generate.UpdateSubscription;
 import com.cnp.sdk.generate.UpdateSubscriptionResponse;
-import com.cnp.sdk.generate.VendorCreditCtx;
 import com.cnp.sdk.generate.VendorCreditResponse;
-import com.cnp.sdk.generate.VendorDebitCtx;
 import com.cnp.sdk.generate.VendorDebitResponse;
 import com.cnp.sdk.generate.VirtualGiftCardType;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
@@ -1625,265 +1620,6 @@ public class TestBatchFile {
     }
 
 
-
-    @Test
-    public void testCtxAll(){
-
-        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
-        String requestFileName = "cnpSdk-testBatchFile-CtxAll-" + TIME_STAMP + ".xml";
-        CnpBatchFileRequest request = new CnpBatchFileRequest(
-                requestFileName);
-
-        Properties configFromFile = request.getConfig();
-
-        configFromFile.setProperty("merchantId", configFromFile.getProperty("payfacMerchantId_v12_7"));
-        configFromFile.setProperty("username", configFromFile.getProperty("payfacUsername_v12_7"));
-        configFromFile.setProperty("sftpUsername", configFromFile.getProperty("payfacSftpUsername_v12_7"));
-        configFromFile.setProperty("password", configFromFile.getProperty("payfacPassword_v12_7"));
-        configFromFile.setProperty("sftpPassword", configFromFile.getProperty("payfacSftpPassword_v12_7"));
-
-        // pre-assert the config file has required param values
-        assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));
-        //assertEquals("15000", configFromFile.getProperty("batchPort"));
-
-        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
-
-        String fundsTransferIdString = ""+System.currentTimeMillis();
-
-        EcheckTypeCtx echeck = new EcheckTypeCtx();
-        echeck.setAccNum("1092969901");
-        echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
-        echeck.setRoutingNum("011075150");
-        echeck.setCheckNum("123455");
-
-        CtxPaymentInformationType echeckPayInfo = new CtxPaymentInformationType();
-        List<String> payDetails = echeckPayInfo.getCtxPaymentDetails();
-        payDetails.add("ctx1 for submerchantcredit");
-        echeck.setCtxPaymentInformation(echeckPayInfo);
-
-        VendorCreditCtx vcredit = new VendorCreditCtx();
-        vcredit.setReportGroup("vendorCredit");
-        vcredit.setId("111");
-        vcredit.setFundingSubmerchantId("vendorCreditTest");
-        vcredit.setVendorName("Vendor101");
-        vcredit.setFundsTransferId(fundsTransferIdString);
-        vcredit.setAmount(500l);
-        vcredit.setAccountInfo(echeck);
-        batch.addTransaction(vcredit);
-
-        VendorDebitCtx vdebit = new VendorDebitCtx();
-        vdebit.setReportGroup("vendorDebit");
-        vdebit.setId("111");
-        vdebit.setFundingSubmerchantId("vendorDebit");
-        vdebit.setVendorName("Vendor101");
-        vdebit.setFundsTransferId(fundsTransferIdString);
-        vdebit.setAmount(500l);
-        vdebit.setAccountInfo(echeck);
-        batch.addTransaction(vdebit);
-
-        SubmerchantCreditCtx smcredit = new SubmerchantCreditCtx();
-        smcredit.setReportGroup("submerchantCredit");
-        smcredit.setId("111");
-        smcredit.setFundingSubmerchantId("submerchantCredit");
-        smcredit.setSubmerchantName("submerchant101");
-        smcredit.setFundsTransferId(fundsTransferIdString);
-        smcredit.setAmount(500l);
-        smcredit.setAccountInfo(echeck);
-        batch.addTransaction(smcredit);
-
-        SubmerchantDebitCtx smdebit = new SubmerchantDebitCtx();
-        smdebit.setReportGroup("submerchantDebit");
-        smdebit.setId("111");
-        smdebit.setFundingSubmerchantId("submerchantDebit");
-        smdebit.setSubmerchantName("submerchant101");
-        smdebit.setFundsTransferId(fundsTransferIdString);
-        smdebit.setAmount(500l);
-        smdebit.setAccountInfo(echeck);
-        batch.addTransaction(smdebit);
-
-        int transactionCount = batch.getNumberOfTransactions();
-
-        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-        CnpBatchResponse batchResponse = fileResponse
-                .getNextCnpBatchResponse();
-        int txns = 0;
-
-//        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
-
-        while (batchResponse
-                .processNextTransaction(new CnpResponseProcessor() {
-
-                    public void processVendorDebitResponse(
-                            VendorDebitResponse vendorDebitResponse) {
-                    }
-
-                    public void processVendorCreditResponse(
-                            VendorCreditResponse vendorCreditResponse) {
-                    }
-
-                    public void processUpdateSubscriptionResponse(
-                            UpdateSubscriptionResponse updateSubscriptionResponse) {
-                    }
-
-                    public void processUpdatePlanResponse(
-                            UpdatePlanResponse updatePlanResponse) {
-                    }
-
-                    public void processUpdateCardValidationNumOnTokenResponse(
-                            UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
-                    }
-
-                    public void processUnloadResponse(
-                            UnloadResponse unloadResponse) {
-                    }
-
-                    public void processSubmerchantDebitResponse(
-                            SubmerchantDebitResponse submerchantDebitResponse) {
-                    }
-
-                    public void processSubmerchantCreditResponse(
-                            SubmerchantCreditResponse submerchantCreditResponse) {
-                    }
-
-                    public void processSaleResponse(SaleResponse saleResponse) {
-                    }
-
-                    public void processReserveDebitResponse(
-                            ReserveDebitResponse reserveDebitResponse) {
-                    }
-
-                    public void processReserveCreditResponse(
-                            ReserveCreditResponse reserveCreditResponse) {
-                    }
-
-                    public void processRegisterTokenResponse(
-                            RegisterTokenResponse registerTokenResponse) {
-                    }
-
-                    public void processPhysicalCheckDebitResponse(
-                            PhysicalCheckDebitResponse checkDebitResponse) {
-                    }
-
-                    public void processPhysicalCheckCreditResponse(
-                            PhysicalCheckCreditResponse checkCreditResponse) {
-                    }
-
-                    public void processPayFacDebitResponse(
-                            PayFacDebitResponse payFacDebitResponse) {
-                    }
-
-                    public void processPayFacCreditResponse(
-                            PayFacCreditResponse payFacCreditResponse) {
-                    }
-
-                    public void processLoadResponse(LoadResponse loadResponse) {
-                    }
-
-                    public void processForceCaptureResponse(
-                            ForceCaptureResponse forceCaptureResponse) {
-                    }
-
-                    public void processEcheckVerificationResponse(
-                            EcheckVerificationResponse echeckVerificationResponse) {
-                    }
-
-                    public void processEcheckSalesResponse(
-                            EcheckSalesResponse echeckSalesResponse) {
-                    }
-
-                    public void processEcheckRedepositResponse(
-                            EcheckRedepositResponse echeckRedepositResponse) {
-                    }
-
-                    public void processEcheckPreNoteSaleResponse(
-                            EcheckPreNoteSaleResponse echeckPreNoteSaleResponse) {
-
-                    }
-
-                    public void processEcheckPreNoteCreditResponse(
-                            EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
-
-                    }
-
-                    public void processEcheckCreditResponse(
-                            EcheckCreditResponse echeckCreditResponse) {
-                    }
-
-                    public void processDeactivateResponse(
-                            DeactivateResponse deactivateResponse) {
-                    }
-
-                    public void processCreditResponse(
-                            CreditResponse creditResponse) {
-                    }
-
-                    public void processCreatePlanResponse(
-                            CreatePlanResponse createPlanResponse) {
-                    }
-
-                    public void processCaptureResponse(
-                            CaptureResponse captureResponse) {
-                    }
-
-                    public void processCaptureGivenAuthResponse(
-                            CaptureGivenAuthResponse captureGivenAuthResponse) {
-                    }
-
-                    public void processCancelSubscriptionResponse(
-                            CancelSubscriptionResponse cancelSubscriptionResponse) {
-                    }
-
-                    public void processBalanceInquiryResponse(
-                            BalanceInquiryResponse balanceInquiryResponse) {
-                    }
-
-                    public void processAuthorizationResponse(
-                            AuthorizationResponse authorizationResponse) {
-                    }
-
-                    public void processAuthReversalResponse(
-                            AuthReversalResponse authReversalResponse) {
-                    }
-
-                    public void processActivateResponse(
-                            ActivateResponse activateResponse) {
-                    }
-
-                    public void processAccountUpdate(
-                            AccountUpdateResponse accountUpdateResponse) {
-                    }
-
-                    public void processFundingInstructionVoidResponse(
-                            FundingInstructionVoidResponse fundingInstructionVoidResponse) {
-
-                    }
-
-                    public void processGiftCardAuthReversalResponse(
-                            GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-                    }
-
-                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-                    }
-
-                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-                    }
-
-                    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
-
-                    }
-
-                    public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
-                    }
-                })) {
-
-            txns++;
-        }
-
-        assertEquals(transactionCount, txns);
-
-    }
 
 
 //    @Test
