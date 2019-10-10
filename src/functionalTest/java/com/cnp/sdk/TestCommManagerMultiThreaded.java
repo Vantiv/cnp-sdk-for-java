@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+
+import javax.security.auth.login.Configuration;
+
 import org.junit.Test;
 
 public class TestCommManagerMultiThreaded {
@@ -30,7 +33,7 @@ public class TestCommManagerMultiThreaded {
             // init the CommManager
             fileInputStream = new FileInputStream((new Configuration()).location());
             config.load(fileInputStream);
-            config.setProperty("proxyHost", "websenseproxy");
+            config.setProperty("proxyHost", "inetproxy.infoftps.com");
             config.setProperty("proxyPort", "8080");
             config.setProperty("multiSite", "true");
             config.setProperty("printxml", "false");
