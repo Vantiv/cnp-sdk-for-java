@@ -44,6 +44,8 @@ import com.cnp.sdk.generate.CreatePlanResponse;
 import com.cnp.sdk.generate.Credit;
 import com.cnp.sdk.generate.CreditResponse;
 import com.cnp.sdk.generate.CtxPaymentInformationType;
+import com.cnp.sdk.generate.CustomerCreditResponse;
+import com.cnp.sdk.generate.CustomerDebitResponse;
 import com.cnp.sdk.generate.Deactivate;
 import com.cnp.sdk.generate.DeactivateResponse;
 import com.cnp.sdk.generate.EcheckAccountTypeEnum;
@@ -82,6 +84,8 @@ import com.cnp.sdk.generate.ObjectFactory;
 import com.cnp.sdk.generate.OrderSourceType;
 import com.cnp.sdk.generate.PayFacCreditResponse;
 import com.cnp.sdk.generate.PayFacDebitResponse;
+import com.cnp.sdk.generate.PayoutOrgCreditResponse;
+import com.cnp.sdk.generate.PayoutOrgDebitResponse;
 import com.cnp.sdk.generate.PhysicalCheckCreditResponse;
 import com.cnp.sdk.generate.PhysicalCheckDebitResponse;
 import com.cnp.sdk.generate.RegisterTokenRequestType;
@@ -880,6 +884,18 @@ public class TestBatchFile {
 
                     public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
                     }
+
+                    public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+                    }
+
+                    public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+                    }
+
+                    public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+                    }
+
+                    public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
+                    }
                 })) {
 
             txns++;
@@ -1324,6 +1340,18 @@ public class TestBatchFile {
 
                     public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse) {
                     }
+
+                    public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+                    }
+
+                    public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+                    }
+
+                    public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+                    }
+
+                    public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
+                    }
                 })) {
             txns++;
         }
@@ -1611,6 +1639,18 @@ public class TestBatchFile {
                     }
 
                     public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse){
+                    }
+
+                    public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+                    }
+
+                    public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+                    }
+
+                    public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+                    }
+
+                    public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                     }
                 })) {
             txns++;
@@ -2135,6 +2175,30 @@ public class TestBatchFile {
         public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse){
             assertNotNull(translateToLowValueTokenResponse.getResponse());
             assertNotNull(translateToLowValueTokenResponse.getMessage());
+            responseCount++;
+        }
+
+        public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+            assertNotNull(customerCreditResponse.getResponse());
+            assertNotNull(customerCreditResponse.getMessage());
+            responseCount++;
+        }
+
+        public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+            assertNotNull(customerDebitResponse.getResponse());
+            assertNotNull(customerDebitResponse.getMessage());
+            responseCount++;
+        }
+
+        public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+            assertNotNull(payoutOrgCreditResponse.getResponse());
+            assertNotNull(payoutOrgCreditResponse.getMessage());
+            responseCount++;
+        }
+
+        public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
+            assertNotNull(payoutOrgDebitResponse.getResponse());
+            assertNotNull(payoutOrgDebitResponse.getMessage());
             responseCount++;
         }
     }
