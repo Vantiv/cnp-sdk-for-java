@@ -174,7 +174,16 @@ public class CnpBatchResponse {
 			processor.processFastAccessFundingResponse((FastAccessFundingResponse)objToRet);
 		} else if (objToRet instanceof TranslateToLowValueTokenResponse) {
         	processor.processTranslateToLowValueTokenResponse((TranslateToLowValueTokenResponse) objToRet);
+		} else if (objToRet instanceof CustomerCreditResponse) {
+	    	processor.processCustomerCreditResponse((CustomerCreditResponse) objToRet);
+		} else if (objToRet instanceof CustomerDebitResponse) {
+			processor.processCustomerDebitResponse((CustomerDebitResponse) objToRet);
+		} else if (objToRet instanceof PayoutOrgCreditResponse) {
+			processor.processPayoutOrgCreditResponse((PayoutOrgCreditResponse) objToRet);
+		} else if (objToRet instanceof PayoutOrgDebitResponse) {
+			processor.processPayoutOrgDebitResponse((PayoutOrgDebitResponse) objToRet);
 		}
+
 	    return true;
 	}
 

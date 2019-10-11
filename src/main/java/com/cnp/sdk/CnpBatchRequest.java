@@ -362,6 +362,30 @@ public class CnpBatchRequest {
 		    transaction = objFac.createTranslateToLowValueTokenRequest((TranslateToLowValueTokenRequestType) transactionType);
 		    transactionAdded = true;
 		    numOfTxn++;
+        } else if(transactionType instanceof CustomerCredit){
+            batchRequest.setNumCustomerCredit(batchRequest.getNumCustomerCredit().add(BigInteger.valueOf(1)));
+            batchRequest.setCustomerCreditAmount(batchRequest.getCustomerCreditAmount().add(BigInteger.valueOf(((CustomerCredit) transactionType).getAmount())));
+            transaction = objFac.createCustomerCredit((CustomerCredit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof CustomerDebit) {
+            batchRequest.setNumCustomerDebit(batchRequest.getNumCustomerDebit().add(BigInteger.valueOf(1)));
+            batchRequest.setCustomerDebitAmount(batchRequest.getCustomerDebitAmount().add(BigInteger.valueOf(((CustomerDebit) transactionType).getAmount())));
+            transaction = objFac.createCustomerDebit((CustomerDebit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof PayoutOrgCredit) {
+            batchRequest.setNumPayoutOrgCredit(batchRequest.getNumPayoutOrgCredit().add(BigInteger.valueOf(1)));
+            batchRequest.setPayoutOrgCreditAmount(batchRequest.getPayoutOrgCreditAmount().add(BigInteger.valueOf(((PayoutOrgCredit) transactionType).getAmount())));
+            transaction = objFac.createPayoutOrgCredit((PayoutOrgCredit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof PayoutOrgDebit) {
+            batchRequest.setNumPayoutOrgDebit(batchRequest.getNumPayoutOrgDebit().add(BigInteger.valueOf(1)));
+            batchRequest.setPayoutOrgDebitAmount(batchRequest.getPayoutOrgDebitAmount().add(BigInteger.valueOf(((PayoutOrgDebit) transactionType).getAmount())));
+            transaction = objFac.createPayoutOrgDebit((PayoutOrgDebit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
         } else {
             transaction = objFac.createTransaction(new TransactionType());
         }

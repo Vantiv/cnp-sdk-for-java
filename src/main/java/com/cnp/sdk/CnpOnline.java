@@ -785,6 +785,66 @@ public class CnpOnline {
         return (TranslateToLowValueTokenResponse)newresponse.getValue();
     }
 
+    public CustomerCreditResponse customerCredit(CustomerCredit customerCredit) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return customerCredit(customerCredit, request);
+    }
+
+    public CustomerCreditResponse customerCredit(CustomerCredit customerCredit, CnpOnlineRequest overrides) {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(customerCredit);
+
+        request.setTransaction(CnpContext.getObjectFactory().createCustomerCredit(customerCredit));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (CustomerCreditResponse)newresponse.getValue();
+    }
+
+    public CustomerDebitResponse customerDebit(CustomerDebit customerDebit) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return customerDebit(customerDebit, request);
+    }
+
+    public CustomerDebitResponse customerDebit(CustomerDebit customerDebit, CnpOnlineRequest overrides) {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(customerDebit);
+
+        request.setTransaction(CnpContext.getObjectFactory().createCustomerDebit(customerDebit));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (CustomerDebitResponse)newresponse.getValue();
+    }
+
+    public PayoutOrgCreditResponse payoutOrgCredit(PayoutOrgCredit payoutOrgCredit) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return payoutOrgCredit(payoutOrgCredit, request);
+    }
+
+    public PayoutOrgCreditResponse payoutOrgCredit(PayoutOrgCredit payoutOrgCredit, CnpOnlineRequest overrides) {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(payoutOrgCredit);
+
+        request.setTransaction(CnpContext.getObjectFactory().createPayoutOrgCredit(payoutOrgCredit));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (PayoutOrgCreditResponse)newresponse.getValue();
+    }
+
+    public PayoutOrgDebitResponse payoutOrgDebit(PayoutOrgDebit payoutOrgDebit) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return payoutOrgDebit(payoutOrgDebit, request);
+    }
+
+    public PayoutOrgDebitResponse payoutOrgDebit(PayoutOrgDebit payoutOrgDebit, CnpOnlineRequest overrides) {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(payoutOrgDebit);
+
+        request.setTransaction(CnpContext.getObjectFactory().createPayoutOrgDebit(payoutOrgDebit));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (PayoutOrgDebitResponse)newresponse.getValue();
+    }
+
 	private CnpOnlineRequest createCnpOnlineRequest() {
 		CnpOnlineRequest request = new CnpOnlineRequest();
 		request.setMerchantId(config.getProperty("merchantId"));
