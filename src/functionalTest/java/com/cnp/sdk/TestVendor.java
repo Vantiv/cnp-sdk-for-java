@@ -14,7 +14,7 @@ public class TestVendor {
         cnp = new CnpOnline();
     }
 
-    @org.junit.Test
+    @Test
     public void testVendorCredit() throws Exception{
         VendorCredit vcredit = new VendorCredit();
         vcredit.setReportGroup("vendorCredit");
@@ -37,11 +37,55 @@ public class TestVendor {
     }
 
     @Test
-    public void testVendorDebit() throws Exception{
+    public void testVendorCreditWithFundingCustomerId() throws Exception{
+        VendorCredit vcredit = new VendorCredit();
+        vcredit.setReportGroup("vendorCredit");
+        vcredit.setId("111");
+        vcredit.setFundingCustomerId("vendorDebit");
+        vcredit.setVendorName("Vendor101");
+        vcredit.setFundsTransferId("1001");
+        vcredit.setAmount(500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        vcredit.setAccountInfo(echeck);
+
+        VendorCreditResponse response = cnp.vendorCredit(vcredit);
+        assertEquals("Approved", response.getMessage());
+    }
+
+    @Test
+    public void testVendorDebit() throws Exception {
         VendorDebit vdebit = new VendorDebit();
-        vdebit.setReportGroup("VendorDebit");
+        vdebit.setReportGroup("vendorCredit");
         vdebit.setId("111");
-        vdebit.setFundingSubmerchantId("VendorDebit");
+        vdebit.setFundingSubmerchantId("vendorCredit");
+        vdebit.setVendorName("Vendor101");
+        vdebit.setFundsTransferId("1001");
+        vdebit.setAmount(500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        vdebit.setAccountInfo(echeck);
+
+        VendorDebitResponse response = cnp.vendorDebit(vdebit);
+        assertEquals("Approved", response.getMessage());
+    }
+
+    @Test
+    public void testVendorDebitWithFundingCustomerId() throws Exception {
+        VendorDebit vdebit = new VendorDebit();
+        vdebit.setReportGroup("vendorDebit");
+        vdebit.setId("111");
+        vdebit.setFundingCustomerId("vendorDebit");
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(500l);
