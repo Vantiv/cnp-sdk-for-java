@@ -39,7 +39,7 @@ public class TestFastAccessFunding {
         assertEquals("000", response.getResponse());
     }
 
-    @Ignore
+    @Ignore("Sandbox does not check for mixed names. Production does check.")
     @Test(expected = CnpOnlineException.class)
     public void TestFastAccessFundingMixedNames() throws Exception {
         final FastAccessFunding fastAccessFunding = new FastAccessFunding();
