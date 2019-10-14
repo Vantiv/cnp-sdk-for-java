@@ -14,7 +14,7 @@ public class TestCustomer {
         cnp = new CnpOnline();
     }
 
-    @org.junit.Test
+    @Test
     public void testCustomerCredit() throws Exception {
         CustomerCredit ccredit = new CustomerCredit();
         ccredit.setReportGroup("customerCredit");
@@ -34,6 +34,26 @@ public class TestCustomer {
 
         CustomerCreditResponse response = cnp.customerCredit(ccredit);
         assertEquals("Approved", response.getMessage());
+    }
+
+    @Test(expected = CnpOnlineException.class)
+    public void testCustomerCreditNullName() throws Exception {
+        CustomerCredit ccredit = new CustomerCredit();
+        ccredit.setReportGroup("customerCredit");
+        ccredit.setId("111");
+        ccredit.setFundingCustomerId("customerCredit");
+        ccredit.setFundsTransferId("1001");
+        ccredit.setAmount(500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        ccredit.setAccountInfo(echeck);
+
+        cnp.customerCredit(ccredit);
     }
 
     @Test
@@ -56,5 +76,25 @@ public class TestCustomer {
 
         CustomerDebitResponse response = cnp.customerDebit(cdebit);
         assertEquals("Approved", response.getMessage());
+    }
+
+    @Test(expected = CnpOnlineException.class)
+    public void testCustomerDebitNullName() throws Exception {
+        CustomerDebit cdebit = new CustomerDebit();
+        cdebit.setReportGroup("customerDebit");
+        cdebit.setId("111");
+        cdebit.setFundingCustomerId("customerDebit");
+        cdebit.setFundsTransferId("1001");
+        cdebit.setAmount(500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        cdebit.setAccountInfo(echeck);
+
+        CustomerDebitResponse response = cnp.customerDebit(cdebit);
     }
 }
