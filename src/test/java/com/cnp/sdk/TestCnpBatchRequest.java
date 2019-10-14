@@ -420,6 +420,82 @@ public class TestCnpBatchRequest {
     }
 
     @Test
+    public void testAddCustomerCredit() {
+        cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
+        cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
+
+        cnpBatchRequest.setNumOfTxn(1);
+        Marshaller mockMarshaller = Mockito.mock(Marshaller.class);
+        cnpBatchRequest.setMarshaller(mockMarshaller);
+
+        CustomerCredit customerCredit = new CustomerCredit();
+        customerCredit.setAmount(25L);
+        cnpBatchRequest.addTransaction(customerCredit);
+        assertEquals(1, cnpBatchRequest.getBatchRequest()
+                .getNumCustomerCredit().intValue());
+        assertEquals(25, cnpBatchRequest.getBatchRequest().getCustomerCreditAmount()
+                .intValue());
+        assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
+    }
+
+    @Test
+    public void testAddCustomerDebit() {
+        cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
+        cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
+
+        cnpBatchRequest.setNumOfTxn(1);
+        Marshaller mockMarshaller = Mockito.mock(Marshaller.class);
+        cnpBatchRequest.setMarshaller(mockMarshaller);
+
+        CustomerDebit customerDebit = new CustomerDebit();
+        customerDebit.setAmount(25L);
+        cnpBatchRequest.addTransaction(customerDebit);
+        assertEquals(1, cnpBatchRequest.getBatchRequest()
+                .getNumCustomerDebit().intValue());
+        assertEquals(25, cnpBatchRequest.getBatchRequest().getCustomerDebitAmount()
+                .intValue());
+        assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
+    }
+
+    @Test
+    public void testAddPayoutOrgCredit() {
+        cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
+        cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
+
+        cnpBatchRequest.setNumOfTxn(1);
+        Marshaller mockMarshaller = Mockito.mock(Marshaller.class);
+        cnpBatchRequest.setMarshaller(mockMarshaller);
+
+        PayoutOrgCredit payoutOrgCredit  = new PayoutOrgCredit();
+        payoutOrgCredit.setAmount(25L);
+        cnpBatchRequest.addTransaction(payoutOrgCredit);
+        assertEquals(1, cnpBatchRequest.getBatchRequest()
+                .getNumPayoutOrgCredit().intValue());
+        assertEquals(25, cnpBatchRequest.getBatchRequest().getPayoutOrgCreditAmount()
+                .intValue());
+        assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
+    }
+
+    @Test
+    public void testAddPayoutOrgDebit() {
+        cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
+        cnpBatchRequest = cnpBatchFileRequest.createBatch("101");
+
+        cnpBatchRequest.setNumOfTxn(1);
+        Marshaller mockMarshaller = Mockito.mock(Marshaller.class);
+        cnpBatchRequest.setMarshaller(mockMarshaller);
+
+        PayoutOrgDebit payoutOrgDebit  = new PayoutOrgDebit();
+        payoutOrgDebit.setAmount(25L);
+        cnpBatchRequest.addTransaction(payoutOrgDebit);
+        assertEquals(1, cnpBatchRequest.getBatchRequest()
+                .getNumPayoutOrgDebit().intValue());
+        assertEquals(25, cnpBatchRequest.getBatchRequest().getPayoutOrgDebitAmount()
+                .intValue());
+        assertEquals(2, cnpBatchRequest.getNumberOfTransactions());
+    }
+
+    @Test
     public void testPFIFInstructionTxn() {
         cnpBatchFileRequest = new CnpBatchFileRequest("testFile", property);
         cnpBatchRequest = cnpBatchFileRequest.createBatch("101");

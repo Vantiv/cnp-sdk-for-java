@@ -19,7 +19,7 @@ public class TestPayoutOrg {
 
     @Test
     public void TestPayoutOrgCredit() throws Exception {
-       PayoutOrgCredit pocredit = new PayoutOrgCredit();
+        PayoutOrgCredit pocredit = new PayoutOrgCredit();
         pocredit.setReportGroup("payoutOrgCredit");
         pocredit.setId("111");
         pocredit.setFundingCustomerId("payoutOrgCredit");
