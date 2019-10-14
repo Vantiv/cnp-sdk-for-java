@@ -644,7 +644,7 @@ public class CnpOnline {
         return (SubmerchantDebitResponse)newresponse.getValue();
     }
     
-    public ReserveCreditResponse submerchantDebit(ReserveCredit reserveCredit) {
+    public ReserveCreditResponse submerchantCredit(ReserveCredit reserveCredit) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return reserveCredit(reserveCredit, request);
     }

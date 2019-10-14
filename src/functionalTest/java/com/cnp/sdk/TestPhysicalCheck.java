@@ -40,8 +40,6 @@ public class TestPhysicalCheck {
         assertEquals("Approved", response.getMessage());
     }
 
-    //
-
     @Test
     public void testPhysicalCheckDebit() throws Exception{
         PhysicalCheckDebit pcdebit = new PhysicalCheckDebit();
