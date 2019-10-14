@@ -2,6 +2,7 @@ package com.cnp.sdk;
 
 import com.cnp.sdk.generate.*;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -84,6 +85,49 @@ public class TestCustomer {
         cdebit.setReportGroup("customerDebit");
         cdebit.setId("111");
         cdebit.setFundingCustomerId("customerDebit");
+        cdebit.setFundsTransferId("1001");
+        cdebit.setAmount(500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        cdebit.setAccountInfo(echeck);
+
+        CustomerDebitResponse response = cnp.customerDebit(cdebit);
+    }
+
+    @Ignore("Sandbox does not check for negative amounts. Production does check.")
+    @Test(expected = CnpOnlineException.class)
+    public void testCustomerDebitNegativeAmount() throws Exception {
+        CustomerDebit cdebit = new CustomerDebit();
+        cdebit.setReportGroup("customerDebit");
+        cdebit.setId("111");
+        cdebit.setFundingCustomerId("customerDebit");
+        cdebit.setCustomerName("Customer101");
+        cdebit.setFundsTransferId("1001");
+        cdebit.setAmount(-500l);
+
+        EcheckType echeck = new EcheckType();
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setAccNum("123456789012");
+        echeck.setRoutingNum("114567895");
+        echeck.setCcdPaymentInformation("paymentInfo");
+
+        cdebit.setAccountInfo(echeck);
+
+        cnp.customerDebit(cdebit);
+    }
+
+    @Test(expected = CnpOnlineException.class)
+    public void testCustomerDebitIdTooLong() throws Exception {
+        CustomerDebit cdebit = new CustomerDebit();
+        cdebit.setReportGroup("customerDebit");
+        cdebit.setId("111");
+        cdebit.setFundingCustomerId("123456789012345678901234567890123456789012345678901234567890");
+        cdebit.setCustomerName("Customer101");
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
