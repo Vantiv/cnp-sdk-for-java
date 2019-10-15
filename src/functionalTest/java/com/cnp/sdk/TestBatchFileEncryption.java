@@ -45,6 +45,10 @@ public class TestBatchFileEncryption {
         config.setProperty("merchantId", encMerchantId);
         
         preliveStatus = System.getenv("preliveStatus");
+        if (preliveStatus == null) {
+            System.out.println("preliveStatus environment variable is not defined. Defaulting to down.");
+            preliveStatus = "down";
+        }
     }
 
     @Test
