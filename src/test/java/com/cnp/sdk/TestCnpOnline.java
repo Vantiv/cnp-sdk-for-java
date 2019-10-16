@@ -1375,7 +1375,7 @@ public class TestCnpOnline {
         when(
                 mockedCommunication
                         .requestToServer(
-                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\"12.9\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
+                                matches(".*?<cnpOnlineRequest merchantId=\"905\" merchantSdk=.*version=\".*?\" xmlns=\"http://www.vantivcnp.com/schema\">.*?"
                                 		+ "<deactivateReversal reportGroup=\"Default Report Group\">"
                                 		+ "<cnpTxnId>123</cnpTxnId>"
                                 		+ "<originalSystemTraceId>0</originalSystemTraceId>"
