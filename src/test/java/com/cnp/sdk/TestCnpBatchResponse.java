@@ -3,6 +3,7 @@ package com.cnp.sdk;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.math.BigInteger;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +29,13 @@ public class TestCnpBatchResponse {
 		batchResponse.setId("101");
 		batchResponse.setCnpBatchId(562L);
 		batchResponse.setMerchantId("101");
+		batchResponse.setNumAccountUpdates(BigInteger.valueOf(4));
 		CnpBatchResponse cnpBatchResponse = new CnpBatchResponse(batchResponse);
 		assertEquals("101", cnpBatchResponse.getBatchResponse().getId());
 		assertEquals(562L, cnpBatchResponse.getBatchResponse().getCnpBatchId());
 		assertEquals("101", cnpBatchResponse.getBatchResponse().getMerchantId());
+		assertEquals(562L, cnpBatchResponse.getBatchResponse().getCnpBatchId());
+		assertEquals(BigInteger.valueOf(4), cnpBatchResponse.getBatchResponse().getNumAccountUpdates());
 	}
 
 	public Sale createTestSale(Long amount, String orderId){
