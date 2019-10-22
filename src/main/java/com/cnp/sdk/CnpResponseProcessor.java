@@ -90,4 +90,13 @@ public interface CnpResponseProcessor {
     void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse);
 
     void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse);
+
+    void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse);
+
+    void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse);
+
+    void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse);
+
+    void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse);
+
 }

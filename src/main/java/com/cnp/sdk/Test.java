@@ -176,7 +176,20 @@ public class Test {
 
                 public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
                 }
+
                 public void processTranslateToLowValueTokenResponse (TranslateToLowValueTokenResponse  translateToLowValueTokenResponse){
+                }
+
+                public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+                }
+
+                public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+                }
+
+                public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+                }
+
+                public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                 }
 
             })){

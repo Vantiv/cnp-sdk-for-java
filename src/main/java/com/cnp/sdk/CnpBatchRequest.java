@@ -277,102 +277,7 @@ public class CnpBatchRequest {
             transactionAdded = true;
             numOfTxn++;
 
-        } else if(transactionType instanceof VendorCreditCtx) {
-            batchRequest.setNumVendorCredit(batchRequest.getNumVendorCredit().add(BigInteger.valueOf(1)));
-            batchRequest.setVendorCreditAmount((batchRequest.getVendorCreditAmount().add(BigInteger.valueOf(((VendorCreditCtx) transactionType).getAmount()))));
-            transaction = objFac.createVendorCreditCtx((VendorCreditCtx)transactionType);
 
-            StringWriter sw = new StringWriter();
-            try {
-                marshaller.marshal(transaction, sw);
-            } catch (JAXBException e) {
-                throw new CnpBatchException("There was an exception while marshalling the transaction object.", e);
-            }
-
-            String request = sw.toString();
-
-            request = request.replace("vendorCreditCtx", "vendorCredit");
-
-            try {
-                osWrttxn.write(request.getBytes(Charset.forName("UTF-8")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof VendorDebitCtx) {
-            batchRequest.setNumVendorDebit(batchRequest.getNumVendorDebit().add(BigInteger.valueOf(1)));
-            batchRequest.setVendorDebitAmount((batchRequest.getVendorDebitAmount().add(BigInteger.valueOf(((VendorDebitCtx) transactionType).getAmount()))));
-            transaction = objFac.createVendorDebitCtx((VendorDebitCtx)transactionType);
-
-            StringWriter sw = new StringWriter();
-            try {
-                marshaller.marshal(transaction, sw);
-            } catch (JAXBException e) {
-                throw new CnpBatchException("There was an exception while marshalling the transaction object.", e);
-            }
-
-            String request = sw.toString();
-
-            request = request.replace("vendorDebitCtx", "vendorDebit");
-
-            try {
-                osWrttxn.write(request.getBytes(Charset.forName("UTF-8")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof SubmerchantCreditCtx) {
-            batchRequest.setNumSubmerchantCredit(batchRequest.getNumSubmerchantCredit().add(BigInteger.valueOf(1)));
-            batchRequest.setSubmerchantCreditAmount((batchRequest.getSubmerchantCreditAmount().add(BigInteger.valueOf(((SubmerchantCreditCtx) transactionType).getAmount()))));
-            transaction = objFac.createSubmerchantCreditCtx((SubmerchantCreditCtx)transactionType);
-
-            StringWriter sw = new StringWriter();
-            try {
-                marshaller.marshal(transaction, sw);
-            } catch (JAXBException e) {
-                throw new CnpBatchException("There was an exception while marshalling the transaction object.", e);
-            }
-
-            String request = sw.toString();
-
-            request = request.replace("submerchantCreditCtx", "submerchantCredit");
-
-            try {
-                osWrttxn.write(request.getBytes(Charset.forName("UTF-8")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            transactionAdded = true;
-            numOfTxn ++;
-        } else if(transactionType instanceof SubmerchantDebitCtx) {
-            batchRequest.setNumSubmerchantDebit(batchRequest.getNumSubmerchantDebit().add(BigInteger.valueOf(1)));
-            batchRequest.setSubmerchantDebitAmount((batchRequest.getSubmerchantDebitAmount().add(BigInteger.valueOf(((SubmerchantDebitCtx) transactionType).getAmount()))));
-            transaction = objFac.createSubmerchantDebitCtx((SubmerchantDebitCtx)transactionType);
-
-            StringWriter sw = new StringWriter();
-            try {
-                marshaller.marshal(transaction, sw);
-            } catch (JAXBException e) {
-                throw new CnpBatchException("There was an exception while marshalling the transaction object.", e);
-            }
-
-            String request = sw.toString();
-
-            request = request.replace("submerchantDebitCtx", "submerchantDebit");
-
-            try {
-                osWrttxn.write(request.getBytes(Charset.forName("UTF-8")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            transactionAdded = true;
-            numOfTxn ++;
         } else if(transactionType instanceof ReserveCredit) {
             batchRequest.setNumReserveCredit(batchRequest.getNumReserveCredit().add(BigInteger.valueOf(1)));
             batchRequest.setReserveCreditAmount((batchRequest.getReserveCreditAmount().add(BigInteger.valueOf(((ReserveCredit) transactionType).getAmount()))));
@@ -457,19 +362,35 @@ public class CnpBatchRequest {
 		    transaction = objFac.createTranslateToLowValueTokenRequest((TranslateToLowValueTokenRequestType) transactionType);
 		    transactionAdded = true;
 		    numOfTxn++;
+        } else if(transactionType instanceof CustomerCredit){
+            batchRequest.setNumCustomerCredit(batchRequest.getNumCustomerCredit().add(BigInteger.valueOf(1)));
+            batchRequest.setCustomerCreditAmount(batchRequest.getCustomerCreditAmount().add(BigInteger.valueOf(((CustomerCredit) transactionType).getAmount())));
+            transaction = objFac.createCustomerCredit((CustomerCredit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof CustomerDebit) {
+            batchRequest.setNumCustomerDebit(batchRequest.getNumCustomerDebit().add(BigInteger.valueOf(1)));
+            batchRequest.setCustomerDebitAmount(batchRequest.getCustomerDebitAmount().add(BigInteger.valueOf(((CustomerDebit) transactionType).getAmount())));
+            transaction = objFac.createCustomerDebit((CustomerDebit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof PayoutOrgCredit) {
+            batchRequest.setNumPayoutOrgCredit(batchRequest.getNumPayoutOrgCredit().add(BigInteger.valueOf(1)));
+            batchRequest.setPayoutOrgCreditAmount(batchRequest.getPayoutOrgCreditAmount().add(BigInteger.valueOf(((PayoutOrgCredit) transactionType).getAmount())));
+            transaction = objFac.createPayoutOrgCredit((PayoutOrgCredit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        } else if(transactionType instanceof PayoutOrgDebit) {
+            batchRequest.setNumPayoutOrgDebit(batchRequest.getNumPayoutOrgDebit().add(BigInteger.valueOf(1)));
+            batchRequest.setPayoutOrgDebitAmount(batchRequest.getPayoutOrgDebitAmount().add(BigInteger.valueOf(((PayoutOrgDebit) transactionType).getAmount())));
+            transaction = objFac.createPayoutOrgDebit((PayoutOrgDebit) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
         } else {
             transaction = objFac.createTransaction(new TransactionType());
         }
 
-        if(!(transactionType instanceof VendorCreditCtx) && !(transactionType instanceof VendorDebitCtx) &&
-                !(transactionType instanceof SubmerchantCreditCtx) && !(transactionType instanceof SubmerchantDebitCtx)) {
-            try {
-                marshaller.marshal(transaction, osWrttxn);
-            } catch (JAXBException e) {
-                throw new CnpBatchException("There was an exception while marshalling the transaction object.", e);
-            }
 
-        }
 
         batchFileStatus = verifyFileThresholds();
         if( batchFileStatus == TransactionCodeEnum.FILEFULL){

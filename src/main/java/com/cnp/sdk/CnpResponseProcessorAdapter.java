@@ -141,5 +141,15 @@ public class CnpResponseProcessorAdapter implements CnpResponseProcessor {
     public void processTranslateToLowValueTokenResponse(TranslateToLowValueTokenResponse translateToLowValueTokenResponse){
     }
 
+    public void processCustomerCreditResponse(CustomerCreditResponse customerCreditResponse) {
+    }
 
+    public void processCustomerDebitResponse(CustomerDebitResponse customerDebitResponse) {
+    }
+
+    public void processPayoutOrgCreditResponse(PayoutOrgCreditResponse payoutOrgCreditResponse) {
+    }
+
+    public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
+    }
 }

@@ -30,7 +30,7 @@ public class TestCommManagerMultiThreaded {
             // init the CommManager
             fileInputStream = new FileInputStream((new Configuration()).location());
             config.load(fileInputStream);
-            config.setProperty("proxyHost", "websenseproxy");
+            config.setProperty("proxyHost", "inetproxy.infoftps.com");
             config.setProperty("proxyPort", "8080");
             config.setProperty("multiSite", "true");
             config.setProperty("printxml", "false");
