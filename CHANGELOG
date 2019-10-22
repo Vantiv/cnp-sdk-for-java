@@ -1,7 +1,10 @@
 = Vantiv eCommerce CNP CHANGELOG
 
 ==Version 12.9.0 (October 22, 2019)
-* Feature: Updated to 12.9 CNP XML
+* Feature: Added support for customerCredit, customerDebit 
+* Feature: Added support for payoutOrgCredit , payoutOrgDebit 
+* Feature: Added fundingCustomerID support
+* Feature: Enhancements to fastAccessFunding
 
 ==Version 12.8.0 (August 28, 2019)
 * Feature: Added tokenUrl element
