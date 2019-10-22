@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Properties;
 
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import com.cnp.sdk.generate.AccountUpdateFileRequestData;
 import com.cnp.sdk.generate.RFRRequest;
@@ -16,7 +17,15 @@ import com.cnp.sdk.generate.RFRRequest;
 public class TestRFRFile {
 
     private String preliveStatus = System.getenv("preliveStatus");
-    
+
+    @Before
+    public void setup() {
+        if (preliveStatus == null) {
+            System.out.println("preliveStatus environment variable is not defined. Defaulting to down.");
+            preliveStatus = "down";
+        }
+    }
+
     @Test
     public void testSendToCnpSFTP() throws Exception {
 

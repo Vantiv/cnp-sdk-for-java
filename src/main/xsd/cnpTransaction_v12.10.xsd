@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.9.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.9.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.10.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.10.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -164,6 +164,7 @@
                             <xs:element name="originalNetworkTransactionId" type="xp:string30Type" minOccurs="0" />
                             <xs:element name="originalTransactionAmount" type="xp:transactionAmountType" minOccurs="0" />
                             <xs:element name="pinlessDebitRequest" type="xp:pinlessDebitRequestType" minOccurs="0"/>
+                            <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0" />
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -367,6 +368,7 @@
                         <xs:element name="originalNetworkTransactionId" type="xp:string30Type" minOccurs="0" />
                         <xs:element name="originalTransactionAmount" type="xp:transactionAmountType" minOccurs="0" />
                         <xs:element name="pinlessDebitRequest" type="xp:pinlessDebitRequestType" minOccurs="0"/>
+                        <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -876,6 +878,13 @@
             <xs:enumeration value="Merchant" />
             <xs:enumeration value="Cnp" />
             <xs:enumeration value="None" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="accountUpdateSourceType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="R" />
+            <xs:enumeration value="N" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -1598,16 +1607,22 @@
                     <xs:element name="originalCardInfo" type="xp:cardAccountInfoType" />
                     <xs:element name="newCardInfo" type="xp:cardAccountInfoType" />
                     <xs:element name="extendedCardResponse" type="xp:extendedCardResponseType" minOccurs="0" />
+                    <xs:element name="accountUpdateSource" type="xp:accountUpdateSourceType" minOccurs="0" />
                 </xs:sequence>
 
                 <xs:sequence>
                     <xs:element name="originalCardTokenInfo" type="xp:cardTokenInfoType" />
                     <xs:element name="newCardTokenInfo" type="xp:cardTokenInfoType" />
                     <xs:element name="extendedCardResponse" type="xp:extendedCardResponseType" minOccurs="0" />
+                    <xs:element name="accountUpdateSource" type="xp:accountUpdateSourceType" minOccurs="0" />
                 </xs:sequence>
 
-                <xs:element name="extendedCardResponse" type="xp:extendedCardResponseType" minOccurs="0" />
+                <xs:sequence>
+                    <xs:element name="extendedCardResponse" type="xp:extendedCardResponseType" minOccurs="0" />
+                    <xs:element name="accountUpdateSource" type="xp:accountUpdateSourceType" minOccurs="0" />
+                </xs:sequence>
             </xs:choice>
+
         </xs:complexType>
     </xs:element>
 
@@ -1667,16 +1682,6 @@
     </xs:element>
 
     <xs:complexType name="echeckType">
-        <xs:all>
-            <xs:element name="accType" type="xp:echeckAccountTypeEnum" />
-            <xs:element name="accNum" type="xp:echeckAccountNumberType" />
-            <xs:element name="routingNum" type="xp:routingNumberType" />
-            <xs:element name="checkNum" type="xp:checkNumberType" minOccurs="0" />
-            <xs:element name="ccdPaymentInformation" type="xp:string80Type" minOccurs="0"/>
-        </xs:all>
-    </xs:complexType>
-
-    <xs:complexType name="echeckTypeCtx">
         <xs:all>
             <xs:element name="accType" type="xp:echeckAccountTypeEnum" />
             <xs:element name="accNum" type="xp:echeckAccountNumberType" />

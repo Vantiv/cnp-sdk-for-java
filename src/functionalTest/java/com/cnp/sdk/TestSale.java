@@ -240,4 +240,40 @@ public class TestSale {
 
 		assertEquals("Approved", response.getMessage());
 	}
+
+	@Test
+	public void simpleSaleWithCardSkipRealtimeAUTrue() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setSkipRealtimeAU(true);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+	}
+
+	@Test
+	public void simpleSaleWithCardSkipRealtimeAUFalse() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setSkipRealtimeAU(false);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+	}
 }

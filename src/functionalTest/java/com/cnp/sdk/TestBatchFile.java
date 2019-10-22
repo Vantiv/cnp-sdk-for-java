@@ -17,6 +17,7 @@ import java.util.Properties;
 import javax.xml.bind.JAXBException;
 
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.cnp.sdk.generate.AccountUpdate;
@@ -114,6 +115,14 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 public class TestBatchFile {
     private final long TIME_STAMP = System.currentTimeMillis();
     private String preliveStatus = System.getenv("preliveStatus");
+    @Before
+    public void setup() {
+        if (preliveStatus == null) {
+            System.out.println("preliveStatus environment variable is not defined. Defaulting to down.");
+            preliveStatus = "down";
+        }
+    }
+
     @Test
     public void testSendToCnp_WithFileConfig() throws Exception {
 
