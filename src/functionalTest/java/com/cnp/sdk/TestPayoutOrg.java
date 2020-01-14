@@ -27,7 +27,7 @@ public class TestPayoutOrg {
         pocredit.setAmount(500l);
 
         PayoutOrgCreditResponse response = cnp.payoutOrgCredit(pocredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -51,7 +51,7 @@ public class TestPayoutOrg {
         podebit.setAmount(500l);
 
         PayoutOrgDebitResponse response = cnp.payoutOrgDebit(podebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)

@@ -24,7 +24,7 @@ public class TestPhysicalCheck {
         pccredit.setAmount(500l);
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TestPhysicalCheck {
         pccredit.setAmount(500l);
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TestPhysicalCheck {
         pcdebit.setAmount(500l);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -63,6 +63,6 @@ public class TestPhysicalCheck {
         pcdebit.setAmount(500l);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 }

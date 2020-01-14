@@ -24,7 +24,7 @@ public class TestVendor {
         vcredit.setFundsTransferId("1001");
         vcredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -33,7 +33,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TestVendor {
         vcredit.setFundsTransferId("1001");
         vcredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -55,7 +55,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TestVendor {
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -77,7 +77,7 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class TestVendor {
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -99,6 +99,6 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 }

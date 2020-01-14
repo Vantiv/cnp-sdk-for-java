@@ -24,7 +24,7 @@ public class TestReserve {
         rcredit.setAmount(500l);
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TestReserve {
         rcredit.setAmount(500l);
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TestReserve {
         rdebit.setAmount(500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class TestReserve {
         rdebit.setAmount(500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -76,6 +76,6 @@ public class TestReserve {
         rdebit.setAmount(500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 }

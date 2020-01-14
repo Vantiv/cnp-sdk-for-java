@@ -25,7 +25,7 @@ public class TestCustomer {
         ccredit.setFundsTransferId("1001");
         ccredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -34,7 +34,7 @@ public class TestCustomer {
         ccredit.setAccountInfo(echeck);
 
         CustomerCreditResponse response = cnp.customerCredit(ccredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -46,7 +46,7 @@ public class TestCustomer {
         ccredit.setFundsTransferId("1001");
         ccredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -67,7 +67,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -76,7 +76,7 @@ public class TestCustomer {
         cdebit.setAccountInfo(echeck);
 
         CustomerDebitResponse response = cnp.customerDebit(cdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -88,7 +88,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -110,7 +110,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(-500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -131,7 +131,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");

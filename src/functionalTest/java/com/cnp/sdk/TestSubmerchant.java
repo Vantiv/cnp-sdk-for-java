@@ -25,7 +25,7 @@ public class TestSubmerchant {
         submerchantcredit.setFundsTransferId("1001");
         submerchantcredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -35,7 +35,7 @@ public class TestSubmerchant {
         submerchantcredit.setCustomIdentifier("SCFFISC");
 
         SubmerchantCreditResponse response = cnp.submerchantCredit(submerchantcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class TestSubmerchant {
         submerchantdebit.setFundsTransferId("1001");
         submerchantdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -58,7 +58,7 @@ public class TestSubmerchant {
         submerchantdebit.setCustomIdentifier("SCFFISC");
 
         SubmerchantDebitResponse response = cnp.submerchantDebit(submerchantdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
 }
