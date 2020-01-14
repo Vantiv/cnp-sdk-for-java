@@ -25,7 +25,7 @@ public class TestCustomer {
         ccredit.setFundsTransferId("1001");
         ccredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -46,7 +46,7 @@ public class TestCustomer {
         ccredit.setFundsTransferId("1001");
         ccredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -67,7 +67,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -88,7 +88,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -110,7 +110,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(-500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -131,7 +131,7 @@ public class TestCustomer {
         cdebit.setFundsTransferId("1001");
         cdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");

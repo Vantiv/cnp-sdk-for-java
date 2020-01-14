@@ -26,6 +26,7 @@ public class TestCnpOnline {
 		cnp = new CnpOnline();
 	}
 
+
 	@Test
 	public void testAuth() throws Exception {
 
@@ -165,6 +166,35 @@ public class TestCnpOnline {
 		assertEquals(123L, authreversal.getCnpTxnId());
 	}
 
+	@Test
+	public void testAuthWIthMCC() throws Exception {
+
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setMerchantCategoryCode("3535");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000002");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<authorization.*?<card>.*?<number>4100000000000002</number>.*?</card>.*?</authorization>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><authorizationResponse><cnpTxnId>123</cnpTxnId></authorizationResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		AuthorizationResponse authorize = cnp.authorize(authorization);
+		assertEquals(123L, authorize.getCnpTxnId());
+		assertEquals("3535", authorization.getMerchantCategoryCode());
+	}
+
 
 	@Test
 	public void testCapture() throws Exception {
@@ -278,6 +308,42 @@ public class TestCnpOnline {
 		assertEquals(123L, capturegivenauthresponse.getCnpTxnId());
 	}
 
+	@Test
+	public void testCaptureGivenAuthWIthMCC() throws Exception {
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setSecondaryAmount(10L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+
+		capturegivenauth.setMerchantCategoryCode("5678");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000001");
+		card.setExpDate("1210");
+		capturegivenauth.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<captureGivenAuth.*?<secondaryAmount>10</secondaryAmount>.*?<card>.*?<number>4100000000000001</number>.*?</card>.*?</captureGivenAuth>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><captureGivenAuthResponse><cnpTxnId>123</cnpTxnId></captureGivenAuthResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		CaptureGivenAuthResponse capturegivenauthresponse = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals(123L, capturegivenauthresponse.getCnpTxnId());
+		assertEquals("5678", capturegivenauth.getMerchantCategoryCode());
+	}
+
 
 	@Test
 	public void testCredit() throws Exception {
@@ -303,6 +369,34 @@ public class TestCnpOnline {
 		cnp.setCommunication(mockedCommunication);
 		CreditResponse creditresponse = cnp.credit(credit);
 		assertEquals(123L, creditresponse.getCnpTxnId());
+	}
+
+	@Test
+	public void testCreditWithMCC() throws Exception {
+		Credit credit = new Credit();
+		credit.setAmount(106L);
+		credit.setSecondaryAmount(10L);
+		credit.setOrderId("12344");
+		credit.setOrderSource(OrderSourceType.ECOMMERCE);
+		credit.setMerchantCategoryCode("3333");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000001");
+		card.setExpDate("1210");
+		credit.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<credit.*?<secondaryAmount>10</secondaryAmount>.*?<card>.*?<number>4100000000000001</number>.*?</card>.*?</credit>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><creditResponse><cnpTxnId>123</cnpTxnId></creditResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		CreditResponse creditresponse = cnp.credit(credit);
+		assertEquals(123L, creditresponse.getCnpTxnId());
+		assertEquals("3333", credit.getMerchantCategoryCode());
 	}
 
 	@Test
@@ -436,6 +530,35 @@ public class TestCnpOnline {
 	}
 
 	@Test
+	public void testForceCaptureWithMCC() throws Exception {
+		ForceCapture forcecapture = new ForceCapture();
+		forcecapture.setAmount(106L);
+		forcecapture.setSecondaryAmount(10L);
+		forcecapture.setOrderId("12344");
+		forcecapture.setOrderSource(OrderSourceType.ECOMMERCE);
+		forcecapture.setMerchantCategoryCode("0099");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000001");
+		card.setExpDate("1210");
+
+		forcecapture.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<forceCapture.*?<secondaryAmount>10</secondaryAmount>.*?<card>.*?<number>4100000000000001</number>.*?</card>.*?</forceCapture>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><forceCaptureResponse><cnpTxnId>123</cnpTxnId></forceCaptureResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		ForceCaptureResponse forcecaptureresponse = cnp.forceCapture(forcecapture);
+		assertEquals(123L, forcecaptureresponse.getCnpTxnId());
+		assertEquals("0099", forcecapture.getMerchantCategoryCode());
+	}
+
+	@Test
 	public void testSale() throws Exception {
 		Sale sale = new Sale();
 		sale.setAmount(106L);
@@ -563,7 +686,7 @@ public class TestCnpOnline {
 								matches(".*?<cnpOnlineRequest.*?<sale.*?<card>.*?<number>4100100000000002</number>.*?</card>.*?</sale>.*?"),
 								any(Properties.class)))
 				.thenReturn(
-						"<cnpOnlineResponse version='12.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId><accountUpdater><accountUpdateSource>R</accountUpdateSource></accountUpdater></saleResponse></cnpOnlineResponse>");
+						"<cnpOnlineResponse version='12.11' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId><accountUpdater><accountUpdateSource>R</accountUpdateSource></accountUpdater></saleResponse></cnpOnlineResponse>");
 		cnp.setCommunication(mockedCommunication);
 		SaleResponse saleresponse = cnp.sale(sale);
 		assertEquals(123L, saleresponse.getCnpTxnId());
@@ -590,7 +713,7 @@ public class TestCnpOnline {
 								matches(".*?<cnpOnlineRequest.*?<sale.*?<card>.*?<number>4100100000000002</number>.*?</card>.*?</sale>.*?"),
 								any(Properties.class)))
 				.thenReturn(
-						"<cnpOnlineResponse version='12.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId><accountUpdater><accountUpdateSource>N</accountUpdateSource></accountUpdater></saleResponse></cnpOnlineResponse>");
+						"<cnpOnlineResponse version='12.11' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId><accountUpdater><accountUpdateSource>N</accountUpdateSource></accountUpdater></saleResponse></cnpOnlineResponse>");
 		cnp.setCommunication(mockedCommunication);
 		SaleResponse saleresponse = cnp.sale(sale);
 		assertEquals(123L, saleresponse.getCnpTxnId());
@@ -635,6 +758,35 @@ public class TestCnpOnline {
         assertEquals(123L, saleresponse.getCnpTxnId());
         assertEquals("123455", saleresponse.getApplepayResponse().getApplicationPrimaryAccountNumber());
     }
+
+	@Test
+	public void testSale_withMCC() throws Exception {
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100100000000002");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setMerchantCategoryCode("1567");
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<sale.*?<card>.*?<number>4100100000000002</number>.*?</card>.*?</sale>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='12.11' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><saleResponse><cnpTxnId>123</cnpTxnId><accountUpdater><accountUpdateSource>N</accountUpdateSource></accountUpdater></saleResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		SaleResponse saleresponse = cnp.sale(sale);
+		assertEquals(123L, saleresponse.getCnpTxnId());
+		assertEquals(AccountUpdateSourceType.N, saleresponse.getAccountUpdater().getAccountUpdateSource());
+		assertEquals("1567", sale.getMerchantCategoryCode());
+	}
 
 	@Test
 	public void testToken() throws Exception {
@@ -2162,5 +2314,7 @@ public class TestCnpOnline {
         assertEquals(new Integer(42), advancedFraudResultsType.getDeviceReputationScore());
         assertEquals(5, advancedFraudResultsType.getTriggeredRules().size());
     }
+
+
 
 }

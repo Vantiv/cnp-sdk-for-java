@@ -509,7 +509,7 @@ public class TestCnpBatchRequest {
         submerchantCredit.setSubmerchantName("submerchant");
         submerchantCredit.setFundsTransferId("1234567");
         submerchantCredit.setAmount(106L);
-        submerchantCredit.setAccountInfo(new EcheckType());
+        submerchantCredit.setAccountInfo(new EcheckTypeCtx());
         cnpBatchRequest.addTransaction(submerchantCredit);
 
         VendorCredit vendorCredit = new VendorCredit();
@@ -517,7 +517,7 @@ public class TestCnpBatchRequest {
         vendorCredit.setVendorName("vendor");
         vendorCredit.setFundsTransferId("1234567");
         vendorCredit.setAmount(107L);
-        vendorCredit.setAccountInfo(new EcheckType());
+        vendorCredit.setAccountInfo(new EcheckTypeCtx());
         cnpBatchRequest.addTransaction(vendorCredit);
 
         PayFacCredit payFacCredit = new PayFacCredit();
@@ -543,7 +543,7 @@ public class TestCnpBatchRequest {
         submerchantDebit.setSubmerchantName("submerchant");
         submerchantDebit.setFundsTransferId("1234567");
         submerchantDebit.setAmount(106L);
-        submerchantDebit.setAccountInfo(new EcheckType());
+        submerchantDebit.setAccountInfo(new EcheckTypeCtx());
         cnpBatchRequest.addTransaction(submerchantDebit);
 
         VendorDebit vendorDebit = new VendorDebit();
@@ -551,7 +551,7 @@ public class TestCnpBatchRequest {
         vendorDebit.setVendorName("vendor");
         vendorDebit.setFundsTransferId("1234567");
         vendorDebit.setAmount(107L);
-        vendorDebit.setAccountInfo(new EcheckType());
+        vendorDebit.setAccountInfo(new EcheckTypeCtx());
         cnpBatchRequest.addTransaction(vendorDebit);
 
         PayFacDebit payFacDebit = new PayFacDebit();

@@ -24,7 +24,7 @@ public class TestVendor {
         vcredit.setFundsTransferId("1001");
         vcredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -46,7 +46,7 @@ public class TestVendor {
         vcredit.setFundsTransferId("1001");
         vcredit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -68,7 +68,7 @@ public class TestVendor {
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
@@ -90,7 +90,7 @@ public class TestVendor {
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(500l);
 
-        EcheckType echeck = new EcheckType();
+        EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
         echeck.setRoutingNum("114567895");
