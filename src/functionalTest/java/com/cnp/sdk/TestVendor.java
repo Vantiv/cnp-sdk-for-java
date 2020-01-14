@@ -33,7 +33,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -99,6 +99,6 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 }

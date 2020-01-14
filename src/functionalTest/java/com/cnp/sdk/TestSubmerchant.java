@@ -35,7 +35,7 @@ public class TestSubmerchant {
         submerchantcredit.setCustomIdentifier("SCFFISC");
 
         SubmerchantCreditResponse response = cnp.submerchantCredit(submerchantcredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class TestSubmerchant {
         submerchantdebit.setCustomIdentifier("SCFFISC");
 
         SubmerchantDebitResponse response = cnp.submerchantDebit(submerchantdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
 }

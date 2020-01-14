@@ -34,7 +34,7 @@ public class TestCustomer {
         ccredit.setAccountInfo(echeck);
 
         CustomerCreditResponse response = cnp.customerCredit(ccredit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -76,7 +76,7 @@ public class TestCustomer {
         cdebit.setAccountInfo(echeck);
 
         CustomerDebitResponse response = cnp.customerDebit(cdebit);
-        assertEquals("Approved", response.getMessage());
+        assertEquals("The account number was changed", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
