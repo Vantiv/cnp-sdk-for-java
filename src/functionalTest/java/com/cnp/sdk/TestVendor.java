@@ -22,7 +22,7 @@ public class TestVendor {
         vcredit.setFundingSubmerchantId("vendorCredit");
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
-        vcredit.setAmount(500l);
+        vcredit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -33,7 +33,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class TestVendor {
         vcredit.setFundingCustomerId("vendorDebit");
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
-        vcredit.setAmount(500l);
+        vcredit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -55,7 +55,7 @@ public class TestVendor {
         vcredit.setAccountInfo(echeck);
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class TestVendor {
         vdebit.setFundingSubmerchantId("vendorCredit");
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
-        vdebit.setAmount(500l);
+        vdebit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -77,7 +77,7 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TestVendor {
         vdebit.setFundingCustomerId("vendorDebit");
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
-        vdebit.setAmount(500l);
+        vdebit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -99,6 +99,6 @@ public class TestVendor {
         vdebit.setAccountInfo(echeck);
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 }
