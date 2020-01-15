@@ -63,6 +63,6 @@ public class TestPhysicalCheck {
         pcdebit.setAmount(1512l);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 }
