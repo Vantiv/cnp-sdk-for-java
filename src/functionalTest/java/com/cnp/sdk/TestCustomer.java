@@ -23,7 +23,7 @@ public class TestCustomer {
         ccredit.setFundingCustomerId("customerCredit");
         ccredit.setCustomerName("Customer101");
         ccredit.setFundsTransferId("1001");
-        ccredit.setAmount(500l);
+        ccredit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -34,7 +34,7 @@ public class TestCustomer {
         ccredit.setAccountInfo(echeck);
 
         CustomerCreditResponse response = cnp.customerCredit(ccredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -65,7 +65,7 @@ public class TestCustomer {
         cdebit.setFundingCustomerId("customerDebit");
         cdebit.setCustomerName("Customer101");
         cdebit.setFundsTransferId("1001");
-        cdebit.setAmount(500l);
+        cdebit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -76,7 +76,7 @@ public class TestCustomer {
         cdebit.setAccountInfo(echeck);
 
         CustomerDebitResponse response = cnp.customerDebit(cdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -86,7 +86,7 @@ public class TestCustomer {
         cdebit.setId("111");
         cdebit.setFundingCustomerId("customerDebit");
         cdebit.setFundsTransferId("1001");
-        cdebit.setAmount(500l);
+        cdebit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -108,7 +108,7 @@ public class TestCustomer {
         cdebit.setFundingCustomerId("customerDebit");
         cdebit.setCustomerName("Customer101");
         cdebit.setFundsTransferId("1001");
-        cdebit.setAmount(-500l);
+        cdebit.setAmount(-1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -129,7 +129,7 @@ public class TestCustomer {
         cdebit.setFundingCustomerId("123456789012345678901234567890123456789012345678901234567890");
         cdebit.setCustomerName("Customer101");
         cdebit.setFundsTransferId("1001");
-        cdebit.setAmount(500l);
+        cdebit.setAmount(1500l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);

@@ -21,10 +21,10 @@ public class TestReserve {
         rcredit.setId("111");
         rcredit.setFundingSubmerchantId("reserveCredit");
         rcredit.setFundsTransferId("1001");
-        rcredit.setAmount(500l);
+        rcredit.setAmount(1500l);
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -34,10 +34,10 @@ public class TestReserve {
         rcredit.setId("111");
         rcredit.setFundingCustomerId("reserveCredit");
         rcredit.setFundsTransferId("1001");
-        rcredit.setAmount(500l);
+        rcredit.setAmount(1500l);
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class TestReserve {
         rdebit.setId("111");
         rdebit.setFundingSubmerchantId("reserveDebit");
         rdebit.setFundsTransferId("1001");
-        rdebit.setAmount(500l);
+        rdebit.setAmount(1500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -60,10 +60,10 @@ public class TestReserve {
         rdebit.setId("111");
         rdebit.setFundingCustomerId("reserveDebit");
         rdebit.setFundsTransferId("1001");
-        rdebit.setAmount(500l);
+        rdebit.setAmount(1500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -73,9 +73,9 @@ public class TestReserve {
         rdebit.setId("111");
         rdebit.setFundingSubmerchantId("reser<veD>ebit");
         rdebit.setFundsTransferId("1001");
-        rdebit.setAmount(500l);
+        rdebit.setAmount(1500l);
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 }
