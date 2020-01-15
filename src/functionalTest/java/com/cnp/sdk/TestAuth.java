@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.cnp.sdk.CnpOnline;
-import com.cnp.sdk.CnpOnlineException;
+import java.math.BigInteger;
+
 import com.cnp.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -362,5 +362,69 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
+	}
+
+	@Test
+	public void simpleAuthProtocolOne() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("1"));
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("Approved", response.getMessage());
+	}
+
+	@Test (expected = CnpOnlineException.class)
+	public void simpleAuthProtocolZero() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("0"));
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+	}
+
+	@Test
+	public void simpleAuthProtocolNot() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		assertEquals(null, authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
 	}
 }
