@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBElement;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -167,7 +168,7 @@ public class TestCnpOnline {
 	}
 
 	@Test
-	public void testAuthWIthMCC() throws Exception {
+	public void testAuthWithMCC() throws Exception {
 
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
@@ -193,6 +194,66 @@ public class TestCnpOnline {
 		AuthorizationResponse authorize = cnp.authorize(authorization);
 		assertEquals(123L, authorize.getCnpTxnId());
 		assertEquals("3535", authorization.getMerchantCategoryCode());
+	}
+
+	@Test
+	public void testAuthProtocolIsOne() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		FraudCheckType ftc = new FraudCheckType();
+		ftc.setAuthenticationProtocolVersion(new BigInteger("1"));
+		authorization.setCardholderAuthentication(ftc);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000002");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<authorization.*?<card>.*?<number>4100000000000002</number>.*?</card>.*?</authorization>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><authorizationResponse><cnpTxnId>123</cnpTxnId></authorizationResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		AuthorizationResponse authorize = cnp.authorize(authorization);
+		assertEquals(123L, authorize.getCnpTxnId());
+		assertEquals(new BigInteger("1"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+	}
+
+	@Test
+	public void testAuthProtocolIsZero() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		FraudCheckType ftc = new FraudCheckType();
+		ftc.setAuthenticationProtocolVersion(new BigInteger("0"));
+		authorization.setCardholderAuthentication(ftc);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000002");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+
+		Communication mockedCommunication = mock(Communication.class);
+		when(
+				mockedCommunication
+						.requestToServer(
+								matches(".*?<cnpOnlineRequest.*?<authorization.*?<card>.*?<number>4100000000000002</number>.*?</card>.*?</authorization>.*?"),
+								any(Properties.class)))
+				.thenReturn(
+						"<cnpOnlineResponse version='8.10' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><authorizationResponse><cnpTxnId>123</cnpTxnId></authorizationResponse></cnpOnlineResponse>");
+		cnp.setCommunication(mockedCommunication);
+		AuthorizationResponse authorize = cnp.authorize(authorization);
+		assertEquals(123L, authorize.getCnpTxnId());
+		assertEquals(new BigInteger("0"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
 	}
 
 
