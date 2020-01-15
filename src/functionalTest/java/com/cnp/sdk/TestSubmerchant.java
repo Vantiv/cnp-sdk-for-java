@@ -23,7 +23,7 @@ public class TestSubmerchant {
         submerchantcredit.setFundingSubmerchantId("submerchantCredit");
         submerchantcredit.setSubmerchantName("SubMerchant101");
         submerchantcredit.setFundsTransferId("1001");
-        submerchantcredit.setAmount(1500l);
+        submerchantcredit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -46,7 +46,7 @@ public class TestSubmerchant {
         submerchantdebit.setFundingSubmerchantId("submerchantdebit");
         submerchantdebit.setSubmerchantName("SubMerchant101");
         submerchantdebit.setFundsTransferId("1001");
-        submerchantdebit.setAmount(1500l);
+        submerchantdebit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
