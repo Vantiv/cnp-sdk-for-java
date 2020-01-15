@@ -22,7 +22,7 @@ public class TestVendor {
         vcredit.setFundingSubmerchantId("vendorCredit");
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
-        vcredit.setAmount(1500l);
+        vcredit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -44,7 +44,7 @@ public class TestVendor {
         vcredit.setFundingCustomerId("vendorDebit");
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
-        vcredit.setAmount(1500l);
+        vcredit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -66,7 +66,7 @@ public class TestVendor {
         vdebit.setFundingSubmerchantId("vendorCredit");
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
-        vdebit.setAmount(1500l);
+        vdebit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -88,7 +88,7 @@ public class TestVendor {
         vdebit.setFundingCustomerId("vendorDebit");
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
-        vdebit.setAmount(1500l);
+        vdebit.setAmount(1512l);
 
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);

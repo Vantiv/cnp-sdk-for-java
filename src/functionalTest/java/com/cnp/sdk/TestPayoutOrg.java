@@ -24,10 +24,10 @@ public class TestPayoutOrg {
         pocredit.setId("111");
         pocredit.setFundingCustomerId("payoutOrgCredit");
         pocredit.setFundsTransferId("1001");
-        pocredit.setAmount(500l);
+        pocredit.setAmount(1512l);
 
         PayoutOrgCreditResponse response = cnp.payoutOrgCredit(pocredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -36,7 +36,7 @@ public class TestPayoutOrg {
         pocredit.setReportGroup("payoutOrgCredit");
         pocredit.setId("111");
         pocredit.setFundsTransferId("1001");
-        pocredit.setAmount(500l);
+        pocredit.setAmount(1512l);
 
         cnp.payoutOrgCredit(pocredit);
     }
@@ -48,10 +48,10 @@ public class TestPayoutOrg {
         podebit.setId("111");
         podebit.setFundingCustomerId("payoutOrgDebit");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512l);
 
         PayoutOrgDebitResponse response = cnp.payoutOrgDebit(podebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test(expected = CnpOnlineException.class)
@@ -60,7 +60,7 @@ public class TestPayoutOrg {
         podebit.setReportGroup("payoutOrgDebit");
         podebit.setId("111");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512l);
 
         cnp.payoutOrgDebit(podebit);
     }
@@ -72,7 +72,7 @@ public class TestPayoutOrg {
         podebit.setId("111");
         podebit.setFundingCustomerId("012345678901234567890123456789012345678901234567890123456789");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512l);
 
         PayoutOrgDebitResponse response = cnp.payoutOrgDebit(podebit);
         assertEquals("Approved", response.getMessage());

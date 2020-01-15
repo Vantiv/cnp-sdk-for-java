@@ -21,10 +21,10 @@ public class TestPhysicalCheck {
         pccredit.setId("111");
         pccredit.setFundingSubmerchantId("physicalCheckCredit");
         pccredit.setFundsTransferId("1001");
-        pccredit.setAmount(500l);
+        pccredit.setAmount(1512l);
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -34,10 +34,10 @@ public class TestPhysicalCheck {
         pccredit.setId("111");
         pccredit.setFundingCustomerId("physicalCheckCredit");
         pccredit.setFundsTransferId("1001");
-        pccredit.setAmount(500l);
+        pccredit.setAmount(1512l);
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class TestPhysicalCheck {
         pcdebit.setId("111");
         pcdebit.setFundingSubmerchantId("physicalCheckDebit");
         pcdebit.setFundsTransferId("1001");
-        pcdebit.setAmount(500l);
+        pcdebit.setAmount(1512l);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
-        assertEquals("The account number was changed", response.getMessage());
+        assertEquals("Approved", response.getMessage());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TestPhysicalCheck {
         pcdebit.setId("111");
         pcdebit.setFundingCustomerId("physicalCheckDebit");
         pcdebit.setFundsTransferId("1001");
-        pcdebit.setAmount(500l);
+        pcdebit.setAmount(1512l);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
         assertEquals("The account number was changed", response.getMessage());
