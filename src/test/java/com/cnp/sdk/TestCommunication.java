@@ -10,7 +10,6 @@ import java.io.PrintStream;
 import java.util.Properties;
 import java.io.ByteArrayOutputStream;
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -165,7 +164,5 @@ public class TestCommunication {
 		System.setOut(originalOut);
 		System.setErr(originalErr);
 	}
-
-
 }
 

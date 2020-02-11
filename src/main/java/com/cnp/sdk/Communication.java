@@ -322,7 +322,6 @@ public class Communication {
 		return session;
 	}
 
-
 	/* Method to neuter out sensitive information from xml */
 	public String neuterXml(String xml) {
 		if (xml == null) {
