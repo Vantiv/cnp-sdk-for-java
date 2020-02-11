@@ -1,6 +1,9 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.11.0 (January 14, 2019)
+==Version 12.11.1 (February 11, 2020)
+* BugFix: Neutering of XMLRequest for log was affecting actual log, separated these two XMLs.
+
+==Version 12.11.0 (January 14, 2020)
 * Feature: Added merchantCatagoryCode support to forceCapture, captureGivenAuth, sale, credit, authorization
 * Feature: Added authenticationProtocolVersion support to fraudCheckType
 
