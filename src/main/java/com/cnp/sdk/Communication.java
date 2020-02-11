@@ -133,13 +133,11 @@ public class Communication {
 		try {
 			boolean printxml = "true".equalsIgnoreCase(configuration.getProperty("printxml"));
 			boolean neuterXml = "true".equalsIgnoreCase(configuration.getProperty("neuterXml"));
+
 			if (printxml) {
-				if (neuterXml) {
-					xmlRequest = neuterXml(xmlRequest);
-				}
-				System.out.println("Request XML: " + xmlRequest);
+				printXml(xmlRequest, neuterXml);
 			}
-			
+
 			post.setEntity(new StringEntity(xmlRequest,"UTF-8"));
 			HttpResponse response = httpClient.execute(post);
 			entity = response.getEntity();
@@ -324,6 +322,7 @@ public class Communication {
 		return session;
 	}
 
+
 	/* Method to neuter out sensitive information from xml */
 	public String neuterXml(String xml) {
 		if (xml == null) {
@@ -336,7 +335,16 @@ public class Communication {
 		xml = xml.replaceAll("<track>.*</track>", "<track>" + NEUTER_STR + "</track>");
 		xml = xml.replaceAll("<number>.*</number>", "<number>" + NEUTER_STR + "</number>");
 		return xml;
+	}
 
+	public String printXml(String xmlRequest, boolean neuterXml){
+		String xmlToLog = xmlRequest;
+		if (neuterXml) {
+			xmlToLog = neuterXml(xmlToLog);
+		}
+		System.out.println("Request XML: " + xmlToLog);
+
+		return xmlRequest;
 	}
 
 }
