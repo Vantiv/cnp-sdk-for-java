@@ -52,6 +52,7 @@ public class TestCommunication {
 				"<number>4100000000000000</number>" +
 				"<track>dummy track data</track>" +
 				"<expDate>1210</expDate>" +
+				"<cardValidationNum>1234</cardValidationNum>" +
 				"</card>" +
 				"<echeck>" +
 				"<accType>Checking</accType>" +
@@ -74,6 +75,7 @@ public class TestCommunication {
 				"<number>NEUTERED</number>" +
 				"<track>NEUTERED</track>" +
 				"<expDate>1210</expDate>" +
+				"<cardValidationNum>NEUTERED</cardValidationNum>" +
 				"</card>" +
 				"<echeck>" +
 				"<accType>Checking</accType>" +
