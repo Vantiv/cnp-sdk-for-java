@@ -333,6 +333,7 @@ public class Communication {
 		xml = xml.replaceAll("<password>.*</password>", "<password>" + NEUTER_STR + "</password>");
 		xml = xml.replaceAll("<track>.*</track>", "<track>" + NEUTER_STR + "</track>");
 		xml = xml.replaceAll("<number>.*</number>", "<number>" + NEUTER_STR + "</number>");
+		xml = xml.replaceAll("<cardValidationNum>.*</cardValidationNum>", "<cardValidationNum>" + NEUTER_STR + "</cardValidationNum>");
 		return xml;
 	}
 

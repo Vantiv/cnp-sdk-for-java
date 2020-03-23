@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.11.2 (March 23, 2020)
+* BugFix: Add neutering for cardValidationNum
+
 ==Version 12.11.1 (February 11, 2020)
 * BugFix: Neutering of XMLRequest for log was affecting actual log, separated these two XMLs.
 
