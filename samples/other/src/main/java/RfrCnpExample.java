@@ -5,6 +5,12 @@ import com.cnp.sdk.generate.RFRRequest;
 import java.util.Calendar;
 public class RfrCnpExample {
     public static void main(String[] args) {
+        String preliveStatus = System.getenv("preliveStatus");
+
+        if(preliveStatus != null && preliveStatus.equalsIgnoreCase("down")){
+            return;
+        }
+
         String merchantId = "0180";
         String requestFileName = "cnpSdk-testRFRFile-fileConfigSFTP.xml";
         RFRRequest rfrRequest = new RFRRequest();
