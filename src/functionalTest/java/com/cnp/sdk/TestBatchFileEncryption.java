@@ -51,6 +51,11 @@ public class TestBatchFileEncryption {
         }
     }
 
+    /**
+     * NOTE: below tests are commented out until PGP key is renewed
+     *
+
+
     @Test
     public void testSendToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
@@ -198,6 +203,7 @@ public class TestBatchFileEncryption {
         prepareTestRequest(request);
 
         /* call method under test */
+    /**
         CnpBatchFileResponse response = request.sendToCnpSFTP();
 
         // assert response can be processed through Java API
@@ -207,6 +213,7 @@ public class TestBatchFileEncryption {
         assertGeneratedFiles(workingDirRequests, workingDirResponses,
                 requestFileName, request, response);
     }
+     */
 
     private void prepareTestRequest(CnpBatchFileRequest request) {
 
