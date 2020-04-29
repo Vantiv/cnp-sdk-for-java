@@ -1994,7 +1994,7 @@ public class TestCnpOnline {
         sub.setAmount(1000L);
         CreateAddOnType cat = new CreateAddOnType();
         cat.setAddOnCode("1234");
-        cat.setAmount(500L);
+        cat.setAmount(1512l);
         cat.setEndDate(Calendar.getInstance());
         cat.setName("name");
         cat.setEndDate(Calendar.getInstance());
