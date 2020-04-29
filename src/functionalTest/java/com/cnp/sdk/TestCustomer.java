@@ -44,7 +44,7 @@ public class TestCustomer {
         ccredit.setId("111");
         ccredit.setFundingCustomerId("customerCredit");
         ccredit.setFundsTransferId("1001");
-        ccredit.setAmount(500l);
+        ccredit.setAmount(1512l);
 
         EcheckType echeck = new EcheckType();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
@@ -65,7 +65,7 @@ public class TestCustomer {
         cdebit.setFundingCustomerId("customerDebit");
         cdebit.setCustomerName("Customer101");
         cdebit.setFundsTransferId("1001");
-        cdebit.setAmount(500l);
+        cdebit.setAmount(1512l);
 
         EcheckType echeck = new EcheckType();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
