@@ -59,7 +59,7 @@ public class TestPhysicalCheck {
         pcdebit.setId("111");
         pcdebit.setFundingCustomerId("physicalCheckDebit");
         pcdebit.setFundsTransferId("1001");
-        pcdebit.setAmount(500l);
+        pcdebit.setAmount(1512L);
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
         assertEquals("Approved", response.getMessage());
