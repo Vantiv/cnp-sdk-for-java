@@ -24,7 +24,7 @@ public class TestPayoutOrg {
         pocredit.setId("111");
         pocredit.setFundingCustomerId("payoutOrgCredit");
         pocredit.setFundsTransferId("1001");
-        pocredit.setAmount(500l);
+        pocredit.setAmount(1512l);
 
         PayoutOrgCreditResponse response = cnp.payoutOrgCredit(pocredit);
         assertEquals("Approved", response.getMessage());
@@ -36,7 +36,7 @@ public class TestPayoutOrg {
         pocredit.setReportGroup("payoutOrgCredit");
         pocredit.setId("111");
         pocredit.setFundsTransferId("1001");
-        pocredit.setAmount(500l);
+        pocredit.setAmount(1512l);
 
         cnp.payoutOrgCredit(pocredit);
     }
