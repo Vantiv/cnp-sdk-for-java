@@ -48,7 +48,7 @@ public class TestPayoutOrg {
         podebit.setId("111");
         podebit.setFundingCustomerId("payoutOrgDebit");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512L);
 
         PayoutOrgDebitResponse response = cnp.payoutOrgDebit(podebit);
         assertEquals("Approved", response.getMessage());
@@ -60,7 +60,7 @@ public class TestPayoutOrg {
         podebit.setReportGroup("payoutOrgDebit");
         podebit.setId("111");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512L);
 
         cnp.payoutOrgDebit(podebit);
     }
@@ -72,7 +72,7 @@ public class TestPayoutOrg {
         podebit.setId("111");
         podebit.setFundingCustomerId("012345678901234567890123456789012345678901234567890123456789");
         podebit.setFundsTransferId("1001");
-        podebit.setAmount(500l);
+        podebit.setAmount(1512L);
 
         PayoutOrgDebitResponse response = cnp.payoutOrgDebit(podebit);
         assertEquals("Approved", response.getMessage());
