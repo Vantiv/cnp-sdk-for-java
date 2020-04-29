@@ -22,7 +22,7 @@ public class TestVendor {
         vcredit.setFundingSubmerchantId("vendorCredit");
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
-        vcredit.setAmount(500l);
+        vcredit.setAmount(1512L);
 
         EcheckType echeck = new EcheckType();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
