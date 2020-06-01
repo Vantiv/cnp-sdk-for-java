@@ -36,6 +36,7 @@ public class TestSubmerchant {
 
         SubmerchantCreditResponse response = cnp.submerchantCredit(submerchantcredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -59,6 +60,7 @@ public class TestSubmerchant {
 
         SubmerchantDebitResponse response = cnp.submerchantDebit(submerchantdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
 }

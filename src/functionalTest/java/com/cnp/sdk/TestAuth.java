@@ -36,6 +36,7 @@ public class TestAuth {
 
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals("русский中文",response.getReportGroup());
+        assertEquals("sandbox", response.getLocation());
     }
 
 	@Test
@@ -55,6 +56,7 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -71,6 +73,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -92,6 +95,7 @@ public class TestAuth {
 		assertEquals("aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ0K", response.getAndroidpayResponse().getCryptogram());
 		assertEquals("01", response.getAndroidpayResponse().getExpMonth());
 		assertEquals("2050", response.getAndroidpayResponse().getExpYear());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -111,6 +115,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -138,6 +143,7 @@ public class TestAuth {
 		authorization.setProcessingType(ProcessingTypeEnum.CARDHOLDER_INITIATED_COF);
 		response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 
 	}
 
@@ -160,6 +166,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -178,6 +185,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -203,6 +211,7 @@ public class TestAuth {
 
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals(new Long(110),response.getApplepayResponse().getTransactionAmount());
+		assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -230,6 +239,7 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals("000", response.getResponse());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -272,6 +282,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals("4100100000000000", response.getAccountUpdater().getOriginalCardInfo().getNumber());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -296,6 +307,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "Approved",response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -322,6 +334,7 @@ public class TestAuth {
 
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -342,6 +355,7 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -362,6 +376,7 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -384,6 +399,7 @@ public class TestAuth {
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test (expected = CnpOnlineException.class)
@@ -405,6 +421,7 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -426,5 +443,6 @@ public class TestAuth {
 
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 }

@@ -60,6 +60,7 @@ public class TestEcheckSale {
 		EcheckSalesResponse response = cnp.echeckSale(echecksale);
 		//System.out.println(response.getVerificationCode());
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -83,6 +84,7 @@ public class TestEcheckSale {
 		echecksale.setId("id");
 		EcheckSalesResponse response = cnp.echeckSale(echecksale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -122,6 +124,7 @@ public class TestEcheckSale {
 		echecksale.setId("id");
 		EcheckSalesResponse response = cnp.echeckSale(echecksale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -151,6 +154,7 @@ public class TestEcheckSale {
 		echecksale.setId("id");
 		EcheckSalesResponse response = cnp.echeckSale(echecksale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -186,6 +190,7 @@ public class TestEcheckSale {
 		echecksale.setId("id");
 		EcheckSalesResponse response = cnp.echeckSale(echecksale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -212,6 +217,7 @@ public class TestEcheckSale {
         echecksale.setId("id");
         EcheckSalesResponse response = cnp.echeckSale(echecksale);
         assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
     }
 	
 	@Test

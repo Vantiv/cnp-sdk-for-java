@@ -49,6 +49,7 @@ public class TestGiftCardTransactions {
         
         GiftCardCaptureResponse response = cnp.giftCardCapture(gcCapture);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -70,6 +71,7 @@ public class TestGiftCardTransactions {
         
         GiftCardCreditResponse response = cnp.giftCardCredit(gcCredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -93,6 +95,7 @@ public class TestGiftCardTransactions {
         GiftCardCreditResponse response = cnp.giftCardCredit(gcCredit);
         assertEquals("Approved", response.getMessage());
         assertEquals("123456", response.getGiftCardResponse().getSequenceNumber());
+        assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -119,6 +122,7 @@ public class TestGiftCardTransactions {
         GiftCardAuthReversalResponse response = cnp.giftCardAuthReversal(gcAuthReversal);
         assertEquals("Approved", response.getMessage());
         assertEquals(0, (int)response.getGiftCardResponse().getSystemTraceId());
+        assertEquals("sandbox", response.getLocation());
 	}
 
 }

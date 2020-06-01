@@ -34,6 +34,7 @@ public class TestQueryTransaction {
         assertEquals("150", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
 	}
 
     @Test
@@ -53,6 +54,7 @@ public class TestQueryTransaction {
         assertEquals("150", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 
 	@Test
@@ -71,6 +73,7 @@ public class TestQueryTransaction {
         assertEquals("150", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(2, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 	
 	@Test
@@ -89,6 +92,7 @@ public class TestQueryTransaction {
         assertEquals("151", queryTransactionResponse.getResponse());
         assertEquals("Original transaction not found",queryTransactionResponse.getMessage());
         assertNull(queryTransactionResponse.getResultsMax10());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 	
 	@Test
@@ -107,6 +111,7 @@ public class TestQueryTransaction {
         assertEquals("151", queryTransactionResponse.getResponse());
         assertEquals("Original transaction not found",queryTransactionResponse.getMessage());
         assertNull(queryTransactionResponse.getResultsMax10());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 
 	@Test
@@ -124,5 +129,6 @@ public class TestQueryTransaction {
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("152", queryTransactionResponse.getResponse());
         assertEquals("Original transaction found but response not yet available",queryTransactionResponse.getMessage());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 }

@@ -34,6 +34,7 @@ public class TestEcheckCredit {
 		echeckcredit.setId("id");
 		EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -68,6 +69,7 @@ public class TestEcheckCredit {
 		echeckcredit.setId("id");
 		EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -91,6 +93,7 @@ public class TestEcheckCredit {
 		echeckcredit.setId("id");
 		EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -135,6 +138,7 @@ public class TestEcheckCredit {
         echeckcredit.setId("id");
         EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
         assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
     }
 	
 	@Test
@@ -146,6 +150,7 @@ public class TestEcheckCredit {
         echeckcredit.setId("id");
         EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
         assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
     }
 
 }

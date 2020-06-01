@@ -29,6 +29,7 @@ public class TestToken {
 	    token.setId("id");
 		RegisterTokenResponse response = cnp.registerToken(token);
 		assertEquals("Account number was successfully registered", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -39,6 +40,7 @@ public class TestToken {
 	    token.setId("id");
 		RegisterTokenResponse response = cnp.registerToken(token);
 		assertEquals("Account number was successfully registered", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -53,6 +55,7 @@ public class TestToken {
 		RegisterTokenResponse response = cnp.registerToken(token);
 		System.out.println(response.getCnpToken());
 		assertEquals("Account number was successfully registered", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -89,6 +92,7 @@ public class TestToken {
         RegisterTokenResponse response = cnp.registerToken(token);
         assertEquals("Account number was successfully registered", response.getMessage());
         assertEquals(new Long(0),response.getApplepayResponse().getTransactionAmount());
+		assertEquals("sandbox", response.getLocation());
     }
 	
 	@Test
@@ -99,6 +103,7 @@ public class TestToken {
 		tokenRequest.setId("id");
 		RegisterTokenResponse tokenResponse = cnp.registerToken(tokenRequest);
 		assertEquals("1111222233334444", tokenResponse.getCnpToken()); //all paypage registration ids return the same token
+		assertEquals("sandbox", tokenResponse.getLocation());
 	}
 }
 

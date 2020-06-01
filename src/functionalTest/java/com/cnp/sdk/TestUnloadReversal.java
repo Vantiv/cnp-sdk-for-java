@@ -46,6 +46,7 @@ public class TestUnloadReversal {
 
         UnloadReversalResponse response=cnp.unloadReversal(unloadReversal);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
 }

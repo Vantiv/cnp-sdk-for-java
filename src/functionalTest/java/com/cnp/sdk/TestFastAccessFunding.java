@@ -37,6 +37,7 @@ public class TestFastAccessFunding {
         FastAccessFundingResponse response = cnp.fastAccessFunding(fastAccessFunding);
         assertEquals("Approved", response.getMessage());
         assertEquals("000", response.getResponse());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Ignore("Sandbox does not check for mixed names. Production does check.")

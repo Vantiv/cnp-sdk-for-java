@@ -44,6 +44,7 @@ public class TestActivateReversal {
 
         ActivateReversalResponse response=cnp.activateReversal(activateReversal);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
 }

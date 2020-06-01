@@ -47,6 +47,7 @@ public class TestDepositReversal {
 
         DepositReversalResponse response=cnp.depositReversal(depositReversal);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
 }

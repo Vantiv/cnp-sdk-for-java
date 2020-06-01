@@ -28,6 +28,7 @@ public class TestAuthReversal {
 		
 		AuthReversalResponse response = cnp.authReversal(reversal);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 }

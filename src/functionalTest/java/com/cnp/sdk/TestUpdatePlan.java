@@ -26,6 +26,7 @@ public class TestUpdatePlan {
 
        UpdatePlanResponse response=cnp.updatePlan(updatePlan);
          assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
 
     }
 
