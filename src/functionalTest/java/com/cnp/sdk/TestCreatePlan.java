@@ -2,6 +2,7 @@ package com.cnp.sdk;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class TestCreatePlan {
        CreatePlanResponse response=cnp.createPlan(createPlan);
       
          assertEquals("Approved", response.getMessage());
-        assertEquals("sandbox", response.getLocation());
+        assertNull(response.getLocation());
     }
 
 }

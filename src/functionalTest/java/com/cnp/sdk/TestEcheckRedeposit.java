@@ -1,6 +1,7 @@
 package com.cnp.sdk;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class TestEcheckRedeposit {
 		echeckredeposit.setId("id");
 		EcheckRedepositResponse response = cnp.echeckRedeposit(echeckredeposit);
 		assertEquals("Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
+		assertNull(response.getLocation());
 	}
 	
 	@Test
@@ -45,7 +46,7 @@ public class TestEcheckRedeposit {
 		echeckredeposit.setEcheck(echeck);
 		EcheckRedepositResponse response = cnp.echeckRedeposit(echeckredeposit);
 		assertEquals("Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
+		assertNull(response.getLocation());
 	}
 	
 	@Test
@@ -62,7 +63,7 @@ public class TestEcheckRedeposit {
 		echeckredeposit.setEcheckToken(echeckToken);
 		EcheckRedepositResponse response = cnp.echeckRedeposit(echeckredeposit);
 		assertEquals("Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
+		assertNull(response.getLocation());
 	}
 
 }
