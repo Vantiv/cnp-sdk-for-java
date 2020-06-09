@@ -46,6 +46,7 @@ public class TestRefundReversal {
 
         RefundReversalResponse response=cnp.refundReversal(refundReversal);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
 
 
     }

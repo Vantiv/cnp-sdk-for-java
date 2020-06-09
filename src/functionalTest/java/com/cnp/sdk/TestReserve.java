@@ -25,6 +25,7 @@ public class TestReserve {
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -38,6 +39,7 @@ public class TestReserve {
 
         ReserveCreditResponse response = cnp.submerchantCredit(rcredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -51,6 +53,7 @@ public class TestReserve {
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -64,6 +67,7 @@ public class TestReserve {
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -77,5 +81,6 @@ public class TestReserve {
 
         ReserveDebitResponse response = cnp.submerchantDebit(rdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 }

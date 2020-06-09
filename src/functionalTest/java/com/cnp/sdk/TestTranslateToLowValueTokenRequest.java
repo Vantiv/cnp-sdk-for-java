@@ -27,5 +27,6 @@ public class TestTranslateToLowValueTokenRequest {
         TranslateToLowValueTokenResponse translateToLowValueTokenResponse = cnp.TranslateToLowValueTokenRequest(translateToLowValueTokenRequest);
         assertEquals("803", translateToLowValueTokenResponse.getResponse());
         assertEquals("Valid Token", translateToLowValueTokenResponse.getMessage());
+        assertEquals("sandbox", translateToLowValueTokenResponse.getLocation());
     }
 }

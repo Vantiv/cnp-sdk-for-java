@@ -27,5 +27,6 @@ public class TestUpdateCardValidationNumOnToken {
 		
 		UpdateCardValidationNumOnTokenResponse response = cnp.updateCardValidationNumOnToken(update);
 		assertEquals(response.getMessage(), "805",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
 	}
 }

@@ -37,6 +37,7 @@ public class TestForceCapture {
 	    forcecapture.setId("id");
 		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -54,6 +55,7 @@ public class TestForceCapture {
 	    forcecapture.setId("id");
 		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -71,6 +73,7 @@ public class TestForceCapture {
         forcecapture.setId("id");
         ForceCaptureResponse response = cnp.forceCapture(forcecapture);
         assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
     }
 	
 	@Test
@@ -88,6 +91,7 @@ public class TestForceCapture {
 		forcecapture.setId("id");
 		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 }

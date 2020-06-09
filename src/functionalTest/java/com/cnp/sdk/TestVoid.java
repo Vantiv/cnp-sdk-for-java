@@ -26,5 +26,6 @@ public class TestVoid {
 
         VoidResponse response = cnp.dovoid(voidTxn);
         assertEquals("822",response.getResponse());
+        assertEquals("sandbox", response.getLocation());
     }
 }

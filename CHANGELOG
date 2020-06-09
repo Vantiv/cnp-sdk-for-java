@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.13 (May 29, 2020)
+* Feature: Added location as optional element of all online responses
+
 ==Version 12.11.3 (April 28, 2020)
 * BugFix: Fix serialization issue in BatchRequest
 

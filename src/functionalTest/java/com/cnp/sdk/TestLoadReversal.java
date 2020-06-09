@@ -47,6 +47,7 @@ public class TestLoadReversal {
         LoadReversalResponse response=cnp.loadReversal(loadReversal);
       //  DeactivateReversalResponse response=cnp.deactivateReversal(deactivateReversal);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
 
 
     }

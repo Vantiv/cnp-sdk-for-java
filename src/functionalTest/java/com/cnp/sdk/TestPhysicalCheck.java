@@ -25,6 +25,7 @@ public class TestPhysicalCheck {
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -38,6 +39,7 @@ public class TestPhysicalCheck {
 
         PhysicalCheckCreditResponse response = cnp.physicalCheckCredit(pccredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -51,6 +53,7 @@ public class TestPhysicalCheck {
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -64,5 +67,6 @@ public class TestPhysicalCheck {
 
         PhysicalCheckDebitResponse response = cnp.physicalCheckDebit(pcdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 }

@@ -25,6 +25,7 @@ public class TestEcheckVoid {
 		echeckvoid.setId("id");
 		EcheckVoidResponse response = cnp.echeckVoid(echeckvoid);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 }
 

@@ -50,6 +50,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -74,6 +75,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -98,14 +100,17 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 
 		capturegivenauth.setProcessingType(ProcessingTypeEnum.MERCHANT_INITIATED_COF);
 		response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 
 		capturegivenauth.setProcessingType(ProcessingTypeEnum.CARDHOLDER_INITIATED_COF);
 		response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -132,6 +137,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -156,6 +162,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -180,6 +187,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -213,6 +221,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	@Test
 	public void authInfo() throws Exception{
@@ -241,6 +250,7 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 }

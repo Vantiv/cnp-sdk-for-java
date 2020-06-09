@@ -32,6 +32,7 @@ public class TestSale {
 		sale.setId("id");
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -49,6 +50,7 @@ public class TestSale {
 	    sale.setId("id");
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -76,6 +78,7 @@ public class TestSale {
         SaleResponse response = cnp.sale(sale);
         assertEquals("Insufficient Funds", response.getMessage());
         assertEquals(new Long(110),response.getApplepayResponse().getTransactionAmount());
+		assertEquals("sandbox", response.getLocation());
     }
 	
 	@Test
@@ -93,6 +96,7 @@ public class TestSale {
 	    sale.setId("id");
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 
@@ -118,6 +122,7 @@ public class TestSale {
 
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -137,6 +142,7 @@ public class TestSale {
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
 		assertEquals("http://redirect.url.vantiv.com", response.getSepaDirectDebitResponse().getRedirectUrl());
+		assertEquals("sandbox", response.getLocation());
 	}
 	
 	@Test
@@ -157,6 +163,7 @@ public class TestSale {
 		sale.setOriginalTransactionAmount(4242l);
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -175,14 +182,17 @@ public class TestSale {
 		sale.setProcessingType(ProcessingTypeEnum.INITIAL_COF);
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 
 		sale.setProcessingType(ProcessingTypeEnum.MERCHANT_INITIATED_COF);
 		response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 
 		sale.setProcessingType(ProcessingTypeEnum.CARDHOLDER_INITIATED_COF);
 		response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -203,6 +213,7 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("http://redirect.url.vantiv.com", response.getIdealResponse().getRedirectUrl());
 		assertEquals("jj2d1d372osmmt7tb8epm0a99q", response.getIdealResponse().getRedirectToken());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -221,6 +232,7 @@ public class TestSale {
 		SaleResponse response = cnp.sale(sale);
 
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -239,6 +251,7 @@ public class TestSale {
 		SaleResponse response = cnp.sale(sale);
 
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -257,6 +270,7 @@ public class TestSale {
 		sale.setId("id");
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 	@Test
@@ -275,5 +289,6 @@ public class TestSale {
 		sale.setId("id");
 		SaleResponse response = cnp.sale(sale);
 		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 }

@@ -34,6 +34,7 @@ public class TestVendor {
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -56,6 +57,7 @@ public class TestVendor {
 
         VendorCreditResponse response = cnp.vendorCredit(vcredit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -78,6 +80,7 @@ public class TestVendor {
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test
@@ -100,5 +103,6 @@ public class TestVendor {
 
         VendorDebitResponse response = cnp.vendorDebit(vdebit);
         assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 }
