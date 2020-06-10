@@ -6,7 +6,7 @@ public class AuthWithTokenExample {
     public static void main(String[] args) {
         Authorization auth = new Authorization();
         auth.setOrderId("1");
-        auth.setAmount(10010L);
+        auth.setAmount(10000L);
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         CardTokenType token = new CardTokenType();
         token.setCardValidationNum("349");
