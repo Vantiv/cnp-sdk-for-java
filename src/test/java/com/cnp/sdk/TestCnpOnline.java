@@ -1136,11 +1136,10 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<cancelSubscription><subscriptionId>12345</subscriptionId></cancelSubscription></cnpOnlineRequest>*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><cancelSubscriptionResponse><subscriptionId>12345</subscriptionId><location>sandbox</location></cancelSubscriptionResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><cancelSubscriptionResponse><subscriptionId>12345</subscriptionId></cancelSubscriptionResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CancelSubscriptionResponse cancelResponse = cnp.cancelSubscription(cancel);
         assertEquals(12345L, cancelResponse.getSubscriptionId());
-		assertEquals("sandbox", cancelResponse.getLocation());
     }
 
     @Test
@@ -1155,13 +1154,12 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"9001\".*?<cancelSubscription><subscriptionId>12345</subscriptionId></cancelSubscription></cnpOnlineRequest>*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><cancelSubscriptionResponse><subscriptionId>12345</subscriptionId><location>sandbox</location></cancelSubscriptionResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><cancelSubscriptionResponse><subscriptionId>12345</subscriptionId></cancelSubscriptionResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CnpOnlineRequest overrides = new CnpOnlineRequest();
         overrides.setMerchantId("9001");
         CancelSubscriptionResponse cancelResponse = cnp.cancelSubscription(cancel, overrides);
         assertEquals(12345L, cancelResponse.getSubscriptionId());
-		assertEquals("sandbox", cancelResponse.getLocation());
     }
 
     @Test
@@ -1191,11 +1189,10 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<updateSubscription><subscriptionId>12345</subscriptionId><planCode>abcdefg</planCode><billToAddress><name>Greg Dake</name><city>Lowell</city><state>MA</state><email>sdksupport@cnp.com</email></billToAddress><card><type>VI</type><number>4100000000000001</number><expDate>1215</expDate></card><billingDate>2013-08-07</billingDate></updateSubscription></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updateSubscriptionResponse><subscriptionId>12345</subscriptionId><location>sandbox</location></updateSubscriptionResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updateSubscriptionResponse><subscriptionId>12345</subscriptionId></updateSubscriptionResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         UpdateSubscriptionResponse updateResponse = cnp.updateSubscription(update);
         assertEquals(12345L, updateResponse.getSubscriptionId());
-		assertEquals("sandbox", updateResponse.getLocation());
     }
 
     @Test
@@ -1225,13 +1222,12 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<updateSubscription><subscriptionId>12345</subscriptionId><planCode>abcdefg</planCode><billToAddress><name>Greg Dake</name><city>Lowell</city><state>MA</state><email>sdksupport@cnp.com</email></billToAddress><card><type>VI</type><number>4100000000000001</number><expDate>1215</expDate></card><billingDate>2013-08-07</billingDate></updateSubscription></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updateSubscriptionResponse><subscriptionId>12345</subscriptionId><location>sandbox</location></updateSubscriptionResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updateSubscriptionResponse><subscriptionId>12345</subscriptionId></updateSubscriptionResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CnpOnlineRequest overrides = new CnpOnlineRequest();
         overrides.setMerchantId("905");
         UpdateSubscriptionResponse updateResponse = cnp.updateSubscription(update, overrides);
         assertEquals(12345L, updateResponse.getSubscriptionId());
-		assertEquals("sandbox", updateResponse.getLocation());
     }
 
     @Test
@@ -1247,11 +1243,10 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<updatePlan><planCode>abc</planCode><active>true</active></updatePlan></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updatePlanResponse><planCode>abc</planCode><location>sandbox</location></updatePlanResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updatePlanResponse><planCode>abc</planCode></updatePlanResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         UpdatePlanResponse updateResponse = cnp.updatePlan(update);
         assertEquals("abc", updateResponse.getPlanCode());
-		assertEquals("sandbox", updateResponse.getLocation());
     }
 
     @Test
@@ -1267,13 +1262,12 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<updatePlan><planCode>abc</planCode><active>true</active></updatePlan></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updatePlanResponse><planCode>abc</planCode><location>sandbox</location></updatePlanResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.20' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><updatePlanResponse><planCode>abc</planCode></updatePlanResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CnpOnlineRequest overrides = new CnpOnlineRequest();
         overrides.setMerchantId("905");
         UpdatePlanResponse updateResponse = cnp.updatePlan(update, overrides);
         assertEquals("abc", updateResponse.getPlanCode());
-		assertEquals("sandbox", updateResponse.getLocation());
     }
 
     @Test
@@ -1289,11 +1283,10 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?<createPlan><planCode>abc</planCode><active>true</active></createPlan></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><createPlanResponse><planCode>abc</planCode><location>sandbox</location></createPlanResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><createPlanResponse><planCode>abc</planCode></createPlanResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CreatePlanResponse createResponse = cnp.createPlan(create);
         assertEquals("abc", createResponse.getPlanCode());
-		assertEquals("sandbox", createResponse.getLocation());
     }
 
     @Test
@@ -1309,13 +1302,12 @@ public class TestCnpOnline {
                                 matches(".*?<cnpOnlineRequest.*?merchantId=\"905\".*?<createPlan><planCode>abc</planCode><active>true</active></createPlan></cnpOnlineRequest>.*?"),
                                 any(Properties.class)))
                 .thenReturn(
-                        "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><createPlanResponse><planCode>abc</planCode><location>sandbox</location></createPlanResponse></cnpOnlineResponse>");
+                        "<cnpOnlineResponse version='8.21' response='0' message='Valid Format' xmlns='http://www.vantivcnp.com/schema'><createPlanResponse><planCode>abc</planCode></createPlanResponse></cnpOnlineResponse>");
         cnp.setCommunication(mockedCommunication);
         CnpOnlineRequest overrides = new CnpOnlineRequest();
         overrides.setMerchantId("905");
         CreatePlanResponse createResponse = cnp.createPlan(create, overrides);
         assertEquals("abc", createResponse.getPlanCode());
-		assertEquals("sandbox", createResponse.getLocation());
     }
 
     @Test

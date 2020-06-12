@@ -6,7 +6,7 @@ public class SaleWithTokenExample {
     public static void main(String[] args) {
         Sale sale = new Sale();
         sale.setOrderId("1");
-        sale.setAmount(10010L);
+        sale.setAmount(10000L);
         sale.setOrderSource(OrderSourceType.ECOMMERCE);
         CardTokenType token = new CardTokenType();
         token.setCardValidationNum("349");
