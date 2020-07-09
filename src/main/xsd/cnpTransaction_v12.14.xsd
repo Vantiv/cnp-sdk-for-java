@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.13.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.13.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.14.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.14.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -116,6 +116,7 @@
             <xs:element name="customerIpAddress" type="xp:ipAddress" minOccurs="0" />
             <xs:element name="authenticatedByMerchant" type="xs:boolean" minOccurs="0" />
             <xs:element name="authenticationProtocolVersion" type="xp:authenticationProtocolVersionType" minOccurs="0" />
+            <xs:element name="tokenAuthenticationValue" type="xp:tokenAuthenticationValueType" minOccurs="0" />
         </xs:all>
     </xs:complexType>
 
@@ -827,6 +828,7 @@
                         <!-- For merchant initiated transactions -->
                         <xs:element name="networkTransactionId" type="xp:string30Type" minOccurs="0" />
                         <xs:element name="paymentAccountReferenceNumber" type="xp:string50Type" minOccurs="0" />
+                        <!-- If PRIME PINless debit transaction -->
                         <xs:element ref="xp:pinlessDebitResponse" minOccurs="0"/>
                     </xs:all>
                 </xs:extension>
@@ -992,6 +994,8 @@
                         <xs:element name="postDate" type="xs:date" minOccurs="0" />
                         <xs:element name="message" type="xp:messageType" />
                         <xs:element name="location" type="xs:string" minOccurs="0"/>
+                        <!-- If PRIME PINless debit transaction -->
+                        <xs:element ref="xp:pinlessDebitResponse" minOccurs="0"/>
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -1153,6 +1157,8 @@
                         <xs:element ref="xp:accountUpdater" minOccurs="0" />
                         <!-- If Gift Card transaction -->
                         <xs:element ref="xp:fraudResult" minOccurs="0" />
+                        <!-- If PRIME PINless debit transaction -->
+                        <xs:element ref="xp:pinlessDebitResponse" minOccurs="0"/>
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -1783,6 +1789,11 @@
     <xs:simpleType name="authenticationTransactionIdType">
         <xs:restriction base="xs:string">
             <xs:maxLength value="36" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="tokenAuthenticationValueType">
+        <xs:restriction base="xs:base64Binary">
+            <xs:maxLength value="28" />
         </xs:restriction>
     </xs:simpleType>
 
