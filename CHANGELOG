@@ -1,6 +1,10 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.13 (May 29, 2020)
+==Version 12.14.0 (July 09, 2020)
+* Feature: Added pinlessDebitResponse in authorizationResponse, authReversalResponse, captureResponse, saleResponse
+* Feature: Added tokenAuthenticationValue as an optional child of the cardholderAuthentication element
+
+==Version 12.13.0 (May 29, 2020)
 * Feature: Added location as optional element of all online responses
 
 ==Version 12.11.3 (April 28, 2020)
