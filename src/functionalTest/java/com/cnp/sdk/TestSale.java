@@ -34,6 +34,42 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void simpleSaleWithCardError() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4165851242543100");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Processing Network Unavailable", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void simpleSaleWithCardError2() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4165851242543850");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Tax Billing only allowed for MCC 9311", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 	
 	@Test
 	public void simpleSaleWithPayPal() throws Exception{
@@ -98,6 +134,7 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
 
 
 	@Test
