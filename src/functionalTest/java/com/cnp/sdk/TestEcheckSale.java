@@ -136,7 +136,7 @@ public class TestEcheckSale {
 		echecksale.setOrderId("12345");
 		echecksale.setOrderSource(OrderSourceType.ECOMMERCE);
 		EcheckTokenType token = new EcheckTokenType();
-		token.setAccType(EcheckAccountTypeEnum.CHECKING);
+		token.setAccType(EcheckAccountTypeEnum.CHECKING.value());
 		token.setCnpToken("1234565789012");
 		token.setRoutingNum("123456789");
 		token.setCheckNum("123455");
@@ -163,7 +163,7 @@ public class TestEcheckSale {
 		echecksale.setReportGroup("Planets");
 		echecksale.setAmount(123456L);
 		EcheckTokenType token = new EcheckTokenType();
-		token.setAccType(EcheckAccountTypeEnum.CHECKING);
+		token.setAccType(EcheckAccountTypeEnum.CHECKING.value());
 		token.setCnpToken("1234565789012");
 		token.setRoutingNum("123456789");
 		token.setCheckNum("123455");

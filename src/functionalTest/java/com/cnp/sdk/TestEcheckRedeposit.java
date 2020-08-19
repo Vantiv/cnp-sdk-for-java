@@ -53,7 +53,7 @@ public class TestEcheckRedeposit {
 		EcheckRedeposit echeckredeposit = new EcheckRedeposit();
 		echeckredeposit.setCnpTxnId(123456L);
 		EcheckTokenType echeckToken = new EcheckTokenType();
-		echeckToken.setAccType(EcheckAccountTypeEnum.CHECKING);
+		echeckToken.setAccType(EcheckAccountTypeEnum.CHECKING.value());
 		echeckToken.setCnpToken("1234565789012");
 		echeckToken.setRoutingNum("123456789");
 		echeckToken.setCheckNum("123455");
