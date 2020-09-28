@@ -719,6 +719,7 @@
             <xs:element name="cardValidationNum" type="xp:cvNumType" minOccurs="0" />
             <xs:element name="type" type="xp:methodOfPaymentTypeEnum" minOccurs="0" />
             <xs:element name="checkoutId" type="xp:checkoutIdType" minOccurs="0" />
+            <xs:element name="authenticatedShopperID" type="xp:authenticatedShopperIDType" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
@@ -726,6 +727,13 @@
         <xs:restriction base="xs:string">
             <xs:minLength value="18" />
             <xs:maxLength value="18" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="authenticatedShopperIDType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="64" />
         </xs:restriction>
     </xs:simpleType>
 
