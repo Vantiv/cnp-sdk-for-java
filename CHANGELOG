@@ -1,6 +1,6 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.15.0 (August 04, 2020)
+==Version 12.15.0 (September 28, 2020)
 * Feature: Added an AuthenticationShopperID to cardTokenType
 * Feature: Added a copayAmount to healthcareAmounts
 * Feature: Created echeckTokenRoutingNumber and echeckTokenAccountTypeEnum types and set routingNum and accType
