@@ -2,7 +2,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.15.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.16.xsd" />
 
     <xs:element name="cnpRequest">
         <xs:complexType>
@@ -38,6 +38,8 @@
             <xs:attribute name="authAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numAuthReversals" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="authReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
+            <xs:attribute name="numTransactionReversals" type="xs:integer" use="optional"  default="0"/>
+            <xs:attribute name="transactionReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numGiftCardAuthReversals" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="giftCardAuthReversalOriginalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numCaptures" type="xs:integer" use="optional"  default="0"/>
@@ -399,6 +401,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    
+
+
+
 </xs:schema>
 
