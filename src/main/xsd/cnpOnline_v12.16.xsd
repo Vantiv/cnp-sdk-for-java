@@ -304,7 +304,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="vendorCredit" substitutionGroup="xp:transaction">
+    <!--<xs:element name="vendorCredit" substitutionGroup="xp:transaction">
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
@@ -421,6 +421,6 @@
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
-    </xs:element>
+    </xs:element>-->
 
 </xs:schema>
