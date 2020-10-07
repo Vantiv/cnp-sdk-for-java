@@ -20,12 +20,14 @@ public class TestTransactionReversal {
     @Test
     public void simpleTransactionReversal() {
         TransactionReversal transactionReversal = new TransactionReversal();
+        transactionReversal.setId("id");
         transactionReversal.setCnpTxnId(124785L);
 
         TransactionReversalResponse response = cnp.transactionReversal(transactionReversal);
         assertEquals("Approved", response.getMessage());
         assertEquals("sandbox", response.getLocation());
         assertEquals("000", response.getResponse());
+        assertEquals("id", response.getId());
         assertEquals(124785L, response.getRecyclingResponse().getCreditCnpTxnId().longValue());
     }
 }
