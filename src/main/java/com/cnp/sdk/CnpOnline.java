@@ -523,7 +523,22 @@ public class CnpOnline {
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
         return (DepositReversalResponse)newresponse.getValue();
     }
-    
+
+    public TransactionReversalResponse transactionReversal(TransactionReversal transactionReversal) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return transactionReversal(transactionReversal, request);
+    }
+
+    public TransactionReversalResponse transactionReversal(TransactionReversal transactionReversal, CnpOnlineRequest overrides) {
+	    CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+	    fillInReportGroup(transactionReversal);
+
+	    request.setTransaction(CnpContext.getObjectFactory().createTransactionReversal(transactionReversal));
+	    CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (TransactionReversalResponse) newresponse.getValue();
+    }
+
     public TransactionTypeWithReportGroup queryTransaction(QueryTransaction queryTransaction) {
         CnpOnlineRequest request = createCnpOnlineRequest();
         return queryTransaction(queryTransaction, request);
