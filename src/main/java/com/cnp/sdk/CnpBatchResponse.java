@@ -126,6 +126,8 @@ public class CnpBatchResponse {
             processor.processForceCaptureResponse( (ForceCaptureResponse) objToRet);
         } else if (objToRet instanceof AuthReversalResponse){
             processor.processAuthReversalResponse( (AuthReversalResponse) objToRet);
+        } else if (objToRet instanceof TransactionReversalResponse) {
+            processor.processTransactionReversalResponse((TransactionReversalResponse) objToRet);
         } else if (objToRet instanceof CaptureResponse){
             processor.processCaptureResponse((CaptureResponse) objToRet);
         } else if (objToRet instanceof EcheckVerificationResponse){
