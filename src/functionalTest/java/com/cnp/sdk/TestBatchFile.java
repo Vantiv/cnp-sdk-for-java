@@ -97,6 +97,7 @@ import com.cnp.sdk.generate.Sale;
 import com.cnp.sdk.generate.SaleResponse;
 import com.cnp.sdk.generate.SubmerchantCreditResponse;
 import com.cnp.sdk.generate.SubmerchantDebitResponse;
+import com.cnp.sdk.generate.TransactionReversal;
 import com.cnp.sdk.generate.TransactionReversalResponse;
 import com.cnp.sdk.generate.TranslateToLowValueTokenRequestType;
 import com.cnp.sdk.generate.TranslateToLowValueTokenResponse;
@@ -1241,6 +1242,46 @@ public class TestBatchFile {
         }
 
         assertEquals(5, txns);
+    }
+
+    @Test
+    public void testBatchTransactionReversal() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+
+        String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+        // pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+        TransactionReversal transactionReversal = new TransactionReversal();
+        transactionReversal.setId("id");
+        transactionReversal.setCnpTxnId(1234L);
+        batch.addTransaction(transactionReversal);
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+        // Final boolean array so we can access from within the anonymous class
+        final boolean[] responseReceived = new boolean[]{false};
+        CnpResponseProcessor processor = new CnpResponseProcessorAdapter() {
+            @Override
+            public void processTransactionReversalResponse(TransactionReversalResponse response) {
+                responseReceived[0] = true;
+                assertEquals("Approved", response.getMessage());
+                assertEquals("sandbox", response.getLocation());
+                assertEquals("000", response.getResponse());
+                assertEquals("id", response.getId());
+                assertEquals(1234L, response.getRecyclingResponse().getCreditCnpTxnId().longValue());
+            }
+        };
+        int numTxn = 0;
+        while (batchResponse.processNextTransaction(processor)) {
+            numTxn++;
+        }
+
+        assertTrue(responseReceived[0]);
+        assertEquals(1, numTxn);
     }
 
     @Test
