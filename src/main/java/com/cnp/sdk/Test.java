@@ -78,7 +78,7 @@ public class Test {
 
                 public void processRegisterTokenResponse(RegisterTokenResponse registerTokenResponse) { }
 
-                public void processAccountUpdate(AccountUpdateResponse accountUpdateResponse) {
+                public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
                 }
 
                 public void processUpdateSubscriptionResponse(UpdateSubscriptionResponse updateSubscriptionResponse) {
@@ -192,6 +192,8 @@ public class Test {
                 public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                 }
 
+                public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+                }
             })){
                 System.out.println("Processed another txn!");
             }
