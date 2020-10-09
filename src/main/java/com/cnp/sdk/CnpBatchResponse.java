@@ -133,9 +133,6 @@ public class CnpBatchResponse {
 			throw new CnpBatchException("Illegally accessed " + methodName, e);
 		} catch (InvocationTargetException e) {
 			// Called if the method in processor throws an exception (the implementing class throws an exception)
-			// For future reference, if this exception is raised in:
-			//  - A test, then the SDK test is implemented incorrectly (exception was thrown during test)
-			//  - A merchant's environment, then they are implementing the process method incorrectly
 			throw new CnpBatchException("An uncaught exception occurred in " + methodName, e);
 		}
 	}
