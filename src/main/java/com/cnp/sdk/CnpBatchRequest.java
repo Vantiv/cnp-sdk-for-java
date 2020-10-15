@@ -165,6 +165,12 @@ public class CnpBatchRequest {
             transaction = objFac.createAuthReversal((AuthReversal) transactionType);
             transactionAdded = true;
             numOfTxn++;
+        } else if (transactionType instanceof TransactionReversal) {
+            batchRequest.setNumTransactionReversals(batchRequest.getNumTransactionReversals().add(BigInteger.valueOf(1)));
+            batchRequest.setTransactionReversalAmount(batchRequest.getTransactionReversalAmount().add(BigInteger.valueOf(((TransactionReversal) transactionType).getAmount())));
+            transaction = objFac.createTransactionReversal((TransactionReversal) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
         } else if (transactionType instanceof Capture) {
             batchRequest.setNumCaptures(batchRequest.getNumCaptures().add(BigInteger.valueOf(1)));
             batchRequest.setCaptureAmount(batchRequest.getCaptureAmount().add(BigInteger.valueOf(((Capture) transactionType).getAmount())));
@@ -269,15 +275,12 @@ public class CnpBatchRequest {
             transaction = objFac.createSubmerchantCredit((SubmerchantCredit) transactionType);
             transactionAdded = true;
             numOfTxn++;
-
         } else if (transactionType instanceof VendorCredit) {
             batchRequest.setNumVendorCredit(batchRequest.getNumVendorCredit().add(BigInteger.valueOf(1)));
             batchRequest.setVendorCreditAmount((batchRequest.getVendorCreditAmount().add(BigInteger.valueOf(((VendorCredit) transactionType).getAmount()))));
             transaction = objFac.createVendorCredit((VendorCredit) transactionType);
             transactionAdded = true;
             numOfTxn++;
-
-
         } else if(transactionType instanceof ReserveCredit) {
             batchRequest.setNumReserveCredit(batchRequest.getNumReserveCredit().add(BigInteger.valueOf(1)));
             batchRequest.setReserveCreditAmount((batchRequest.getReserveCreditAmount().add(BigInteger.valueOf(((ReserveCredit) transactionType).getAmount()))));

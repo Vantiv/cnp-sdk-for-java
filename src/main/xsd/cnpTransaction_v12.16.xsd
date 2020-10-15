@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.15.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.15.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.16.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.16.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -2902,6 +2902,50 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="transactionReversal" substitutionGroup="xp:transaction">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xp:transactionTypeWithReportGroup">
+                    <xs:all>
+                        <xs:element name="cnpTxnId" type="xp:cnpIdType" />
+                        <xs:element name="amount" type="xp:transactionAmountType" minOccurs="0" />
+                        <xs:element name="surchargeAmount" type="xp:transactionAmountType" minOccurs="0" />
+                        <xs:element ref="xp:enhancedData" minOccurs="0" />
+                        <xs:element ref="xp:processingInstructions" minOccurs="0" />
+                        <xs:element ref="xp:customBilling" minOccurs="0" />
+                        <xs:element ref="xp:lodgingInfo" minOccurs="0" />
+                        <xs:element name="pin" type="xp:pinType" minOccurs="0" />
+                    </xs:all>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="transactionReversalResponse" substitutionGroup="xp:transactionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xp:transactionTypeWithReportGroup">
+                    <xs:all>
+                        <xs:element name="cnpTxnId" type="xp:cnpIdType" />
+                        <xs:element name="response" type="xp:responseType" />
+                        <xs:element name="responseTime" type="xs:dateTime" />
+                        <xs:element name="postDate" type="xs:date" minOccurs="0" />
+                        <xs:element name="message" type="xp:messageType" />
+                        <xs:element name="location" type="xs:string" minOccurs="0" />
+                        <xs:element name="recyclingResponse" type="xp:transactionReversalRecyclingResponseType" minOccurs="0" />
+                    </xs:all>
+
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="transactionReversalRecyclingResponseType">
+        <xs:sequence>
+            <xs:element name="creditCnpTxnId" type="xp:cnpIdType" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:simpleType name="disbursementTypeEnum">
         <xs:restriction base="xs:string">

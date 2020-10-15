@@ -1,5 +1,10 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.16.0 (October 7, 2020)
+* Feature: Added a new transaction type: Transaction Reversal
+* BugFix: Properly call methods in CnpResponseProcessor
+* Change: Rename CnpResponseProcessor.processAcountUpdate to CnpResponseProcessor.processAccountUpdateResponse
+
 ==Version 12.15.0 (September 28, 2020)
 * Feature: Added an AuthenticationShopperID to cardTokenType
 * Feature: Added a copayAmount to healthcareAmounts

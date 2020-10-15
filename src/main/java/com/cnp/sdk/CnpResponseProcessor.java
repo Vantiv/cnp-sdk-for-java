@@ -4,8 +4,10 @@ import com.cnp.sdk.generate.*;
 
 /**
  * Implement this interface in order to process transactions on CnpBatchResponse objects with the .processNextTransaction method.
+ * Consider auto generating this file in the future
  * @author ahammond
  */
+@SuppressWarnings("unused") // These methods are called via reflection
 public interface CnpResponseProcessor {
 
     void processAuthorizationResponse(AuthorizationResponse authorizationResponse);
@@ -32,7 +34,7 @@ public interface CnpResponseProcessor {
 
     void processRegisterTokenResponse(RegisterTokenResponse registerTokenResponse);
 
-    void processAccountUpdate(AccountUpdateResponse accountUpdateResponse);
+    void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse);
 
     void processUpdateSubscriptionResponse(UpdateSubscriptionResponse updateSubscriptionResponse);
 
@@ -99,4 +101,5 @@ public interface CnpResponseProcessor {
 
     void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse);
 
+    void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse);
 }

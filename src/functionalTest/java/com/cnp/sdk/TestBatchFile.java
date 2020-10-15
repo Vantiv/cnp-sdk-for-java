@@ -97,6 +97,8 @@ import com.cnp.sdk.generate.Sale;
 import com.cnp.sdk.generate.SaleResponse;
 import com.cnp.sdk.generate.SubmerchantCreditResponse;
 import com.cnp.sdk.generate.SubmerchantDebitResponse;
+import com.cnp.sdk.generate.TransactionReversal;
+import com.cnp.sdk.generate.TransactionReversalResponse;
 import com.cnp.sdk.generate.TranslateToLowValueTokenRequestType;
 import com.cnp.sdk.generate.TranslateToLowValueTokenResponse;
 import com.cnp.sdk.generate.Unload;
@@ -779,6 +781,10 @@ public class TestBatchFile {
                             RegisterTokenResponse registerTokenResponse) {
                     }
 
+                    @Override
+                    public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
+                    }
+
                     public void processPhysicalCheckDebitResponse(
                             PhysicalCheckDebitResponse checkDebitResponse) {
                     }
@@ -868,10 +874,6 @@ public class TestBatchFile {
                             ActivateResponse activateResponse) {
                     }
 
-                    public void processAccountUpdate(
-                            AccountUpdateResponse accountUpdateResponse) {
-                    }
-
                     public void processFundingInstructionVoidResponse(
                             FundingInstructionVoidResponse fundingInstructionVoidResponse) {
 
@@ -905,6 +907,11 @@ public class TestBatchFile {
 
                     public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                     }
+
+                    @Override
+                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+
+                    }
                 })) {
 
             txns++;
@@ -912,142 +919,6 @@ public class TestBatchFile {
 
         assertEquals(transactionCount, txns);
     }
-
-//    @Test
-//    public void testPFIFInstructionTxn() {
-//        String requestFileName = "cnpSdk-testBatchFile-PFIF-" + TIME_STAMP + ".xml";
-//        CnpBatchFileRequest request = new CnpBatchFileRequest(
-//                requestFileName);
-//
-//        Properties configFromFile = request.getConfig();
-//
-//        // pre-assert the config file has required param values
-//        assertEquals("prelive.litle.com",
-//                configFromFile.getProperty("batchHost"));
-//        //assertEquals("15000", configFromFile.getProperty("batchPort"));
-//
-//        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
-//
-//        // echeck
-//        EcheckType echeck = new EcheckType();
-//        echeck.setAccNum("1092969901");
-//        echeck.setAccType(EcheckAccountTypeEnum.CORPORATE);
-//        echeck.setRoutingNum("011075150");
-//        echeck.setCheckNum("123455");
-//
-//        // billto address
-//        Contact contact = new Contact();
-//        contact.setName("Bob");
-//        contact.setCity("Lowell");
-//        contact.setState("MA");
-//        contact.setEmail("Bob@cnp.com");
-//
-//        SubmerchantCredit submerchantCredit = new SubmerchantCredit();
-//        submerchantCredit.setReportGroup("Planets");
-//        submerchantCredit.setFundingSubmerchantId("12345");
-//        submerchantCredit.setSubmerchantName("submerchant co.");
-//        submerchantCredit.setFundsTransferId("000");
-//        submerchantCredit.setAmount(1000L);
-//        submerchantCredit.setAccountInfo(echeck);
-//        submerchantCredit.setId("ID");
-//        submerchantCredit.setCustomIdentifier("custom field");
-//        batch.addTransaction(submerchantCredit);
-//
-//        PayFacCredit payFacCredit = new PayFacCredit();
-//        payFacCredit.setReportGroup("Planets");
-//        payFacCredit.setFundingSubmerchantId("12346");
-//        payFacCredit.setFundsTransferId("000");
-//        payFacCredit.setAmount(1000L);
-//        payFacCredit.setId("ID");
-//        batch.addTransaction(payFacCredit);
-//
-//        VendorCredit vendorCredit = new VendorCredit();
-//        vendorCredit.setReportGroup("Planets");
-//        vendorCredit.setFundingSubmerchantId("12347");
-//        vendorCredit.setVendorName("vendor co.");
-//        vendorCredit.setFundsTransferId("000");
-//        vendorCredit.setAmount(1000L);
-//        vendorCredit.setAccountInfo(echeck);
-//        vendorCredit.setId("ID");
-//        batch.addTransaction(vendorCredit);
-//
-//        ReserveCredit reserveCredit = new ReserveCredit();
-//        reserveCredit.setReportGroup("Planets");
-//        reserveCredit.setFundingSubmerchantId("12348");
-//        reserveCredit.setFundsTransferId("000");
-//        reserveCredit.setAmount(1000L);
-//        reserveCredit.setId("ID");
-//        batch.addTransaction(reserveCredit);
-//
-//        PhysicalCheckCredit physicalCheckCredit = new PhysicalCheckCredit();
-//        physicalCheckCredit.setReportGroup("Planets");
-//        physicalCheckCredit.setFundingSubmerchantId("12349");
-//        physicalCheckCredit.setFundsTransferId("000");
-//        physicalCheckCredit.setAmount(1000L);
-//        physicalCheckCredit.setId("ID");
-//        batch.addTransaction(physicalCheckCredit);
-//
-//        SubmerchantDebit submerchantDebit = new SubmerchantDebit();
-//        submerchantDebit.setReportGroup("Planets");
-//        submerchantDebit.setFundingSubmerchantId("12345");
-//        submerchantDebit.setSubmerchantName("submerchant co.");
-//        submerchantDebit.setFundsTransferId("000");
-//        submerchantDebit.setAmount(1000L);
-//        submerchantDebit.setAccountInfo(echeck);
-//        submerchantDebit.setId("ID");
-//        submerchantDebit.setCustomIdentifier("custom field");
-//        batch.addTransaction(submerchantDebit);
-//
-//        PayFacDebit payFacDebit = new PayFacDebit();
-//        payFacDebit.setReportGroup("Planets");
-//        payFacDebit.setFundingSubmerchantId("12346");
-//        payFacDebit.setFundsTransferId("000");
-//        payFacDebit.setAmount(1000L);
-//        payFacDebit.setId("ID");
-//        batch.addTransaction(payFacDebit);
-//
-//        VendorDebit vendorDebit = new VendorDebit();
-//        vendorDebit.setReportGroup("Planets");
-//        vendorDebit.setFundingSubmerchantId("12347");
-//        vendorDebit.setVendorName("vendor co.");
-//        vendorDebit.setFundsTransferId("000");
-//        vendorDebit.setAmount(1000L);
-//        vendorDebit.setAccountInfo(echeck);
-//        vendorDebit.setId("ID");
-//        batch.addTransaction(vendorDebit);
-//
-//        ReserveDebit reserveDebit = new ReserveDebit();
-//        reserveDebit.setReportGroup("Planets");
-//        reserveDebit.setFundingSubmerchantId("12348");
-//        reserveDebit.setFundsTransferId("000");
-//        reserveDebit.setAmount(1000L);
-//        reserveDebit.setId("ID");
-//        batch.addTransaction(reserveDebit);
-//
-//        PhysicalCheckDebit physicalCheckDebit = new PhysicalCheckDebit();
-//        physicalCheckDebit.setReportGroup("Planets");
-//        physicalCheckDebit.setFundingSubmerchantId("12349");
-//        physicalCheckDebit.setFundsTransferId("000");
-//        physicalCheckDebit.setAmount(1000L);
-//        physicalCheckDebit.setId("ID");
-//        batch.addTransaction(physicalCheckDebit);
-//
-//        int transactionCount = batch.getNumberOfTransactions();
-//
-//        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-//        CnpBatchResponse batchResponse = fileResponse
-//                .getNextCnpBatchResponse();
-//        int txns = 0;
-//
-//        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
-//
-//        while (batchResponse.processNextTransaction(processor)) {
-//            txns++;
-//        }
-//
-//        assertEquals(transactionCount, txns);
-//        assertEquals(transactionCount, processor.responseCount);
-//    }
 
     @Test
     public void testGiftCardTransactions() {
@@ -1225,6 +1096,11 @@ public class TestBatchFile {
                         assertNotNull(registerTokenResponse.getCnpTxnId());
                     }
 
+                    @Override
+                    public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
+                        assertNotNull(accountUpdateResponse.getCnpTxnId());
+                    }
+
                     public void processUpdateSubscriptionResponse(
                             UpdateSubscriptionResponse updateSubscriptionResponse) {
                         assertNotNull(updateSubscriptionResponse.getCnpTxnId());
@@ -1238,11 +1114,6 @@ public class TestBatchFile {
                     public void processUpdateCardValidationNumOnTokenResponse(
                             UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
                         assertNotNull(updateCardValidationNumOnTokenResponse.getCnpTxnId());
-                    }
-
-                    public void processAccountUpdate(
-                            AccountUpdateResponse accountUpdateResponse) {
-                        assertNotNull(accountUpdateResponse.getCnpTxnId());
                     }
 
                     public void processCreatePlanResponse(
@@ -1361,11 +1232,53 @@ public class TestBatchFile {
 
                     public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                     }
+
+                    @Override
+                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+
+                    }
                 })) {
             txns++;
         }
 
         assertEquals(5, txns);
+    }
+
+    @Test
+    public void testBatchTransactionReversal() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+
+        String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+        // pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+        TransactionReversal transactionReversal = new TransactionReversal();
+        transactionReversal.setId("id");
+        transactionReversal.setCnpTxnId(1234L);
+        transactionReversal.setAmount(4321L);
+        transactionReversal.setReportGroup("Default Report Group");
+        batch.addTransaction(transactionReversal);
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+        // Final boolean array so we can access from within the anonymous class
+        final boolean[] responseReceived = new boolean[]{false};
+        CnpResponseProcessor processor = new CnpResponseProcessorAdapter() {
+            @Override
+            public void processTransactionReversalResponse(TransactionReversalResponse response) {
+                responseReceived[0] = true;
+            }
+        };
+        int numTxn = 0;
+        while (batchResponse.processNextTransaction(processor)) {
+            numTxn++;
+        }
+
+        assertTrue(responseReceived[0]);
+        assertEquals(1, numTxn);
     }
 
     @Test
@@ -1535,8 +1448,8 @@ public class TestBatchFile {
                             RegisterTokenResponse registerTokenResponse) {
                     }
 
-                    public void processAccountUpdate(
-                            AccountUpdateResponse accountUpdateResponse) {
+                    @Override
+                    public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
                         assertEquals("Planets",
                                 accountUpdateResponse.getReportGroup());
                         assertEquals("12345", accountUpdateResponse.getId());
@@ -1661,217 +1574,17 @@ public class TestBatchFile {
 
                     public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                     }
+
+                    @Override
+                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+
+                    }
                 })) {
             txns++;
         }
 
         assertEquals(1, txns);
     }
-
-
-
-
-//    @Test
-//    public void testBatch_FastAccessFunding() {
-//        String requestFileName = "cnpSdk-testBatchFile_fastAccessFunding-" + TIME_STAMP + ".xml";
-//        CnpBatchFileRequest request = new CnpBatchFileRequest(
-//                requestFileName);
-//
-//        Properties configFromFile = request.getConfig();
-//
-//        // pre-assert the config file has required param values
-//        assertEquals("prelive.litle.com",
-//                configFromFile.getProperty("batchHost"));
-//        // assertEquals("15000", configFromFile.getProperty("batchPort"));
-//
-//        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
-//
-//        FastAccessFunding fastAccessFunding = new FastAccessFunding();
-//        fastAccessFunding.setId("id");
-//        fastAccessFunding.setReportGroup("Planets");
-//        fastAccessFunding.setCustomerId("0987");
-//        fastAccessFunding.setFundingSubmerchantId("2111");
-//        fastAccessFunding.setSubmerchantName("001");
-//        fastAccessFunding.setFundsTransferId("1234567891111111");
-//        fastAccessFunding.setAmount(20L);
-//        CardType card = new CardType();
-//        card.setType(MethodOfPaymentTypeEnum.VI);
-//        card.setNumber("4457010000000009");
-//        card.setExpDate("0114");
-//        fastAccessFunding.setCard(card);
-//
-//        batch.addTransaction(fastAccessFunding);
-//
-//        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
-//        CnpBatchResponse batchResponse = fileResponse
-//                .getNextCnpBatchResponse();
-//        int txns = 0;
-//        // iterate over all transactions in the file with a custom response
-//        // processor
-//        while (batchResponse
-//                .processNextTransaction(new CnpResponseProcessor() {
-//                    public void processAuthorizationResponse(
-//                            AuthorizationResponse authorizationResponse) {
-//
-//                    }
-//
-//                    public void processCaptureResponse(
-//                            CaptureResponse captureResponse) {
-//                    }
-//
-//                    public void processForceCaptureResponse(
-//                            ForceCaptureResponse forceCaptureResponse) {
-//                    }
-//
-//                    public void processCaptureGivenAuthResponse(
-//                            CaptureGivenAuthResponse captureGivenAuthResponse) {
-//                    }
-//
-//                    public void processSaleResponse(SaleResponse saleResponse) {
-//                    }
-//
-//                    public void processCreditResponse(
-//                            CreditResponse creditResponse) {
-//                    }
-//
-//                    public void processEcheckSalesResponse(
-//                            EcheckSalesResponse echeckSalesResponse) {
-//                    }
-//
-//                    public void processEcheckCreditResponse(
-//                            EcheckCreditResponse echeckCreditResponse) {
-//                    }
-//
-//                    public void processEcheckVerificationResponse(
-//                            EcheckVerificationResponse echeckVerificationResponse) {
-//                    }
-//
-//                    public void processEcheckRedepositResponse(
-//                            EcheckRedepositResponse echeckRedepositResponse) {
-//                    }
-//
-//                    public void processAuthReversalResponse(
-//                            AuthReversalResponse authReversalResponse) {
-//                    }
-//
-//                    public void processRegisterTokenResponse(
-//                            RegisterTokenResponse registerTokenResponse) {
-//                    }
-//
-//                    public void processAccountUpdate(
-//                            AccountUpdateResponse accountUpdateResponse) {
-//                    }
-//
-//                    public void processUpdateSubscriptionResponse(
-//                            UpdateSubscriptionResponse updateSubscriptionResponse) {
-//                    }
-//
-//                    public void processCancelSubscriptionResponse(
-//                            CancelSubscriptionResponse cancelSubscriptionResponse) {
-//                    }
-//
-//                    public void processUpdateCardValidationNumOnTokenResponse(
-//                            UpdateCardValidationNumOnTokenResponse updateCardValidationNumOnTokenResponse) {
-//                    }
-//
-//                    public void processCreatePlanResponse(
-//                            CreatePlanResponse createPlanResponse) {
-//                    }
-//
-//                    public void processUpdatePlanResponse(
-//                            UpdatePlanResponse updatePlanResponse) {
-//                    }
-//
-//                    public void processActivateResponse(
-//                            ActivateResponse activateResponse) {
-//                    }
-//
-//                    public void processDeactivateResponse(
-//                            DeactivateResponse deactivateResponse) {
-//                    }
-//
-//                    public void processLoadResponse(LoadResponse loadResponse) {
-//                    }
-//
-//                    public void processUnloadResponse(
-//                            UnloadResponse unloadResponse) {
-//                    }
-//
-//                    public void processBalanceInquiryResponse(
-//                            BalanceInquiryResponse balanceInquiryResponse) {
-//                    }
-//
-//                    public void processEcheckPreNoteSaleResponse(
-//                            EcheckPreNoteSaleResponse echeckPreNoteSaleResponse) {
-//                    }
-//
-//                    public void processEcheckPreNoteCreditResponse(
-//                            EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
-//                    }
-//
-//                    public void processSubmerchantCreditResponse(
-//                            SubmerchantCreditResponse submerchantCreditResponse) {
-//                    }
-//
-//                    public void processPayFacCreditResponse(
-//                            PayFacCreditResponse payFacCreditResponse) {
-//                    }
-//
-//                    public void processVendorCreditResponse(
-//                            VendorCreditResponse vendorCreditResponse) {
-//                    }
-//
-//                    public void processReserveCreditResponse(
-//                            ReserveCreditResponse reserveCreditResponse) {
-//                    }
-//
-//                    public void processPhysicalCheckCreditResponse(
-//                            PhysicalCheckCreditResponse checkCreditResponse) {
-//                    }
-//
-//                    public void processSubmerchantDebitResponse(
-//                            SubmerchantDebitResponse submerchantDebitResponse) {
-//                    }
-//
-//                    public void processPayFacDebitResponse(
-//                            PayFacDebitResponse payFacDebitResponse) {
-//                    }
-//
-//                    public void processVendorDebitResponse(
-//                            VendorDebitResponse vendorDebitResponse) {
-//                    }
-//
-//                    public void processReserveDebitResponse(
-//                            ReserveDebitResponse reserveDebitResponse) {
-//                    }
-//
-//                    public void processPhysicalCheckDebitResponse(
-//                            PhysicalCheckDebitResponse checkDebitResponse) {
-//                    }
-//
-//                    public void processFundingInstructionVoidResponse(
-//                            FundingInstructionVoidResponse fundingInstructionVoidResponse) {
-//                    }
-//
-//                    public void processGiftCardAuthReversalResponse(GiftCardAuthReversalResponse giftCardAuthReversalResponse) {
-//                    }
-//
-//                    public void processGiftCardCaptureResponse(GiftCardCaptureResponse giftCardCaptureResponse) {
-//                    }
-//
-//                    public void processGiftCardCreditResponse(GiftCardCreditResponse giftCardCreditResponse) {
-//                    }
-//
-//                    public void processFastAccessFundingResponse(FastAccessFundingResponse fastAccessFundingResponse) {
-//                        assertEquals("Planets",
-//                                fastAccessFundingResponse.getReportGroup());
-//                    }
-//                })) {
-//            txns++;
-//        }
-//
-//        assertEquals(1, txns);
-//    }
 
     private void assertJavaApi(CnpBatchFileRequest request,
                                CnpBatchFileResponse response) {
@@ -2020,6 +1733,12 @@ public class TestBatchFile {
             responseCount++;
         }
 
+        @Override
+        public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
+            assertNotNull(accountUpdateResponse.getCnpTxnId());
+            responseCount++;
+        }
+
         public void processUpdateSubscriptionResponse(
                 UpdateSubscriptionResponse updateSubscriptionResponse) {
             assertNotNull(updateSubscriptionResponse.getCnpTxnId());
@@ -2047,12 +1766,6 @@ public class TestBatchFile {
         public void processEcheckPreNoteCreditResponse(
                 EcheckPreNoteCreditResponse echeckPreNoteCreditResponse) {
             assertNotNull(echeckPreNoteCreditResponse.getCnpTxnId());
-            responseCount++;
-        }
-
-        public void processAccountUpdate(
-                AccountUpdateResponse accountUpdateResponse) {
-            assertNotNull(accountUpdateResponse.getCnpTxnId());
             responseCount++;
         }
 
@@ -2209,6 +1922,11 @@ public class TestBatchFile {
             assertNotNull(payoutOrgDebitResponse.getResponse());
             assertNotNull(payoutOrgDebitResponse.getMessage());
             responseCount++;
+        }
+
+        @Override
+        public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+
         }
     }
 

@@ -40,7 +40,17 @@ public class CnpResponseProcessorAdapter implements CnpResponseProcessor {
     public void processRegisterTokenResponse(RegisterTokenResponse registerTokenResponse) {
     }
 
+    /**
+     * @deprecated Use/override processAcountUpdateResponse instead! This method is left for backwards compatibility
+     */
+    @Deprecated
     public void processAccountUpdate(AccountUpdateResponse accountUpdateResponse) {
+    }
+    
+    public void processAccountUpdateResponse(AccountUpdateResponse accountUpdateResponse) {
+        // This default implementation (that is called from SDK) should automatically forward requests to older version
+        // This is kept for backwards compatibility
+        processAccountUpdate(accountUpdateResponse);
     }
 
     public void processUpdateSubscriptionResponse(UpdateSubscriptionResponse updateSubscriptionResponse) {
@@ -151,5 +161,8 @@ public class CnpResponseProcessorAdapter implements CnpResponseProcessor {
     }
 
     public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
+    }
+
+    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
     }
 }

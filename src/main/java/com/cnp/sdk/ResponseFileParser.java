@@ -167,6 +167,7 @@ public class ResponseFileParser {
                         || currentStartingTagInFile.compareToIgnoreCase("<customerDebitResponse") == 0
 						|| currentStartingTagInFile.compareToIgnoreCase("<customerCreditResponse") == 0
 						|| currentStartingTagInFile.compareToIgnoreCase("<payoutOrgDebitResponse") == 0
+                        || currentStartingTagInFile.compareToIgnoreCase("<transactionReversalResponse") == 0
 						|| currentStartingTagInFile.compareToIgnoreCase("<payoutOrgCreditResponse") == 0)) {
 			retVal = true;
 		} else if (openingTagToLookFor
@@ -223,6 +224,7 @@ public class ResponseFileParser {
 					|| currentStartingTagInFile.compareToIgnoreCase("</translateToLowValueTokenResponse>") == 0
 					|| currentStartingTagInFile.compareToIgnoreCase("</customerCreditResponse>") == 0
 					|| currentStartingTagInFile.compareToIgnoreCase("</customerDebitResponse>") == 0
+					|| currentStartingTagInFile.compareToIgnoreCase("</transactionReversalResponse>") == 0
 					|| currentStartingTagInFile.compareToIgnoreCase("</payoutOrgDebitResponse>") == 0
 					|| currentStartingTagInFile.compareToIgnoreCase("</payoutOrgDebitResponse>") == 0)) {
 

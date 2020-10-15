@@ -1,6 +1,8 @@
 package com.cnp.sdk;
 
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -97,7 +99,7 @@ public class CnpBatchResponse {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean processNextTransaction(CnpResponseProcessor processor){
-	    String txnXml = "";
+	    String txnXml;
 	    CnpTransactionInterface objToRet;
 
         try {
@@ -111,80 +113,27 @@ public class CnpBatchResponse {
 	    } catch (JAXBException e){
 	        throw new CnpBatchException("There was an exception while trying to unmarshall transactionResponse: " + txnXml, e);
 	    }
-	    
-	    if(objToRet instanceof SaleResponse){
-            processor.processSaleResponse((SaleResponse) objToRet);
-        } else if (objToRet instanceof AuthorizationResponse){
-            processor.processAuthorizationResponse((AuthorizationResponse) objToRet);
-        } else if (objToRet instanceof CreditResponse){
-            processor.processCreditResponse((CreditResponse) objToRet);
-        } else if (objToRet instanceof RegisterTokenResponse){
-            processor.processRegisterTokenResponse((RegisterTokenResponse) objToRet);
-        } else if (objToRet instanceof CaptureGivenAuthResponse){
-            processor.processCaptureGivenAuthResponse((CaptureGivenAuthResponse) objToRet);
-        } else if (objToRet instanceof ForceCaptureResponse){
-            processor.processForceCaptureResponse( (ForceCaptureResponse) objToRet);
-        } else if (objToRet instanceof AuthReversalResponse){
-            processor.processAuthReversalResponse( (AuthReversalResponse) objToRet);
-        } else if (objToRet instanceof CaptureResponse){
-            processor.processCaptureResponse((CaptureResponse) objToRet);
-        } else if (objToRet instanceof EcheckVerificationResponse){
-            processor.processEcheckVerificationResponse( (EcheckVerificationResponse) objToRet);
-        } else if (objToRet instanceof EcheckCreditResponse){
-            processor.processEcheckCreditResponse( (EcheckCreditResponse) objToRet);
-        } else if (objToRet instanceof EcheckRedepositResponse){
-            processor.processEcheckRedepositResponse( (EcheckRedepositResponse) objToRet);
-        } else if (objToRet instanceof EcheckSalesResponse){
-            processor.processEcheckSalesResponse((EcheckSalesResponse) objToRet);
-        } else if (objToRet instanceof AccountUpdateResponse){
-            processor.processAccountUpdate((AccountUpdateResponse) objToRet);
-        } else if (objToRet instanceof EcheckPreNoteSaleResponse){
-            processor.processEcheckPreNoteSaleResponse((EcheckPreNoteSaleResponse) objToRet);
-        } else if (objToRet instanceof EcheckPreNoteCreditResponse){
-            processor.processEcheckPreNoteCreditResponse((EcheckPreNoteCreditResponse) objToRet);
-        } else if (objToRet instanceof UpdateSubscriptionResponse) {
-            processor.processUpdateSubscriptionResponse((UpdateSubscriptionResponse)objToRet);
-        } else if (objToRet instanceof CancelSubscriptionResponse) {
-            processor.processCancelSubscriptionResponse((CancelSubscriptionResponse)objToRet);
-        } else if (objToRet instanceof UpdateCardValidationNumOnTokenResponse) {
-            processor.processUpdateCardValidationNumOnTokenResponse((UpdateCardValidationNumOnTokenResponse)objToRet);
-        } else if (objToRet instanceof SubmerchantCreditResponse) {
-            processor.processSubmerchantCreditResponse((SubmerchantCreditResponse)objToRet);
-        } else if (objToRet instanceof PayFacCreditResponse) {
-            processor.processPayFacCreditResponse((PayFacCreditResponse)objToRet);
-        } else if (objToRet instanceof VendorCreditResponse) {
-            processor.processVendorCreditResponse((VendorCreditResponse)objToRet);
-        } else if (objToRet instanceof ReserveCreditResponse) {
-            processor.processReserveCreditResponse((ReserveCreditResponse)objToRet);
-        } else if (objToRet instanceof PhysicalCheckCreditResponse) {
-            processor.processPhysicalCheckCreditResponse((PhysicalCheckCreditResponse)objToRet);
-        } else if (objToRet instanceof SubmerchantDebitResponse) {
-            processor.processSubmerchantDebitResponse((SubmerchantDebitResponse)objToRet);
-        } else if (objToRet instanceof PayFacDebitResponse) {
-            processor.processPayFacDebitResponse((PayFacDebitResponse)objToRet);
-        } else if (objToRet instanceof VendorDebitResponse) {
-            processor.processVendorDebitResponse((VendorDebitResponse)objToRet);
-        } else if (objToRet instanceof ReserveDebitResponse) {
-            processor.processReserveDebitResponse((ReserveDebitResponse)objToRet);
-        } else if (objToRet instanceof PhysicalCheckDebitResponse) {
-            processor.processPhysicalCheckDebitResponse((PhysicalCheckDebitResponse)objToRet);
-        } else if (objToRet instanceof FundingInstructionVoidResponse) {
-            processor.processFundingInstructionVoidResponse((FundingInstructionVoidResponse)objToRet);
-        } else if (objToRet instanceof FastAccessFundingResponse) {
-			processor.processFastAccessFundingResponse((FastAccessFundingResponse)objToRet);
-		} else if (objToRet instanceof TranslateToLowValueTokenResponse) {
-        	processor.processTranslateToLowValueTokenResponse((TranslateToLowValueTokenResponse) objToRet);
-		} else if (objToRet instanceof CustomerCreditResponse) {
-	    	processor.processCustomerCreditResponse((CustomerCreditResponse) objToRet);
-		} else if (objToRet instanceof CustomerDebitResponse) {
-			processor.processCustomerDebitResponse((CustomerDebitResponse) objToRet);
-		} else if (objToRet instanceof PayoutOrgCreditResponse) {
-			processor.processPayoutOrgCreditResponse((PayoutOrgCreditResponse) objToRet);
-		} else if (objToRet instanceof PayoutOrgDebitResponse) {
-			processor.processPayoutOrgDebitResponse((PayoutOrgDebitResponse) objToRet);
+
+	    // The following code figures out the type of objToRet and calls the corresponding method on processor
+        // IMPORTANT: When doing an SDK upgrade, add a process method for any new types into CnpResponseProcessor
+		String methodName = "process" + objToRet.getClass().getSimpleName();
+		try {
+			// First, determine the method we need to call via reflection based on the method name
+			Method processMethod = CnpResponseProcessor.class.getMethod(methodName, objToRet.getClass());
+			// Next, invoke the method on the processor object with objToRet as the only argument
+			processMethod.invoke(processor, objToRet);
+			return true;
+		} catch (NoSuchMethodException e) {
+		    // Called if the CnpResponseProcessor interface is missing the method needed
+			// The only reason this would be called is if an SDK upgrade was not done correctly
+			throw new CnpBatchException("CnpResponseProcessor is missing a method: " + methodName, e);
+		} catch (IllegalAccessException e) {
+			// Called if we don't have proper permission to call the method (this should never occur)
+			// If this ever occurs, try calling processMethod.setAccessible(true); before invoking it
+			throw new CnpBatchException("Illegally accessed " + methodName, e);
+		} catch (InvocationTargetException e) {
+			// Called if the method in processor throws an exception (the implementing class throws an exception)
+			throw new CnpBatchException("An uncaught exception occurred in " + methodName, e);
 		}
-
-	    return true;
 	}
-
 }
