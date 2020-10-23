@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.16.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.16.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.17.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.17.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -168,6 +168,7 @@
                             <xs:element name="pinlessDebitRequest" type="xp:pinlessDebitRequestType" minOccurs="0"/>
                             <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0" />
                             <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
+                            <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -274,6 +275,7 @@
                         <xs:element name="debtRepayment" type="xs:boolean" minOccurs="0" />
                         <xs:element name="processingType" type="xp:processingTypeEnum" minOccurs="0" />
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
+                        <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -311,6 +313,7 @@
                         <xs:element name="originalNetworkTransactionId" type="xp:string30Type" minOccurs="0" />
                         <xs:element name="originalTransactionAmount" type="xp:transactionAmountType" minOccurs="0" />
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
+                        <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -375,6 +378,7 @@
                         <xs:element name="pinlessDebitRequest" type="xp:pinlessDebitRequestType" minOccurs="0"/>
                         <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0" />
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
+                        <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -449,6 +453,7 @@
                         </xs:choice>
                         <xs:element name="payPalNotes" type="xp:payPalNotesType" minOccurs="0" />
                         <xs:element name="actionReason" type="xp:actionReasonType" minOccurs="0" />
+                        <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -868,6 +873,15 @@
             <xs:maxLength value="6" />
         </xs:restriction>
     </xs:simpleType>
+
+
+
+    <xs:simpleType name="businessApplicationIdentifierEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CB" />
+        </xs:restriction>
+    </xs:simpleType>
+
 
     <xs:simpleType name="cardProductTypeEnum">
         <xs:restriction base="xs:string">
