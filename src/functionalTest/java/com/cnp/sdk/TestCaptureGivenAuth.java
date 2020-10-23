@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.cnp.sdk.CnpOnline;
 import com.cnp.sdk.generate.AuthInformation;
+import com.cnp.sdk.generate.BusinessIndicatorEnum;
 import com.cnp.sdk.generate.CaptureGivenAuth;
 import com.cnp.sdk.generate.CaptureGivenAuthResponse;
 import com.cnp.sdk.generate.CardTokenType;
@@ -48,6 +49,31 @@ public class TestCaptureGivenAuth {
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
 		capturegivenauth.setId("id");
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void simpleCaptureGivenAuthWithBusinessIndicator() throws Exception{
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		capturegivenauth.setCard(card);
+		capturegivenauth.setId("id");
+		capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());

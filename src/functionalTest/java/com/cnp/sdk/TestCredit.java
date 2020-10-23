@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cnp.sdk.CnpOnline;
+import com.cnp.sdk.generate.BusinessIndicatorEnum;
 import com.cnp.sdk.generate.CardType;
 import com.cnp.sdk.generate.Credit;
 import com.cnp.sdk.generate.Credit.Paypal;
@@ -37,6 +38,24 @@ public class TestCredit {
         card.setExpDate("1210");
         credit.setCard(card);
         credit.setId("id");
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+
+    @Test
+    public void simpleCreditWithBusinessIndicator() throws Exception {
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setOrderId("12344");
+        credit.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        card.setNumber("4100000000000001");
+        card.setExpDate("1210");
+        credit.setCard(card);
+        credit.setId("id");
+        credit.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
         CreditResponse response = cnp.credit(credit);
         assertEquals("Approved", response.getMessage());
         assertEquals("sandbox", response.getLocation());
