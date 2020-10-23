@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.17.0 (October 23, 2020)
+* Feature: Added a new optional element: Business Indicator
+
 ==Version 12.16.0 (October 7, 2020)
 * Feature: Added a new transaction type: Transaction Reversal
 * BugFix: Properly call methods in CnpResponseProcessor
