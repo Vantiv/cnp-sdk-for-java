@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cnp.sdk.CnpOnline;
+import com.cnp.sdk.generate.BusinessIndicatorEnum;
 import com.cnp.sdk.generate.CardTokenType;
 import com.cnp.sdk.generate.CardType;
 import com.cnp.sdk.generate.ForceCapture;
@@ -35,6 +36,24 @@ public class TestForceCapture {
 		card.setExpDate("1210");
 		forcecapture.setCard(card);
 	    forcecapture.setId("id");
+		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void simpleForceCaptureWithBusinessIndicator() throws Exception{
+		ForceCapture forcecapture = new ForceCapture();
+		forcecapture.setAmount(106L);
+		forcecapture.setOrderId("12344");
+		forcecapture.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000001");
+		card.setExpDate("1210");
+		forcecapture.setCard(card);
+		forcecapture.setId("id");
+		forcecapture.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
 		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
