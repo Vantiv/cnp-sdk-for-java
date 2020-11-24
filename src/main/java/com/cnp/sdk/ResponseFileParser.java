@@ -187,4 +187,13 @@ public class ResponseFileParser implements AutoCloseable {
             buffer.close();
         }
     }
+
+    /**
+     * Closes resources. Use close() instead.
+     * @throws IOException in case an exception is raised while trying to close resources
+     */
+    @Deprecated
+    public void closeResources() throws IOException {
+        close();
+    }
 }
