@@ -89,7 +89,7 @@ public class TestGiftCardTransactions {
         gcCredit.setCustomerId("customer_22");
         gcCredit.setOrderSource(OrderSourceType.ECOMMERCE);
         gcCredit.setCreditAmount(1942l);
-        gcCredit.setOrderId("order 4");
+        gcCredit.setOrderId("order 4 with a really long order id");
         gcCredit.setCard(giftCard);
         
         GiftCardCreditResponse response = cnp.giftCardCredit(gcCredit);
@@ -97,7 +97,7 @@ public class TestGiftCardTransactions {
         assertEquals("123456", response.getGiftCardResponse().getSequenceNumber());
         assertEquals("sandbox", response.getLocation());
 	}
-	
+
 	@Test
 	public void testGiftCardAuthReversal() {
 		GiftCardAuthReversal gcAuthReversal = new GiftCardAuthReversal();
