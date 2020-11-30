@@ -84,6 +84,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="string64Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="64" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="string80Type">
         <xs:restriction base="xs:string">
             <xs:maxLength value="80" />
