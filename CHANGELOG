@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.18.0 (November 30, 2020)
+* Feature: Added support for orderId to be up to 64 characters in length (for transaction types)
+
 ==Version 12.17.1 (November 25, 2020)
 * Change: Rewrote part of ResponseFileParser to reduce the potential for future bugs
 
