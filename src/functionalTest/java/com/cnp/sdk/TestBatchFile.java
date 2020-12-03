@@ -1241,7 +1241,7 @@ public class TestBatchFile {
             txns++;
         }
 
-        assertEquals(5, txns);
+        assertEquals(8, txns);
     }
 
     @Test

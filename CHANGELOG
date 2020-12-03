@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.17.1 (November 25, 2020)
+* Change: Rewrote part of ResponseFileParser to reduce the potential for future bugs
+
 ==Version 12.17.0 (October 23, 2020)
 * Feature: Added a new optional element: Business Indicator
 

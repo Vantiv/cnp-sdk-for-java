@@ -16,7 +16,7 @@ import com.cnp.sdk.generate.CnpResponse;
  *
  */
 
-abstract class CnpFileResponse {
+abstract class CnpFileResponse implements AutoCloseable {
 
     protected JAXBContext jc;
     protected CnpResponse cnpResponse;
@@ -74,7 +74,17 @@ abstract class CnpFileResponse {
         this.responseFileParser = responseFileParser;
     }
 
-    public void closeResources() throws IOException{
-        this.responseFileParser.closeResources();
+    @Override
+    public void close() throws IOException {
+        this.responseFileParser.close();
+    }
+
+    /**
+     * Closes the resources held by this CnpFileResponse. Use close() instead.
+     * @throws IOException in case an exception is raised while closing resources
+     */
+    @Deprecated
+    public void closeResources() throws IOException {
+        close();
     }
 }

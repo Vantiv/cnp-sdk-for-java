@@ -233,8 +233,8 @@ public class TestCert5Token {
         auth.setId("id");
 
         AuthorizationResponse response = cnp.authorize(auth);
-         assertEquals(response.getMessage(), "823", response.getResponse());
-         assertEquals(response.getMessage(), "Token was invalid",
+         assertEquals(response.getMessage(), "822", response.getResponse());
+         assertEquals(response.getMessage(), "Token was not found",
          response.getMessage());
     }
 

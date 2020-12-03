@@ -8,245 +8,192 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.regex.Pattern;
 
-public class ResponseFileParser {
-	private File fileToParse = null;
-	private InputStream in = null;
-	private Reader reader = null;
-	private Reader buffer = null;
+import com.cnp.sdk.generate.CnpTransactionInterface;
 
-	public ResponseFileParser(File responseFile) {
-		try {
-			fileToParse = responseFile;
-			in = new FileInputStream(fileToParse);
-			reader = new InputStreamReader(in);
-			buffer = new BufferedReader(reader);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+public class ResponseFileParser implements AutoCloseable {
+    private static final String GENERATE_PACKAGE_NAME = "com.cnp.sdk.generate";
 
-	public String getNextTag(String tagToLookFor) throws Exception {
-		StringBuilder currentStartingTagInFile = new StringBuilder();
-		StringBuilder retStringBuf = new StringBuilder();
-		StringBuilder currentEndingTagInFile = new StringBuilder();
+    private InputStream in = null;
+    private Reader reader = null;
+    private Reader buffer = null;
 
-		boolean startRecordingStartingTag = false;
-		boolean startRecordingEndingTag = false;
-		boolean startRecordingRetString = false;
+    public ResponseFileParser(File responseFile) {
+        try {
+            in = new FileInputStream(responseFile);
+            reader = new InputStreamReader(in);
+            buffer = new BufferedReader(reader);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-		char lastChar = 0;
+    public String getNextTag(String tagToLookFor) throws Exception {
+        StringBuilder currentStartingTagInFile = new StringBuilder();
+        StringBuilder retStringBuf = new StringBuilder();
+        StringBuilder currentEndingTagInFile = new StringBuilder();
 
-		String openingTagToLookFor = "<" + tagToLookFor;
-		String closingTagToLookFor = "</" + tagToLookFor + ">";
+        boolean startRecordingStartingTag = false;
+        boolean startRecordingEndingTag = false;
+        boolean startRecordingRetString = false;
 
-		int r;
-		while ((r = buffer.read()) != -1) {
-			char ch = (char) r;
+        char lastChar = 0;
 
-			if (startRecordingRetString) {
-				retStringBuf.append(ch);
+        String openingTagToLookFor = "<" + tagToLookFor;
+        String closingTagToLookFor = "</" + tagToLookFor + ">";
 
-				if (lastChar == '<' && ch == '/') {
-					startRecordingEndingTag = true;
-					currentEndingTagInFile.append(lastChar);
-				}
-				// override process for elements like cnpResponse and
-				// batchResponse
-				if ((tagToLookFor.compareToIgnoreCase("batchResponse") == 0 || tagToLookFor
-						.compareToIgnoreCase("cnpResponse") == 0)
-						&& ch == '>') {
-					retStringBuf.append(closingTagToLookFor);
-					break;
-				}
-			}
-			// We want to look for startingTag only if we aren't already
-			// recording the string to return.
-			if (ch == '<' && !startRecordingRetString) {
-				startRecordingStartingTag = true;
-			}
+        int r;
+        while ((r = buffer.read()) != -1) {
+            char ch = (char) r;
 
-			if (startRecordingStartingTag) {
-				currentStartingTagInFile.append(ch);
+            if (startRecordingRetString) {
+                retStringBuf.append(ch);
 
-				if (okToStartRecordingString(openingTagToLookFor,
-						currentStartingTagInFile.toString())) {
-					startRecordingRetString = true;
-					retStringBuf.append(currentStartingTagInFile);
-					if( openingTagToLookFor.compareToIgnoreCase("<cnpResponse") != 0 ){
-						retStringBuf.append(" xmlns=\"http://www.vantivcnp.com/schema\"");
-					}
-					startRecordingStartingTag = false;
-					currentStartingTagInFile.delete(0,
-							currentStartingTagInFile.length());
-				}
-				// tag declaration has ended. Safe to discard.
-				if (ch == '>') {
-					if (tagToLookFor.compareToIgnoreCase("transactionResponse") == 0
-							&& currentStartingTagInFile.toString()
-									.compareToIgnoreCase("</batchResponse>") == 0) {
-						// Presumably this will only happen when the user is
-						// requesting a new transaction info,
-						// but all transactions have been exhausted. i.e. this
-						// one is a batchResponse
-						throw new Exception(
-								"All payments in this batch have already been retrieved.");
-					}
-					startRecordingStartingTag = false;
-					currentStartingTagInFile.delete(0,
-							currentStartingTagInFile.length());
-				}
-			}
+                if (lastChar == '<' && ch == '/') {
+                    startRecordingEndingTag = true;
+                    currentEndingTagInFile.append(lastChar);
+                }
+                // override process for elements like cnpResponse and
+                // batchResponse
+                if ((tagToLookFor.compareToIgnoreCase("batchResponse") == 0 || tagToLookFor
+                        .compareToIgnoreCase("cnpResponse") == 0)
+                        && ch == '>') {
+                    retStringBuf.append(closingTagToLookFor);
+                    break;
+                }
+            }
+            // We want to look for startingTag only if we aren't already
+            // recording the string to return.
+            if (ch == '<' && !startRecordingRetString) {
+                startRecordingStartingTag = true;
+            }
 
-			if (startRecordingEndingTag) {
-				currentEndingTagInFile.append(ch);
-				if (ch == '>') {
-					startRecordingEndingTag = false;
-					if (okToStopRecordingString(closingTagToLookFor,
-							currentEndingTagInFile.toString())) {
+            if (startRecordingStartingTag) {
+                currentStartingTagInFile.append(ch);
+
+                if (okToStartOrStopRecordingString(openingTagToLookFor, currentStartingTagInFile.toString())) {
+                    startRecordingRetString = true;
+                    retStringBuf.append(currentStartingTagInFile);
+                    if (openingTagToLookFor.compareToIgnoreCase("<cnpResponse") != 0) {
+                        retStringBuf.append(" xmlns=\"http://www.vantivcnp.com/schema\"");
+                    }
+                    startRecordingStartingTag = false;
+                    currentStartingTagInFile.delete(0,
+                            currentStartingTagInFile.length());
+                }
+                // tag declaration has ended. Safe to discard.
+                if (ch == '>') {
+                    if (tagToLookFor.compareToIgnoreCase("transactionResponse") == 0
+                            && currentStartingTagInFile.toString()
+                            .compareToIgnoreCase("</batchResponse>") == 0) {
+                        // Presumably this will only happen when the user is
+                        // requesting a new transaction info,
+                        // but all transactions have been exhausted. i.e. this
+                        // one is a batchResponse
+                        throw new Exception(
+                                "All payments in this batch have already been retrieved.");
+                    }
+                    startRecordingStartingTag = false;
+                    currentStartingTagInFile.delete(0,
+                            currentStartingTagInFile.length());
+                }
+            }
+
+            if (startRecordingEndingTag) {
+                currentEndingTagInFile.append(ch);
+                if (ch == '>') {
+                    startRecordingEndingTag = false;
+                    if (okToStartOrStopRecordingString(closingTagToLookFor, currentEndingTagInFile.toString())) {
 //						startRecordingRetString = false;
 //						currentEndingTagInFile.delete(0,
 //						currentEndingTagInFile.length());
-						break;
-					}
-					currentEndingTagInFile.delete(0,
-							currentEndingTagInFile.length());
-				}
-			}
+                        break;
+                    }
+                    currentEndingTagInFile.delete(0,
+                            currentEndingTagInFile.length());
+                }
+            }
 
-			lastChar = ch;
-		}
-		
-		return retStringBuf.toString();
-	}
+            lastChar = ch;
+        }
 
-	boolean okToStartRecordingString(String openingTagToLookFor,
-			String currentStartingTagInFile) {
-		boolean retVal = false;
+        return retStringBuf.toString();
+    }
 
-		// we're looking for all transactionResponses
-		if (openingTagToLookFor.compareToIgnoreCase("<transactionResponse") == 0
-				&& (currentStartingTagInFile
-						.compareToIgnoreCase("<authorizationResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<saleResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<captureResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<forceCaptureResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<captureGivenAuthResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<creditResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<echeckSalesResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<echeckCreditResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<echeckVerificationResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<echeckRedepositResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<authReversalResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<registerTokenResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<updateSubscriptionResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<cancelSubscriptionResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<updateCardValidationNumOnTokenResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<updatePlanResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<createPlanResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<activateResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<deactivateResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<loadResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<unloadResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<balanceInquiryResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<accountUpdateResponse") == 0
-	                    || currentStartingTagInFile.compareToIgnoreCase("<echeckPreNoteSaleResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<echeckPreNoteCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<submerchantCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<payFacCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<reserveCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<vendorCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<physicalCheckCreditResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<submerchantDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<payFacDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<reserveDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<vendorDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<physicalCheckDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<fundingInstructionVoidResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<translateToLowValueTokenResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<customerDebitResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<customerCreditResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<payoutOrgDebitResponse") == 0
-                        || currentStartingTagInFile.compareToIgnoreCase("<transactionReversalResponse") == 0
-						|| currentStartingTagInFile.compareToIgnoreCase("<payoutOrgCreditResponse") == 0)) {
-			retVal = true;
-		} else if (openingTagToLookFor
-				.compareToIgnoreCase(currentStartingTagInFile) == 0) {
-			retVal = true;
-		}
+    private boolean okToStartOrStopRecordingString(String tagToLookFor, String currentStartingTagInFile) {
+        return (tagToLookFor.contains("transactionResponse") &&
+                isTransactionResponse(currentStartingTagInFile.replaceAll("[</>]", "")))
+                || tagToLookFor.equalsIgnoreCase(currentStartingTagInFile);
+    }
 
-		return retVal;
-	}
+    /**
+     * Determines whether the given xml tag name corresponds to a transaction response
+     *
+     * @param tagName the tag name in the xml to check
+     * @return whether or not tagName has a corresponding transaction response class in Java
+     */
+    static boolean isTransactionResponse(String tagName) {
+        // First, we need to check to make sure the tag we are dealing with is actually a response
+        if (!Pattern.matches("\\w+Response", tagName)) return false;
 
-	boolean okToStopRecordingString(String closingTagToLookFor,
-			String currentStartingTagInFile) {
-		boolean retVal = false;
+        // Converts a response name based on the xml tag into its full class name
+        // Example: authorizationResponse becomes com.cnp.sdk.generate.AuthorizationResponse
+        String responseClassName = GENERATE_PACKAGE_NAME + "." +
+                tagName.substring(0, 1).toUpperCase() + tagName.substring(1);
+        Class responseClass;
+        try {
+            responseClass = Class.forName(responseClassName);
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
 
-		// we're looking for all transactionResponses
-		if (closingTagToLookFor.compareToIgnoreCase("</transactionResponse>") == 0
-				&& (currentStartingTagInFile
-						.compareToIgnoreCase("</authorizationResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</saleResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</captureResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</forceCaptureResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</captureGivenAuthResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</creditResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckSalesResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckCreditResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckVerificationResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckRedepositResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</authReversalResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</registerTokenResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</cancelSubscriptionResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</updateSubscriptionResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</updateCardValidationNumOnTokenResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</createPlanResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</updatePlanResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</activateResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</deactivateResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</loadResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</unloadResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</balanceInquiryResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</accountUpdateResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckPreNoteSaleResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</echeckPreNoteCreditResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</submerchantCreditResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</payFacCreditResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</reserveCreditResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</vendorCreditResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</physicalCheckCreditResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</submerchantDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</payFacDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</reserveDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</vendorDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</physicalCheckDebitResponse>") == 0
-                    || currentStartingTagInFile.compareToIgnoreCase("</fundingInstructionVoidResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</translateToLowValueTokenResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</customerCreditResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</customerDebitResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</transactionReversalResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</payoutOrgDebitResponse>") == 0
-					|| currentStartingTagInFile.compareToIgnoreCase("</payoutOrgDebitResponse>") == 0)) {
+        // As getInterfaces() only returns the immediate implemented interfaces, we have to perform a BFS
+        //     with any super classes as well to determine if we implement CnpTransactionInterface
+        LinkedList<Class> queue = new LinkedList<>(Collections.singleton(responseClass));
+        while (!queue.isEmpty()) {
+            Class clazz = queue.poll();
 
-			retVal = true;
-		} else if (closingTagToLookFor
-				.compareToIgnoreCase(currentStartingTagInFile) == 0) {
-			retVal = true;
-		}
+            Set<Class> supers = new HashSet<>(Arrays.asList(clazz.getInterfaces()));
+            if (clazz.getSuperclass() != null) {
+                supers.add(clazz.getSuperclass());
+            }
 
-		return retVal;
-	}
-	
-	public void closeResources() throws IOException  {
-		// close resources
-		if (in != null) {
-			in.close();
-		}
-		if (reader != null) {
-			reader.close();
-		}
-		if (buffer != null) {
-			buffer.close();
-		}
-	}
+            boolean isTransaction = supers.contains(CnpTransactionInterface.class);
+            if (isTransaction) return true;
+
+            queue.addAll(supers);
+        }
+
+        return false;
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (in != null) {
+            in.close();
+        }
+        if (reader != null) {
+            reader.close();
+        }
+        if (buffer != null) {
+            buffer.close();
+        }
+    }
+
+    /**
+     * Closes resources. Use close() instead.
+     * @throws IOException in case an exception is raised while trying to close resources
+     */
+    @Deprecated
+    public void closeResources() throws IOException {
+        close();
+    }
 }
