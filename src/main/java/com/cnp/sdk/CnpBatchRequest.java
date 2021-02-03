@@ -165,10 +165,16 @@ public class CnpBatchRequest {
             transaction = objFac.createAuthReversal((AuthReversal) transactionType);
             transactionAdded = true;
             numOfTxn++;
-        } else if (transactionType instanceof TransactionReversal) {
-            batchRequest.setNumTransactionReversals(batchRequest.getNumTransactionReversals().add(BigInteger.valueOf(1)));
-            batchRequest.setTransactionReversalAmount(batchRequest.getTransactionReversalAmount().add(BigInteger.valueOf(((TransactionReversal) transactionType).getAmount())));
-            transaction = objFac.createTransactionReversal((TransactionReversal) transactionType);
+        } else if (transactionType instanceof DepositTransactionReversal) {
+            batchRequest.setNumDepositTransactionReversals(batchRequest.getNumDepositTransactionReversals().add(BigInteger.valueOf(1)));
+            batchRequest.setDepositTransactionReversalAmount(batchRequest.getDepositTransactionReversalAmount().add(BigInteger.valueOf(((DepositTransactionReversal) transactionType).getAmount())));
+            transaction = objFac.createDepositTransactionReversal((DepositTransactionReversal) transactionType);
+            transactionAdded = true;
+            numOfTxn++;
+        }else if (transactionType instanceof RefundTransactionReversal) {
+            batchRequest.setNumRefundTransactionReversals(batchRequest.getNumRefundTransactionReversals().add(BigInteger.valueOf(1)));
+            batchRequest.setRefundTransactionReversalAmount(batchRequest.getRefundTransactionReversalAmount().add(BigInteger.valueOf(((RefundTransactionReversal) transactionType).getAmount())));
+            transaction = objFac.createRefundTransactionReversal((RefundTransactionReversal) transactionType);
             transactionAdded = true;
             numOfTxn++;
         } else if (transactionType instanceof Capture) {

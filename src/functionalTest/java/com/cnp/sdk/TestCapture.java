@@ -24,9 +24,8 @@ public class TestCapture {
 	public void simpleCapture() throws Exception{
 		Capture capture = new Capture();
 		capture.setCnpTxnId(123456000L);
-		capture.setAmount(106L);
-		capture.setPayPalNotes("Notes");
 		capture.setId("id");
+		capture.setOrderId("123456789");
 
 		CaptureResponse response = cnp.capture(capture);
 		assertEquals("Approved", response.getMessage());

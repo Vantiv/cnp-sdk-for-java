@@ -2,7 +2,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.17.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.19.xsd" />
 
     <xs:element name="cnpRequest">
         <xs:complexType>
@@ -38,8 +38,10 @@
             <xs:attribute name="authAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numAuthReversals" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="authReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
-            <xs:attribute name="numTransactionReversals" type="xs:integer" use="optional"  default="0"/>
-            <xs:attribute name="transactionReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
+            <xs:attribute name="numDepositTransactionReversals" type="xs:integer" use="optional"  default="0"/>
+            <xs:attribute name="depositTransactionReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
+            <xs:attribute name="numRefundTransactionReversals" type="xs:integer" use="optional"  default="0"/>
+            <xs:attribute name="refundTransactionReversalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numGiftCardAuthReversals" type="xs:integer" use="optional"  default="0"/>
             <xs:attribute name="giftCardAuthReversalOriginalAmount" type="xp:batchTotalAmountType" use="optional"  default="0"/>
             <xs:attribute name="numCaptures" type="xs:integer" use="optional"  default="0"/>
@@ -129,7 +131,7 @@
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:all>
-                        <xs:element name="orderId" type="xp:string25Type" />
+                        <xs:element name="orderId" type="xp:string256Type" />
                         <xs:element ref="xp:cardOrToken" />
                     </xs:all>
                 </xs:extension>
@@ -177,7 +179,7 @@
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:all>
                         <xs:element name="cnpTxnId" type="xp:cnpIdType" />
-                        <xs:element name="orderId" type="xp:string25Type" />
+                        <xs:element name="orderId" type="xp:string256Type" />
                         <xs:element name="response" type="xp:responseType" />
                         <xs:element name="responseTime" type="xs:dateTime" />
                         <xs:element name="message" type="xp:messageType" />
@@ -226,7 +228,7 @@
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:sequence>
-                        <xs:element name="orderId" type="xp:string25Type" />
+                        <xs:element name="orderId" type="xp:string256Type" />
                         <xs:element name="orderSource" type="xp:orderSourceType" />
                         <xs:element ref="xp:billToAddress" />
                         <xs:element name="echeck" type="xp:echeckType"/>
@@ -242,7 +244,7 @@
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:sequence>
-                        <xs:element name="orderId" type="xp:string25Type" />
+                        <xs:element name="orderId" type="xp:string256Type" />
                         <xs:element name="orderSource" type="xp:orderSourceType" />
                         <xs:element ref="xp:billToAddress" />
                         <xs:element name="echeck" type="xp:echeckType"/>

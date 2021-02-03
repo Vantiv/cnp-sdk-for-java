@@ -101,5 +101,7 @@ public interface CnpResponseProcessor {
 
     void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse);
 
-    void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse);
+    void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse);
+
+    void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse);
 }

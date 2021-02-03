@@ -524,19 +524,34 @@ public class CnpOnline {
         return (DepositReversalResponse)newresponse.getValue();
     }
 
-    public TransactionReversalResponse transactionReversal(TransactionReversal transactionReversal) {
+    public DepositTransactionReversalResponse depositTransactionReversal(DepositTransactionReversal depositTransactionReversal) {
         CnpOnlineRequest request = createCnpOnlineRequest();
-        return transactionReversal(transactionReversal, request);
+        return depositTransactionReversal(depositTransactionReversal, request);
     }
 
-    public TransactionReversalResponse transactionReversal(TransactionReversal transactionReversal, CnpOnlineRequest overrides) {
+    public DepositTransactionReversalResponse depositTransactionReversal(DepositTransactionReversal depositTransactionReversal, CnpOnlineRequest overrides) {
 	    CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
-	    fillInReportGroup(transactionReversal);
+	    fillInReportGroup(depositTransactionReversal);
 
-	    request.setTransaction(CnpContext.getObjectFactory().createTransactionReversal(transactionReversal));
+	    request.setTransaction(CnpContext.getObjectFactory().createDepositTransactionReversal(depositTransactionReversal));
 	    CnpOnlineResponse response = sendToCnp(request);
         JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
-        return (TransactionReversalResponse) newresponse.getValue();
+        return (DepositTransactionReversalResponse) newresponse.getValue();
+    }
+
+    public RefundTransactionReversalResponse refundTransactionReversal(RefundTransactionReversal refundTransactionReversal) {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return refundTransactionReversal(refundTransactionReversal, request);
+    }
+
+    public RefundTransactionReversalResponse refundTransactionReversal(RefundTransactionReversal transactionReversal, CnpOnlineRequest overrides) {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(transactionReversal);
+
+        request.setTransaction(CnpContext.getObjectFactory().createRefundTransactionReversal(transactionReversal));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (RefundTransactionReversalResponse) newresponse.getValue();
     }
 
     public TransactionTypeWithReportGroup queryTransaction(QueryTransaction queryTransaction) {

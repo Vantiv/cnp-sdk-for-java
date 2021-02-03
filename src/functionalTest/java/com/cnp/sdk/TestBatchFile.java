@@ -97,8 +97,10 @@ import com.cnp.sdk.generate.Sale;
 import com.cnp.sdk.generate.SaleResponse;
 import com.cnp.sdk.generate.SubmerchantCreditResponse;
 import com.cnp.sdk.generate.SubmerchantDebitResponse;
-import com.cnp.sdk.generate.TransactionReversal;
-import com.cnp.sdk.generate.TransactionReversalResponse;
+import com.cnp.sdk.generate.DepositTransactionReversal;
+import com.cnp.sdk.generate.DepositTransactionReversalResponse;
+import com.cnp.sdk.generate.RefundTransactionReversal;
+import com.cnp.sdk.generate.RefundTransactionReversalResponse;
 import com.cnp.sdk.generate.TranslateToLowValueTokenRequestType;
 import com.cnp.sdk.generate.TranslateToLowValueTokenResponse;
 import com.cnp.sdk.generate.Unload;
@@ -909,7 +911,12 @@ public class TestBatchFile {
                     }
 
                     @Override
-                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+                    public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse) {
+
+                    }
+
+                    @Override
+                    public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse) {
 
                     }
                 })) {
@@ -1234,7 +1241,12 @@ public class TestBatchFile {
                     }
 
                     @Override
-                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+                    public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse) {
+
+                    }
+
+                    @Override
+                    public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse) {
 
                     }
                 })) {
@@ -1245,7 +1257,7 @@ public class TestBatchFile {
     }
 
     @Test
-    public void testBatchTransactionReversal() {
+    public void testBatchDepositTransactionReversal() {
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
 
         String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
@@ -1255,7 +1267,7 @@ public class TestBatchFile {
         assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
-        TransactionReversal transactionReversal = new TransactionReversal();
+        DepositTransactionReversal transactionReversal = new DepositTransactionReversal();
         transactionReversal.setId("id");
         transactionReversal.setCnpTxnId(1234L);
         transactionReversal.setAmount(4321L);
@@ -1268,7 +1280,44 @@ public class TestBatchFile {
         final boolean[] responseReceived = new boolean[]{false};
         CnpResponseProcessor processor = new CnpResponseProcessorAdapter() {
             @Override
-            public void processTransactionReversalResponse(TransactionReversalResponse response) {
+            public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse response) {
+                responseReceived[0] = true;
+            }
+        };
+        int numTxn = 0;
+        while (batchResponse.processNextTransaction(processor)) {
+            numTxn++;
+        }
+
+        assertTrue(responseReceived[0]);
+        assertEquals(1, numTxn);
+    }
+
+    @Test
+    public void testBatchRefundTransactionReversal() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+
+        String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+        // pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+        RefundTransactionReversal transactionReversal = new RefundTransactionReversal();
+        transactionReversal.setId("id");
+        transactionReversal.setCnpTxnId(1234L);
+        transactionReversal.setAmount(4321L);
+        transactionReversal.setReportGroup("Default Report Group");
+        batch.addTransaction(transactionReversal);
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+        // Final boolean array so we can access from within the anonymous class
+        final boolean[] responseReceived = new boolean[]{false};
+        CnpResponseProcessor processor = new CnpResponseProcessorAdapter() {
+            @Override
+            public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse response) {
                 responseReceived[0] = true;
             }
         };
@@ -1576,7 +1625,12 @@ public class TestBatchFile {
                     }
 
                     @Override
-                    public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+                    public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse) {
+
+                    }
+
+                    @Override
+                    public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse) {
 
                     }
                 })) {
@@ -1925,7 +1979,12 @@ public class TestBatchFile {
         }
 
         @Override
-        public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+        public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse) {
+
+        }
+
+        @Override
+        public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse) {
 
         }
     }
