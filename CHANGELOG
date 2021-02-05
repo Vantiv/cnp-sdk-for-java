@@ -1,7 +1,7 @@
 = Vantiv eCommerce CNP CHANGELOG
 
 ==Version 12.19.0 (February 04, 2021)
-* Feature: Added a new transaction type: Deporit Transaction Reversal
+* Feature: Added a new transaction type: Deposit Transaction Reversal
 * Feature: Added a new transaction type: Refund Transaction Reversal
 * Feature: Added an optional element OrderID in Capture Transaction
 * Feature: Added an optional element OrderID in Credit Transaction
