@@ -7,8 +7,8 @@ import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cnp.sdk.CnpOnline;
 import com.cnp.sdk.generate.BusinessIndicatorEnum;
+import com.cnp.sdk.generate.CaptureResponse;
 import com.cnp.sdk.generate.CardType;
 import com.cnp.sdk.generate.Credit;
 import com.cnp.sdk.generate.Credit.Paypal;
@@ -107,19 +107,17 @@ public class TestCredit {
     }
 
     @Test
-    public void simpleCreditConflictWithTxnAndOrderId() throws Exception {
+    public void simpleCreditWithOrderId() throws Exception {
         Credit credit = new Credit();
         credit.setOrderId("12344");
         credit.setAmount(106L);
         credit.setSecondaryAmount(20L);
         credit.setCnpTxnId(1234L);
         credit.setId("id");
-        try {
-            cnp.credit(credit);
-            fail("Cnp Txn and Order Id should conflict, fail to throw a exception");
-        } catch (Exception e) {
-            assertTrue(e.getMessage(),e.getMessage().startsWith("Error validating xml data against the schema"));
-        }
+
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
     }
 
     @Test

@@ -192,7 +192,10 @@ public class Test {
                 public void processPayoutOrgDebitResponse(PayoutOrgDebitResponse payoutOrgDebitResponse) {
                 }
 
-                public void processTransactionReversalResponse(TransactionReversalResponse transactionReversalResponse) {
+                public void processDepositTransactionReversalResponse(DepositTransactionReversalResponse depositTransactionReversalResponse) {
+                }
+
+                public void processRefundTransactionReversalResponse(RefundTransactionReversalResponse refundTransactionReversalResponse) {
                 }
             })){
                 System.out.println("Processed another txn!");

@@ -22,8 +22,13 @@ public class TestResponseFileParser {
     }
 
     @Test
-    public void testIsTransactionResponse_transactionReversalResponse() {
-        assertTrue(ResponseFileParser.isTransactionResponse("transactionReversalResponse"));
+    public void testIsDepositTransactionResponse_depositTransactionReversalResponse() {
+        assertTrue(ResponseFileParser.isTransactionResponse("depositTransactionReversalResponse"));
+    }
+
+    @Test
+    public void testIsRefundTransactionResponse_refundTransactionReversalResponse() {
+        assertTrue(ResponseFileParser.isTransactionResponse("refundTransactionReversalResponse"));
     }
 
     @Test

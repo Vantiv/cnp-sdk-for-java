@@ -80,6 +80,20 @@ public class TestCapture {
 		assertEquals("sandbox", response.getLocation());
 	}
 
+	@Test
+	public void simpleCaptureWithOrderId() throws Exception{
+		Capture capture = new Capture();
+		capture.setCnpTxnId(123456000L);
+		capture.setAmount(106L);
+		capture.setPayPalNotes("Notes");
+		capture.setId("id");
+		capture.setOrderId("1234567567");
+
+		CaptureResponse response = cnp.capture(capture);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }
 
 
