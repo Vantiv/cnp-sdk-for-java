@@ -24,7 +24,7 @@ Setup
 
 1. Add JCenter repository to your Maven or Gradle build:
 	1. For Maven, please read instructions at: https://bintray.com/bintray/jcenter
-	2. For Gradle, add `jcenter()` to your `repositories { ... }`
+	2. For Gradle, add `mavenCentral()` to your `repositories { ... }`
 2. Add the dependency
     1. For Maven:
         ```xml
@@ -32,7 +32,7 @@ Setup
 
         
 
-                <groupId>com.cnp</groupId>
+                <groupId>io.github.vantiv</groupId>
                 <artifactId>cnp-sdk-for-java</artifactId>
                 <version>12.0.3</version>
 
@@ -42,7 +42,7 @@ Setup
     2. For Gradle:
         ```groovy
 
-            compile(group: 'com.cnp', name: 'cnp-sdk-for-java', version: '12.0.3')
+            compile(group: 'io.github.vantiv', name: 'cnp-sdk-for-java', version: '12.0.3')
 
         ```
         
@@ -53,32 +53,32 @@ Setup
 
 ```java
 
-import com.cnp.sdk.*;
-import com.cnp.sdk.generate.*;
+import io.github.vantiv.sdk.*;
+
 public class SampleCnpTxn {
 
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		// Visa $10 Sale
-		Sale sale = new Sale();
-		sale.setReportGroup("Planets");
-		sale.setOrderId("12344");
-		sale.setAmount(1000L);
-		sale.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardType card = new CardType();
-		card.setType(MethodOfPaymentTypeEnum.VI);
-		card.setNumber("4100000000000002");
-		card.setExpDate("1210");
-		sale.setCard(card);
-		
-		// Peform the transaction on the Vantiv eCommerce Platform
-		SaleResponse response = new CnpOnline().sale(sale);
+        // Visa $10 Sale
+        Sale sale = new Sale();
+        sale.setReportGroup("Planets");
+        sale.setOrderId("12344");
+        sale.setAmount(1000L);
+        sale.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        card.setNumber("4100000000000002");
+        card.setExpDate("1210");
+        sale.setCard(card);
 
-		// display result
-		System.out.println("Message: " + response.getMessage());
-		System.out.println("Vantiv eCommerce Transaction ID: " + response.getCnpTxnId());
-	}
+        // Peform the transaction on the Vantiv eCommerce Platform
+        SaleResponse response = new CnpOnline().sale(sale);
+
+        // display result
+        System.out.println("Message: " + response.getMessage());
+        System.out.println("Vantiv eCommerce Transaction ID: " + response.getCnpTxnId());
+    }
 }
 ```
 
