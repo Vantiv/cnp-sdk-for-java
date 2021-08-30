@@ -1,10 +1,10 @@
-package com.cnp.sdk.samples;
-import com.cnp.sdk.*;
-import com.cnp.sdk.generate.*;
+package io.github.vantiv.sdk.samples;
+import io.github.vantiv.sdk.*;
+import io.github.vantiv.sdk.generate.*;
  
 public class VoidExample {
     public static void main(String[] args) {
-        com.cnp.sdk.generate.Void theVoid = new com.cnp.sdk.generate.Void();
+        io.github.vantiv.sdk.generate.Void theVoid = new io.github.vantiv.sdk.generate.Void();
         theVoid.setId("id");
         //cnpTxnId contains the Cnp Transaction Id returned on the deposit
         theVoid.setCnpTxnId(100000000000000000L);
