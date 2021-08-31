@@ -1,5 +1,11 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.19.1 (August 31, 2021)
+* Change: Group ID Change from 'com.cnp' to 'io.github.vantiv' & package refactoring
+* Change: Version ID updated to '12.19.1'
+* Change: Added New task for .pom file generation in build.gradle
+* Change: Updated existing task for JavaDocs with type:JAR
+
 ==Version 12.19.0 (February 04, 2021)
 * Feature: Added a new transaction type: Deposit Transaction Reversal
 * Feature: Added a new transaction type: Refund Transaction Reversal

@@ -34,7 +34,7 @@ Setup
 
                 <groupId>io.github.vantiv</groupId>
                 <artifactId>cnp-sdk-for-java</artifactId>
-                <version>12.0.3</version>
+                <version>12.19.1</version>
 
             </dependency>
         ```
