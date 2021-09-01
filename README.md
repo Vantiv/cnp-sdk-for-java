@@ -82,6 +82,68 @@ public class SampleCnpTxn {
 }
 ```
 
+Note (Setup for all older versions than 12.19.1)
+-----
+
+1. Add JCenter repository to your Maven or Gradle build:
+    1. For Maven, please read instructions at: https://bintray.com/bintray/jcenter
+    2. For Gradle, add `jcenter()` to your `repositories { ... }`
+2. Add the dependency
+    1. For Maven:
+        ```xml
+            <dependency>
+
+        
+
+                <groupId>com.cnp</groupId>
+                <artifactId>cnp-sdk-for-java</artifactId>
+                <version>12.0.3</version>
+
+            </dependency>
+        ```
+
+    2. For Gradle:
+        ```groovy
+
+            compile(group: 'com.cnp', name: 'cnp-sdk-for-java', version: '12.0.3')
+
+        ```
+
+3. Create your configuration file with one of the following
+    * Run `java -jar /path/to/cnp-sdk-for-java.jar` and answer the questions, or
+    * Add a file `.cnp_SDK_config.properties` to your home directory with the correct properties in it
+4. Use it:
+
+```java
+
+import com.cnp.sdk.*;
+import com.cnp.sdk.generate.*;
+public class SampleCnpTxn {
+
+
+	public static void main(String[] args) {
+
+		// Visa $10 Sale
+		Sale sale = new Sale();
+		sale.setReportGroup("Planets");
+		sale.setOrderId("12344");
+		sale.setAmount(1000L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000002");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		
+		// Peform the transaction on the Vantiv eCommerce Platform
+		SaleResponse response = new CnpOnline().sale(sale);
+
+		// display result
+		System.out.println("Message: " + response.getMessage());
+		System.out.println("Vantiv eCommerce Transaction ID: " + response.getCnpTxnId());
+	}
+}
+```
 
 More examples can be found here [Java Gists](https://gist.github.com/VantivSDK)
 
