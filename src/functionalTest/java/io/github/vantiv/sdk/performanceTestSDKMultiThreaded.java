@@ -80,7 +80,7 @@ public class performanceTestSDKMultiThreaded {
             try {
                 fileInputStream = new FileInputStream((new Configuration()).location());
                 config.load(fileInputStream);
-                config.setProperty("proxyHost", "inetproxy.infoftps.com");
+                config.setProperty("proxyHost", "usproxy.dlb.corp.vantiv.com");
                 config.setProperty("proxyPort", "8080");
                 config.setProperty("multiSite", "true");
                 config.setProperty("printxml", "false");
