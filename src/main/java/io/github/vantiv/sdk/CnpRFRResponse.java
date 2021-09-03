@@ -27,7 +27,7 @@ public class CnpRFRResponse {
 
 		try {
 			rfrResponseXML = responseFileParser.getNextTag("RFRResponse");
-			jc = JAXBContext.newInstance("com.cnp.sdk.generate");
+			jc = JAXBContext.newInstance("io.github.vantiv.sdk.generate");
 			unmarshaller = jc.createUnmarshaller();
 			rfrResponse = (RFRResponse) unmarshaller.unmarshal(new StringReader(rfrResponseXML));
 		} catch (JAXBException e) {

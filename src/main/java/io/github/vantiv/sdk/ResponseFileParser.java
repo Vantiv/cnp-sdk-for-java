@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import io.github.vantiv.sdk.generate.CnpTransactionInterface;
 
 public class ResponseFileParser implements AutoCloseable {
-    private static final String GENERATE_PACKAGE_NAME = "com.cnp.sdk.generate";
+    private static final String GENERATE_PACKAGE_NAME = "io.github.vantiv.sdk.generate";
 
     private InputStream in = null;
     private Reader reader = null;

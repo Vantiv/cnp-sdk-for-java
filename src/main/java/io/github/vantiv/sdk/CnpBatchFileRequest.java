@@ -89,7 +89,7 @@ public class CnpBatchFileRequest{
 
 	public void initializeMembers(String requestFileName, Properties in_properties) throws CnpBatchException{
 		try {
-			this.jc = JAXBContext.newInstance("com.cnp.sdk.generate");
+			this.jc = JAXBContext.newInstance("io.github.vantiv.sdk.generate");
 			if(config == null){
 				config = new Configuration();
 			}

@@ -32,7 +32,7 @@ abstract class CnpFileResponse implements AutoCloseable {
             responseFileParser = new ResponseFileParser(xmlFile);
             String cnpResponseXml = responseFileParser.getNextTag("cnpResponse");
 
-            jc = JAXBContext.newInstance("com.cnp.sdk.generate");
+            jc = JAXBContext.newInstance("io.github.vantiv.sdk.generate");
             unmarshaller = jc.createUnmarshaller();
             cnpResponse = (CnpResponse) unmarshaller.unmarshal(new StringReader(cnpResponseXml));
         } catch (JAXBException e) {

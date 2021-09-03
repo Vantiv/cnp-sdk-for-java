@@ -55,7 +55,7 @@ public class CnpBatchRequest {
 		filePath = new String(lbfr.getConfig().getProperty("batchRequestFolder")+ "/tmp/Transactions" + merchantId + dateString);
 		numOfTxn = 0;
 		try {
-			this.jc = JAXBContext.newInstance("com.cnp.sdk.generate");
+			this.jc = JAXBContext.newInstance("io.github.vantiv.sdk.generate");
 			marshaller = jc.createMarshaller();
 			// JAXB_FRAGMENT property required to prevent unnecessary XML info from being printed in the file during marshal.
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
