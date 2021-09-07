@@ -1,6 +1,6 @@
-package com.cnp.sdk.samples;
-import com.cnp.sdk.*;
-import com.cnp.sdk.generate.*;
+package io.github.vantiv.sdk.samples;
+import io.github.vantiv.sdk.*;
+import io.github.vantiv.sdk.generate.*;
  
 /*
  * This example assumes the following prerequisite set up in Cnp's system.

@@ -1,7 +1,7 @@
-package com.cnp.sdk.samples;
-import com.cnp.sdk.*;
-import com.cnp.sdk.generate.AccountUpdateFileRequestData;
-import com.cnp.sdk.generate.RFRRequest;
+package io.github.vantiv.sdk.samples;
+import io.github.vantiv.sdk.*;
+import io.github.vantiv.sdk.generate.AccountUpdateFileRequestData;
+import io.github.vantiv.sdk.generate.RFRRequest;
 import java.util.Calendar;
 public class RfrCnpExample {
     public static void main(String[] args) {

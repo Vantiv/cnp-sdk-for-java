@@ -3,7 +3,7 @@ apply plugin : 'java'
 apply plugin : 'jacoco'
 apply plugin : 'maven'
 
-group = 'com.cnp'
+group = 'io.github.vantiv'
 version = JAR_VERSION
 
 repositories {
@@ -74,13 +74,14 @@ jacocoTestReport {
 
 jar{
     manifest {
-        attributes("Implementation-Title":"Cnp SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"com.cnp.sdk.Setup")
+        attributes("Implementation-Title":"Cnp SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"io.github.vantiv.sdk.Setup")
     }
     destinationDir = file("${DIST_DIR_15}/lib")
     archiveName = "cnp-sdk-for-java-${JAR_VERSION}.jar"
 }
 
-javadoc{
+task javadocJar(type:Jar){
+    classifier = 'javadoc'
     destinationDir = file("$buildDir/kit/java15/doc")
 }
 
@@ -162,7 +163,7 @@ task generateJaxbClasses(dependsOn: processXsd) {
      
     doLast {
         ant.taskdef(name: "xjc", classname:"com.sun.tools.xjc.XJCTask", classpath:configurations.generateJAXB.asPath)
-        ant.xjc(destdir:"${generatedDir}", package: "com.cnp.sdk.generate", binding:bindingsFile, extension:'true'){
+        ant.xjc(destdir:"${generatedDir}", package: "io.github.vantiv.sdk.generate", binding:bindingsFile, extension:'true'){
             schema(dir:"${processXsd.xsdOutput}", includes:"cnpOnline_v${SCHEMA_VERSION}.xsd,cnpBatch_v${SCHEMA_VERSION}.xsd")
         }
     }
@@ -245,6 +246,39 @@ task writeNewPom(type:Copy) {
             version "${JAR_VERSION}"
         }
     }.writeTo("$buildDir/kit/pom.xml")
+}
+
+task writeNewPomMvnCentral(type:Copy) {
+    build.dependsOn it
+    pom {
+        project {
+            modelVersion '4.0.0'
+            groupId 'io.github.vantiv'
+            artifactId 'cnp-sdk-for-java'
+            version "${JAR_VERSION}"
+            name 'cnp-sdk-for-java'
+            description 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
+            url 'https://github.com/Vantiv/cnp-sdk-for-java'
+            licenses {
+                license {
+                    name 'License'
+                    url 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
+                }
+            }
+            developers{
+                developer{
+                    id 'vantivSDKSupport'
+                    name 'VantivSDKSupport'
+                    email 'sdksupport@fisglobal.com'
+                }
+            }
+            scm {
+                connection 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
+                developerConnection 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
+                url 'https://github.com/vantiv/cnp-sdk-for-java.git'
+            }
+        }
+    }.writeTo("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
 }
 
 task sourceJar(type:Jar) {
