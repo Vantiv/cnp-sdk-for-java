@@ -22,7 +22,7 @@ Please contact [Vantiv eCommerce](https://developer.vantiv.com/community/ecommer
 Setup
 -----
 
-1. Add JCenter repository to your Maven or Gradle build:
+1. Add MavenCentral repository to your Maven or Gradle build:
 	1. For Maven, please read instructions at: https://bintray.com/bintray/jcenter
 	2. For Gradle, add `mavenCentral()` to your `repositories { ... }`
 2. Add the dependency
