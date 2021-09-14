@@ -23,7 +23,7 @@ Setup
 -----
 
 1. Add MavenCentral repository to your Maven or Gradle build:
-	1. For Maven, please read instructions at: https://bintray.com/bintray/jcenter
+	1. For Maven, please read instructions at: https://mvnrepository.com/artifact/io.github.vantiv/cnp-sdk-for-java
 	2. For Gradle, add `mavenCentral()` to your `repositories { ... }`
 2. Add the dependency
     1. For Maven:
