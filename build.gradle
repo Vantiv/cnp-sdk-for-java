@@ -54,8 +54,8 @@ dependencies{
     compile group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
     compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
 
-    compileOnly group:'junit', name:'junit', version:'4.13.2'
-    compileOnly group:'org.mockito', name:'mockito-all', version:'1.9.5'
+    compile group:'junit', name:'junit', version:'4.13.2'
+    compile group:'org.mockito', name:'mockito-all', version:'1.9.5'
     
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
