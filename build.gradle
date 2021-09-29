@@ -7,10 +7,11 @@ group = 'io.github.vantiv'
 version = JAR_VERSION
 
 repositories {
-    mavenCentral()
-    //maven  {
+    //mavenCentral()
+    maven  {
     //    url "http://repo1.maven.org/maven2"
-    //}
+        url "http://nexus1.litle.com:8080/repository/central/"
+    }
 }
 
 configurations {
