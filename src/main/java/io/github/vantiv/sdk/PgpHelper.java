@@ -124,7 +124,7 @@ public class PgpHelper {
             encryptedDataList = (PGPEncryptedDataList) jcaPGPObjectFactory.nextObject();
         }
 
-        Iterator<PGPPublicKeyEncryptedData> pgpPublicKeyEncryptedDataIterator = encryptedDataList.getEncryptedDataObjects();
+        Iterator<PGPPublicKeyEncryptedData> pgpPublicKeyEncryptedDataIterator = (Iterator) encryptedDataList.getEncryptedDataObjects();
         PGPPrivateKey pgpPrivateKey = null;
         PGPPublicKeyEncryptedData pgpPublicKeyEncryptedData = null;
 
