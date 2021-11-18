@@ -1,5 +1,12 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.19.2 (September 29, 2021)
+* Change: Updated com.jcraft:jsch version from '0.1.54' to '0.1.55'
+* Change: Updated commons-io version from '2.5' to '2.8.0'
+* Change: Updated org.bouncycastle:bcpg-jdk15on version from '1.59' to '1.68'
+* Change: Updated org.bouncycastle:bcprov-ext-jdk15on version from '1.59' to '1.68'
+* Change: Updated junit version from '4.12' to '4.13.2'
+
 ==Version 12.19.1 (August 31, 2021)
 * Change: Group ID Change from 'com.cnp' to 'io.github.vantiv' & package refactoring
 * Change: Version ID updated to '12.19.1'
