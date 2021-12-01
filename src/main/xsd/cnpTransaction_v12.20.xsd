@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.19.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.19.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.20.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.20.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
