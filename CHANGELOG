@@ -1,5 +1,9 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.20.0 (December 7, 2021)
+* Change: Added support for Interac transactions
+* Change: Version ID updated to '12.20.0'
+
 ==Version 12.19.2 (September 29, 2021)
 * Change: Updated com.jcraft:jsch version from '0.1.54' to '0.1.55'
 * Change: Updated commons-io version from '2.5' to '2.8.0'
