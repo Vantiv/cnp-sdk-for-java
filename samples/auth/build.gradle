@@ -36,7 +36,8 @@ repositories {
         main='io.github.vantiv.sdk.samples.SampleDetailTax'
         classpath = sourceSets.main.runtimeClasspath
 }
-   
-   
-
-
+task execAuthExampleInterac(type:JavaExec){
+    check.dependsOn it
+    main='io.github.vantiv.sdk.samples.AuthExampleInterac'
+    classpath = sourceSets.main.runtimeClasspath
+}
