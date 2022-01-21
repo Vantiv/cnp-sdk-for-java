@@ -1,4 +1,4 @@
-//package io.github.vantiv.sdk.samples;
+package io.github.vantiv.sdk.samples;
 
 import io.github.vantiv.sdk.CnpOnline;
 import io.github.vantiv.sdk.generate.*;
