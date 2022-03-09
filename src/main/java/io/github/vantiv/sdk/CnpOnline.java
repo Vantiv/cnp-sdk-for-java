@@ -975,56 +975,51 @@ public class CnpOnline {
 		} finally {
 		}
 	}
-    private CnpOnlineResponse sendQueryTxnToCnp(CnpOnlineRequest request,String siteLocation,Boolean retrySite)throws CnpOnlineException {
-        String xmlResponse=null;
-        CnpOnlineResponse response=null;
-        QueryTransactionResponse queryTxnResponse=null;
+
+    private CnpOnlineResponse sendQueryTxnToCnp(CnpOnlineRequest request, String siteLocation, Boolean retrySite) throws CnpOnlineException {
+        String xmlResponse = null;
+        CnpOnlineResponse response = null;
+        QueryTransactionResponse queryTxnResponse = null;
         try {
             StringWriter sw = new StringWriter();
             CnpContext.getJAXBContext().createMarshaller().marshal(request, sw);
             String xmlRequest = sw.toString();
 
-            if(this.removeStubs){
+            if (this.removeStubs) {
                 xmlRequest = xmlRequest.replaceAll("<[A-Za-z]+\\s*/>", "");
             }
             //	System.out.println("config-------------"+config+"\n\n\n");
-            config.setProperty("url", config.getProperty("multiSiteUrl1", "https://payments.east.vantivprelive.com/vap/communicator/online"));
-
-             if("GR2".equals(siteLocation))
+            if (!"GR2".equals(siteLocation))
+                config.setProperty("url", config.getProperty("multiSiteUrl1", "https://payments.east.vantivprelive.com/vap/communicator/online"));
+            else
                 config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
-
-             CommManager.reset();
-            xmlResponse = communication.requestToServer(xmlRequest, config);// use primary site
-            /**
-             * This was added to accommodate an issue with OpenAccess and possibly VAP where the XML namespace returned
-             * contains the extra "/online".
-             * This issue will be fixed for OpenAccess in Jan 2018
-             */
-            if(xmlResponse.contains("http://www.vantivcnp.com/schema/online")){
-                xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
-            }
+            CommManager.reset();
+            xmlResponse = communication.requestToServer(xmlRequest, config);
             try {
-                if (xmlResponse.contains("queryTransactionResponse")) {
+                if (xmlResponse.contains("queryTransactionResponse") && !retrySite) {
                     response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
-                        if ("florence".equalsIgnoreCase(queryTxnResponse.getLocation())) {
-                            config.setProperty("url", config.getProperty("multiSiteUrl1", "https://payments.east.vantivprelive.com/vap/communicator/online"));
-                        } else {
-                            config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
-                        }
+                        config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
                         CommManager.reset();
                         xmlResponse = communication.requestToServer(xmlRequest, config);
                     }
                 }
             } catch (CnpOnlineException ex) {
-                queryTxnResponse.setMessage("Transaction Not found-Site Down- Site location");
-                response.setResponse(queryTxnResponse.toString());
-                return response;
+                String siteAddress = "florence".equalsIgnoreCase(queryTxnResponse.getLocation()) ? "GR2" : "florence";
+                throw new CnpOnlineException("Transaction not found- Site Down-" + siteAddress);
             }
-            response = (CnpOnlineResponse)CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+            /**
+             * This was added to accommodate an issue with OpenAccess and possibly VAP where the XML namespace returned
+             * contains the extra "/online".
+             * This issue will be fixed for OpenAccess in Jan 2018
+             */
+            if (xmlResponse.contains("http://www.vantivcnp.com/schema/online")) {
+                xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
+            }
+            response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
             // non-zero responses indicate a problem
-            if(!"0".equals(response.getResponse())) {
+            if (!"0".equals(response.getResponse())) {
                 if ("2".equals(response.getResponse()) || "3".equals(response.getResponse())) {
                     throw new CnpInvalidCredentialException(response.getMessage());
                 } else if ("4".equals(response.getResponse())) {
@@ -1036,22 +1031,14 @@ public class CnpOnline {
                 }
             }
             return response;
-        } catch(JAXBException ume) {
+        } catch (JAXBException ume) {
             throw new CnpOnlineException("Error validating xml data against the schema", ume);
-        }catch(CnpOnlineException ex){
-            if(retrySite){
-                System.out.println("Site Down");
+        } catch (CnpOnlineException ex) {
+            if (!retrySite) {
+                sendQueryTxnToCnp(request, "GR2", true);
             }
-            else {
-                config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
-                CommManager.reset();
-                response= sendQueryTxnToCnp(request,"GR2",true);
-            }
-            queryTxnResponse.setMessage("Transaction not found-Site Down");
-            response.setResponse(queryTxnResponse.toString());
-            return response;
-        }
-        finally {
+            throw new CnpOnlineException("Transaction not found- Site Down");
+        } finally {
         }
 
     }
