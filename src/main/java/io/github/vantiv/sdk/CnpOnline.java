@@ -980,7 +980,6 @@ public class CnpOnline {
         String xmlResponse = null;
         CnpOnlineResponse response = null;
         QueryTransactionResponse queryTxnResponse = null;
-        String siteAddress=null;
         try {
             StringWriter sw = new StringWriter();
             CnpContext.getJAXBContext().createMarshaller().marshal(request, sw);
@@ -990,10 +989,11 @@ public class CnpOnline {
                 xmlRequest = xmlRequest.replaceAll("<[A-Za-z]+\\s*/>", "");
             }
             //	System.out.println("config-------------"+config+"\n\n\n");
-            if (!"GR2".equals(siteLocation))
-                config.setProperty("url", config.getProperty("multiSiteUrl1", "https://payments.east.vantivprelive.com/vap/communicator/online"));
-            else
+            if ("GR2".equals(siteLocation))
                 config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
+            else
+                config.setProperty("url", config.getProperty("multiSiteUrl1", "https://payments.east.vantivprelive.com/vap/communicator/online"));
+
             CommManager.reset();
             xmlResponse = communication.requestToServer(xmlRequest, config);
             try {
