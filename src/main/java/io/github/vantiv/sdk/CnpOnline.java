@@ -980,6 +980,7 @@ public class CnpOnline {
         String xmlResponse = null;
         CnpOnlineResponse response = null;
         QueryTransactionResponse queryTxnResponse = null;
+        String siteAddress=null;
         try {
             StringWriter sw = new StringWriter();
             CnpContext.getJAXBContext().createMarshaller().marshal(request, sw);
@@ -996,18 +997,20 @@ public class CnpOnline {
             CommManager.reset();
             xmlResponse = communication.requestToServer(xmlRequest, config);
             try {
-                if (xmlResponse.contains("queryTransactionResponse") && !retrySite) {
+                if (xmlResponse.contains("queryTransactionResponse")) {
                     response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
+                        if(!"florence".equalsIgnoreCase(queryTxnResponse.getLocation())){
+                            throw new CnpOnlineException("Transaction not found - Site Down-florence"); //primary site down
+                        }
                         config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
                         CommManager.reset();
                         xmlResponse = communication.requestToServer(xmlRequest, config);
                     }
                 }
             } catch (CnpOnlineException ex) {
-                String siteAddress = "florence".equalsIgnoreCase(queryTxnResponse.getLocation()) ? "GR2" : "florence";
-                throw new CnpOnlineException("Transaction not found- Site Down-" + siteAddress);
+                throw new CnpOnlineException("Transaction not found - Site Down-GR2"); //secondary site down
             }
             /**
              * This was added to accommodate an issue with OpenAccess and possibly VAP where the XML namespace returned
