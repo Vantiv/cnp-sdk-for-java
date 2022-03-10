@@ -1001,7 +1001,7 @@ public class CnpOnline {
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
                         if(!retrySite){
-                            queryTxnResponse.setMessage("Transaction not found - Site Down : "+config.getProperty("multiSiteUrl1"));
+                            queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl1"));
                             response.setResponse(queryTxnResponse.toString());
                             return response;
                         }
@@ -1013,7 +1013,7 @@ public class CnpOnline {
                     }
                 }
             } catch (CnpOnlineException ex) {
-                queryTxnResponse.setMessage("Transaction not found - Site Down : "+config.getProperty("multiSiteUrl2"));
+                queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl2"));
                 response.setResponse(queryTxnResponse.toString());
                 return response;
             }
@@ -1046,7 +1046,7 @@ public class CnpOnline {
              response=sendQueryTxnToCnp(request, false);
              return response;
             }
-            throw new CnpOnlineException("Transaction not found - Sites Down");
+            throw new CnpOnlineException("Original transaction not found - Sites Down");
         } finally {
         }
 
