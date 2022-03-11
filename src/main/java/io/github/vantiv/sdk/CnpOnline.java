@@ -976,7 +976,7 @@ public class CnpOnline {
 	}
 
     private CnpOnlineResponse sendQueryTxnToCnp(CnpOnlineRequest request, Boolean retrySite) throws CnpOnlineException {
-        String xmlResponse = null;
+        String xmlResponse;
         CnpOnlineResponse response = null;
         QueryTransactionResponse queryTxnResponse = null;
         try {
@@ -997,11 +997,12 @@ public class CnpOnline {
             xmlResponse = communication.requestToServer(xmlRequest, config);
             try {
                 if (xmlResponse.contains("queryTransactionResponse")) {
+                    xmlResponse = getSchema(xmlResponse);
                     response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
                         if(!retrySite){
-                            queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl1"));
+                            queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl1",""));
                             response.setResponse(queryTxnResponse.toString());
                             return response;
                         }
@@ -1013,7 +1014,7 @@ public class CnpOnline {
                     }
                 }
             } catch (CnpOnlineException ex) {
-                queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl2"));
+                queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl2",""));
                 response.setResponse(queryTxnResponse.toString());
                 return response;
             }
@@ -1022,9 +1023,7 @@ public class CnpOnline {
              * contains the extra "/online".
              * This issue will be fixed for OpenAccess in Jan 2018
              */
-            if (xmlResponse.contains("http://www.vantivcnp.com/schema/online")) {
-                xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
-            }
+            xmlResponse = getSchema(xmlResponse);
             response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
             // non-zero responses indicate a problem
             if (!"0".equals(response.getResponse())) {
@@ -1052,7 +1051,14 @@ public class CnpOnline {
 
     }
 
-	private void fillInReportGroup(TransactionTypeWithReportGroup txn) {
+    private String getSchema(String xmlResponse) {
+        if (xmlResponse.contains("http://www.vantivcnp.com/schema/online")) {
+            xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
+        }
+        return xmlResponse;
+    }
+
+    private void fillInReportGroup(TransactionTypeWithReportGroup txn) {
 		if(txn.getReportGroup() == null) {
 			txn.setReportGroup(config.getProperty("reportGroup"));
 		}
