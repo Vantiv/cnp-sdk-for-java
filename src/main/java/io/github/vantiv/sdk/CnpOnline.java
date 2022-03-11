@@ -979,6 +979,7 @@ public class CnpOnline {
         String xmlResponse;
         CnpOnlineResponse response = null;
         QueryTransactionResponse queryTxnResponse = null;
+        String siteAddress;
         try {
             StringWriter sw = new StringWriter();
             CnpContext.getJAXBContext().createMarshaller().marshal(request, sw);
@@ -1002,7 +1003,8 @@ public class CnpOnline {
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
                         if(!retrySite){
-                            queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl1",""));
+                            siteAddress=config.getProperty("multiSiteUrl1")!=null ?" : "+config.getProperty("multiSiteUrl1"): "";
+                            queryTxnResponse.setMessage("Original transaction not found - Site Down"+siteAddress);
                             response.setResponse(queryTxnResponse.toString());
                             return response;
                         }
@@ -1014,7 +1016,8 @@ public class CnpOnline {
                     }
                 }
             } catch (CnpOnlineException ex) {
-                queryTxnResponse.setMessage("Original transaction not found - Site Down : "+config.getProperty("multiSiteUrl2",""));
+                siteAddress=config.getProperty("multiSiteUrl2")!=null ?" : "+config.getProperty("multiSiteUrl2"): "";
+                queryTxnResponse.setMessage("Original transaction not found - Site Down"+siteAddress);
                 response.setResponse(queryTxnResponse.toString());
                 return response;
             }
