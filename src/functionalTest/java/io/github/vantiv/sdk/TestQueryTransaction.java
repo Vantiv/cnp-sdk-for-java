@@ -257,8 +257,8 @@ public class TestQueryTransaction {
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("151", queryTransactionResponse.getResponse());
-        MatcherAssert.assertThat("Site down",queryTransactionResponse.getMessage().contains("Transaction not found - Site Down : "));
-        assertEquals("sandbox", queryTransactionResponse.getLocation());
+        MatcherAssert.assertThat("Site down",queryTransactionResponse.getMessage().contains("Original transaction not found - Site Down : "));
+        assertEquals("florence", queryTransactionResponse.getLocation());
     }
 
     @Test
