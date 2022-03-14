@@ -15,16 +15,16 @@ import org.mockito.Mockito;
 
 public class TestQueryTransaction {
 
-	private static CnpOnline cnp;
+    private static CnpOnline cnp;
 
-	@BeforeClass
-	public static void beforeClass() throws Exception {
-		cnp = new CnpOnline();
-	}
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        cnp = new CnpOnline();
+    }
 
-	@Test
-	public void simpleQueryTransaction() throws Exception {
-	    QueryTransaction queryTransaction = new QueryTransaction();
+    @Test
+    public void simpleQueryTransaction() throws Exception {
+        QueryTransaction queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId1");
@@ -39,7 +39,7 @@ public class TestQueryTransaction {
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
-	}
+    }
 
     @Test
     public void simpleQueryTransaction_showStatusOnly() throws Exception {
@@ -61,7 +61,7 @@ public class TestQueryTransaction {
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 
-	@Test
+    @Test
     public void simpleQueryTransaction_multipleResponses() throws Exception {
         QueryTransaction queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
@@ -79,8 +79,8 @@ public class TestQueryTransaction {
         assertEquals(2, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
-	
-	@Test
+
+    @Test
     public void simpleQueryTransaction_transactionNotFound() throws Exception {
         QueryTransaction queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
@@ -98,8 +98,8 @@ public class TestQueryTransaction {
         assertNull(queryTransactionResponse.getResultsMax10());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
-	
-	@Test
+
+    @Test
     public void simpleQueryTransaction_transactionNotFoundWrongActionType() throws Exception {
         QueryTransaction queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
@@ -118,7 +118,7 @@ public class TestQueryTransaction {
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
 
-	@Test
+    @Test
     public void simpleQueryTransaction_queryTransactionUnavailaleResponse() throws Exception {
         QueryTransaction queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
@@ -257,8 +257,8 @@ public class TestQueryTransaction {
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("151", queryTransactionResponse.getResponse());
-        MatcherAssert.assertThat("Site down",queryTransactionResponse.getMessage().contains("Transaction not found - Site Down : "));
-        assertEquals("sandbox", queryTransactionResponse.getLocation());
+        MatcherAssert.assertThat("Site down",queryTransactionResponse.getMessage().contains("Original transaction not found - Site Down : "));
+        assertEquals("florence", queryTransactionResponse.getLocation());
     }
 
     @Test
