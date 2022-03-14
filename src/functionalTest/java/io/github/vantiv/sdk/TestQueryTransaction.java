@@ -234,13 +234,13 @@ public class TestQueryTransaction {
         queryTransaction.setOrigActionType(ActionTypeEnum.A);
         queryTransaction.setReportGroup("default");
         QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original Transaction not found - Site Down : https://payments.east.vantivprelive.com/vap/communicator/online1");
+        resp.setMessage("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online1. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1");
         Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online1");
         Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original Transaction not found - Site Down : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
+        assertEquals("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online1. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
     }
     @Test
     public void queryTransaction_bothSiteDown() throws Exception {
