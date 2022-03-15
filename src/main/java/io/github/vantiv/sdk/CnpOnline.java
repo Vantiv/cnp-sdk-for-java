@@ -990,7 +990,7 @@ public class CnpOnline {
                 xmlRequest = xmlRequest.replaceAll("<[A-Za-z]+\\s*/>", "");
             }
             //	System.out.println("config-------------"+config+"\n\n\n");
-            if(retrySite)
+            if (retrySite)
                 config.setProperty("url", config.getProperty("multiSiteUrl1", config.getProperty("url")));
             else
                 config.setProperty("url", config.getProperty("multiSiteUrl2", config.getProperty("url")));
@@ -1003,24 +1003,23 @@ public class CnpOnline {
                     response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
-                        if(!retrySite){
-                            siteAddress=config.getProperty("multiSiteUrl1")!=null ?". Site unavailable : "+config.getProperty("multiSiteUrl1"): "";
-                            altAddress=config.getProperty("multiSiteUrl2")!=null ?" in "+config.getProperty("multiSiteUrl2"): "";
-                            queryTxnResponse.setMessage("Original transaction not found"+altAddress+""+siteAddress);
+                        if (!retrySite) {
+                            siteAddress = config.getProperty("multiSiteUrl1") != null ? ". Site unavailable : " + config.getProperty("multiSiteUrl1") : "";
+                            altAddress = config.getProperty("multiSiteUrl2") != null ? " in " + config.getProperty("multiSiteUrl2") : "";
+                            queryTxnResponse.setMessage("Original transaction not found" + altAddress + "" + siteAddress);
                             response.setResponse(queryTxnResponse.toString());
                             return response;
-                        }
-                        else {
-                            config.setProperty("url", config.getProperty("multiSiteUrl2",config.getProperty("url")));
+                        } else {
+                            config.setProperty("url", config.getProperty("multiSiteUrl2", config.getProperty("url")));
                             CommManager.reset();
                             xmlResponse = communication.requestToServer(xmlRequest, config);
                         }
                     }
                 }
             } catch (CnpOnlineException ex) {
-                siteAddress=config.getProperty("multiSiteUrl2")!=null ?". Site unavailable : "+config.getProperty("multiSiteUrl2"): "";
-                altAddress=config.getProperty("multiSiteUrl1")!=null ?" in "+config.getProperty("multiSiteUrl1"): "";
-                queryTxnResponse.setMessage("Original transaction not found"+altAddress+""+siteAddress);
+                siteAddress = config.getProperty("multiSiteUrl2") != null ? ". Site unavailable : " + config.getProperty("multiSiteUrl2") : "";
+                altAddress = config.getProperty("multiSiteUrl1") != null ? " in " + config.getProperty("multiSiteUrl1") : "";
+                queryTxnResponse.setMessage("Original transaction not found" + altAddress + "" + siteAddress);
                 response.setResponse(queryTxnResponse.toString());
                 return response;
             }
@@ -1048,8 +1047,8 @@ public class CnpOnline {
             throw new CnpOnlineException("Error validating xml data against the schema", ume);
         } catch (CnpOnlineException ex) {
             if (retrySite) {
-             response=sendQueryTxnToCnp(request, false);
-             return response;
+                response = sendQueryTxnToCnp(request, false);
+                return response;
             }
             throw new CnpOnlineException("Original transaction not found - Site/s unavailable");
         } finally {
