@@ -228,7 +228,7 @@ public class TestQueryTransaction {
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online1. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
+        assertEquals("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
     }
     @Test
     public void queryTransaction_bothSitesUnavailable() throws Exception {
