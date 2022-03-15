@@ -1004,23 +1004,23 @@ public class CnpOnline {
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
                         if(!retrySite){
-                            siteAddress=config.getProperty("multiSiteUrl1")!=null ?" : "+config.getProperty("multiSiteUrl1"): "";
+                            siteAddress=config.getProperty("multiSiteUrl1")!=null ?". Site unavailable : "+config.getProperty("multiSiteUrl1"): "";
                             altAddress=config.getProperty("multiSiteUrl2")!=null ?" in "+config.getProperty("multiSiteUrl2"): "";
-                            queryTxnResponse.setMessage("Original transaction not found"+altAddress+". Site unavailable"+siteAddress);
+                            queryTxnResponse.setMessage("Original transaction not found"+altAddress+""+siteAddress);
                             response.setResponse(queryTxnResponse.toString());
                             return response;
                         }
                         else {
-                            config.setProperty("url", config.getProperty("multiSiteUrl2", "https://payments.west.vantivprelive.com/vap/communicator/online"));
+                            config.setProperty("url", config.getProperty("multiSiteUrl2",config.getProperty("url")));
                             CommManager.reset();
                             xmlResponse = communication.requestToServer(xmlRequest, config);
                         }
                     }
                 }
             } catch (CnpOnlineException ex) {
-                siteAddress=config.getProperty("multiSiteUrl2")!=null ?" : "+config.getProperty("multiSiteUrl2"): "";
+                siteAddress=config.getProperty("multiSiteUrl2")!=null ?". Site unavailable : "+config.getProperty("multiSiteUrl2"): "";
                 altAddress=config.getProperty("multiSiteUrl1")!=null ?" in "+config.getProperty("multiSiteUrl1"): "";
-                queryTxnResponse.setMessage("Original transaction not found"+altAddress+". Site unavailable"+siteAddress);
+                queryTxnResponse.setMessage("Original transaction not found"+altAddress+""+siteAddress);
                 response.setResponse(queryTxnResponse.toString());
                 return response;
             }
