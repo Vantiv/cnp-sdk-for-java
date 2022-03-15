@@ -16,10 +16,15 @@ import org.mockito.Mockito;
 public class TestQueryTransaction {
 
     private static CnpOnline cnp;
+    private static Properties p;
+    private static CnpOnline cnpOnlineMock;
+    QueryTransaction queryTransaction;
 
     @BeforeClass
     public static void beforeClass() throws Exception {
         cnp = new CnpOnline();
+        p= Mockito.mock(Properties.class);
+        cnpOnlineMock=Mockito.mock(CnpOnline.class);
     }
 
     @Test
@@ -138,9 +143,7 @@ public class TestQueryTransaction {
 
     @Test
     public void simpleQueryTransaction_queryTransactionFoundInPrimarySite() throws Exception {
-        Properties p= Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock=Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction=Mockito.mock(QueryTransaction.class);
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
@@ -159,9 +162,7 @@ public class TestQueryTransaction {
 
     @Test
     public void simpleQueryTransaction_TransactionNotFoundInPrimarySiteButFoundInSecondarySite() throws Exception {
-        Properties p= Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock=Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction=Mockito.mock(QueryTransaction.class);
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
@@ -170,21 +171,16 @@ public class TestQueryTransaction {
         QueryTransactionResponse resp=new QueryTransactionResponse();
         resp.setMessage("Original transaction found");
         resp.setResponse("150");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        System.out.println("Value is: "+((QueryTransactionResponse) response).getMessage());
         assertEquals("Original transaction found",queryTransactionResponse.getMessage());
         assertEquals("150", queryTransactionResponse.getResponse());
     }
 
     @Test
-    public void queryTransaction_TransactionNotFoundInBothPrimaryAmdSecondarySite() throws Exception {
-        Properties p = Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock = Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction = Mockito.mock(QueryTransaction.class);
+    public void queryTransaction_TransactionNotFoundInBothPrimaryAndSecondarySite() throws Exception {
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId0");
@@ -193,8 +189,6 @@ public class TestQueryTransaction {
         QueryTransactionResponse resp = new QueryTransactionResponse();
         resp.setMessage("Original transaction not found");
         resp.setResponse("151");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
@@ -204,10 +198,8 @@ public class TestQueryTransaction {
     }
 
     @Test
-    public void queryTransaction_PrimarySiteDownTransactionFoundInSecondarySite() throws Exception {
-        Properties p= Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock=Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction=Mockito.mock(QueryTransaction.class);
+    public void queryTransaction_PrimarySiteUnavailableTransactionFoundInSecondarySite() throws Exception {
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
@@ -216,7 +208,6 @@ public class TestQueryTransaction {
         QueryTransactionResponse resp=new QueryTransactionResponse();
         resp.setMessage("Original transaction found");
         Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online1");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
@@ -224,29 +215,24 @@ public class TestQueryTransaction {
     }
 
     @Test
-    public void queryTransaction_PrimarySiteDownTransactionNotFoundInSecondarySite() throws Exception {
-        Properties p= Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock=Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction=Mockito.mock(QueryTransaction.class);
+    public void queryTransaction_PrimarySiteUnavailableTransactionNotFoundInSecondarySite() throws Exception {
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
         queryTransaction.setOrigActionType(ActionTypeEnum.A);
         queryTransaction.setReportGroup("default");
         QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online1. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1");
+        resp.setMessage("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1");
         Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online1");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
         assertEquals("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online1. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
     }
     @Test
-    public void queryTransaction_bothSiteDown() throws Exception {
-        Properties p= Mockito.mock(Properties.class);
-        CnpOnline cnpOnlineMock=Mockito.mock(CnpOnline.class);
-        QueryTransaction queryTransaction=Mockito.mock(QueryTransaction.class);
+    public void queryTransaction_bothSitesUnavailable() throws Exception {
+        queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
@@ -254,8 +240,6 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
         QueryTransactionResponse resp=new QueryTransactionResponse();
         resp.setMessage("Transaction not found - Site/s unavailable");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl2"), Mockito.<String>any())).thenReturn("https://payments.west.vantivprelive.com/vap/communicator/online");
         Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
         TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
