@@ -140,109 +140,50 @@ public class TestQueryTransaction {
         assertEquals("Original transaction found but response not yet available",queryTransactionResponse.getMessage());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
-
     @Test
-    public void simpleQueryTransaction_queryTransactionFoundInPrimarySite() throws Exception {
+    public void transactionFoundInSecondarySiteAndPrimarySiteUnavailable() throws Exception {
+        QueryTransaction queryTransaction = new QueryTransaction();
+        queryTransaction.setId("findId");
+        queryTransaction.setCustomerId("customerId");
+        queryTransaction.setOrigId("orgId1");
+        queryTransaction.setOrigActionType(ActionTypeEnum.A);
+        queryTransaction.setReportGroup("default");
+
+        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://payments.east.vantivprelive.com/vap/communicator/online1","https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        assertEquals("findId", queryTransactionResponse.getId());
+        assertEquals("customerId", queryTransactionResponse.getCustomerId());
+        //assertEquals("150", queryTransactionResponse.getResponse());
+        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
+        assertEquals("sandbox", queryTransactionResponse.getLocation());
+    }
+    @Test
+    public void queryTransaction_notFoundinBothSites() throws Exception {
         queryTransaction = new QueryTransaction();
         queryTransaction.setId("findId");
         queryTransaction.setCustomerId("customerId");
         queryTransaction.setOrigId("orgId5");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
+        queryTransaction.setOrigActionType(ActionTypeEnum.R);
         queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original transaction found");
-        resp.setResponse("150");
-        Mockito.when(p.getProperty(Mockito.<String>any(), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
+        CommManager.reset();
+        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://www.testvantivcnp.com/sandbox/communicator/online","https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
         QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
-        assertEquals("150", queryTransactionResponse.getResponse());
-    }
-
-    @Test
-    public void simpleQueryTransaction_TransactionNotFoundInPrimarySiteButFoundInSecondarySite() throws Exception {
-        queryTransaction = new QueryTransaction();
-        queryTransaction.setId("findId");
-        queryTransaction.setCustomerId("customerId");
-        queryTransaction.setOrigId("orgId5");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original transaction found");
-        resp.setResponse("150");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
-        assertEquals("150", queryTransactionResponse.getResponse());
-    }
-
-    @Test
-    public void queryTransaction_TransactionNotFoundInBothPrimaryAndSecondarySite() throws Exception {
-        queryTransaction = new QueryTransaction();
-        queryTransaction.setId("findId");
-        queryTransaction.setCustomerId("customerId");
-        queryTransaction.setOrigId("orgId0");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp = new QueryTransactionResponse();
-        resp.setMessage("Original transaction not found");
-        resp.setResponse("151");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
-        System.out.println("Value is: " + ((QueryTransactionResponse) response).getMessage());
         assertEquals("Original transaction not found", queryTransactionResponse.getMessage());
         assertEquals("151", queryTransactionResponse.getResponse());
     }
 
-    @Test
-    public void queryTransaction_PrimarySiteUnavailableTransactionFoundInSecondarySite() throws Exception {
-        queryTransaction = new QueryTransaction();
-        queryTransaction.setId("findId");
-        queryTransaction.setCustomerId("customerId");
-        queryTransaction.setOrigId("orgId5");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original transaction found");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online1");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
-    }
-
-    @Test
-    public void queryTransaction_PrimarySiteUnavailableTransactionNotFoundInSecondarySite() throws Exception {
-        queryTransaction = new QueryTransaction();
-        queryTransaction.setId("findId");
-        queryTransaction.setCustomerId("customerId");
-        queryTransaction.setOrigId("orgId5");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1");
-        Mockito.when(p.getProperty(Mockito.matches("multiSiteUrl1"), Mockito.<String>any())).thenReturn("https://payments.east.vantivprelive.com/vap/communicator/online1");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Original Transaction not found in https://payments.west.vantivprelive.com/vap/communicator/online. Site unavailable : https://payments.east.vantivprelive.com/vap/communicator/online1",queryTransactionResponse.getMessage());
-    }
-    @Test
-    public void queryTransaction_bothSitesUnavailable() throws Exception {
-        queryTransaction = new QueryTransaction();
-        queryTransaction.setId("findId");
-        queryTransaction.setCustomerId("customerId");
-        queryTransaction.setOrigId("orgId5");
-        queryTransaction.setOrigActionType(ActionTypeEnum.A);
-        queryTransaction.setReportGroup("default");
-        QueryTransactionResponse resp=new QueryTransactionResponse();
-        resp.setMessage("Transaction not found - Site/s unavailable");
-        Mockito.when(cnpOnlineMock.queryTransaction(queryTransaction)).thenReturn(resp);
-        TransactionTypeWithReportGroup response = cnpOnlineMock.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
-        assertEquals("Transaction not found - Site/s unavailable",queryTransactionResponse.getMessage());
+    Properties getCnpProperty(String url1,String url2) {
+        Properties cnpProperty = new Properties();
+        cnpProperty.setProperty("username", "SDKTEAM12");
+        cnpProperty.setProperty("password", "V2b9F4k7");
+        cnpProperty.setProperty("merchantId", "1288791");
+        cnpProperty.setProperty("reportGroup", "Default Report Group");
+         cnpProperty.setProperty("printxml", "true");
+        cnpProperty.setProperty("proxyHost", "usproxy.dlb.corp.vantiv.com");
+        cnpProperty.setProperty("proxyPort", "8080");
+        cnpProperty.setProperty("multiSiteUrl1",url1);
+        cnpProperty.setProperty("multiSiteUrl2",url2);
+        return cnpProperty;
     }
 }
