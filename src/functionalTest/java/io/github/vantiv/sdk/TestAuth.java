@@ -561,5 +561,41 @@ public class TestAuth {
 		assertEquals(response.getMessage(), "Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+	@Test
+	public void simpleAuthWithRetailerAddress() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		Contact contact = new Contact();
+		contact.setSellerId("12386576");
+		contact.setCompanyName("fis Global");
+		contact.setAddressLine1("Pune East");
+		contact.setAddressLine2("Pune west");
+		contact.setAddressLine3("Pune north");
+		contact.setCity("lowell");
+		contact.setState("MA");
+		contact.setZip("825320");
+		contact.setCountry(CountryTypeEnum.IN);
+		contact.setEmail("cnp.com");
+		contact.setPhone("8880129170");
+		contact.setUrl("www.lowel.com");
+		authorization.setRetailerAddress(contact);
+		assertEquals(null, authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+
 
 }

@@ -443,5 +443,37 @@ public class TestSale {
 		assertEquals(response.getMessage(), "Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+	@Test
+	public void simpleSaleWithRetailerAddress() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		Contact contact = new Contact();
+		contact.setSellerId("12386576");
+		contact.setCompanyName("fis Global");
+		contact.setAddressLine1("Pune East");
+		contact.setAddressLine2("Pune west");
+		contact.setAddressLine3("Pune north");
+		contact.setCity("lowell");
+		contact.setState("MA");
+		contact.setZip("825320");
+		contact.setCountry(CountryTypeEnum.IN);
+		contact.setEmail("cnp.com");
+		contact.setPhone("8880129170");
+		contact.setUrl("www.lowel.com");
+		sale.setRetailerAddress(contact);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 
 }

@@ -16,6 +16,7 @@ import io.github.vantiv.sdk.generate.CaptureGivenAuthResponse;
 import io.github.vantiv.sdk.generate.CardTokenType;
 import io.github.vantiv.sdk.generate.CardType;
 import io.github.vantiv.sdk.generate.Contact;
+import io.github.vantiv.sdk.generate.CountryTypeEnum;
 import io.github.vantiv.sdk.generate.EnhancedData;
 import io.github.vantiv.sdk.generate.FraudResult;
 import io.github.vantiv.sdk.generate.FrequencyOfMITEnum;
@@ -360,6 +361,43 @@ public class TestCaptureGivenAuth {
 		capturegivenauth.setAdditionalCOFData(data);
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public void simpleCaptureGivenAuthWithRetailerAddress() throws Exception{
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		capturegivenauth.setCard(card);
+		capturegivenauth.setId("id");
+		Contact contact = new Contact();
+		contact.setSellerId("12386576");
+		contact.setCompanyName("fis Global");
+		contact.setAddressLine1("Pune East");
+		contact.setAddressLine2("Pune west");
+		contact.setAddressLine3("Pune north");
+		contact.setCity("lowell");
+		contact.setState("MA");
+		contact.setZip("825320");
+		contact.setCountry(CountryTypeEnum.IN);
+		contact.setEmail("cnp.com");
+		contact.setPhone("8880129170");
+		contact.setUrl("www.lowel.com");
+		capturegivenauth.setRetailerAddress(contact);
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
 
