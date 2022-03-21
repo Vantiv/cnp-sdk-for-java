@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
+import java.util.Calendar;
 
 //import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
@@ -19,7 +20,7 @@ public class TestAuth {
 	public static void beforeClass() throws Exception {
 		cnp = new CnpOnline();
 	}
-	
+
 
     @Test
     public void simpleAuthWithCardUTF8() throws Exception {
@@ -73,8 +74,8 @@ public class TestAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		authorization.setCard(card);
-		authorization.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
-
+		//authorization.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
+		authorization.setBusinessIndicator(BusinessIndicatorEnum.BUY_ONLINE_PICK_UP_IN_STORE);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
@@ -467,4 +468,98 @@ public class TestAuth {
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void testAuthWithCustomerInfo() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setReportGroup("Default");
+		authorization.setOrderId("67890");
+		authorization.setAmount(10000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CustomerInfo cust = new CustomerInfo();
+		cust.setAccountUsername("Woolfoo");
+		cust.setUserAccountNumber("123456ATY");
+		cust.setUserAccountEmail("woolfoo@gmail.com");
+		cust.setMembershipId("Member01");
+		cust.setMembershipPhone("9765431234");
+		cust.setMembershipEmail("mem@abc.com");
+		cust.setMembershipName("memName");
+		Calendar createDate = Calendar.getInstance();
+		createDate.set(1990, Calendar.MARCH, 16);
+		cust.setAccountCreatedDate(createDate);
+		cust.setUserAccountPhone("123456789");
+		authorization.setCustomerInfo(cust);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void testAuthWithEnhancedDataLineItemDataOrdChanelGpStatus() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setReportGroup("Default");
+		authorization.setOrderId("67890");
+		authorization.setAmount(10000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		authorization.setCard(card);
+		EnhancedData enhanced = new EnhancedData();
+		enhanced.setCustomerReference("Cust Ref");
+		enhanced.setSalesTax(1000L);
+		LineItemData lid = new LineItemData();
+		lid.setItemSequenceNumber(1);
+		lid.setItemDescription("Electronics");
+		lid.setProductCode("El01");
+		lid.setItemCategory("Ele Appiances");
+		lid.setItemSubCategory("home appliaces");
+		lid.setProductId("1001");
+		lid.setProductName("dryer");
+		enhanced.getLineItemDatas().add(lid);
+		enhanced.setDiscountCode("oneTimeDis");
+		enhanced.setDiscountPercent(BigInteger.valueOf(12));
+		enhanced.setFulfilmentMethodType("LOCKER_PICKUP");
+		authorization.setEnhancedData(enhanced);
+		authorization.setOrderChannel("PHONE");
+		authorization.setGpStatus("close");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void testAuthWithAdditionalCOFData() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setReportGroup("Default");
+		authorization.setOrderId("67890");
+		authorization.setAmount(10000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		authorization.setCard(card);
+		AdditionalCOFData data = new AdditionalCOFData();
+		data.setUniqueId("56655678D");
+		data.setTotalPaymentCount("35");
+		data.setFrequencyOfMIT(FrequencyOfMITEnum.ANUALLY);
+		data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+		data.setValidationReference("asd123");
+		data.setSequenceIndicator(BigInteger.valueOf(12));
+		authorization.setAdditionalCOFData(data);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }
