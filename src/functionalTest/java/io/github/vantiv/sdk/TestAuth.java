@@ -590,9 +590,8 @@ public class TestAuth {
 		contact.setPhone("8880129170");
 		contact.setUrl("www.lowel.com");
 		authorization.setRetailerAddress(contact);
-		assertEquals(null, authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
 		AuthorizationResponse response = cnp.authorize(authorization);
-		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals( "Approved",response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
 
