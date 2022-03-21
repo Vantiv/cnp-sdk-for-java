@@ -1,5 +1,16 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.23 (March 21, 2022)
+* Change: New elements are introduced for different request.
+* Change:new element :address is added in vendorCredit/vendorDebit/FastAccessFunding.
+* Change:retailerAddress,AdditionalCOFData added in Auth/Sale/CaptureGivenAuth
+* Change:Added a new value in element Business Indicator:buyOnlinePickUpInStore
+* Change:Added a new element :Order Channel for Auth/sale
+* Change:Added element in customerInfo element.
+* Change:Added a new element :gpStatus for Auth/sale
+* Change:Added a new element in enhancedData, LineItemData
+* Change: Version ID updated to '12.23.0'
+
 ==Version 12.21.2 (March 17, 2022)
 * Change: Added functionality to handle status query transaction for multi sites
 * Change: Version ID updated to '12.21.2'

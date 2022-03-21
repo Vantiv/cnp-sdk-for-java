@@ -3,7 +3,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.21.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.23.xsd" />
 
     <xs:complexType name="baseRequest">
         <xs:sequence>
@@ -66,6 +66,8 @@
                         <xs:element name="message" type="xp:messageType" />
                         <xs:element name="location" type="xs:string" minOccurs="0"/>
                         <xs:element name="recyclingResponse" type="xp:voidRecyclingResponseType" minOccurs="0" />
+                        <!-- Introduced as part of Guaranteed Payments -->
+                        <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0" />
                     </xs:all>
 
                 </xs:extension>
@@ -102,6 +104,8 @@
                         <xs:element name="postDate" type="xs:date" />
                         <xs:element name="message" type="xp:messageType" />
                         <xs:element name="location" type="xs:string" minOccurs="0"/>
+                        <!-- Introduced as part of Guaranteed Payments -->
+                        <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0" />
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
