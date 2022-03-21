@@ -1,5 +1,13 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.21.2 (March 17, 2022)
+* Change: Added functionality to handle status query transaction for multi sites
+* Change: Version ID updated to '12.21.2'
+
+==Version 12.21.1 (March 16, 2022)
+* Change: Added functionality to handle status query transaction for multi sites
+* Change: Version ID updated to '12.21.1'
+
 ==Version 12.21.0 (January 20, 2022)
 * Change: Increased authenticationValueType length from 56 to 512
 * Change: Version ID updated to '12.21.0'

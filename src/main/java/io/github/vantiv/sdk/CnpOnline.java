@@ -566,9 +566,9 @@ public class CnpOnline {
         fillInReportGroup(queryTransaction);
 
         request.setTransaction(CnpContext.getObjectFactory().createQueryTransaction(queryTransaction));
-        CnpOnlineResponse response = sendToCnp(request);
-        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
-        return newresponse.getValue();
+        CnpOnlineResponse response = sendQueryTxnToCnp(request,true);
+        JAXBElement<? extends TransactionTypeWithReportGroup> txnTypeWithReportGroup = response.getTransactionResponse();
+        return txnTypeWithReportGroup.getValue();
     }
     
     public GiftCardCaptureResponse giftCardCapture(GiftCardCapture giftCardCapture) {
@@ -975,7 +975,95 @@ public class CnpOnline {
 		}
 	}
 
-	private void fillInReportGroup(TransactionTypeWithReportGroup txn) {
+    private CnpOnlineResponse sendQueryTxnToCnp(CnpOnlineRequest request, Boolean retrySite) throws CnpOnlineException {
+        String xmlResponse;
+        CnpOnlineResponse response = null;
+        QueryTransactionResponse queryTxnResponse = null;
+        String siteAddress;
+        String altAddress;
+        try {
+            StringWriter sw = new StringWriter();
+            CnpContext.getJAXBContext().createMarshaller().marshal(request, sw);
+            String xmlRequest = sw.toString();
+
+            if (this.removeStubs) {
+                xmlRequest = xmlRequest.replaceAll("<[A-Za-z]+\\s*/>", "");
+            }
+            //	System.out.println("config-------------"+config+"\n\n\n");
+            if (retrySite)
+                config.setProperty("url", config.getProperty("multiSiteUrl1", config.getProperty("url")));
+            else
+                config.setProperty("url", config.getProperty("multiSiteUrl2", config.getProperty("url")));
+
+            CommManager.reset();
+            xmlResponse = communication.requestToServer(xmlRequest, config);
+            try {
+                if (xmlResponse.contains("queryTransactionResponse")) {
+                    xmlResponse = getSchema(xmlResponse);
+                    response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+                    queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
+                    if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
+                        if (!retrySite) {
+                            siteAddress = config.getProperty("multiSiteUrl1") != null ? ". Site unavailable : " + config.getProperty("multiSiteUrl1") : "";
+                            altAddress = config.getProperty("multiSiteUrl2") != null ? " in " + config.getProperty("multiSiteUrl2") : "";
+                            queryTxnResponse.setMessage("Original transaction not found" + altAddress + "" + siteAddress);
+                            response.setResponse(queryTxnResponse.toString());
+                            return response;
+                        } else {
+                            config.setProperty("url", config.getProperty("multiSiteUrl2", config.getProperty("url")));
+                            CommManager.reset();
+                            xmlResponse = communication.requestToServer(xmlRequest, config);
+                        }
+                    }
+                }
+            } catch (CnpOnlineException ex) {
+                siteAddress = config.getProperty("multiSiteUrl2") != null ? ". Site unavailable : " + config.getProperty("multiSiteUrl2") : "";
+                altAddress = config.getProperty("multiSiteUrl1") != null ? " in " + config.getProperty("multiSiteUrl1") : "";
+                queryTxnResponse.setMessage("Original transaction not found" + altAddress + "" + siteAddress);
+                response.setResponse(queryTxnResponse.toString());
+                return response;
+            }
+            /**
+             * This was added to accommodate an issue with OpenAccess and possibly VAP where the XML namespace returned
+             * contains the extra "/online".
+             * This issue will be fixed for OpenAccess in Jan 2018
+             */
+            xmlResponse = getSchema(xmlResponse);
+            response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+            // non-zero responses indicate a problem
+            if (!"0".equals(response.getResponse())) {
+                if ("2".equals(response.getResponse()) || "3".equals(response.getResponse())) {
+                    throw new CnpInvalidCredentialException(response.getMessage());
+                } else if ("4".equals(response.getResponse())) {
+                    throw new CnpConnectionLimitExceededException(response.getMessage());
+                } else if ("5".equals(response.getResponse())) {
+                    throw new CnpObjectionableContentException(response.getMessage());
+                } else {
+                    throw new CnpOnlineException(response.getMessage());
+                }
+            }
+            return response;
+        } catch (JAXBException ume) {
+            throw new CnpOnlineException("Error validating xml data against the schema", ume);
+        } catch (CnpOnlineException ex) {
+            if (retrySite) {
+                response = sendQueryTxnToCnp(request, false);
+                return response;
+            }
+            throw new CnpOnlineException("Original transaction not found - Site/s unavailable");
+        } finally {
+        }
+
+    }
+
+    private String getSchema(String xmlResponse) {
+        if (xmlResponse.contains("http://www.vantivcnp.com/schema/online")) {
+            xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
+        }
+        return xmlResponse;
+    }
+
+    private void fillInReportGroup(TransactionTypeWithReportGroup txn) {
 		if(txn.getReportGroup() == null) {
 			txn.setReportGroup(config.getProperty("reportGroup"));
 		}
