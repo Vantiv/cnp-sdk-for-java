@@ -2,13 +2,11 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigInteger;
 import java.util.Calendar;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import io.github.vantiv.sdk.generate.AdditionalCOFData;
 import io.github.vantiv.sdk.generate.AuthInformation;
 import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
 import io.github.vantiv.sdk.generate.CaptureGivenAuth;
@@ -16,18 +14,11 @@ import io.github.vantiv.sdk.generate.CaptureGivenAuthResponse;
 import io.github.vantiv.sdk.generate.CardTokenType;
 import io.github.vantiv.sdk.generate.CardType;
 import io.github.vantiv.sdk.generate.Contact;
-import io.github.vantiv.sdk.generate.CountryTypeEnum;
-import io.github.vantiv.sdk.generate.EnhancedData;
 import io.github.vantiv.sdk.generate.FraudResult;
-import io.github.vantiv.sdk.generate.FrequencyOfMITEnum;
-import io.github.vantiv.sdk.generate.LineItemData;
 import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
 import io.github.vantiv.sdk.generate.OrderSourceType;
-import io.github.vantiv.sdk.generate.PaymentTypeEnum;
 import io.github.vantiv.sdk.generate.ProcessingInstructions;
 import io.github.vantiv.sdk.generate.ProcessingTypeEnum;
-import io.github.vantiv.sdk.generate.Sale;
-import io.github.vantiv.sdk.generate.SaleResponse;
 
 public class TestCaptureGivenAuth {
 
@@ -81,9 +72,7 @@ public class TestCaptureGivenAuth {
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
 		capturegivenauth.setId("id");
-		//capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
-		capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.BUY_ONLINE_PICK_UP_IN_STORE);
-
+		capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.CONSUMER_BILL_PAYMENT);
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
@@ -284,118 +273,6 @@ public class TestCaptureGivenAuth {
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
 		capturegivenauth.setId("id");
-		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
-		assertEquals("Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
-	}
-
-	@Test
-	public void testCaptureGivenAuthWithEnhancedDataLineItemDataBussinessIndi() throws Exception {
-		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
-		capturegivenauth.setAmount(106L);
-		capturegivenauth.setOrderId("12344");
-		AuthInformation authInfo = new AuthInformation();
-		Calendar authDate = Calendar.getInstance();
-		authDate.set(2002, Calendar.OCTOBER, 9);
-		authInfo.setAuthDate(authDate);
-		authInfo.setAuthCode("543216");
-		authInfo.setAuthAmount(12345L);
-		capturegivenauth.setAuthInformation(authInfo);
-		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardTokenType cardtoken = new CardTokenType();
-		cardtoken.setTokenURL("http://token.com/sales");
-		cardtoken.setExpDate("1210");
-		cardtoken.setCardValidationNum("555");
-		cardtoken.setType(MethodOfPaymentTypeEnum.VI);
-		capturegivenauth.setToken(cardtoken);
-		capturegivenauth.setId("id");
-		EnhancedData enhanced = new EnhancedData();
-		enhanced.setCustomerReference("Cust Ref");
-		enhanced.setSalesTax(1000L);
-		LineItemData lid = new LineItemData();
-		lid.setItemSequenceNumber(1);
-		lid.setItemDescription("Electronics");
-		lid.setProductCode("El01");
-		lid.setItemCategory("Ele Appiances");
-		lid.setItemSubCategory("home appliaces");
-		lid.setProductId("1001");
-		lid.setProductName("dryer");
-		enhanced.getLineItemDatas().add(lid);
-		enhanced.setDiscountCode("oneTimeDis");
-		enhanced.setDiscountPercent(BigInteger.valueOf(12));
-		enhanced.setFulfilmentMethodType("LOCKER_PICKUP");
-		capturegivenauth.setEnhancedData(enhanced);
-		capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.BUY_ONLINE_PICK_UP_IN_STORE);
-		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
-		assertEquals(response.getMessage(), "Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
-	}
-
-	@Test
-	public void testCaptureGivenAuthWithAdditionalCOFData() throws Exception {
-		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
-		capturegivenauth.setAmount(106L);
-		capturegivenauth.setOrderId("12344");
-		AuthInformation authInfo = new AuthInformation();
-		Calendar authDate = Calendar.getInstance();
-		authDate.set(2002, Calendar.OCTOBER, 9);
-		authInfo.setAuthDate(authDate);
-		authInfo.setAuthCode("543216");
-		authInfo.setAuthAmount(12345L);
-		capturegivenauth.setAuthInformation(authInfo);
-		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardTokenType cardtoken = new CardTokenType();
-		cardtoken.setTokenURL("http://token.com/sales");
-		cardtoken.setExpDate("1210");
-		cardtoken.setCardValidationNum("555");
-		cardtoken.setType(MethodOfPaymentTypeEnum.VI);
-		capturegivenauth.setToken(cardtoken);
-		capturegivenauth.setId("id");
-		AdditionalCOFData data = new AdditionalCOFData();
-		data.setUniqueId("56655678D");
-		data.setTotalPaymentCount("35");
-		data.setFrequencyOfMIT(FrequencyOfMITEnum.ANUALLY);
-		data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
-		data.setValidationReference("asd123");
-		data.setSequenceIndicator(BigInteger.valueOf(12));
-		capturegivenauth.setAdditionalCOFData(data);
-		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
-		assertEquals(response.getMessage(), "Approved", response.getMessage());
-		assertEquals("sandbox", response.getLocation());
-	}
-	@Test
-	public void simpleCaptureGivenAuthWithRetailerAddress() throws Exception{
-		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
-		capturegivenauth.setAmount(106L);
-		capturegivenauth.setOrderId("12344");
-		AuthInformation authInfo = new AuthInformation();
-		Calendar authDate = Calendar.getInstance();
-		authDate.set(2002, Calendar.OCTOBER, 9);
-		authInfo.setAuthDate(authDate);
-		authInfo.setAuthCode("543216");
-		authInfo.setAuthAmount(12345L);
-		capturegivenauth.setAuthInformation(authInfo);
-		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
-		CardType card = new CardType();
-		card.setType(MethodOfPaymentTypeEnum.VI);
-		card.setNumber("4100000000000000");
-		card.setExpDate("1210");
-		capturegivenauth.setCard(card);
-		capturegivenauth.setId("id");
-		Contact contact = new Contact();
-		contact.setSellerId("12386576");
-		contact.setCompanyName("fis Global");
-		contact.setAddressLine1("Pune East");
-		contact.setAddressLine2("Pune west");
-		contact.setAddressLine3("Pune north");
-		contact.setCity("lowell");
-		contact.setState("MA");
-		contact.setZip("825320");
-		contact.setCountry(CountryTypeEnum.IN);
-		contact.setEmail("cnp.com");
-		contact.setPhone("8880129170");
-		contact.setUrl("www.lowel.com");
-		capturegivenauth.setRetailerAddress(contact);
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
