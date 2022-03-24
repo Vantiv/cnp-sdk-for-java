@@ -1,8 +1,6 @@
 package io.github.vantiv.sdk;
 
-import io.github.vantiv.sdk.generate.Address;
 import io.github.vantiv.sdk.generate.CardType;
-import io.github.vantiv.sdk.generate.CountryTypeEnum;
 import io.github.vantiv.sdk.generate.FastAccessFunding;
 
 import io.github.vantiv.sdk.generate.FastAccessFundingResponse;
@@ -31,15 +29,6 @@ public class TestFastAccessFunding {
         fastAccessFunding.setSubmerchantName("001");
         fastAccessFunding.setFundsTransferId("1234567891111111");
         fastAccessFunding.setAmount(20L);
-        Address adr=new Address();
-        adr.setAddressLine1("100 MAIN ST1");
-        adr.setAddressLine2("100 MAIN ST2");
-        adr.setAddressLine3("100 MAIN ST3");
-        adr.setCity("home town");
-        adr.setState("MA");
-        adr.setZip("01851");
-        adr.setCountry(CountryTypeEnum.US);
-        fastAccessFunding.setCardholderAddress(adr);
         CardType card = new CardType();
         card.setType(MethodOfPaymentTypeEnum.VI);
         card.setNumber("4457010000000009");
