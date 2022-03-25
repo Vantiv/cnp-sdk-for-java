@@ -24,7 +24,15 @@ public class TestVendor {
         vcredit.setVendorName("Vendor101");
         vcredit.setFundsTransferId("1001");
         vcredit.setAmount(1512l);
-
+        Address adr = new Address();
+        adr.setAddressLine1("100 MAIN ST1");
+        adr.setAddressLine2("100 MAIN ST2");
+        adr.setAddressLine3("100 MAIN ST3");
+        adr.setCity("home town");
+        adr.setState("MA");
+        adr.setZip("01851");
+        adr.setCountry(CountryTypeEnum.US);
+        vcredit.setVendorAddress(adr);
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
@@ -70,7 +78,15 @@ public class TestVendor {
         vdebit.setVendorName("Vendor101");
         vdebit.setFundsTransferId("1001");
         vdebit.setAmount(1512l);
-
+        Address adr = new Address();
+        adr.setAddressLine1("100 MAIN ST1");
+        adr.setAddressLine2("100 MAIN ST2");
+        adr.setAddressLine3("100 MAIN ST3");
+        adr.setCity("home town");
+        adr.setState("MA");
+        adr.setZip("01851");
+        adr.setCountry(CountryTypeEnum.US);
+        vdebit.setVendorAddress(adr);
         EcheckTypeCtx echeck = new EcheckTypeCtx();
         echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
         echeck.setAccNum("123456789012");
