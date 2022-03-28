@@ -1,5 +1,9 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.22.0 (March 24, 2022)
+* Change: New element introduced for different request.
+* Change: new element :address is added in vendorCredit/vendorDebit/FastAccessFunding.
+
 ==Version 12.21.2 (March 17, 2022)
 * Change: Added functionality to handle status query transaction for multi sites
 * Change: Version ID updated to '12.21.2'
