@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.21.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.21.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.22.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.22.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -2702,8 +2702,8 @@
                     <xs:choice>
                         <xs:sequence>
                             <xs:choice>
-                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" />
-                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
+                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" minOccurs="0"/>
+                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" minOccurs="0"/>
                             </xs:choice>
                             <xs:choice>
                                 <xs:element name="customerName" type="xp:string256Type"/>
@@ -2712,6 +2712,7 @@
                             <xs:element name="fundsTransferId" type="xp:stringExactly16AlphanumericType" />
                             <xs:element name="amount" type="xp:transactionAmountType" />
                             <xs:element name="disbursementType" type="xp:disbursementTypeEnum" minOccurs="0"/>
+                            <xs:element name="cardholderAddress" type="xp:address"  minOccurs="0"/>
                             <xs:choice>
                                 <xs:element name="card" type="xp:cardType" />
                                 <xs:element name="token" type="xp:cardTokenType" />
