@@ -1,5 +1,20 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.24.0 (April 4, 2022)
+* Change: [cnpAPI v12.23] Added a new value in businessIndicatorEnum to support businessIndicator element :buyOnlinePickUpInStore.
+* Change: [cnpAPI v12.23] Added  new element :orderChannel for Auth/sale transaction request.
+* Change: [cnpAPI v12.23] Added new elements(accountUsername, userAccountNumber, userAccountEmail, membershipId, membershipPhone, membershipEmail, membershipName, accountCreatedDate and userAccountPhone) in customerInfo type.
+* Change: [cnpAPI v12.23] Added new elements:sellerId , url to support contact type which is referenced by retailerAddress
+* Change: [cnpAPI v12.23] Added new elements retailerAddress,additionalCOFData to support Auth/Sale/CaptureGivenAuth.
+* Change: [cnpAPI v12.23] Added a new elements:discountCode,discountPercent,fulfilmentMethodType in enhancedData.
+* Change: [cnpAPI v12.23] Added a new elements:itemCategory,itemSubCategory,productId,productName in LineItemData
+* Change: [cnpAPI v12.24] Added a new values in businessIndicatorEnum to support businessIndicator element :highRiskSecuritiesPurchase,fundTransfer,walletTransfer
+* Change: [cnpAPI v12.24] Added OrderChannelEnum to support  element :orderChannel for Auth/sale transaction request.
+* Change: [cnpAPI v12.24] Added fulfilmentMethodTypeEnum to support  element fulfilmentMethodType in enhancedData type
+* Change: [cnpAPI v12.24] Added new value in frequencyOfMITEnum: Annually(It was Anually- Incorrect spelling in earlier version.)
+* Change: [cnpAPI v12.24] Added new element crypto to support Auth/Sale/CaptureGivenAuth.
+* Change: [cnpAPI v12.24] Added new element fraudCheckStatus to support Auth/Sale.
+
 ==Version 12.22.0 (March 28, 2022)
 * Change: New element introduced for different request.
 * Change: new element :address is added in vendorCredit/vendorDebit/FastAccessFunding.

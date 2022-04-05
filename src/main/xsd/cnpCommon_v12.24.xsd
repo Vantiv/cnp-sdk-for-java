@@ -53,6 +53,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="string14Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="14" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="stringExactly4Type">
         <xs:restriction base="xs:string">
             <xs:minLength value="4" />
@@ -87,6 +93,18 @@
     <xs:simpleType name="string64Type">
         <xs:restriction base="xs:string">
             <xs:maxLength value="64" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string100Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string150Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="150" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -211,12 +229,22 @@
     <xs:simpleType name="businessIndicatorEnum">
         <xs:restriction base="xs:string">
             <xs:enumeration value="consumerBillPayment" />
+            <xs:enumeration value="buyOnlinePickUpInStore" />
+            <xs:enumeration value="highRiskSecuritiesPurchase" />
+            <xs:enumeration value="fundTransfer" />
+            <xs:enumeration value="walletTransfer" />
         </xs:restriction>
     </xs:simpleType>
 
     <xs:simpleType name="transactionAmountType">
         <xs:restriction base="xs:integer">
             <xs:totalDigits value="12" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="discountPercentType">
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="8" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -612,6 +640,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="sellerIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="lastNameType">
         <xs:restriction base="xs:string">
             <xs:maxLength value="25" />
@@ -664,10 +698,14 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="phone" type="xp:phoneType" minOccurs="0" />
+            <xs:element name="sellerId" type="xp:sellerIdType" minOccurs="0" />
+            <xs:element name="url" type="xp:string35Type" minOccurs="0"/>
         </xs:all>
     </xs:complexType>
 
     <xs:element name="billToAddress" type="xp:contact" />
+
+    <xs:element name="retailerAddress" type="xp:contact" />
 
     <xs:complexType name="address">
         <xs:all>
@@ -895,6 +933,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="string35Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="35" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="stringExactly16AlphanumericType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[A-Z,a-z,0-9]{16,16}"/>
@@ -914,6 +958,12 @@
     </xs:simpleType>
 
     <xs:simpleType name="noOfAdultsType">
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="sequenceIndicatorType">
         <xs:restriction base="xs:integer">
             <xs:totalDigits value="2" />
         </xs:restriction>
@@ -950,6 +1000,60 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="Y" />
             <xs:enumeration value="N" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="additionalCOFData">
+        <xs:all>
+            <xs:element name="totalPaymentCount" type="xp:string2Type" minOccurs="0" />
+            <xs:element name="paymentType" type="xp:paymentTypeEnum" minOccurs="0" />
+            <xs:element name="uniqueId" type="xp:string14Type" minOccurs="0" />
+            <xs:element name="frequencyOfMIT" type="xp:frequencyOfMITEnum" minOccurs="0" />
+            <xs:element name="validationReference" type="xp:string20Type" minOccurs="0" />
+            <xs:element name="sequenceIndicator" type="xp:sequenceIndicatorType" minOccurs="0" />
+        </xs:all>
+    </xs:complexType>
+
+    <xs:element name="additionalCOFData" type="xp:additionalCOFData" />
+
+    <xs:simpleType name="paymentTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Fixed Amount" />
+            <xs:enumeration value="Variable Amount" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="frequencyOfMITEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Daily" />
+            <xs:enumeration value="Weekly" />
+            <xs:enumeration value="BiWeekly" />
+            <xs:enumeration value="Monthly" />
+            <xs:enumeration value="Quarterly" />
+            <xs:enumeration value="BiAnnually" />
+            <xs:enumeration value="Anually" /> <!--Incorrect spelling. deprecated field-->
+            <xs:enumeration value="Annually" />
+            <xs:enumeration value="UNSCHEDULED" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="fulfilmentMethodTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DELIVERY"/>
+            <xs:enumeration value="COUNTER_PICKUP"/>
+            <xs:enumeration value="CURBSIDE_PICKUP"/>
+            <xs:enumeration value="LOCKER_PICKUP"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="orderChannelEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WEB" />
+            <xs:enumeration value="PHONE" />
+            <xs:enumeration value="MOBILE_APP" />
+            <xs:enumeration value="SOCIAL" />
+            <xs:enumeration value="MARKETPLACE" />
+            <xs:enumeration value="IN_STORE_KIOSK" />
         </xs:restriction>
     </xs:simpleType>
 
