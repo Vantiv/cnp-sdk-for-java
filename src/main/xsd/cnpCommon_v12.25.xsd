@@ -11,6 +11,18 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:simpleType name="string16Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="16" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string18Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="18" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="string20Type">
         <xs:restriction base="xs:string">
             <xs:maxLength value="20" />
@@ -963,6 +975,18 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="numberOfRoomsType">
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="smokingPreferenceType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="sequenceIndicatorType">
         <xs:restriction base="xs:integer">
             <xs:totalDigits value="2" />
@@ -987,6 +1011,15 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:simpleType name="travelPackageIndicatorEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CarRentalReservation" />
+            <xs:enumeration value="AirlineReservation" />
+            <xs:enumeration value="Both" />
+            <xs:enumeration value="Unknown" />
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="lodgingProgramCodeType">
         <xs:restriction base="xs:string">
@@ -1057,4 +1090,25 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="productEnrolledEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GUARPAY1" />
+            <xs:enumeration value="GUARPAY2" />
+            <xs:enumeration value="GUARPAY3" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="decisionPurposeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CONSIDER_DECISION" />
+            <xs:enumeration value="INFORMATION_ONLY" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="fraudSwitchIndicatorEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PRE" />
+            <xs:enumeration value="POST" />
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
