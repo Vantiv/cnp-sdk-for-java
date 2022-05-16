@@ -595,4 +595,69 @@ public class TestAuth {
 		assertEquals( "Approved",response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void AuthWithFsErrorCode_OverridePolicy_ProdEnrolled_MercAcctStatus_FraudSwitchInd_Deci_Purpose() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setOverridePolicy("FIS Policy");
+		authorization.setFsErrorCode("Not Applicable");
+		authorization.setMerchantAccountStatus("Active");
+		authorization.setProductEnrolled(ProductEnrolledEnum.GUARPAY_1);
+		authorization.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
+		authorization.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals( "Approved",response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void AuthWithLodgingInfo_propertyAddress() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setOverridePolicy("FIS Policy");
+		authorization.setFsErrorCode("Not Applicable");
+		authorization.setMerchantAccountStatus("Active");
+		authorization.setProductEnrolled(ProductEnrolledEnum.GUARPAY_1);
+		authorization.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
+		authorization.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
+		LodgingInfo lodgingInfo = new LodgingInfo();
+		lodgingInfo.setBookingID("bKID1");
+		lodgingInfo.setPassengerName("HoneyWell");
+		PropertyAddress propertyAddress = new PropertyAddress();
+		propertyAddress.setName("Bangalore");
+		propertyAddress.setCity("Karnataka");
+		propertyAddress.setCountry(CountryTypeEnum.IN);
+		propertyAddress.setRegion("NTH");
+		lodgingInfo.setPropertyAddress(propertyAddress);
+		lodgingInfo.setTravelPackageIndicator(TravelPackageIndicatorEnum.CAR_RENTAL_RESERVATION);
+		lodgingInfo.setNumberOfRooms(BigInteger.valueOf(1));
+		lodgingInfo.setTollFreePhoneNumber("9934579676");
+		authorization.setLodgingInfo(lodgingInfo);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals( "Approved",response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }
