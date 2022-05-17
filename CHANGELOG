@@ -1,5 +1,13 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.25.0 (May 17, 2022)
+* Change:  Added new Elements to support Guaranteed Payments for Authorization/Sale-overridePolicy, fsErrorCode, merchantAccountStatus, productEnrolled, decisionPurpose, fraudSwitchIndicator.
+* Change:  Added a new Enum productEnrolledEnum(GUARPAY1,GUARPAY2,GUARPAY3) to support productEnrolled
+* Change:  Added a new Enum decisionPurposeEnum(CONSIDER_DECISION,INFORMATION_ONLY) to support decisionPurpose
+* Change:  Added a new Enum fraudSwitchIndicatorEnum(PRE,POST) to support fraudSwitchIndicator
+* Change:  Added new Elements to support Cruise Lines for lodgingInfo element for Authorization/Sale :- bookingID, passengerName, propertyAddress( name,city,region, country), travelPackageIndicator, smokingPreference, numberOfRooms, tollFreePhoneNumber.
+* Change:  Added a new Enum travelPackageIndicatorEnum(CarRentalReservation,AirlineReservation,Both,Unknown) to support travelPackageIndicator
+
 ==Version 12.24.0 (April 4, 2022)
 * Change: [cnpAPI v12.23] Added a new value in businessIndicatorEnum to support businessIndicator element :buyOnlinePickUpInStore.
 * Change: [cnpAPI v12.23] Added  new element :orderChannel for Auth/sale transaction request.

@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.24.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.24.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.25.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.25.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -184,6 +184,12 @@
                             </xs:element>
                             <xs:element name="fraudCheckStatus" type="xp:string50Type" minOccurs="0"/>
                             <xs:element name="crypto" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="overridePolicy" type="xp:string150Type" minOccurs="0"/>
+                            <xs:element name="fsErrorCode" type="xp:string50Type" minOccurs="0"/>
+                            <xs:element name="merchantAccountStatus" type="xp:string50Type" minOccurs="0"/>
+                            <xs:element name="productEnrolled" type="xp:productEnrolledEnum" minOccurs="0" />
+                            <xs:element name="decisionPurpose" type="xp:decisionPurposeEnum" minOccurs="0" />
+                            <xs:element name="fraudSwitchIndicator" type="xp:fraudSwitchIndicatorEnum" minOccurs="0" />
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -403,6 +409,12 @@
                         <xs:element name="orderChannel" type="xp:orderChannelEnum" minOccurs="0"/>
                         <xs:element name="fraudCheckStatus" type="xp:string50Type" minOccurs="0"/>
                         <xs:element name="crypto" type="xs:boolean" minOccurs="0" />
+                        <xs:element name="overridePolicy" type="xp:string150Type" minOccurs="0"/>
+                        <xs:element name="fsErrorCode" type="xp:string50Type" minOccurs="0"/>
+                        <xs:element name="merchantAccountStatus" type="xp:string50Type" minOccurs="0"/>
+                        <xs:element name="productEnrolled" type="xp:productEnrolledEnum" minOccurs="0" />
+                        <xs:element name="decisionPurpose" type="xp:decisionPurposeEnum" minOccurs="0" />
+                        <xs:element name="fraudSwitchIndicator" type="xp:fraudSwitchIndicatorEnum" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -2964,6 +2976,24 @@
                 <xs:element name="propertyLocalPhone" type="xp:csPhoneType" minOccurs="0" />
                 <xs:element name="fireSafetyIndicator" type="xs:boolean" minOccurs="0" />
                 <xs:element ref="xp:lodgingCharge" minOccurs="0" maxOccurs="6"/>
+                <xs:element name="bookingID" type="xp:string14Type" minOccurs="0" />
+                <xs:element name="passengerName" type="xp:string30Type" minOccurs="0" />
+                <xs:element ref="xp:propertyAddress" minOccurs="0" />
+                <xs:element name="travelPackageIndicator" type="xp:travelPackageIndicatorEnum" minOccurs="0" />
+                <xs:element name="smokingPreference" type="xp:smokingPreferenceType" minOccurs="0" />
+                <xs:element name="numberOfRooms" type="xp:numberOfRoomsType" minOccurs="0" />
+                <xs:element name="tollFreePhoneNumber" type="xp:string16Type" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="propertyAddress">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xp:string20Type" minOccurs="0" />
+                <xs:element name="city" type="xp:string18Type" minOccurs="0" />
+                <xs:element name="region" type="xp:string3Type" minOccurs="0" />
+                <xs:element name="country" type="xp:countryTypeEnum" minOccurs="0" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>

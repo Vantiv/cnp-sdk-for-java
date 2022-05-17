@@ -475,4 +475,66 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void SaleWithFsErrorCode_OverridePolicy_ProdEnrolled_MercAcctStatus_FraudSwitchInd_Deci_Purpose() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		sale.setOverridePolicy("FIS Policy");
+		sale.setFsErrorCode("Not Applicable");
+		sale.setMerchantAccountStatus("Active");
+		sale.setProductEnrolled(ProductEnrolledEnum.GUARPAY_1);
+		sale.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
+		sale.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void simpleSaleWithLodgingInfoAndpropertyAddress() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		sale.setOverridePolicy("FIS Policy");
+		sale.setFsErrorCode("Not Applicable");
+		sale.setMerchantAccountStatus("Active");
+		sale.setProductEnrolled(ProductEnrolledEnum.GUARPAY_1);
+		sale.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
+		sale.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
+		LodgingInfo lodgingInfo = new LodgingInfo();
+		lodgingInfo.setBookingID("bKID1");
+		lodgingInfo.setPassengerName("HoneyWell");
+		PropertyAddress propertyAddress = new PropertyAddress();
+		propertyAddress.setName("Bangalore");
+		propertyAddress.setCity("Karnataka");
+		propertyAddress.setCountry(CountryTypeEnum.IN);
+		propertyAddress.setRegion("NTH");
+		lodgingInfo.setPropertyAddress(propertyAddress);
+		lodgingInfo.setTravelPackageIndicator(TravelPackageIndicatorEnum.CAR_RENTAL_RESERVATION);
+		lodgingInfo.setNumberOfRooms(BigInteger.valueOf(1));
+		lodgingInfo.setTollFreePhoneNumber("9934579676");
+		sale.setLodgingInfo(lodgingInfo);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }
