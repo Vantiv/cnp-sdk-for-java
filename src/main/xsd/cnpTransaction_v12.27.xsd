@@ -1,8 +1,8 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.25.xsd" />
-    <xs:include schemaLocation="cnpRecurring_v12.25.xsd" />
+    <xs:include schemaLocation="cnpCommon_v12.27.xsd" />
+    <xs:include schemaLocation="cnpRecurring_v12.27.xsd" />
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true" />
 
@@ -190,6 +190,7 @@
                             <xs:element name="productEnrolled" type="xp:productEnrolledEnum" minOccurs="0" />
                             <xs:element name="decisionPurpose" type="xp:decisionPurposeEnum" minOccurs="0" />
                             <xs:element name="fraudSwitchIndicator" type="xp:fraudSwitchIndicatorEnum" minOccurs="0" />
+                            <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -207,6 +208,7 @@
                         <xs:element name="surchargeAmount" type="xp:transactionAmountType" minOccurs="0" />
                         <xs:element name="payPalNotes" type="xp:payPalNotesType" minOccurs="0" />
                         <xs:element name="actionReason" type="xp:actionReasonType" minOccurs="0" />
+                        <xs:element ref="xp:additionalCOFData" minOccurs="0" />
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -247,6 +249,7 @@
                         <xs:element ref="xp:customBilling" minOccurs="0" />
                         <xs:element ref="xp:lodgingInfo" minOccurs="0" />
                         <xs:element name="pin" type="xp:pinType" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -298,6 +301,7 @@
                         <xs:element name="processingType" type="xp:processingTypeEnum" minOccurs="0" />
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
                         <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -339,6 +343,7 @@
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
                         <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
                         <xs:element name="crypto" type="xs:boolean" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -406,7 +411,7 @@
                         <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0" />
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
                         <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0" />
-                        <xs:element name="orderChannel" type="xp:orderChannelEnum" minOccurs="0"/>
+                        <xs:element name="orderChannel" type="xp:orderChannelEnum" minOccurs="0" />
                         <xs:element name="fraudCheckStatus" type="xp:string50Type" minOccurs="0"/>
                         <xs:element name="crypto" type="xs:boolean" minOccurs="0" />
                         <xs:element name="overridePolicy" type="xp:string150Type" minOccurs="0"/>
@@ -415,6 +420,7 @@
                         <xs:element name="productEnrolled" type="xp:productEnrolledEnum" minOccurs="0" />
                         <xs:element name="decisionPurpose" type="xp:decisionPurposeEnum" minOccurs="0" />
                         <xs:element name="fraudSwitchIndicator" type="xp:fraudSwitchIndicatorEnum" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -434,12 +440,14 @@
                                 <xs:element name="amount" type="xp:transactionAmountType" minOccurs="0" />
                                 <xs:element name="secondaryAmount" type="xp:transactionAmountType" minOccurs="0" />
                                 <xs:element name="surchargeAmount" type="xp:transactionAmountType" minOccurs="0" />
+                                <xs:element ref="xp:additionalCOFData" minOccurs="0" />
                                 <xs:element ref="xp:customBilling" minOccurs="0" />
                                 <xs:element ref="xp:enhancedData" minOccurs="0" />
                                 <xs:element ref="xp:lodgingInfo" minOccurs="0" />
                                 <xs:element ref="xp:processingInstructions" minOccurs="0" />
                                 <xs:element ref="xp:pos" minOccurs="0" />
                                 <xs:element name="pin" type="xp:pinType" minOccurs="0" />
+                                <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                             </xs:sequence>
                             <xs:sequence>
                                 <xs:element name="orderId" type="xp:string256Type" />
@@ -448,6 +456,7 @@
                                 <xs:element name="surchargeAmount" type="xp:transactionAmountType" minOccurs="0" />
                                 <xs:element name="orderSource" type="xp:orderSourceType" />
                                 <xs:element ref="xp:billToAddress" minOccurs="0" />
+                                <xs:element ref="xp:additionalCOFData" minOccurs="0" />
                                 <xs:choice>
                                     <xs:element name="mpos" type="xp:mposType" />
                                     <xs:element name="card" type="xp:cardType" />
@@ -486,6 +495,7 @@
                                 <xs:element ref="xp:pos" minOccurs="0" />
                                 <xs:element name="merchantData" type="xp:merchantDataType" minOccurs="0" />
                                 <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0" />
+                                <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                             </xs:sequence>
                         </xs:choice>
                         <xs:element name="payPalNotes" type="xp:payPalNotesType" minOccurs="0" />
@@ -661,7 +671,7 @@
                 <xs:element ref="xp:lineItemData" minOccurs="0" maxOccurs="99" />
                 <xs:element name="discountCode" type="xp:string100Type" minOccurs="0" />
                 <xs:element name="discountPercent" type="xp:discountPercentType" minOccurs="0" />
-                <xs:element name="fulfilmentMethodType" type="xp:fulfilmentMethodTypeEnum" minOccurs="0"/>
+                <xs:element name="fulfilmentMethodType" type="xp:fulfilmentMethodTypeEnum" minOccurs="0" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -882,6 +892,8 @@
                         <xs:element ref="xp:pinlessDebitResponse" minOccurs="0"/>
                         <!-- Introduced as part of Guaranteed Payments -->
                         <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0" />
+                        <!--If AuthMax is used -->
+                        <xs:element ref="xp:authMax" minOccurs="0"/>
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -1346,6 +1358,8 @@
                         <xs:element name="paymentAccountReferenceNumber" type="xp:string50Type" minOccurs="0" />
                         <!-- Introduced as part of Guaranteed Payments -->
                         <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0" />
+                        <!--If AuthMax is used -->
+                        <xs:element ref="xp:authMax" minOccurs="0"/>
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -2763,7 +2777,7 @@
                         <xs:sequence>
                             <xs:choice>
                                 <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" minOccurs="0"/>
-                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" minOccurs="0" />
+                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" minOccurs="0"/>
                             </xs:choice>
                             <xs:choice>
                                 <xs:element name="customerName" type="xp:string256Type"/>
@@ -3011,6 +3025,7 @@
                         <xs:element ref="xp:customBilling" minOccurs="0" />
                         <xs:element ref="xp:lodgingInfo" minOccurs="0" />
                         <xs:element name="pin" type="xp:pinType" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -3055,6 +3070,7 @@
                         <xs:element ref="xp:customBilling" minOccurs="0" />
                         <xs:element ref="xp:lodgingInfo" minOccurs="0" />
                         <xs:element name="pin" type="xp:pinType" minOccurs="0" />
+                        <xs:element ref="xp:passengerTransportData" minOccurs="0" />
                     </xs:all>
                 </xs:extension>
             </xs:complexContent>
@@ -3113,4 +3129,64 @@
             <xs:enumeration value="VWT" />
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:element name="passengerTransportData">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="passengerName" type="xp:string29Type" minOccurs="0" />
+                <xs:element name="ticketNumber" type="xp:string15Type" minOccurs="0" />
+                <xs:element name="issuingCarrier" type="xp:string4Type" minOccurs="0" />
+                <xs:element name="carrierName" type="xp:string19Type" minOccurs="0" />
+                <xs:element name="restrictedTicketIndicator" type="xp:string20Type" minOccurs="0" />
+                <xs:element name="numberOfAdults" type="xp:numberOfPassengersType" minOccurs="0" />
+                <xs:element name="numberOfChildren" type="xp:numberOfPassengersType" minOccurs="0" />
+                <xs:element name="customerCode" type="xp:string25Type" minOccurs="0" />
+                <xs:element name="arrivalDate" type="xs:date" minOccurs="0" />
+                <xs:element name="issueDate" type="xs:date" minOccurs="0" />
+                <xs:element name="travelAgencyCode" type="xp:stringExactly8Type" minOccurs="0" />
+                <xs:element name="travelAgencyName" type="xp:string25Type" minOccurs="0" />
+                <xs:element name="computerizedReservationSystem" type="xp:computerizedReservationSystemEnum" minOccurs="0" />
+                <xs:element name="creditReasonIndicator" type="xp:creditReasonIndicatorEnum" minOccurs="0" />
+                <xs:element name="ticketChangeIndicator" type="xp:ticketChangeIndicatorEnum" minOccurs="0" />
+                <xs:element name="ticketIssuerAddress" type="xp:string16Type" minOccurs="0" />
+                <xs:element name="exchangeTicketNumber" type="xp:string15Type" minOccurs="0" />
+                <xs:element name="exchangeAmount" type="xp:transactionAmountType" minOccurs="0" />
+                <xs:element name="exchangeFeeAmount" type="xp:transactionAmountType" minOccurs="0" />
+                <xs:element ref="xp:tripLegData" minOccurs="1" maxOccurs="99" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="tripLegData">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="tripLegNumber" type="xp:tripLegNumberType" />
+                <xs:element name="departureCode" type="xp:string5Type" minOccurs="0" />
+                <xs:element name="carrierCode" type="xp:stringExactly2Type" minOccurs="0" />
+                <xs:element name="serviceClass" type="xp:serviceClassEnum" minOccurs="0" />
+                <xs:element name="stopOverCode" type="xp:string1Type" minOccurs="0" />
+                <xs:element name="destinationCode" type="xp:string5Type" minOccurs="0" />
+                <xs:element name="fareBasisCode" type="xp:string15Type" minOccurs="0" />
+                <xs:element name="departureDate" type="xs:date" minOccurs="0" />
+                <xs:element name="originCity" type="xp:string5Type" minOccurs="0" />
+                <xs:element name="travelNumber" type="xp:string5Type" minOccurs="0" />
+                <xs:element name="departureTime" type="xp:time24HourType" minOccurs="0" />
+                <xs:element name="arrivalTime" type="xp:time24HourType" minOccurs="0" />
+                <xs:element name="remarks" type="xp:string80Type" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="authMax">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="authMaxApplied" type="xs:boolean" minOccurs="0" />
+                <xs:element name="networkTokenApplied" type="xs:boolean" minOccurs="0" />
+                <xs:element name="networkToken" type="xs:string" minOccurs="0" />
+                <xs:element name="authMaxResponseCode" type="xs:string" minOccurs="0" />
+                <xs:element name="authMaxResponseMessage" type="xs:string" minOccurs="0" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>
