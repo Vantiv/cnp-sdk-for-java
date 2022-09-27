@@ -716,8 +716,8 @@ public class TestAuth {
 		tripLegData.setDepartureDate(Calendar.getInstance());
 		tripLegData.setOriginCity("OCity");
 		tripLegData.setTravelNumber("TravN");
-		tripLegData.setDepartureTime("DepartureTime");
-		tripLegData.setArrivalTime("ArrivalTime");
+		tripLegData.setDepartureTime("01:00");
+		tripLegData.setArrivalTime("10:00");
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
 	}

@@ -4,16 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
-import io.github.vantiv.sdk.generate.CardType;
-import io.github.vantiv.sdk.generate.Credit;
-import io.github.vantiv.sdk.generate.CreditResponse;
-import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
-import io.github.vantiv.sdk.generate.OrderSourceType;
-import io.github.vantiv.sdk.generate.ProcessingInstructions;
+import java.math.BigInteger;
 
 public class TestCredit {
 
@@ -168,5 +163,50 @@ public class TestCredit {
         assertEquals("Approved", response.getMessage());
         assertEquals("sandbox", response.getLocation());
     }
+    @Test
+    public void testCreditWithAdditionalCOFData() throws Exception {
+        Credit credit = new Credit();
+        credit.setId("12345");
+        credit.setReportGroup("Default");
+        credit.setOrderId("67890");
+        credit.setAmount(10000L);
+        credit.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setNumber("4100000000000000");
+        card.setExpDate("1215");
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        credit.setCard(card);
+        AdditionalCOFData data = new AdditionalCOFData();
+        data.setUniqueId("56655678D");
+        data.setTotalPaymentCount("35");
+        data.setFrequencyOfMIT(FrequencyOfMITEnum.ANNUALLY);
+        data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+        data.setValidationReference("asd123");
+        data.setSequenceIndicator(BigInteger.valueOf(12));
+        credit.setAdditionalCOFData(data);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals(response.getMessage(), "Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+    @Test
+    public void simpleCreditWithTxnAndAdditionalCofData() throws Exception {
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setSecondaryAmount(20L);
+        credit.setCnpTxnId(1234L);
+        credit.setId("id");
+        AdditionalCOFData data = new AdditionalCOFData();
+        data.setUniqueId("56655678D");
+        data.setTotalPaymentCount("35");
+        data.setFrequencyOfMIT(FrequencyOfMITEnum.ANNUALLY);
+        data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+        data.setValidationReference("asd123");
+        data.setSequenceIndicator(BigInteger.valueOf(12));
+        credit.setAdditionalCOFData(data);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+
 
 }
