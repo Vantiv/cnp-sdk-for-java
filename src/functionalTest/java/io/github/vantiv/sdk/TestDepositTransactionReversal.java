@@ -2,15 +2,12 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
+import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import io.github.vantiv.sdk.generate.CustomBilling;
-import io.github.vantiv.sdk.generate.EnhancedData;
-import io.github.vantiv.sdk.generate.LodgingInfo;
-import io.github.vantiv.sdk.generate.ProcessingInstructions;
-import io.github.vantiv.sdk.generate.DepositTransactionReversal;
-import io.github.vantiv.sdk.generate.DepositTransactionReversalResponse;
+import java.math.BigInteger;
+import java.util.Calendar;
 
 public class TestDepositTransactionReversal {
 
@@ -54,5 +51,61 @@ public class TestDepositTransactionReversal {
         assertEquals("000", response.getResponse());
         assertEquals("id123", response.getId());
         assertEquals(987654L, response.getRecyclingResponse().getCreditCnpTxnId().longValue());
+    }
+    @Test
+    public  void simpleDepositTransactionReversalWithPassengerTransportData() throws Exception{
+        DepositTransactionReversal depositTransactionReversal = new DepositTransactionReversal();
+        depositTransactionReversal.setId("id");
+        depositTransactionReversal.setCnpTxnId(124785L);
+        depositTransactionReversal.setPassengerTransportData(passengerTransportData());
+        DepositTransactionReversalResponse response = cnp.depositTransactionReversal(depositTransactionReversal);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+        assertEquals("000", response.getResponse());
+        assertEquals("id", response.getId());
+        assertEquals(124785L, response.getRecyclingResponse().getCreditCnpTxnId().longValue());
+    }
+
+    private PassengerTransportData passengerTransportData(){
+        PassengerTransportData passengerTransportData = new PassengerTransportData();
+        passengerTransportData.setPassengerName("PassengerName");
+        passengerTransportData.setTicketNumber("9876543210");
+        passengerTransportData.setIssuingCarrier("str4");
+        passengerTransportData.setCarrierName("CarrierName");
+        passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+        passengerTransportData.setNumberOfAdults(8);
+        passengerTransportData.setNumberOfChildren(1);
+        passengerTransportData.setCustomerCode("CustomerCode");
+        passengerTransportData.setArrivalDate(Calendar.getInstance());
+        passengerTransportData.setIssueDate(Calendar.getInstance());
+        passengerTransportData.setTravelAgencyCode("TravCode");
+        passengerTransportData.setTravelAgencyName("TravelAgencyName");
+        passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+        passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+        passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+        passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+        passengerTransportData.setExchangeAmount(new Long(110));
+        passengerTransportData.setExchangeFeeAmount(new Long(112));
+        passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+        passengerTransportData.getTripLegDatas().add(addTripLegData());
+        return  passengerTransportData;
+    }
+
+    private TripLegData addTripLegData(){
+        TripLegData tripLegData = new TripLegData();
+        tripLegData.setTripLegNumber(new BigInteger("4"));
+        tripLegData.setDepartureCode("DeptC");
+        tripLegData.setCarrierCode("CC");
+        tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+        tripLegData.setStopOverCode("N");
+        tripLegData.setDestinationCode("DestC");
+        tripLegData.setFareBasisCode("FareBasisCode");
+        tripLegData.setDepartureDate(Calendar.getInstance());
+        tripLegData.setOriginCity("OCity");
+        tripLegData.setTravelNumber("TravN");
+        tripLegData.setDepartureTime("01:00");
+        tripLegData.setArrivalTime("10:00");
+        tripLegData.setRemarks("Remarks");
+        return  tripLegData;
     }
 }
