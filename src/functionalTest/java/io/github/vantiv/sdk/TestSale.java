@@ -538,20 +538,20 @@ public class TestSale {
 	}
 	@Test
 	public  void simpleSaleWithPassengerTransportData() throws Exception{
-		Authorization authorization = new Authorization();
-		authorization.setReportGroup("русский中文");
-		authorization.setOrderId("12344");
-		authorization.setAmount(106L);
-		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
-		authorization.setId("id");
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
-		authorization.setCard(card);
-		authorization.setPassengerTransportData(passengerTransportData());
-		AuthorizationResponse response = cnp.authorize(authorization);
-		assertEquals("русский中文",response.getReportGroup());
+		sale.setCard(card);
+		sale.setId("id");
+		sale.setPassengerTransportData(passengerTransportData());
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
 
