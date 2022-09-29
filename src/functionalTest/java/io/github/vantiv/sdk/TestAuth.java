@@ -35,7 +35,6 @@ public class TestAuth {
         card.setNumber("4100000000000000");
         card.setExpDate("1210");
         authorization.setCard(card);
-
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals("русский中文",response.getReportGroup());
         assertEquals("sandbox", response.getLocation());
@@ -720,5 +719,58 @@ public class TestAuth {
 		tripLegData.setArrivalTime("10:00");
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxData() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344401");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxFalse() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344402");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxNotApplied() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344403");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
 	}
 }

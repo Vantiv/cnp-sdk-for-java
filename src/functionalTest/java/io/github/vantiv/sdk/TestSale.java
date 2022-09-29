@@ -539,19 +539,19 @@ public class TestSale {
 	@Test
 	public  void simpleSaleWithPassengerTransportData() throws Exception{
 		Sale sale = new Sale();
-		sale.setAmount(106L);
-		sale.setCnpTxnId(123456L);
+		sale.setReportGroup("русский中文");
 		sale.setOrderId("12344");
+		sale.setAmount(106L);
 		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		sale.setCard(card);
-		sale.setId("id");
 		sale.setPassengerTransportData(passengerTransportData());
 		SaleResponse response = cnp.sale(sale);
-		assertEquals("Approved", response.getMessage());
+		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
 
@@ -593,10 +593,63 @@ public class TestSale {
 		tripLegData.setDepartureDate(Calendar.getInstance());
 		tripLegData.setOriginCity("OCity");
 		tripLegData.setTravelNumber("TravN");
-		tripLegData.setDepartureTime("DepartureTime");
-		tripLegData.setArrivalTime("ArrivalTime");
+		tripLegData.setDepartureTime("12:00");
+		tripLegData.setArrivalTime("15:00");
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
+	}
+	@Test
+	public  void simpleSaleWithAuthMaxData() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344401");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxFalse() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344402");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxNotApplied() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344403");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
 	}
 
 }
