@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import javax.xml.bind.JAXBException;
 
+import io.github.vantiv.sdk.generate.*;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -444,6 +445,49 @@ public class TestBatchFile {
         batchRequest1.addTransaction(sale11);
     }
 
+    private PassengerTransportData passengerTransportData(){
+        PassengerTransportData passengerTransportData = new PassengerTransportData();
+        passengerTransportData.setPassengerName("PassengerName");
+        passengerTransportData.setTicketNumber("9876543210");
+        passengerTransportData.setIssuingCarrier("str4");
+        passengerTransportData.setCarrierName("CarrierName");
+        passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+        passengerTransportData.setNumberOfAdults(8);
+        passengerTransportData.setNumberOfChildren(1);
+        passengerTransportData.setCustomerCode("CustomerCode");
+        passengerTransportData.setArrivalDate(Calendar.getInstance());
+        passengerTransportData.setIssueDate(Calendar.getInstance());
+        passengerTransportData.setTravelAgencyCode("TravCode");
+        passengerTransportData.setTravelAgencyName("TravelAgencyName");
+        passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+        passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+        passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+        passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+        passengerTransportData.setExchangeAmount(new Long(110));
+        passengerTransportData.setExchangeFeeAmount(new Long(112));
+        passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+        passengerTransportData.getTripLegDatas().add(addTripLegData());
+        return  passengerTransportData;
+    }
+
+    private TripLegData addTripLegData(){
+        TripLegData tripLegData = new TripLegData();
+        tripLegData.setTripLegNumber(new BigInteger("4"));
+        tripLegData.setDepartureCode("DeptC");
+        tripLegData.setCarrierCode("CC");
+        tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+        tripLegData.setStopOverCode("N");
+        tripLegData.setDestinationCode("DestC");
+        tripLegData.setFareBasisCode("FareBasisCode");
+        tripLegData.setDepartureDate(Calendar.getInstance());
+        tripLegData.setOriginCity("OCity");
+        tripLegData.setTravelNumber("TravN");
+        tripLegData.setDepartureTime("01:00");
+        tripLegData.setArrivalTime("10:00");
+        tripLegData.setRemarks("Remarks");
+        return  tripLegData;
+    }
+
     @Test
     public void testMechaBatchAndProcess() {
 
@@ -652,6 +696,22 @@ public class TestBatchFile {
         authorizationNew.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
         authorizationNew.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
         batch.addTransaction(authorizationNew);
+
+        Authorization authForPassengerTransportData = new Authorization();
+        authForPassengerTransportData.setReportGroup("Planets");
+        authForPassengerTransportData.setOrderId("12344");
+        authForPassengerTransportData.setAmount(106L);
+        authForPassengerTransportData.setOrderSource(OrderSourceType.ECOMMERCE);
+        authForPassengerTransportData.setId("id");
+        authForPassengerTransportData.setCard(card);
+        authForPassengerTransportData.setOverridePolicy("FIS Policy");
+        authForPassengerTransportData.setFsErrorCode("Not Applicable");
+        authForPassengerTransportData.setMerchantAccountStatus("Active");
+        authForPassengerTransportData.setProductEnrolled(ProductEnrolledEnum.GUARPAY_1);
+        authForPassengerTransportData.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
+        authForPassengerTransportData.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
+        authForPassengerTransportData.setPassengerTransportData(passengerTransportData());
+        batch.addTransaction(authForPassengerTransportData);
 
         int transactionCount = batch.getNumberOfTransactions();
 
