@@ -4,9 +4,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
+import io.github.vantiv.sdk.generate.CardType;
+import io.github.vantiv.sdk.generate.Credit;
+import io.github.vantiv.sdk.generate.CreditResponse;
+import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
+import io.github.vantiv.sdk.generate.OrderSourceType;
+import io.github.vantiv.sdk.generate.ProcessingInstructions;
+import io.github.vantiv.sdk.generate.PassengerTransportData;
+import io.github.vantiv.sdk.generate.TripLegData;
+import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
+import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
+import io.github.vantiv.sdk.generate.TicketChangeIndicatorEnum;
+import io.github.vantiv.sdk.generate.ServiceClassEnum;
+import io.github.vantiv.sdk.generate.AdditionalCOFData;
+import io.github.vantiv.sdk.generate.FrequencyOfMITEnum;
+import io.github.vantiv.sdk.generate.PaymentTypeEnum;
 
 import java.math.BigInteger;
 import java.util.Calendar;

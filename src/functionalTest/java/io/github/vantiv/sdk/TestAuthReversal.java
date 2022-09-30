@@ -2,9 +2,14 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
-import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import io.github.vantiv.sdk.generate.AuthReversal;
+import io.github.vantiv.sdk.generate.AuthReversalResponse;
+import io.github.vantiv.sdk.generate.AdditionalCOFData;
+import io.github.vantiv.sdk.generate.FrequencyOfMITEnum;
+import io.github.vantiv.sdk.generate.PaymentTypeEnum;
 
 import java.math.BigInteger;
 

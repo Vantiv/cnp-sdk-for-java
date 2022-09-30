@@ -2,9 +2,23 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
-import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
+import io.github.vantiv.sdk.generate.CardTokenType;
+import io.github.vantiv.sdk.generate.CardType;
+import io.github.vantiv.sdk.generate.ForceCapture;
+import io.github.vantiv.sdk.generate.ForceCaptureResponse;
+import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
+import io.github.vantiv.sdk.generate.OrderSourceType;
+import io.github.vantiv.sdk.generate.ProcessingTypeEnum;
+import io.github.vantiv.sdk.generate.PassengerTransportData;
+import io.github.vantiv.sdk.generate.TripLegData;
+import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
+import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
+import io.github.vantiv.sdk.generate.TicketChangeIndicatorEnum;
+import io.github.vantiv.sdk.generate.ServiceClassEnum;
 
 import java.math.BigInteger;
 import java.util.Calendar;
