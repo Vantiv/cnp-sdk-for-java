@@ -613,6 +613,9 @@ public class TestSale {
 		sale.setCard(card);
 		SaleResponse response = cnp.sale(sale);
 		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
 		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
@@ -651,5 +654,49 @@ public class TestSale {
 		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
-
+	@Test
+	public  void simpleSaleTxnIdWithAuthMaxData() throws Exception{
+		Sale sale = new Sale();
+		sale.setCustomerId("13");
+		sale.setReportGroup("001550");
+		sale.setAmount(106L);
+		sale.setCnpTxnId(34659348401L);
+		sale.setOrderId("34659348401");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		System.out.println(response);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleSaleTxnIdWithAuthMaxDataFalse() throws Exception{
+		Sale sale = new Sale();
+		sale.setCustomerId("13");
+		sale.setReportGroup("001550");
+		sale.setAmount(106L);
+		sale.setCnpTxnId(34659348402L);
+		sale.setOrderId("34659348402");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		System.out.println(response);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

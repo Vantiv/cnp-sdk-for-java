@@ -735,7 +735,36 @@ public class TestAuth {
 		authorization.setCard(card);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
 		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthTxnIdWithAuthMaxData() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setId("1");
+		authorization.setCustomerId("Cust043");
+		authorization.setReportGroup("001550");
+		authorization.setCnpTxnId(34659348401L);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthTxnIdWithAuthMaxDataFalse() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setId("1");
+		authorization.setCustomerId("Cust043");
+		authorization.setReportGroup("001550");
+		authorization.setCnpTxnId(34659348402L);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
 		assertEquals("sandbox", response.getLocation());
 	}
 	@Test
