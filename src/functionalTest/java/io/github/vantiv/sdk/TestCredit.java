@@ -14,6 +14,18 @@ import io.github.vantiv.sdk.generate.CreditResponse;
 import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
 import io.github.vantiv.sdk.generate.OrderSourceType;
 import io.github.vantiv.sdk.generate.ProcessingInstructions;
+import io.github.vantiv.sdk.generate.PassengerTransportData;
+import io.github.vantiv.sdk.generate.TripLegData;
+import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
+import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
+import io.github.vantiv.sdk.generate.TicketChangeIndicatorEnum;
+import io.github.vantiv.sdk.generate.ServiceClassEnum;
+import io.github.vantiv.sdk.generate.AdditionalCOFData;
+import io.github.vantiv.sdk.generate.FrequencyOfMITEnum;
+import io.github.vantiv.sdk.generate.PaymentTypeEnum;
+
+import java.math.BigInteger;
+import java.util.Calendar;
 
 public class TestCredit {
 
@@ -168,5 +180,110 @@ public class TestCredit {
         assertEquals("Approved", response.getMessage());
         assertEquals("sandbox", response.getLocation());
     }
+    @Test
+    public void testCreditWithAdditionalCOFData() throws Exception {
+        Credit credit = new Credit();
+        credit.setId("12345");
+        credit.setReportGroup("Default");
+        credit.setOrderId("67890");
+        credit.setAmount(10000L);
+        credit.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setNumber("4100000000000000");
+        card.setExpDate("1215");
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        credit.setCard(card);
+        AdditionalCOFData data = new AdditionalCOFData();
+        data.setUniqueId("56655678D");
+        data.setTotalPaymentCount("35");
+        data.setFrequencyOfMIT(FrequencyOfMITEnum.ANNUALLY);
+        data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+        data.setValidationReference("asd123");
+        data.setSequenceIndicator(BigInteger.valueOf(12));
+        credit.setAdditionalCOFData(data);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals(response.getMessage(), "Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+    @Test
+    public void simpleCreditWithTxnAndAdditionalCofData() throws Exception {
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setSecondaryAmount(20L);
+        credit.setCnpTxnId(1234L);
+        credit.setId("id");
+        AdditionalCOFData data = new AdditionalCOFData();
+        data.setUniqueId("56655678D");
+        data.setTotalPaymentCount("35");
+        data.setFrequencyOfMIT(FrequencyOfMITEnum.ANNUALLY);
+        data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+        data.setValidationReference("asd123");
+        data.setSequenceIndicator(BigInteger.valueOf(12));
+        credit.setAdditionalCOFData(data);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+    @Test
+    public  void simpleCreditWithPassengerTransportData() throws Exception{
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setSecondaryAmount(20L);
+        credit.setCnpTxnId(1234L);
+        credit.setId("id");
+        AdditionalCOFData data = new AdditionalCOFData();
+        data.setUniqueId("56655678D");
+        data.setTotalPaymentCount("35");
+        data.setFrequencyOfMIT(FrequencyOfMITEnum.ANNUALLY);
+        data.setPaymentType(PaymentTypeEnum.FIXED_AMOUNT);
+        data.setValidationReference("asd123");
+        data.setSequenceIndicator(BigInteger.valueOf(12));
+        credit.setPassengerTransportData(passengerTransportData());
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
 
+    private PassengerTransportData passengerTransportData(){
+        PassengerTransportData passengerTransportData = new PassengerTransportData();
+        passengerTransportData.setPassengerName("PassengerName");
+        passengerTransportData.setTicketNumber("9876543210");
+        passengerTransportData.setIssuingCarrier("str4");
+        passengerTransportData.setCarrierName("CarrierName");
+        passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+        passengerTransportData.setNumberOfAdults(8);
+        passengerTransportData.setNumberOfChildren(1);
+        passengerTransportData.setCustomerCode("CustomerCode");
+        passengerTransportData.setArrivalDate(Calendar.getInstance());
+        passengerTransportData.setIssueDate(Calendar.getInstance());
+        passengerTransportData.setTravelAgencyCode("TravCode");
+        passengerTransportData.setTravelAgencyName("TravelAgencyName");
+        passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+        passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+        passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+        passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+        passengerTransportData.setExchangeAmount(new Long(110));
+        passengerTransportData.setExchangeFeeAmount(new Long(112));
+        passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+        passengerTransportData.getTripLegDatas().add(addTripLegData());
+        return  passengerTransportData;
+    }
+
+    private TripLegData addTripLegData(){
+        TripLegData tripLegData = new TripLegData();
+        tripLegData.setTripLegNumber(new BigInteger("4"));
+        tripLegData.setDepartureCode("DeptC");
+        tripLegData.setCarrierCode("CC");
+        tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+        tripLegData.setStopOverCode("N");
+        tripLegData.setDestinationCode("DestC");
+        tripLegData.setFareBasisCode("FareBasisCode");
+        tripLegData.setDepartureDate(Calendar.getInstance());
+        tripLegData.setOriginCity("OCity");
+        tripLegData.setTravelNumber("TravN");
+        tripLegData.setDepartureTime("01:00");
+        tripLegData.setArrivalTime("10:00");
+        tripLegData.setRemarks("Remarks");
+        return  tripLegData;
+    }
 }

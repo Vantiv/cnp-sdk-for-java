@@ -3,7 +3,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.25.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.27.xsd" />
 
     <xs:complexType name="baseRequest">
         <xs:sequence>
@@ -308,20 +308,21 @@
         </xs:complexType>
     </xs:element>
 
-    <!--<xs:element name="vendorCredit" substitutionGroup="xp:transaction">
+ <!--   <xs:element name="vendorCredit" substitutionGroup="xp:transaction">
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:choice>
                         <xs:sequence>
                             <xs:choice>
-                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" />
-                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
+                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" minOccurs="0" />
+                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" minOccurs="0" />
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
                             <xs:element name="amount" type="xp:transactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
+                            <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -336,13 +337,14 @@
                     <xs:choice>
                         <xs:sequence>
                             <xs:choice>
-                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" />
-                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
+                                <xs:element name="fundingCustomerId" type="xp:merchantIdentificationType" minOccurs="0" />
+                                <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" minOccurs="0" />
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
                             <xs:element name="amount" type="xp:transactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
+                            <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -425,7 +427,6 @@
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
-    </xs:element>
--->
-</xs:schema>
+    </xs:element>-->
 
+</xs:schema>

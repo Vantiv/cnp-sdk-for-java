@@ -1,5 +1,14 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.27.0 (Sep 30, 2022)
+* Change:  [cnpAPI v12.27] Added new Element AuthMax in Authorization/ Sale Response
+* Change:  [cnpAPI v12.27] Added new elements authMaxApplied, networkTokenApplied, networkToken, authMaxResponseCode, authMaxResponseMessage in new element AuthMax
+* Change:  [cnpAPI v12.27] Added new values FIFA, FIVC, FISC, FISD, FIPC, FIPD, FIRC, FIRD in existing actionTypeEnum Enum
+* Change:  [cnpAPI v12.26] Added new Element passengerTransportData for authorization/sale/capture/forceCapture/captureGivenAuth/credit/depositTransactionReversal/refundTransactionReversal
+* Change:  [cnpAPI v12.26] Added new elements passengerName, ticketNumber, issuingCarrier, carrierName, restrictedTicketIndicator, numberOfAdults, numberOfChildren, customerCode, arrivalDate, issueDate, travelAgencyCode, travelAgencyName, computerizedReservationSystem, creditReasonIndicator, ticketChangeIndicator, ticketIssuerAddress, exchangeTicketNumber, exchangeAmount, exchangeFeeAmount, tripLegData are added for new element passengerTransportData.
+* Change:  [cnpAPI v12.26] Added new elements tripLegNumber, departureCode, carrierCode, serviceClass, stopOverCode, destinationCode, fareBasisCode, departureDate, originCity, travelNumber, departureTime, arrivalTime added in new element in tripLegData.
+* Change:  [cnpAPI v12.26] Added existing Elements additionalCOFData in authReversal/credit
+
 ==Version 12.25.0 (May 17, 2022)
 * Change:  Added new Elements to support Guaranteed Payments for Authorization/Sale-overridePolicy, fsErrorCode, merchantAccountStatus, productEnrolled, decisionPurpose, fraudSwitchIndicator.
 * Change:  Added a new Enum productEnrolledEnum(GUARPAY1,GUARPAY2,GUARPAY3) to support productEnrolled

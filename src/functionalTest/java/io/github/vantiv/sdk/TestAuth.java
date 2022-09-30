@@ -35,7 +35,6 @@ public class TestAuth {
         card.setNumber("4100000000000000");
         card.setExpDate("1210");
         authorization.setCard(card);
-
         AuthorizationResponse response = cnp.authorize(authorization);
         assertEquals("русский中文",response.getReportGroup());
         assertEquals("sandbox", response.getLocation());
@@ -54,7 +53,6 @@ public class TestAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		authorization.setCard(card);
-
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
 		assertEquals("Approved", response.getMessage());
@@ -658,6 +656,149 @@ public class TestAuth {
 		authorization.setLodgingInfo(lodgingInfo);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals( "Approved",response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithPassengerTransportData() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setPassengerTransportData(passengerTransportData());
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	private PassengerTransportData passengerTransportData(){
+		PassengerTransportData passengerTransportData = new PassengerTransportData();
+		passengerTransportData.setPassengerName("PassengerName");
+		passengerTransportData.setTicketNumber("9876543210");
+		passengerTransportData.setIssuingCarrier("str4");
+		passengerTransportData.setCarrierName("CarrierName");
+		passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+		passengerTransportData.setNumberOfAdults(8);
+		passengerTransportData.setNumberOfChildren(1);
+		passengerTransportData.setCustomerCode("CustomerCode");
+		passengerTransportData.setArrivalDate(Calendar.getInstance());
+		passengerTransportData.setIssueDate(Calendar.getInstance());
+		passengerTransportData.setTravelAgencyCode("TravCode");
+		passengerTransportData.setTravelAgencyName("TravelAgencyName");
+		passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+		passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+		passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+		passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+		passengerTransportData.setExchangeAmount(new Long(110));
+		passengerTransportData.setExchangeFeeAmount(new Long(112));
+		passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+		passengerTransportData.getTripLegDatas().add(addTripLegData());
+		return  passengerTransportData;
+	}
+
+	private TripLegData addTripLegData(){
+		TripLegData tripLegData = new TripLegData();
+		tripLegData.setTripLegNumber(new BigInteger("4"));
+		tripLegData.setDepartureCode("DeptC");
+		tripLegData.setCarrierCode("CC");
+		tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+		tripLegData.setStopOverCode("N");
+		tripLegData.setDestinationCode("DestC");
+		tripLegData.setFareBasisCode("FareBasisCode");
+		tripLegData.setDepartureDate(Calendar.getInstance());
+		tripLegData.setOriginCity("OCity");
+		tripLegData.setTravelNumber("TravN");
+		tripLegData.setDepartureTime("01:00");
+		tripLegData.setArrivalTime("10:00");
+		tripLegData.setRemarks("Remarks");
+		return  tripLegData;
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxData() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344401");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthTxnIdWithAuthMaxData() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setId("1");
+		authorization.setCustomerId("Cust043");
+		authorization.setReportGroup("001550");
+		authorization.setCnpTxnId(34659348401L);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthTxnIdWithAuthMaxDataFalse() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setId("1");
+		authorization.setCustomerId("Cust043");
+		authorization.setReportGroup("001550");
+		authorization.setCnpTxnId(34659348402L);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxFalse() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344402");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxNotApplied() throws Exception{
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344403");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
 }

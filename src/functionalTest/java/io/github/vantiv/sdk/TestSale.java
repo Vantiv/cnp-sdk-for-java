@@ -536,5 +536,167 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+	@Test
+	public  void simpleSaleWithPassengerTransportData() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setPassengerTransportData(passengerTransportData());
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
 
+	private PassengerTransportData passengerTransportData(){
+		PassengerTransportData passengerTransportData = new PassengerTransportData();
+		passengerTransportData.setPassengerName("PassengerName");
+		passengerTransportData.setTicketNumber("9876543210");
+		passengerTransportData.setIssuingCarrier("str4");
+		passengerTransportData.setCarrierName("CarrierName");
+		passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+		passengerTransportData.setNumberOfAdults(8);
+		passengerTransportData.setNumberOfChildren(1);
+		passengerTransportData.setCustomerCode("CustomerCode");
+		passengerTransportData.setArrivalDate(Calendar.getInstance());
+		passengerTransportData.setIssueDate(Calendar.getInstance());
+		passengerTransportData.setTravelAgencyCode("TravCode");
+		passengerTransportData.setTravelAgencyName("TravelAgencyName");
+		passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+		passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+		passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+		passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+		passengerTransportData.setExchangeAmount(new Long(110));
+		passengerTransportData.setExchangeFeeAmount(new Long(112));
+		passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+		passengerTransportData.getTripLegDatas().add(addTripLegData());
+		return  passengerTransportData;
+	}
+
+	private TripLegData addTripLegData(){
+
+		TripLegData tripLegData = new TripLegData();
+		tripLegData.setTripLegNumber(new BigInteger("4"));
+		tripLegData.setDepartureCode("DeptC");
+		tripLegData.setCarrierCode("CC");
+		tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+		tripLegData.setStopOverCode("N");
+		tripLegData.setDestinationCode("DestC");
+		tripLegData.setFareBasisCode("FareBasisCode");
+		tripLegData.setDepartureDate(Calendar.getInstance());
+		tripLegData.setOriginCity("OCity");
+		tripLegData.setTravelNumber("TravN");
+		tripLegData.setDepartureTime("12:00");
+		tripLegData.setArrivalTime("15:00");
+		tripLegData.setRemarks("Remarks");
+		return  tripLegData;
+	}
+	@Test
+	public  void simpleSaleWithAuthMaxData() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344401");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxFalse() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344402");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleAuthWithAuthMaxNotApplied() throws Exception{
+		Sale sale = new Sale();
+		sale.setReportGroup("русский中文");
+		sale.setOrderId("12344403");
+		sale.setAmount(106L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleSaleTxnIdWithAuthMaxData() throws Exception{
+		Sale sale = new Sale();
+		sale.setCustomerId("13");
+		sale.setReportGroup("001550");
+		sale.setAmount(106L);
+		sale.setCnpTxnId(34659348401L);
+		sale.setOrderId("34659348401");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		System.out.println(response);
+		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
+		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
+		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public  void simpleSaleTxnIdWithAuthMaxDataFalse() throws Exception{
+		Sale sale = new Sale();
+		sale.setCustomerId("13");
+		sale.setReportGroup("001550");
+		sale.setAmount(106L);
+		sale.setCnpTxnId(34659348402L);
+		sale.setOrderId("34659348402");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		SaleResponse response = cnp.sale(sale);
+		System.out.println(response);
+		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
+		assertEquals("001550",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

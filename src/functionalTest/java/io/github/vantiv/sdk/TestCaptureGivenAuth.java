@@ -379,6 +379,78 @@ public class TestCaptureGivenAuth {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+	@Test
+	public  void simpleCaptureGivenAuthWithPassengerTransportData() throws Exception{
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		FraudResult fraudresult = new FraudResult();
+		fraudresult.setAvsResult("12");
+		fraudresult.setCardValidationResult("123");
+		fraudresult.setAuthenticationResult("1");
+		fraudresult.setAdvancedAVSResult("123");
+		authInfo.setFraudResult(fraudresult);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		capturegivenauth.setCard(card);
+		capturegivenauth.setId("id");
+		capturegivenauth.setPassengerTransportData(passengerTransportData());
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 
+	private PassengerTransportData passengerTransportData(){
+		PassengerTransportData passengerTransportData = new PassengerTransportData();
+		passengerTransportData.setPassengerName("PassengerName");
+		passengerTransportData.setTicketNumber("9876543210");
+		passengerTransportData.setIssuingCarrier("str4");
+		passengerTransportData.setCarrierName("CarrierName");
+		passengerTransportData.setRestrictedTicketIndicator("RestrictedIndicator");
+		passengerTransportData.setNumberOfAdults(8);
+		passengerTransportData.setNumberOfChildren(1);
+		passengerTransportData.setCustomerCode("CustomerCode");
+		passengerTransportData.setArrivalDate(Calendar.getInstance());
+		passengerTransportData.setIssueDate(Calendar.getInstance());
+		passengerTransportData.setTravelAgencyCode("TravCode");
+		passengerTransportData.setTravelAgencyName("TravelAgencyName");
+		passengerTransportData.setComputerizedReservationSystem(ComputerizedReservationSystemEnum.DATS);
+		passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
+		passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
+		passengerTransportData.setTicketIssuerAddress("IssuerAddress");
+		passengerTransportData.setExchangeAmount(new Long(110));
+		passengerTransportData.setExchangeFeeAmount(new Long(112));
+		passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
+		passengerTransportData.getTripLegDatas().add(addTripLegData());
+		return  passengerTransportData;
+	}
+
+	private TripLegData addTripLegData(){
+		TripLegData tripLegData = new TripLegData();
+		tripLegData.setTripLegNumber(new BigInteger("4"));
+		tripLegData.setDepartureCode("DeptC");
+		tripLegData.setCarrierCode("CC");
+		tripLegData.setServiceClass(ServiceClassEnum.BUSINESS);
+		tripLegData.setStopOverCode("N");
+		tripLegData.setDestinationCode("DestC");
+		tripLegData.setFareBasisCode("FareBasisCode");
+		tripLegData.setDepartureDate(Calendar.getInstance());
+		tripLegData.setOriginCity("OCity");
+		tripLegData.setTravelNumber("TravN");
+		tripLegData.setDepartureTime("01:00");
+		tripLegData.setArrivalTime("10:00");
+		tripLegData.setRemarks("Remarks");
+		return  tripLegData;
+	}
 }
 
