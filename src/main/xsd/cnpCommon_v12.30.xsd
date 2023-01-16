@@ -1154,6 +1154,7 @@
             <xs:enumeration value="SOCIAL" />
             <xs:enumeration value="MARKETPLACE" />
             <xs:enumeration value="IN_STORE_KIOSK" />
+            <xs:enumeration value="MIT"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -1222,5 +1223,24 @@
             <xs:enumeration value="Economy" />
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:simpleType name="numberOfAggregateOrderCount">
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="8" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="authIndicatorEstimatedEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Estimated" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="authIndicatorIncrementalEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Incremental" />
+        </xs:restriction>
+    </xs:simpleType>
+
 
 </xs:schema>

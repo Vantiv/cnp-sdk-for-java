@@ -3,7 +3,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.27.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.30.xsd" />
 
     <xs:complexType name="baseRequest">
         <xs:sequence>
