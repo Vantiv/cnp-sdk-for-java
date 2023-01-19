@@ -1230,17 +1230,4 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="authIndicatorEstimatedEnum">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="Estimated" />
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="authIndicatorIncrementalEnum">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="Incremental" />
-        </xs:restriction>
-    </xs:simpleType>
-
-
 </xs:schema>
