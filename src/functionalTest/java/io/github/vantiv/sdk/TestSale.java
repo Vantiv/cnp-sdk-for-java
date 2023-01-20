@@ -699,4 +699,71 @@ public class TestSale {
 		assertEquals("001550",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void simpleSaleWithSellerInfo() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		sale.getSellerInfos().add(addSellerInfo());
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+
+	private SellerInfo addSellerInfo(){
+		SellerInfo sellerInfo=new SellerInfo();
+		sellerInfo.setAccountNumber("4485581000000005");
+		sellerInfo.setAggregateOrderCount(new BigInteger("4"));
+		sellerInfo.setAggregateOrderDollars(100L);
+		sellerInfo.setSellerAddress(addSellerAddress());
+		sellerInfo.setCreatedDate("2015-11-12T20:33:09");
+		sellerInfo.setDomain("vap");
+		sellerInfo.setEmail("bob@example.com");
+		sellerInfo.setLastUpdateDate("2015-11-12T20:33:09");
+		sellerInfo.setName("bob");
+		sellerInfo.setOnboardingEmail("bob@example.com");
+		sellerInfo.setOnboardingIpAddress("75.100.88.78");
+		sellerInfo.setParentEntity("abc");
+		sellerInfo.setPhone("9785510040");
+		sellerInfo.setSellerId("123456789");
+		sellerInfo.setSellerTags(addSellerTags());
+		sellerInfo.setUsername("bob123");
+
+		return  sellerInfo;
+	}
+
+	private SellerAddress addSellerAddress(){
+		SellerAddress sellerAddress=new SellerAddress();
+		sellerAddress.setSellerStreetaddress("15 Main Street");
+		sellerAddress.setSellerUnit("100 AB");
+		sellerAddress.setSellerPostalcode("12345");
+		sellerAddress.setSellerCity("San Jose");
+		sellerAddress.setSellerProvincecode("MA");
+		sellerAddress.setSellerCountrycode("US");
+		return  sellerAddress;
+	}
+
+
+	private SellerTagsType addSellerTags(){
+		SellerTagsType sellerTagsType=new SellerTagsType();
+		sellerTagsType.getTags().add("1");
+		sellerTagsType.getTags().add("2");
+		sellerTagsType.getTags().add("3");
+		sellerTagsType.getTags().add("4");
+		sellerTagsType.getTags().add("5");
+
+		return  sellerTagsType;
+	}
+
+
 }
