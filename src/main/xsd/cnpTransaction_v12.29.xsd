@@ -2,8 +2,8 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.30.xsd"/>
-    <xs:include schemaLocation="cnpRecurring_v12.30.xsd"/>
+    <xs:include schemaLocation="cnpCommon_v12.29.xsd"/>
+    <xs:include schemaLocation="cnpRecurring_v12.29.xsd"/>
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true"/>
 
@@ -137,8 +137,6 @@
                     <xs:choice>
                         <xs:sequence>
                             <xs:element name="cnpTxnId" type="xp:cnpIdType"/>
-                            <xs:element name="amount" type="xp:transactionAmountType"/>
-                            <xs:element name="authIndicator" type="xp:authIndicatorIncrementalEnum"/>
                         </xs:sequence>
                         <xs:sequence>
                             <xs:element name="orderId" type="xp:string256Type"/>
@@ -184,7 +182,8 @@
                             <xs:element name="skipRealtimeAU" type="xs:boolean" minOccurs="0"/>
                             <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0"/>
                             <xs:element name="businessIndicator" type="xp:businessIndicatorEnum" minOccurs="0"/>
-                            <xs:element name="orderChannel" type="xp:orderChannelEnum" minOccurs="0"/>
+                            <xs:element name="orderChannel" type="xp:orderChannelEnum" minOccurs="0">
+                            </xs:element>
                             <xs:element name="fraudCheckStatus" type="xp:string50Type" minOccurs="0"/>
                             <xs:element name="crypto" type="xs:boolean" minOccurs="0"/>
                             <xs:element name="overridePolicy" type="xp:string150Type" minOccurs="0"/>
@@ -194,7 +193,6 @@
                             <xs:element name="decisionPurpose" type="xp:decisionPurposeEnum" minOccurs="0"/>
                             <xs:element name="fraudSwitchIndicator" type="xp:fraudSwitchIndicatorEnum" minOccurs="0"/>
                             <xs:element ref="xp:passengerTransportData" minOccurs="0"/>
-                            <xs:element name="authIndicator" type="xp:authIndicatorEstimatedEnum" minOccurs="0"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
