@@ -379,7 +379,7 @@ public class TestBatchFile {
     @Test
     public void testSendToCnpSFTP_WithConfigOverrides() throws Exception {
 
-        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+       Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String workingDir = System.getProperty("java.io.tmpdir");
 
@@ -731,6 +731,148 @@ public class TestBatchFile {
     }
 
     @Test
+    public void testMITSellerInfoSellerAddress() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+
+        // pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
+        Authorization authorization_mit = new Authorization();
+        authorization_mit.setId("12345");
+        authorization_mit.setReportGroup("Default");
+        authorization_mit.setOrderId("67890");
+        authorization_mit.setAmount(10000L);
+        authorization_mit.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType cardDetails = new CardType();
+        cardDetails.setNumber("4100000000000000");
+        cardDetails.setExpDate("1215");
+        cardDetails.setType(MethodOfPaymentTypeEnum.VI);
+        authorization_mit.setCard(cardDetails);
+        EnhancedData enhancedData = new EnhancedData();
+        enhancedData.setCustomerReference("Cust Ref");
+        enhancedData.setSalesTax(1000L);
+        LineItemData line_Item = new LineItemData();
+        line_Item.setItemSequenceNumber(1);
+        line_Item.setItemDescription("Electronics");
+        line_Item.setProductCode("El01");
+        line_Item.setItemCategory("Ele Appiances");
+        line_Item.setItemSubCategory("home appliaces");
+        line_Item.setProductId("1001");
+        line_Item.setProductName("dryer");
+        enhancedData.getLineItemDatas().add(line_Item);
+        enhancedData.setDiscountCode("oneTimeDis");
+        enhancedData.setDiscountPercent(BigInteger.valueOf(12));
+        enhancedData.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+        authorization_mit.setEnhancedData(enhancedData);
+        authorization_mit.setOrderChannel(OrderChannelEnum.MIT);
+        authorization_mit.setFraudCheckStatus("CLOSE");
+        authorization_mit.setCrypto(false);
+        batch.addTransaction(authorization_mit);
+
+
+        Authorization authorizationSellerInfo = new Authorization();
+        authorizationSellerInfo.setReportGroup("русский中文");
+        authorizationSellerInfo.setOrderId("12344");
+        authorizationSellerInfo.setAmount(106L);
+        authorizationSellerInfo.setOrderSource(OrderSourceType.ECOMMERCE);
+        authorizationSellerInfo.setId("id");
+        CardType cardInfo = new CardType();
+        cardInfo.setType(MethodOfPaymentTypeEnum.VI);
+        cardInfo.setNumber("4100000000000000");
+        cardInfo.setExpDate("1210");
+        authorizationSellerInfo.setCard(cardInfo);
+        authorizationSellerInfo.setAmount(1000L);
+        authorizationSellerInfo.getSellerInfos().add(addSellerInfo());
+        batch.addTransaction(authorizationSellerInfo);
+
+
+        Sale saleInfo = new Sale();
+        saleInfo.setReportGroup("Planets");
+        saleInfo.setAmount(106L);
+        saleInfo.setCnpTxnId(123456L);
+        saleInfo.setOrderId("12344");
+        saleInfo.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType cardData = new CardType();
+        cardData.setType(MethodOfPaymentTypeEnum.VI);
+        cardData.setNumber("4100000000000000");
+        cardData.setExpDate("1210");
+        saleInfo.setCard(cardData);
+        saleInfo.setId("id");
+        saleInfo.getSellerInfos().add(addSellerInfo());
+        batch.addTransaction(saleInfo);
+
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
+        int txns = 0;
+
+        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse.processNextTransaction(processor)) {
+            txns++;
+        }
+
+        assertEquals(transactionCount, txns);
+        assertEquals(transactionCount, processor.responseCount);
+    }
+
+
+    private SellerInfo addSellerInfo(){
+        SellerInfo sellerInfo=new SellerInfo();
+        sellerInfo.setAccountNumber("4485581000000005");
+        sellerInfo.setAggregateOrderCount(new BigInteger("4"));
+        sellerInfo.setAggregateOrderDollars(100L);
+        sellerInfo.setSellerAddress(addSellerAddress());
+        sellerInfo.setCreatedDate("2015-11-12T20:33:09");
+        sellerInfo.setDomain("vap");
+        sellerInfo.setEmail("bob@example.com");
+        sellerInfo.setLastUpdateDate("2015-11-12T20:33:09");
+        sellerInfo.setName("bob");
+        sellerInfo.setOnboardingEmail("bob@example.com");
+        sellerInfo.setOnboardingIpAddress("75.100.88.78");
+        sellerInfo.setParentEntity("abc");
+        sellerInfo.setPhone("9785510040");
+        sellerInfo.setSellerId("123456789");
+        sellerInfo.setSellerTags(addSellerTags());
+        sellerInfo.setUsername("bob123");
+
+        return  sellerInfo;
+    }
+
+    private SellerAddress addSellerAddress(){
+        SellerAddress sellerAddress=new SellerAddress();
+        sellerAddress.setSellerStreetaddress("15 Main Street");
+        sellerAddress.setSellerUnit("100 AB");
+        sellerAddress.setSellerPostalcode("12345");
+        sellerAddress.setSellerCity("San Jose");
+        sellerAddress.setSellerProvincecode("MA");
+        sellerAddress.setSellerCountrycode("US");
+        return  sellerAddress;
+    }
+
+
+    private SellerTagsType addSellerTags(){
+        SellerTagsType sellerTagsType=new SellerTagsType();
+        sellerTagsType.getTags().add("1");
+        sellerTagsType.getTags().add("2");
+        sellerTagsType.getTags().add("3");
+        sellerTagsType.getTags().add("4");
+        sellerTagsType.getTags().add("5");
+
+        return  sellerTagsType;
+    }
+
+
+    @Test
     public void testEcheckPreNoteAll() {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
@@ -845,7 +987,7 @@ public class TestBatchFile {
                 .getNextCnpBatchResponse();
         int txns = 0;
 
-//        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+        // ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
 
         while (batchResponse
                 .processNextTransaction(new CnpResponseProcessor() {
@@ -1044,7 +1186,7 @@ public class TestBatchFile {
     @Test
     public void testGiftCardTransactions() {
 
-        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+       Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-GiftCardTransactions-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(

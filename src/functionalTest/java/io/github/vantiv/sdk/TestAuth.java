@@ -488,6 +488,7 @@ public class TestAuth {
 		cust.setAccountCreatedDate(createDate);
 		cust.setUserAccountPhone("123456789");
 		authorization.setCustomerInfo(cust);
+
 		CardType card = new CardType();
 		card.setNumber("4100000000000000");
 		card.setExpDate("1215");
@@ -616,6 +617,7 @@ public class TestAuth {
 		authorization.setDecisionPurpose(DecisionPurposeEnum.CONSIDER_DECISION);
 		authorization.setFraudSwitchIndicator(FraudSwitchIndicatorEnum.PRE);
 		AuthorizationResponse response = cnp.authorize(authorization);
+
 		assertEquals( "Approved",response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
@@ -736,6 +738,7 @@ public class TestAuth {
 		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
 		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
 		assertEquals("1112000199940085",response.getAuthMax().getNetworkToken());
+		assertEquals("000",response.getAuthMax().getAuthMaxResponseCode());
 		assertEquals("Approved",response.getAuthMax().getAuthMaxResponseMessage());
 		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
@@ -801,4 +804,127 @@ public class TestAuth {
 		assertEquals("русский中文",response.getReportGroup());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void simpleAuthWithSellerInfo() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setAmount(1000L);
+		authorization.getSellerInfos().add(addSellerInfo());
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public void simpleAuthWithSellerInfoNull() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("русский中文");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setAmount(1000L);
+		authorization.getSellerInfos().add(null);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals("русский中文",response.getReportGroup());
+		assertEquals("sandbox", response.getLocation());
+	}
+	@Test
+	public void testAuthWithOrdChanelMITEnum() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setReportGroup("Default");
+		authorization.setOrderId("67890");
+		authorization.setAmount(10000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		authorization.setCard(card);
+		EnhancedData enhanced = new EnhancedData();
+		enhanced.setCustomerReference("Cust Ref");
+		enhanced.setSalesTax(1000L);
+		LineItemData lid = new LineItemData();
+		lid.setItemSequenceNumber(1);
+		lid.setItemDescription("Electronics");
+		lid.setProductCode("El01");
+		lid.setItemCategory("Ele Appiances");
+		lid.setItemSubCategory("home appliaces");
+		lid.setProductId("1001");
+		lid.setProductName("dryer");
+		enhanced.getLineItemDatas().add(lid);
+		enhanced.setDiscountCode("oneTimeDis");
+		enhanced.setDiscountPercent(BigInteger.valueOf(12));
+		enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+		authorization.setEnhancedData(enhanced);
+		authorization.setOrderChannel(OrderChannelEnum.MIT);
+		authorization.setFraudCheckStatus("CLOSE");
+		authorization.setCrypto(false);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+
+	private SellerInfo addSellerInfo(){
+		SellerInfo sellerInfo=new SellerInfo();
+		sellerInfo.setAccountNumber("4485581000000005");
+		sellerInfo.setAggregateOrderCount(new BigInteger("4"));
+		sellerInfo.setAggregateOrderDollars(100L);
+		sellerInfo.setSellerAddress(addSellerAddress());
+		sellerInfo.setCreatedDate("2015-11-12T20:33:09");
+		sellerInfo.setDomain("vap");
+		sellerInfo.setEmail("bob@example.com");
+		sellerInfo.setLastUpdateDate("2015-11-12T20:33:09");
+		sellerInfo.setName("bob");
+		sellerInfo.setOnboardingEmail("bob@example.com");
+		sellerInfo.setOnboardingIpAddress("75.100.88.78");
+		sellerInfo.setParentEntity("abc");
+		sellerInfo.setPhone("9785510040");
+		sellerInfo.setSellerId("123456789");
+		sellerInfo.setSellerTags(addSellerTags());
+		sellerInfo.setUsername("bob123");
+
+		return  sellerInfo;
+	}
+
+	private SellerAddress addSellerAddress(){
+		SellerAddress sellerAddress=new SellerAddress();
+		sellerAddress.setSellerStreetaddress("15 Main Street");
+		sellerAddress.setSellerUnit("100 AB");
+		sellerAddress.setSellerPostalcode("12345");
+		sellerAddress.setSellerCity("San Jose");
+		sellerAddress.setSellerProvincecode("MA");
+		sellerAddress.setSellerCountrycode("US");
+		return  sellerAddress;
+	}
+
+
+	private SellerTagsType addSellerTags(){
+		SellerTagsType sellerTagsType=new SellerTagsType();
+		sellerTagsType.getTags().add("1");
+		sellerTagsType.getTags().add("2");
+		sellerTagsType.getTags().add("3");
+		sellerTagsType.getTags().add("4");
+		sellerTagsType.getTags().add("5");
+
+		return  sellerTagsType;
+	}
+
+
 }

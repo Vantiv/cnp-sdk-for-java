@@ -88,7 +88,14 @@ public class TestCommunication {
 	public void testGetBestProtocol() {
 		Assert.assertEquals("TLSv1.2", Communication.getBestProtocol(new String[] {"TLSv1.1", "TLSv1.2"}));
 	}
-
+	@Test
+	public void testGetBestProtocolForTLSv1_3() {
+		Assert.assertEquals("TLSv1.3", Communication.getBestProtocol(new String[] {"TLSv1.2", "TLSv1.3"}));
+	}
+	@Test
+	public void testGetBestProtocolForTLSv1_1Negative() {
+		Assert.assertEquals(null, new Communication().getBestProtocol(new String[] {"TLSv1.1"}));
+	}
 
 
     @Test
