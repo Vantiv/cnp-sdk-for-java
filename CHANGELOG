@@ -1,5 +1,14 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.29.0 (Jan 24, 2023)
+* Change: [cnpAPI v12.28] Added new value - MIT in orderChannelEnum
+* Change: [cnpAPI v12.29] Added new Element sellerInfo for authorization and sale
+* Change: [cnpAPI v12.29] Added new Element sellerAddress in SellerInfo
+* Change: [cnpAPI v12.29] Added new Element sellerTagsType in SellerInfo
+* Change: [cnpAPI v12.29] Changed datatype for networkToken(ccAccountNumberType) for existing Authmax's Elements in Response
+* Change: [cnpAPI v12.29] Changed datatype for authMaxResponseCode(responseType) for existing Authmax's Elements in Response
+* Change: [cnpAPI v12.29] Changed datatype for authMaxResponseMessage(messageType) for existing Authmax's Elements in Response
+
 ==Version 12.27.0 (Sep 30, 2022)
 * Change:  [cnpAPI v12.27] Added new Element AuthMax in Authorization/ Sale Response
 * Change:  [cnpAPI v12.27] Added new elements authMaxApplied, networkTokenApplied, networkToken, authMaxResponseCode, authMaxResponseMessage in new element AuthMax
