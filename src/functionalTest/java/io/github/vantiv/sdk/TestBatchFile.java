@@ -502,8 +502,6 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));
         // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
@@ -734,18 +732,15 @@ public class TestBatchFile {
 
     @Test
     public void testMITSellerInfoSellerAddress() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
-        CnpBatchFileRequest request = new CnpBatchFileRequest(
-                requestFileName);
-
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
         Properties configFromFile = request.getConfig();
 
-// pre-assert the config file has required param values
-        assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));
+        // pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
 
-
-// assertEquals("15000", configFromFile.getProperty("batchPort"));
+        // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -992,7 +987,7 @@ public class TestBatchFile {
                 .getNextCnpBatchResponse();
         int txns = 0;
 
-//        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+        // ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
 
         while (batchResponse
                 .processNextTransaction(new CnpResponseProcessor() {
