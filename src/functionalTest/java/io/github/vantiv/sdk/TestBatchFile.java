@@ -127,18 +127,18 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 public class TestBatchFile {
     private final long TIME_STAMP = System.currentTimeMillis();
     private String preliveStatus = System.getenv("preliveStatus");
-  /*  @Before
+    @Before
     public void setup() {
         if (preliveStatus == null) {
             System.out.println("preliveStatus environment variable is not defined. Defaulting to down.");
             preliveStatus = "down";
         }
-    }*/
+    }
 
     @Test
     public void testSendToCnp_WithFileConfig() throws Exception {
 
-       // Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-fileConfig-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -178,7 +178,7 @@ public class TestBatchFile {
     @Test
     public void testSendToCnp_WithConfigOverrides() throws Exception {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String workingDir = System.getProperty("java.io.tmpdir");
 
@@ -223,7 +223,7 @@ public class TestBatchFile {
     public void testSendToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
 
-       // Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -274,7 +274,7 @@ public class TestBatchFile {
     public void testSendOnlyToCnpSFTP_WithPreviouslyCreatedFile()
             throws Exception {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         // --- Prepare the batch file ---
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
@@ -339,7 +339,7 @@ public class TestBatchFile {
     @Test
     public void testSendToCnpSFTP_WithFileConfig() throws Exception {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -379,7 +379,7 @@ public class TestBatchFile {
     @Test
     public void testSendToCnpSFTP_WithConfigOverrides() throws Exception {
 
-       // Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+       Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String workingDir = System.getProperty("java.io.tmpdir");
 
@@ -491,7 +491,7 @@ public class TestBatchFile {
     @Test
     public void testMechaBatchAndProcess() {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -500,9 +500,9 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        /*assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));*/
-        assertEquals("nufloprftp01.florence.litle.com",
+        assertEquals("payments.vantivprelive.com",
+                configFromFile.getProperty("batchHost"));
+        assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
         // assertEquals("15000", configFromFile.getProperty("batchPort"));
 
@@ -715,6 +715,40 @@ public class TestBatchFile {
         authForPassengerTransportData.setPassengerTransportData(passengerTransportData());
         batch.addTransaction(authForPassengerTransportData);
 
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
+        int txns = 0;
+
+        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse.processNextTransaction(processor)) {
+            txns++;
+        }
+
+        assertEquals(transactionCount, txns);
+        assertEquals(transactionCount, processor.responseCount);
+    }
+
+    @Test
+    public void testMITSellerInfoSellerAddress() {
+        String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(
+                requestFileName);
+
+        Properties configFromFile = request.getConfig();
+
+// pre-assert the config file has required param values
+        assertEquals("payments.vantivprelive.com",
+                configFromFile.getProperty("batchHost"));
+
+
+// assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
         Authorization authorization_mit = new Authorization();
         authorization_mit.setId("12345");
         authorization_mit.setReportGroup("Default");
@@ -765,6 +799,7 @@ public class TestBatchFile {
 
 
         Sale saleInfo = new Sale();
+        saleInfo.setReportGroup("Planets");
         saleInfo.setAmount(106L);
         saleInfo.setCnpTxnId(123456L);
         saleInfo.setOrderId("12344");
@@ -777,8 +812,6 @@ public class TestBatchFile {
         saleInfo.setId("id");
         saleInfo.getSellerInfos().add(addSellerInfo());
         batch.addTransaction(saleInfo);
-
-
 
         int transactionCount = batch.getNumberOfTransactions();
 
@@ -796,7 +829,6 @@ public class TestBatchFile {
         assertEquals(transactionCount, txns);
         assertEquals(transactionCount, processor.responseCount);
     }
-
 
 
     private SellerInfo addSellerInfo(){
@@ -848,7 +880,7 @@ public class TestBatchFile {
     @Test
     public void testEcheckPreNoteAll() {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-EcheckPreNoteAll-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -1159,7 +1191,7 @@ public class TestBatchFile {
     @Test
     public void testGiftCardTransactions() {
 
-       // Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+       Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-GiftCardTransactions-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -1487,7 +1519,7 @@ public class TestBatchFile {
 
     @Test
     public void testBatchDepositTransactionReversal() {
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
 
         String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
@@ -1524,7 +1556,7 @@ public class TestBatchFile {
 
     @Test
     public void testBatchRefundTransactionReversal() {
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
 
         String requestFileName = "cnpSdk-testBatchFile-TransactionReversal-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
@@ -1562,7 +1594,7 @@ public class TestBatchFile {
     @Test
     public void testMechaBatchAndProcess_RecurringDemonstratesUseOfProcessorAdapter() {
 
-        //Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-RECURRING-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -1639,7 +1671,7 @@ public class TestBatchFile {
     @Test
     public void testBatch_AU() {
 
-       // Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile_AU-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(

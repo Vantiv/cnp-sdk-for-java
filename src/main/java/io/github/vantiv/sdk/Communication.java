@@ -43,7 +43,7 @@ import com.jcraft.jsch.SftpException;
 
 public class Communication {
 
-    private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.2","TLSv1.1"};
+    private static final String[] SUPPORTED_PROTOCOLS = new String[] {"TLSv1.3","TLSv1.2"};
 	public static final String CONTENT_TYPE_TEXT_XML_UTF8 = "text/xml; charset=UTF-8";
     private CloseableHttpClient httpClient;
     private final int KEEP_ALIVE_DURATION = 8000;
