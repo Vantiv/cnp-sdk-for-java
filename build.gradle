@@ -69,25 +69,25 @@ clean {
 }
 
 jacocoTestReport {
-    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
+    executionData(fileTree(dir:"${buildDir}/jacoco/", include:"*.exec"))
 }
 
 jar{
     manifest {
         attributes("Implementation-Title":"Cnp SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"io.github.vantiv.sdk.Setup")
     }
-    destinationDir = file("${DIST_DIR_15}/lib")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.jar"
+    getDestinationDirectory().set(file("${DIST_DIR_15}/lib"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.jar")
 }
 
 task javadocJar(type:Jar){
-    classifier = 'javadoc'
-    destinationDir = file("$buildDir/kit/java15/doc")
+    getArchiveClassifier().set('javadoc')
+    getDestinationDirectory().set(file("$buildDir/kit/java15/doc"))
 }
 
 test {
-    reports.junitXml.destination = "$buildDir/test-results/unit"
-    reports.html.destination = "$buildDir/reports/tests/unit"
+    reports.junitXml.destination(file("$buildDir/test-results/unit"))
+    reports.html.destination(file("$buildDir/reports/tests/unit"))
 }
 
 ////////// CUSTOM TASKS ///////////
@@ -173,18 +173,18 @@ task testFunctional(type:Test, dependsOn: functionalTestClasses){
     check.dependsOn it
     classpath = project.sourceSets.functionalTest.runtimeClasspath
     mustRunAfter test
-    testClassesDir = file(project.sourceSets.functionalTest.output.classesDir)
-    reports.junitXml.destination = "$buildDir/test-results/functional"
-    reports.html.destination = "$buildDir/reports/tests/functional"
+    testClassesDirs = project.sourceSets.functionalTest.output.classesDirs
+    reports.junitXml.destination(file("$buildDir/test-results/functional"))
+    reports.html.destination(file("$buildDir/reports/tests/functional"))
 }
 
 task testCertification(type:Test, dependsOn: certificationTestClasses){
     check.dependsOn it
     classpath = project.sourceSets.certificationTest.runtimeClasspath
     mustRunAfter testFunctional
-    testClassesDir = file(project.sourceSets.certificationTest.output.classesDir)
-    reports.junitXml.destination = "$buildDir/test-results/certification"
-    reports.html.destination = "$buildDir/reports/tests/certification"
+    testClassesDirs = project.sourceSets.certificationTest.output.classesDirs
+    reports.junitXml.destination(file("$buildDir/test-results/certification"))
+    reports.html.destination(file("$buildDir/reports/tests/certification"))
 }
 
 task copyJarToKit(type:Copy, dependsOn:[check,jar]){
@@ -213,14 +213,14 @@ task copyLibsToKit(type:Copy, dependsOn:check){
 
 task tarKit(type:Tar, dependsOn:[copyJarToKit, copyLibsToKit]){
     compression = Compression.GZIP
-    destinationDir = file("$buildDir/kit")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.tar.gz"
+    getDestinationDirectory().set(file("$buildDir/kit"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.tar.gz")
     from "$buildDir/kit/java15"
 }
 
 task zipKit(type:Zip, dependsOn:[copyJarToKit, copyLibsToKit]){
-    destinationDir = file("$buildDir/kit")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.zip"
+    getDestinationDirectory().set(file("$buildDir/kit"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.zip")
     from "$buildDir/kit/java15"
 }
 
@@ -284,8 +284,8 @@ task writeNewPomMvnCentral(type:Copy) {
 task sourceJar(type:Jar) {
     build.dependsOn it
     dependsOn generateJaxbClasses
-    destinationDir = file("${buildDir}/kit")
-    classifier = 'sources'
+    getDestinationDirectory().set(file("${buildDir}/kit"))
+    getArchiveClassifier().set('sources')
     from "src/main/java"
     from generateJaxbClasses.generatedDir
 }
