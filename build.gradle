@@ -1,7 +1,7 @@
 apply plugin : 'eclipse'
 apply plugin : 'java'
 apply plugin : 'jacoco'
-apply plugin : 'maven'
+apply plugin : 'maven-publish'
 
 group = 'io.github.vantiv'
 version = JAR_VERSION
@@ -44,16 +44,16 @@ sourceSets {
 
 dependencies{
     // https://mvnrepository.com/artifact/com.jcraft/jsch
-    compile group: 'com.jcraft', name: 'jsch', version: '0.1.55'
+    implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-    compile group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
-    compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    implementation group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
+    implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
 
-    testCompile group:'junit', name:'junit', version:'4.13.2'
-    testCompile group:'org.mockito', name:'mockito-all', version:'1.9.5'
+    testImplementation group:'junit', name:'junit', version:'4.13.2'
+    testImplementation group:'org.mockito', name:'mockito-all', version:'1.9.5'
     
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
@@ -194,7 +194,7 @@ task copyJarToKit(type:Copy, dependsOn:[check,jar]){
 }
 
 task copyLibsToKit(type:Copy, dependsOn:check){
-    from configurations.compile.asFileTree.matching{
+    from configurations.implementation.asFileTree.matching{
         include '**/activation*'
         include '**/jaxb-api*'
         include '**/jaxb-impl*'
@@ -236,50 +236,50 @@ if (JavaVersion.current().isJava8Compatible()) {
     dependsOn javadoc
 }
 
-task writeNewPom(type:Copy) {
-    build.dependsOn it
-    pom {
-        project {
-            modelVersion '4.0.0'
-            groupId 'com.cnp'
-            artifactId 'cnp-sdk-for-java'
-            version "${JAR_VERSION}"
-        }
-    }.writeTo("$buildDir/kit/pom.xml")
-}
+//task writeNewPom(type:Copy) {
+//    build.dependsOn it
+//    pom {
+//        project {
+//            modelVersion '4.0.0'
+//            groupId 'com.cnp'
+//            artifactId 'cnp-sdk-for-java'
+//            version "${JAR_VERSION}"
+//        }
+//    }.writeTo("$buildDir/kit/pom.xml")
+//}
 
-task writeNewPomMvnCentral(type:Copy) {
-    build.dependsOn it
-    pom {
-        project {
-            modelVersion '4.0.0'
-            groupId 'io.github.vantiv'
-            artifactId 'cnp-sdk-for-java'
-            version "${JAR_VERSION}"
-            name 'cnp-sdk-for-java'
-            description 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
-            url 'https://github.com/Vantiv/cnp-sdk-for-java'
-            licenses {
-                license {
-                    name 'License'
-                    url 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
-                }
-            }
-            developers{
-                developer{
-                    id 'vantivSDKSupport'
-                    name 'VantivSDKSupport'
-                    email 'sdksupport@fisglobal.com'
-                }
-            }
-            scm {
-                connection 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
-                developerConnection 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
-                url 'https://github.com/vantiv/cnp-sdk-for-java.git'
-            }
-        }
-    }.writeTo("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
-}
+//task writeNewPomMvnCentral(type:Copy) {
+//    build.dependsOn it
+//    pom {
+//        project {
+//            modelVersion '4.0.0'
+//            groupId 'io.github.vantiv'
+//            artifactId 'cnp-sdk-for-java'
+//            version "${JAR_VERSION}"
+//            name 'cnp-sdk-for-java'
+//            description 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
+//            url 'https://github.com/Vantiv/cnp-sdk-for-java'
+//            licenses {
+//                license {
+//                    name 'License'
+//                    url 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
+//                }
+//            }
+//            developers{
+//                developer{
+//                    id 'vantivSDKSupport'
+//                    name 'VantivSDKSupport'
+//                    email 'sdksupport@fisglobal.com'
+//                }
+//            }
+//            scm {
+//                connection 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
+//                developerConnection 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
+//                url 'https://github.com/vantiv/cnp-sdk-for-java.git'
+//            }
+//        }
+//    }.writeTo("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
+//}
 
 task sourceJar(type:Jar) {
     build.dependsOn it
