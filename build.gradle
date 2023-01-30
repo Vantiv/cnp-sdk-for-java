@@ -13,11 +13,11 @@ repositories {
 }
 
 configurations {
-    functionalTestCompile.extendsFrom testCompile
-    functionalTestRuntime.extendsFrom testRuntime
+    functionalTestImplementation.extendsFrom implementation
+    functionalTestRuntimeOnly.extendsFrom runtimeOnly
     
-    certificationTestCompile.extendsFrom functionalTestCompile
-    certificationTestRuntime.extendsFrom functionalTestCompile
+    certificationTestImplementation.extendsFrom functionalTestImplementation
+    certificationTestRuntimeOnly.extendsFrom functionalTestRuntimeOnly
     
     generateJAXB.extendsFrom mainRuntime
 }
@@ -30,14 +30,14 @@ sourceSets {
     }
     functionalTest {
         java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
         }
     }
     certificationTest {
         java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
         }
     }
 }
@@ -52,8 +52,12 @@ dependencies{
     implementation group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
     implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
 
-    testImplementation group:'junit', name:'junit', version:'4.13.2'
-    testImplementation group:'org.mockito', name:'mockito-all', version:'1.9.5'
+    implementation group: 'junit', name: 'junit', version: '4.13.2'
+    implementation 'junit:junit:4.13.1'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+
+
+    implementation group:'org.mockito', name:'mockito-all', version:'1.9.5'
     
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
@@ -171,18 +175,18 @@ task generateJaxbClasses(dependsOn: processXsd) {
 
 task testFunctional(type:Test, dependsOn: functionalTestClasses){
     check.dependsOn it
-    classpath = project.sourceSets.functionalTest.runtimeClasspath
+    classpath = sourceSets.functionalTest.runtimeClasspath
     mustRunAfter test
-    testClassesDirs = project.sourceSets.functionalTest.output.classesDirs
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
     reports.junitXml.destination(file("$buildDir/test-results/functional"))
     reports.html.destination(file("$buildDir/reports/tests/functional"))
 }
 
 task testCertification(type:Test, dependsOn: certificationTestClasses){
     check.dependsOn it
-    classpath = project.sourceSets.certificationTest.runtimeClasspath
+    classpath = sourceSets.certificationTest.runtimeClasspath
     mustRunAfter testFunctional
-    testClassesDirs = project.sourceSets.certificationTest.output.classesDirs
+    testClassesDirs = sourceSets.certificationTest.output.classesDirs
     reports.junitXml.destination(file("$buildDir/test-results/certification"))
     reports.html.destination(file("$buildDir/reports/tests/certification"))
 }
@@ -194,7 +198,7 @@ task copyJarToKit(type:Copy, dependsOn:[check,jar]){
 }
 
 task copyLibsToKit(type:Copy, dependsOn:check){
-    from configurations.implementation.asFileTree.matching{
+    from configurations.runtimeClasspath.asFileTree.matching{
         include '**/activation*'
         include '**/jaxb-api*'
         include '**/jaxb-impl*'
