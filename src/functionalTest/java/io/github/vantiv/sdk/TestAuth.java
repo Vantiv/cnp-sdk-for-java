@@ -750,6 +750,8 @@ public class TestAuth {
 		authorization.setCustomerId("Cust043");
 		authorization.setReportGroup("001550");
 		authorization.setCnpTxnId(34659348401L);
+		authorization.setAmount(106L);
+		authorization.setAuthIndicator(AuthIndicatorEnum.ESTIMATED);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(true,response.getAuthMax().isAuthMaxApplied());
 		assertEquals(true,response.getAuthMax().isNetworkTokenApplied());
@@ -765,6 +767,8 @@ public class TestAuth {
 		authorization.setCustomerId("Cust043");
 		authorization.setReportGroup("001550");
 		authorization.setCnpTxnId(34659348402L);
+		authorization.setAmount(106L);
+		authorization.setAuthIndicator(AuthIndicatorEnum.ESTIMATED);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(false,response.getAuthMax().isAuthMaxApplied());
 		assertEquals("sandbox", response.getLocation());
@@ -880,6 +884,57 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
+	@Test
+	public void testAuthIndicatorEnumEstimated() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setReportGroup("Default");
+		authorization.setOrderId("67890");
+		authorization.setAmount(10000L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		authorization.setCard(card);
+		EnhancedData enhanced = new EnhancedData();
+		enhanced.setCustomerReference("Cust Ref");
+		enhanced.setSalesTax(1000L);
+		LineItemData lid = new LineItemData();
+		lid.setItemSequenceNumber(1);
+		lid.setItemDescription("Electronics");
+		lid.setProductCode("El01");
+		lid.setItemCategory("Ele Appiances");
+		lid.setItemSubCategory("home appliaces");
+		lid.setProductId("1001");
+		lid.setProductName("dryer");
+		enhanced.getLineItemDatas().add(lid);
+		enhanced.setDiscountCode("oneTimeDis");
+		enhanced.setDiscountPercent(BigInteger.valueOf(12));
+		enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+		authorization.setEnhancedData(enhanced);
+		authorization.setOrderChannel(OrderChannelEnum.MIT);
+		authorization.setFraudCheckStatus("CLOSE");
+		authorization.setCrypto(false);
+		authorization.setAuthIndicator(AuthIndicatorEnum.INCREMENTAL);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public  void testAuthIndicatorEnumIncremental() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setId("12345");
+		authorization.setCustomerId("Cust044");
+		authorization.setReportGroup("Default");
+		authorization.setCnpTxnId(34659348401L);
+		authorization.setAmount(106L);
+		authorization.setAuthIndicator(AuthIndicatorEnum.INCREMENTAL);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 
 	private SellerInfo addSellerInfo(){
 		SellerInfo sellerInfo=new SellerInfo();
