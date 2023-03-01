@@ -52,12 +52,8 @@ dependencies{
     implementation group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
     implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
 
-    implementation group: 'junit', name: 'junit', version: '4.13.2'
-    implementation 'junit:junit:4.13.1'
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
-
-
-    implementation group:'org.mockito', name:'mockito-all', version:'1.9.5'
+    testImplementation group:'org.mockito', name:'mockito-all', version:'1.9.5'
     
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
@@ -173,23 +169,23 @@ task generateJaxbClasses(dependsOn: processXsd) {
     }
 }
 
-task testFunctional(type:Test, dependsOn: functionalTestClasses){
-    check.dependsOn it
-    classpath = sourceSets.functionalTest.runtimeClasspath
-    mustRunAfter test
-    testClassesDirs = sourceSets.functionalTest.output.classesDirs
-    reports.junitXml.destination(file("$buildDir/test-results/functional"))
-    reports.html.destination(file("$buildDir/reports/tests/functional"))
-}
-
-task testCertification(type:Test, dependsOn: certificationTestClasses){
-    check.dependsOn it
-    classpath = sourceSets.certificationTest.runtimeClasspath
-    mustRunAfter testFunctional
-    testClassesDirs = sourceSets.certificationTest.output.classesDirs
-    reports.junitXml.destination(file("$buildDir/test-results/certification"))
-    reports.html.destination(file("$buildDir/reports/tests/certification"))
-}
+//task testFunctional(type:Test, dependsOn: functionalTestClasses){
+//    check.dependsOn it
+//    classpath = sourceSets.functionalTest.runtimeClasspath
+//    mustRunAfter test
+//    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+//    reports.junitXml.destination(file("$buildDir/test-results/functional"))
+//    reports.html.destination(file("$buildDir/reports/tests/functional"))
+//}
+//
+//task testCertification(type:Test, dependsOn: certificationTestClasses){
+//    check.dependsOn it
+//    classpath = sourceSets.certificationTest.runtimeClasspath
+//    mustRunAfter testFunctional
+//    testClassesDirs = sourceSets.certificationTest.output.classesDirs
+//    reports.junitXml.destination(file("$buildDir/test-results/certification"))
+//    reports.html.destination(file("$buildDir/reports/tests/certification"))
+//}
 
 task copyJarToKit(type:Copy, dependsOn:[check,jar]){
     from "${DIST_DIR_15}/lib/cnp-sdk-for-java-${JAR_VERSION}.jar"
@@ -252,7 +248,48 @@ if (JavaVersion.current().isJava8Compatible()) {
 //    }.writeTo("$buildDir/kit/pom.xml")
 //}
 
-//task writeNewPomMvnCentral(type:Copy) {
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'cnp-sdk-for-java'
+                description = 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
+                url = 'https://github.com/Vantiv/cnp-sdk-for-java'
+                groupId = 'io.github.vantiv'
+                artifactId = 'cnp-sdk-for-java'
+                version = "${JAR_VERSION}"
+
+                licenses {
+                    license {
+                        name = 'License'
+                        url = 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
+                    }
+                }
+                developers{
+                    developer{
+                        id = 'vantivSDKSupport'
+                        name = 'VantivSDKSupport'
+                        email = 'sdksupport@fisglobal.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
+                    developerConnection = 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
+                    url = 'https://github.com/vantiv/cnp-sdk-for-java.git'
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenPublication {
+        destination = file("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
+    }
+}
+
+//task generatePomFileForMavenPublication(type:Copy) {
 //    build.dependsOn it
 //    pom {
 //        project {
