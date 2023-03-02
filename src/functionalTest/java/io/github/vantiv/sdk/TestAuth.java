@@ -916,7 +916,7 @@ public class TestAuth {
 		authorization.setOrderChannel(OrderChannelEnum.MIT);
 		authorization.setFraudCheckStatus("CLOSE");
 		authorization.setCrypto(false);
-		authorization.setAuthIndicator(AuthIndicatorEnum.INCREMENTAL);
+		authorization.setAuthIndicator(AuthIndicatorEnum.ESTIMATED);
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
