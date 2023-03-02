@@ -152,7 +152,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -236,8 +236,8 @@ public class TestBatchFile {
 
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+               configFromFile.getProperty("batchHost"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -289,7 +289,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -353,7 +353,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         String workingDirRequests = configFromFile
                 .getProperty("batchRequestFolder");
@@ -491,7 +491,7 @@ public class TestBatchFile {
     @Test
     public void testMechaBatchAndProcess() {
 
-        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+       Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
         
         String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
@@ -500,9 +500,9 @@ public class TestBatchFile {
         Properties configFromFile = request.getConfig();
 
         // pre-assert the config file has required param values
-        assertEquals("payments.vantivprelive.com",
-                configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+       assertEquals("payments.vantivprelive.com",
+               configFromFile.getProperty("batchHost"));
+        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -740,7 +740,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
 
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -825,6 +825,77 @@ public class TestBatchFile {
         assertEquals(transactionCount, processor.responseCount);
     }
 
+    @Test
+    public void testAuthIndicator() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+
+        // pre-assert the config file has required param values
+       assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
+        Authorization authorization_authInd = new Authorization();
+        authorization_authInd.setId("12345");
+        authorization_authInd.setReportGroup("Default");
+        authorization_authInd.setOrderId("12344");
+        authorization_authInd.setAmount(10000L);
+        authorization_authInd.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType cardDetails = new CardType();
+        cardDetails.setNumber("4100000000000001");
+        cardDetails.setExpDate("1210");
+        cardDetails.setType(MethodOfPaymentTypeEnum.VI);
+        authorization_authInd.setCard(cardDetails);
+        EnhancedData enhancedData = new EnhancedData();
+        enhancedData.setCustomerReference("Cust Ref");
+        enhancedData.setSalesTax(1000L);
+        LineItemData line_Item = new LineItemData();
+        line_Item.setItemSequenceNumber(1);
+        line_Item.setItemDescription("Electronics");
+        line_Item.setProductCode("El01");
+        line_Item.setItemCategory("Ele Appiances");
+        line_Item.setItemSubCategory("home appliaces");
+        line_Item.setProductId("1001");
+        line_Item.setProductName("dryer");
+        enhancedData.getLineItemDatas().add(line_Item);
+        enhancedData.setDiscountCode("oneTimeDis");
+        enhancedData.setDiscountPercent(BigInteger.valueOf(12));
+        enhancedData.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+        authorization_authInd.setEnhancedData(enhancedData);
+        authorization_authInd.setOrderChannel(OrderChannelEnum.MIT);
+        authorization_authInd.setFraudCheckStatus("CLOSE");
+        authorization_authInd.setCrypto(false);
+        authorization_authInd.setAuthIndicator(AuthIndicatorEnum.ESTIMATED);
+        batch.addTransaction(authorization_authInd);
+
+        Authorization authorizationInc = new Authorization();
+        authorizationInc.setId("12345");
+        authorizationInc.setCustomerId("Cust044");
+        authorizationInc.setReportGroup("Default");
+        authorizationInc.setCnpTxnId(34659348401L);
+        authorizationInc.setAmount(106L);
+        authorizationInc.setAuthIndicator(AuthIndicatorEnum.INCREMENTAL);
+        batch.addTransaction(authorizationInc);
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
+        int txns = 0;
+
+        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse.processNextTransaction(processor)) {
+            txns++;
+        }
+
+        assertEquals(transactionCount, txns);
+        assertEquals(transactionCount, processor.responseCount);
+    }
 
     private SellerInfo addSellerInfo(){
         SellerInfo sellerInfo=new SellerInfo();
@@ -888,7 +959,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+        assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -1197,7 +1268,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
@@ -1600,7 +1671,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
         CancelSubscription cancelSubscription = new CancelSubscription();
@@ -1677,7 +1748,7 @@ public class TestBatchFile {
         // pre-assert the config file has required param values
         assertEquals("payments.vantivprelive.com",
                 configFromFile.getProperty("batchHost"));
-        // assertEquals("15000", configFromFile.getProperty("batchPort"));
+         assertEquals("15000", configFromFile.getProperty("batchPort"));
 
         CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
 
