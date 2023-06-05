@@ -49,6 +49,9 @@ dependencies{
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5
+    implementation 'org.apache.httpcomponents.core5:httpcore5:5.2.1'
+
     implementation group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.70'
     implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.70'
 
