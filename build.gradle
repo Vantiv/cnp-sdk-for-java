@@ -1,7 +1,7 @@
 apply plugin : 'eclipse'
 apply plugin : 'java'
 apply plugin : 'jacoco'
-apply plugin : 'maven'
+apply plugin : 'maven-publish'
 
 group = 'io.github.vantiv'
 version = JAR_VERSION
@@ -13,11 +13,11 @@ repositories {
 }
 
 configurations {
-    functionalTestCompile.extendsFrom testCompile
-    functionalTestRuntime.extendsFrom testRuntime
+    functionalTestImplementation.extendsFrom testImplementation
+    functionalTestRuntimeOnly.extendsFrom runtimeOnly
     
-    certificationTestCompile.extendsFrom functionalTestCompile
-    certificationTestRuntime.extendsFrom functionalTestCompile
+    certificationTestImplementation.extendsFrom functionalTestImplementation
+    certificationTestRuntimeOnly.extendsFrom functionalTestRuntimeOnly
     
     generateJAXB.extendsFrom mainRuntime
 }
@@ -30,31 +30,33 @@ sourceSets {
     }
     functionalTest {
         java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
         }
     }
     certificationTest {
         java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
         }
     }
 }
 
 dependencies{
     // https://mvnrepository.com/artifact/com.jcraft/jsch
-    compile group: 'com.jcraft', name: 'jsch', version: '0.1.55'
+    implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-    compile group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.68'
-    compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.68'
+    implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
 
-    testCompile group:'junit', name:'junit', version:'4.13.2'
-    testCompile group:'org.mockito', name:'mockito-all', version:'1.9.5'
-    
+    implementation group: 'org.bouncycastle', name: 'bcpg-jdk15on', version: '1.70'
+    implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.70'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
+
+
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-xjc', version:'2.2.5'
@@ -69,25 +71,25 @@ clean {
 }
 
 jacocoTestReport {
-    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
+    executionData(fileTree(dir:"${buildDir}/jacoco/", include:"*.exec"))
 }
 
 jar{
     manifest {
         attributes("Implementation-Title":"Cnp SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"io.github.vantiv.sdk.Setup")
     }
-    destinationDir = file("${DIST_DIR_15}/lib")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.jar"
+    getDestinationDirectory().set(file("${DIST_DIR_15}/lib"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.jar")
 }
 
 task javadocJar(type:Jar){
-    classifier = 'javadoc'
-    destinationDir = file("$buildDir/kit/java15/doc")
+    getArchiveClassifier().set('javadoc')
+    getDestinationDirectory().set(file("$buildDir/kit/java15/doc"))
 }
 
 test {
-    reports.junitXml.destination = "$buildDir/test-results/unit"
-    reports.html.destination = "$buildDir/reports/tests/unit"
+    reports.junitXml.destination(file("$buildDir/test-results/unit"))
+    reports.html.destination(file("$buildDir/reports/tests/unit"))
 }
 
 ////////// CUSTOM TASKS ///////////
@@ -171,20 +173,20 @@ task generateJaxbClasses(dependsOn: processXsd) {
 
 task testFunctional(type:Test, dependsOn: functionalTestClasses){
     check.dependsOn it
-    classpath = project.sourceSets.functionalTest.runtimeClasspath
+    classpath = sourceSets.functionalTest.runtimeClasspath
     mustRunAfter test
-    testClassesDir = file(project.sourceSets.functionalTest.output.classesDir)
-    reports.junitXml.destination = "$buildDir/test-results/functional"
-    reports.html.destination = "$buildDir/reports/tests/functional"
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    reports.junitXml.destination(file("$buildDir/test-results/functional"))
+    reports.html.destination(file("$buildDir/reports/tests/functional"))
 }
 
 task testCertification(type:Test, dependsOn: certificationTestClasses){
     check.dependsOn it
-    classpath = project.sourceSets.certificationTest.runtimeClasspath
+    classpath = sourceSets.certificationTest.runtimeClasspath
     mustRunAfter testFunctional
-    testClassesDir = file(project.sourceSets.certificationTest.output.classesDir)
-    reports.junitXml.destination = "$buildDir/test-results/certification"
-    reports.html.destination = "$buildDir/reports/tests/certification"
+    testClassesDirs = sourceSets.certificationTest.output.classesDirs
+    reports.junitXml.destination(file("$buildDir/test-results/certification"))
+    reports.html.destination(file("$buildDir/reports/tests/certification"))
 }
 
 task copyJarToKit(type:Copy, dependsOn:[check,jar]){
@@ -194,7 +196,7 @@ task copyJarToKit(type:Copy, dependsOn:[check,jar]){
 }
 
 task copyLibsToKit(type:Copy, dependsOn:check){
-    from configurations.compile.asFileTree.matching{
+    from configurations.runtimeClasspath.asFileTree.matching{
         include '**/activation*'
         include '**/jaxb-api*'
         include '**/jaxb-impl*'
@@ -206,6 +208,9 @@ task copyLibsToKit(type:Copy, dependsOn:check){
         include '**/httpcore*'
         include '**/httpmime*'
         include '**/jsch*'
+        include '**/commons-io*'
+        include '**/bcpg-jdk15on*'
+        include '**/bcprov-ext-jdk15on*'
     }
 
     into KIT_DEPENDENCIES_DIR
@@ -213,14 +218,14 @@ task copyLibsToKit(type:Copy, dependsOn:check){
 
 task tarKit(type:Tar, dependsOn:[copyJarToKit, copyLibsToKit]){
     compression = Compression.GZIP
-    destinationDir = file("$buildDir/kit")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.tar.gz"
+    getDestinationDirectory().set(file("$buildDir/kit"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.tar.gz")
     from "$buildDir/kit/java15"
 }
 
 task zipKit(type:Zip, dependsOn:[copyJarToKit, copyLibsToKit]){
-    destinationDir = file("$buildDir/kit")
-    archiveName = "cnp-sdk-for-java-${JAR_VERSION}.zip"
+    getDestinationDirectory().set(file("$buildDir/kit"))
+    getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.zip")
     from "$buildDir/kit/java15"
 }
 
@@ -236,56 +241,53 @@ if (JavaVersion.current().isJava8Compatible()) {
     dependsOn javadoc
 }
 
-task writeNewPom(type:Copy) {
-    build.dependsOn it
-    pom {
-        project {
-            modelVersion '4.0.0'
-            groupId 'com.cnp'
-            artifactId 'cnp-sdk-for-java'
-            version "${JAR_VERSION}"
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'cnp-sdk-for-java'
+                description = 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
+                url = 'https://github.com/Vantiv/cnp-sdk-for-java'
+                groupId = 'io.github.vantiv'
+                artifactId = 'cnp-sdk-for-java'
+                version = "${JAR_VERSION}"
+
+                licenses {
+                    license {
+                        name = 'License'
+                        url = 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
+                    }
+                }
+                developers{
+                    developer{
+                        id = 'vantivSDKSupport'
+                        name = 'VantivSDKSupport'
+                        email = 'sdksupport@fisglobal.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
+                    developerConnection = 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
+                    url = 'https://github.com/vantiv/cnp-sdk-for-java.git'
+                }
+            }
         }
-    }.writeTo("$buildDir/kit/pom.xml")
+    }
 }
 
-task writeNewPomMvnCentral(type:Copy) {
-    build.dependsOn it
-    pom {
-        project {
-            modelVersion '4.0.0'
-            groupId 'io.github.vantiv'
-            artifactId 'cnp-sdk-for-java'
-            version "${JAR_VERSION}"
-            name 'cnp-sdk-for-java'
-            description 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv eCommerce XML API'
-            url 'https://github.com/Vantiv/cnp-sdk-for-java'
-            licenses {
-                license {
-                    name 'License'
-                    url 'https://github.com/Vantiv/cnp-sdk-for-java/blob/12.x/LICENSE'
-                }
-            }
-            developers{
-                developer{
-                    id 'vantivSDKSupport'
-                    name 'VantivSDKSupport'
-                    email 'sdksupport@fisglobal.com'
-                }
-            }
-            scm {
-                connection 'scm:git:github.com/vantiv/cnp-sdk-for-java.git'
-                developerConnection 'scm:git:ssh://github.com/vantiv/cnp-sdk-for-java.git'
-                url 'https://github.com/vantiv/cnp-sdk-for-java.git'
-            }
-        }
-    }.writeTo("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
+model {
+    tasks.generatePomFileForMavenPublication {
+        build.dependsOn it
+        destination = file("$buildDir/kit/cnp-sdk-for-java-${JAR_VERSION}.pom")
+    }
 }
 
 task sourceJar(type:Jar) {
     build.dependsOn it
     dependsOn generateJaxbClasses
-    destinationDir = file("${buildDir}/kit")
-    classifier = 'sources'
+    getDestinationDirectory().set(file("${buildDir}/kit"))
+    getArchiveClassifier().set('sources')
     from "src/main/java"
     from generateJaxbClasses.generatedDir
 }

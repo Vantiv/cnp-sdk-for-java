@@ -6,7 +6,7 @@ repositories {
     }
 }
    dependencies{
-        compile rootProject
+       implementation rootProject
  }
   task execMultiCurrencyExample2(type:JavaExec){
 	check.dependsOn it

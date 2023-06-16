@@ -6,7 +6,7 @@ repositories {
     }
 }
    dependencies{
-        compile rootProject
+       implementation rootProject
  }
   task execEcheckCreditExample(type:JavaExec){
 	check.dependsOn it
