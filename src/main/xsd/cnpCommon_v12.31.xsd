@@ -1237,4 +1237,10 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="foreignRetailerIndicatorEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="F" />
+        </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>
