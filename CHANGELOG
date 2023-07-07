@@ -1,5 +1,9 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.31.0 (July 8, 2023)
+* Change: [cnpAPI v12.31] Added new Enum foreignRetailerIndicatorEnum with value F
+* Change: [cnpAPI v12.31] Added new Element-foreignRetailerIndicator in sale,capture,forceCapture,captureGivenAuth request.
+
 ==Version 12.30.0 (March 3, 2023)
 * Change: [cnpAPI v12.30] Added new Element authIndicator for authorization
 * Change: [cnpAPI v12.30] Added new values - Estimated and Incremental in authIndicatorEnum
