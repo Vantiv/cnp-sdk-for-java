@@ -765,5 +765,26 @@ public class TestSale {
 		return  sellerTagsType;
 	}
 
+	@Test
+	public void simpleSaleWithForeignRetailerIndicatorEnum() throws Exception{
+		Sale sale = new Sale();
+		sale.setAmount(106L);
+		sale.setCnpTxnId(123456L);
+		sale.setOrderId("12344");
+		sale.setSecondaryAmount(20L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setId("id");
+		sale.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+
 
 }

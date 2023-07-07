@@ -2,18 +2,9 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
+import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import io.github.vantiv.sdk.generate.Capture;
-import io.github.vantiv.sdk.generate.CaptureResponse;
-import io.github.vantiv.sdk.generate.EnhancedData;
-import io.github.vantiv.sdk.generate.PassengerTransportData;
-import io.github.vantiv.sdk.generate.TripLegData;
-import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
-import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
-import io.github.vantiv.sdk.generate.TicketChangeIndicatorEnum;
-import io.github.vantiv.sdk.generate.ServiceClassEnum;
 
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -156,6 +147,19 @@ public class TestCapture {
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
 	}
+
+	@Test
+	public  void simpleCaptureWithForeignRetailerIndicatorEnum() throws Exception{
+		Capture capture = new Capture();
+		capture.setCnpTxnId(123456000L);
+		capture.setAmount(106L);
+		capture.setPayPalNotes("Notes");
+		capture.setId("id");
+		capture.setOrderId("1234567567");
+		capture.setPassengerTransportData(passengerTransportData());
+		capture.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+		CaptureResponse response = cnp.capture(capture);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }
-
-

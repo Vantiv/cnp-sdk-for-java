@@ -897,6 +897,56 @@ public class TestBatchFile {
         assertEquals(transactionCount, processor.responseCount);
     }
 
+    @Test
+    public void testForeignRetailerIndicatorEnum(){
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        String requestFileName = "cnpSdk-testBatchFile-forRetInd-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+        // pre-assert the config file has required param values
+         assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
+        ForceCapture forceCapture = new ForceCapture();
+        forceCapture.setReportGroup("Planets");
+        forceCapture.setId("123456");
+        forceCapture.setOrderId("12344");
+        forceCapture.setAmount(106L);
+        forceCapture.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        card.setNumber("4100000000000001");
+        card.setExpDate("1210");
+        forceCapture.setCard(card);
+        forceCapture.setId("id");
+        forceCapture.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+        batch.addTransaction(forceCapture);
+
+        Capture capture = new Capture();
+        capture.setReportGroup("Planets");
+        capture.setCnpTxnId(123456000L);
+        capture.setAmount(106L);
+        capture.setId("id");
+        capture.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+        batch.addTransaction(capture);
+
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse.getNextCnpBatchResponse();
+        int txns = 0;
+
+        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse.processNextTransaction(processor)) {
+            txns++;
+        }
+        assertEquals(transactionCount, txns);
+        assertEquals(transactionCount, processor.responseCount);
+    }
+
     private SellerInfo addSellerInfo(){
         SellerInfo sellerInfo=new SellerInfo();
         sellerInfo.setAccountNumber("4485581000000005");
