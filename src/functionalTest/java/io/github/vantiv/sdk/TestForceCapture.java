@@ -2,23 +2,9 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
+import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
-import io.github.vantiv.sdk.generate.CardTokenType;
-import io.github.vantiv.sdk.generate.CardType;
-import io.github.vantiv.sdk.generate.ForceCapture;
-import io.github.vantiv.sdk.generate.ForceCaptureResponse;
-import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
-import io.github.vantiv.sdk.generate.OrderSourceType;
-import io.github.vantiv.sdk.generate.ProcessingTypeEnum;
-import io.github.vantiv.sdk.generate.PassengerTransportData;
-import io.github.vantiv.sdk.generate.TripLegData;
-import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
-import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
-import io.github.vantiv.sdk.generate.TicketChangeIndicatorEnum;
-import io.github.vantiv.sdk.generate.ServiceClassEnum;
 
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -180,6 +166,25 @@ public class TestForceCapture {
 		tripLegData.setArrivalTime("10:00");
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
+	}
+
+
+	@Test
+	public void forceCaptureWithForeignRetailerIndicatorEnum() throws Exception{
+		ForceCapture forcecapture = new ForceCapture();
+		forcecapture.setAmount(106L);
+		forcecapture.setOrderId("12344");
+		forcecapture.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000001");
+		card.setExpDate("1210");
+		forcecapture.setCard(card);
+		forcecapture.setId("id");
+		forcecapture.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+		ForceCaptureResponse response = cnp.forceCapture(forcecapture);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
 	}
 }
 

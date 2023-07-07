@@ -452,5 +452,35 @@ public class TestCaptureGivenAuth {
 		tripLegData.setRemarks("Remarks");
 		return  tripLegData;
 	}
-}
 
+	@Test
+	public  void simpleCaptureGivenAuthWithForeignRetailerIndicatorEnum() throws Exception{
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		FraudResult fraudresult = new FraudResult();
+		fraudresult.setAvsResult("12");
+		fraudresult.setCardValidationResult("123");
+		fraudresult.setAuthenticationResult("1");
+		fraudresult.setAdvancedAVSResult("123");
+		authInfo.setFraudResult(fraudresult);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		capturegivenauth.setCard(card);
+		capturegivenauth.setId("id");
+		capturegivenauth.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.F);
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+}
