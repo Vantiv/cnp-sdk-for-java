@@ -209,8 +209,8 @@ task copyLibsToKit(type:Copy, dependsOn:check){
         include '**/httpmime*'
         include '**/jsch*'
         include '**/commons-io*'
-        include '**/bcpg-jdk15on*'
-        include '**/bcprov-ext-jdk15on*'
+        include '**/bcpg-jdk18on*'
+        include '**/bcprov-ext-jdk15to18*'
     }
 
     into KIT_DEPENDENCIES_DIR
