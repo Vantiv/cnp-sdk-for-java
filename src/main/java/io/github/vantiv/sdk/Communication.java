@@ -1,17 +1,6 @@
 package io.github.vantiv.sdk;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
-import javax.net.ssl.SSLContext;
-
+import com.jcraft.jsch.*;
 import org.apache.hc.client5.http.ConnectionKeepAliveStrategy;
 import org.apache.hc.client5.http.HttpRequestRetryStrategy;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -19,17 +8,12 @@ import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.BasicHttpClientConnectionManager;
 import org.apache.hc.client5.http.socket.ConnectionSocketFactory;
 import org.apache.hc.client5.http.socket.LayeredConnectionSocketFactory;
 import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpHost;
-import org.apache.hc.core5.http.HttpResponse;
-import org.apache.hc.core5.http.NoHttpResponseException;
-import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.*;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
@@ -39,12 +23,16 @@ import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
+import javax.net.ssl.SSLContext;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class Communication {
 
@@ -70,7 +58,7 @@ public class Communication {
                     .register("https", sslSocketFactory)
                     .build();
 
-            PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(registry);
+            BasicHttpClientConnectionManager connManager = new BasicHttpClientConnectionManager(registry);
 
             HttpRequestRetryStrategy requestRetryStrategy = new DefaultHttpRequestRetryStrategy(0, TimeValue.ofMilliseconds(DEFAULT_RETRY_INTERVAL));
             // Vantiv will a close an idle connection, so we define our Keep-alive strategy to be below that threshold
@@ -108,8 +96,8 @@ public class Communication {
         String xmlResponse = null;
         String proxyHost = configuration.getProperty("proxyHost");
         String proxyPort = configuration.getProperty("proxyPort");
-        boolean httpKeepAlive = Boolean.valueOf(configuration.getProperty("httpKeepAlive", "false"));
-        int httpTimeout = Integer.valueOf(configuration.getProperty("timeout", "6000"));
+        //Default timeout=120 seconds as per cnp endpoint
+        int httpTimeout = Integer.valueOf(configuration.getProperty("timeout", "120000"));
         HttpHost proxy;
         RequestConfig requestConfig;
         if (proxyHost != null && proxyHost.length() > 0 && proxyPort != null && proxyHost.length() > 0) {
@@ -130,9 +118,6 @@ public class Communication {
         RequestTarget reqTarget = CommManager.instance(configuration).findUrl();
         HttpPost post = new HttpPost(reqTarget.getUrl());
         post.setHeader("Content-Type", CONTENT_TYPE_TEXT_XML_UTF8);
-        if (!httpKeepAlive) {
-            post.setHeader("Connection", "close");
-        }
 
         post.setConfig(requestConfig);
         HttpEntity entity = null;
@@ -149,8 +134,14 @@ public class Communication {
             entity = response.getEntity();
             CommManager.instance(configuration).reportResult(reqTarget, CommManager.REQUEST_RESULT_RESPONSE_RECEIVED, response.getCode());
             if (response.getCode() != 200) {
-                throw new CnpOnlineException(response.getCode() + ":" +
-                        response.getReasonPhrase());
+                StringBuilder errorResponse = new StringBuilder().append(response.getCode())
+                        .append('(').append(response.getReasonPhrase()).append(')');
+                try {
+                    errorResponse.append(" : ").append(EntityUtils.toString(entity, "UTF-8"));
+                }
+                catch (Exception ignored) {
+                }
+                throw new CnpOnlineException(errorResponse.toString());
             }
             xmlResponse = EntityUtils.toString(entity, "UTF-8");
             if (printxml) {
