@@ -62,7 +62,7 @@ public class TestSetup {
             assertEquals("7200000", config.getProperty("sftpTimeout"));
             assertEquals("", config.getProperty("proxyHost"));
             assertEquals("", config.getProperty("proxyPort"));
-            assertEquals("500", config.getProperty("timeout"));
+            assertEquals("120000", config.getProperty("timeout"));
             assertEquals("Default Report Group", config.getProperty("reportGroup"));
             assertEquals("false", config.getProperty("printxml"));
             assertEquals("500000", config.getProperty("maxAllowedTransactionsPerFile"));
