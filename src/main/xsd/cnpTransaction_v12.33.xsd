@@ -2,8 +2,8 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.31.xsd"/>
-    <xs:include schemaLocation="cnpRecurring_v12.31.xsd"/>
+    <xs:include schemaLocation="cnpCommon_v12.33.xsd"/>
+    <xs:include schemaLocation="cnpRecurring_v12.33.xsd"/>
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true"/>
 
@@ -123,7 +123,7 @@
         <xs:all>
             <xs:element name="authenticationValue" type="xp:authenticationValueType" minOccurs="0"/>
             <xs:element name="authenticationTransactionId" type="xp:authenticationTransactionIdType" minOccurs="0"/>
-            <xs:element name="customerIpAddress" type="xp:ipAddress" minOccurs="0"/>
+            <xs:element name="customerIpAddress" type="xp:stringipAddress" minOccurs="0"/>
             <xs:element name="authenticatedByMerchant" type="xs:boolean" minOccurs="0"/>
             <xs:element name="authenticationProtocolVersion" type="xp:authenticationProtocolVersionType" minOccurs="0"/>
             <xs:element name="tokenAuthenticationValue" type="xp:tokenAuthenticationValueType" minOccurs="0"/>
@@ -719,6 +719,8 @@
                 <xs:element name="itemSubCategory" type="xp:string100Type" minOccurs="0"/>
                 <xs:element name="productId" type="xp:string150Type" minOccurs="0"/>
                 <xs:element name="productName" type="xp:string150Type" minOccurs="0"/>
+                <xs:element name="shipmentId" type="xp:string100Type" minOccurs="0"/>
+                <xs:element ref="xp:subscription" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -3258,4 +3260,27 @@
             <xs:element name="tag" type="xp:string100Type" minOccurs="0" maxOccurs="5"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:element name="subscription">
+        <xs:complexType >
+            <xs:all>
+                <xs:element name="subscriptionId" type="xp:string100Type" minOccurs="0"/>
+                <xs:element name="nextDeliveryDate" type="xs:date" minOccurs="0"/>
+                <xs:element name="periodUnit" minOccurs="0">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="WEEK"/>
+                            <xs:enumeration value="MONTH"/>
+                            <xs:enumeration value="QUARTER"/>
+                            <xs:enumeration value="YEAR"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="numberOfPeriods" type="xp:numberOfPeriods" minOccurs="0"/>
+                <xs:element name="regularItemPrice" type="xp:transactionAmountType" minOccurs="0"/>
+                <xs:element name="currentPeriod" type="xp:numberOfPeriods" minOccurs="0" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>
