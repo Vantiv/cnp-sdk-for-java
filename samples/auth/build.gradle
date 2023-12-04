@@ -2,8 +2,7 @@ apply plugin : 'java'
 apply plugin : 'eclipse'
 repositories {
     maven  {
-       url "http://nufl2vpnexus02.nonprod.nb01.local:8081/repository/central/"
-        allowInsecureProtocol = true
+           url "http://repo1.maven.org/maven2"
     }
 }
    dependencies{
