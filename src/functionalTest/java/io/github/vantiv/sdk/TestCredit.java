@@ -11,10 +11,13 @@ import io.github.vantiv.sdk.generate.BusinessIndicatorEnum;
 import io.github.vantiv.sdk.generate.CardType;
 import io.github.vantiv.sdk.generate.Credit;
 import io.github.vantiv.sdk.generate.CreditResponse;
+import io.github.vantiv.sdk.generate.EnhancedData;
+import io.github.vantiv.sdk.generate.LineItemData;
 import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
 import io.github.vantiv.sdk.generate.OrderSourceType;
 import io.github.vantiv.sdk.generate.ProcessingInstructions;
 import io.github.vantiv.sdk.generate.PassengerTransportData;
+import io.github.vantiv.sdk.generate.Subscription;
 import io.github.vantiv.sdk.generate.TripLegData;
 import io.github.vantiv.sdk.generate.ComputerizedReservationSystemEnum;
 import io.github.vantiv.sdk.generate.CreditReasonIndicatorEnum;
@@ -286,4 +289,42 @@ public class TestCredit {
         tripLegData.setRemarks("Remarks");
         return  tripLegData;
     }
+
+    @Test
+    public void simpleCreditWithSubscription() throws Exception {
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setOrderId("123456");
+        credit.setOrderSource(OrderSourceType.ECOMMERCE);
+        Credit.Paypal paypal = new Credit.Paypal();
+        paypal.setPayerId("1234");
+        credit.setPaypal(paypal);
+        credit.setId("id");
+        EnhancedData enhanced = new EnhancedData();
+        enhanced.setCustomerReference("Cust Ref");
+        enhanced.setSalesTax(1000L);
+        LineItemData lid = new LineItemData();
+        lid.setItemSequenceNumber(1);
+        lid.setItemDescription("Electronics");
+        lid.setProductCode("El01");
+        lid.setItemCategory("Ele Appiances");
+        lid.setItemSubCategory("home appliaces");
+        lid.setProductId("1001");
+        lid.setProductName("dryer");
+        Subscription sub = new Subscription();
+        sub.setSubscriptionId("123");
+        sub.setCurrentPeriod(BigInteger.valueOf(1));
+        sub.setPeriodUnit("QUARTER");
+        sub.setNumberOfPeriods(BigInteger.valueOf(2));
+        sub.setCurrentPeriod(BigInteger.valueOf(3));
+        sub.setNextDeliveryDate(Calendar.getInstance());
+        lid.setShipmentId("456");
+        lid.setSubscription(sub);
+        enhanced.getLineItemDatas().add(lid);
+        credit.setEnhancedData(enhanced);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
+
 }

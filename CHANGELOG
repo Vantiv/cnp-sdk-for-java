@@ -1,5 +1,11 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.33.0 (Dec 7, 2023)
+* Change: [cnpAPI v12.33] Added new simple types are added stringipAddress,numberOfPeriods,string10Type
+* Change: [cnpAPI v12.33] Added new Element shipmentId and subscription
+* Change: [cnpAPI v12.33] Added new complex element subscription added with few simple elements subscriptionId ,nextDeliveryDate ,periodUnit ,numberOfPeriods ,regularItemPrice ,currentPeriod
+* Change: [cnpAPI v12.33] Added new Enum periodUnit of type enum with values WEEK,MONTH,QUARTER,YEAR
+
 ==Version 12.31.0 (September 11, 2023)
 * Change: [cnpAPI v12.31] Added new Enum foreignRetailerIndicatorEnum with value F
 * Change: [cnpAPI v12.31] Added new Element-foreignRetailerIndicator in sale,capture,forceCapture,captureGivenAuth request.

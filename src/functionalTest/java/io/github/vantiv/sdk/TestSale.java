@@ -785,6 +785,51 @@ public class TestSale {
 		assertEquals("sandbox", response.getLocation());
 	}
 
-
+	@Test
+	public void testSaleWithEnhancedDataLineItemDataWithSubscription() throws Exception {
+		Sale sale = new Sale();
+		sale.setId("12345");
+		sale.setReportGroup("Default");
+		sale.setOrderId("67890");
+		sale.setAmount(10000L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardType card = new CardType();
+		card.setNumber("4100000000000000");
+		card.setExpDate("1215");
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		sale.setCard(card);
+		EnhancedData enhanced = new EnhancedData();
+		enhanced.setCustomerReference("Cust Ref");
+		enhanced.setSalesTax(1000L);
+		LineItemData lid = new LineItemData();
+		lid.setItemSequenceNumber(1);
+		lid.setItemDescription("Electronics");
+		lid.setProductCode("El01");
+		lid.setItemCategory("Ele Appiances");
+		lid.setItemSubCategory("home appliaces");
+		lid.setProductId("1001");
+		lid.setProductName("dryer");
+		Subscription sub = new Subscription();
+		sub.setSubscriptionId("123");
+		sub.setCurrentPeriod(BigInteger.valueOf(1));
+		sub.setPeriodUnit("WEEK");
+		sub.setNumberOfPeriods(BigInteger.valueOf(2));
+		sub.setCurrentPeriod(BigInteger.valueOf(3));
+		sub.setNextDeliveryDate(Calendar.getInstance());
+		lid.setShipmentId("456");
+		lid.setSubscription(sub);
+		enhanced.getLineItemDatas().add(lid);
+		enhanced.setDiscountCode("oneTimeDis");
+		enhanced.setDiscountPercent(BigInteger.valueOf(12));
+		enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+		sale.setEnhancedData(enhanced);
+		sale.setBusinessIndicator(BusinessIndicatorEnum.HIGH_RISK_SECURITIES_PURCHASE);
+		sale.setOrderChannel(OrderChannelEnum.IN_STORE_KIOSK);
+		sale.setFraudCheckStatus("CLOSE");
+		sale.setCrypto(true);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 
 }
