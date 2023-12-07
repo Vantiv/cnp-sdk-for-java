@@ -872,6 +872,7 @@ public class TestAuth {
 		lid.setItemSubCategory("home appliaces");
 		lid.setProductId("1001");
 		lid.setProductName("dryer");
+		enhanced.getLineItemDatas().add(lid);
 		enhanced.setDiscountCode("oneTimeDis");
 		enhanced.setDiscountPercent(BigInteger.valueOf(12));
 		enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
