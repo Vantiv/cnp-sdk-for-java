@@ -411,6 +411,7 @@ public class TestAuth {
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
 		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("1"));
+		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);

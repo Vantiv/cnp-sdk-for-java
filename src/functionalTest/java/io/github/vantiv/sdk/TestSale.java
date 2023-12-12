@@ -793,6 +793,9 @@ public class TestSale {
 		sale.setOrderId("67890");
 		sale.setAmount(10000L);
 		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		fraudCheckType.setCustomerIpAddress("127.0.0.1");
+		sale.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
 		card.setNumber("4100000000000000");
 		card.setExpDate("1215");
