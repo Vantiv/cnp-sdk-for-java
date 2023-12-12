@@ -766,6 +766,15 @@ public class TestBatchFile {
         line_Item.setItemSubCategory("home appliaces");
         line_Item.setProductId("1001");
         line_Item.setProductName("dryer");
+        line_Item.setShipmentId("456");
+        Subscription sub = new Subscription();
+        sub.setSubscriptionId("123");
+        sub.setCurrentPeriod(BigInteger.valueOf(1));
+        sub.setPeriodUnit("YEAR");
+        sub.setNumberOfPeriods(BigInteger.valueOf(2));
+        sub.setCurrentPeriod(BigInteger.valueOf(3));
+        sub.setNextDeliveryDate(Calendar.getInstance());
+        line_Item.setSubscription(sub);
         enhancedData.getLineItemDatas().add(line_Item);
         enhancedData.setDiscountCode("oneTimeDis");
         enhancedData.setDiscountPercent(BigInteger.valueOf(12));

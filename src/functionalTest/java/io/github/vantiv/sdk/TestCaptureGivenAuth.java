@@ -483,4 +483,56 @@ public class TestCaptureGivenAuth {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void testCaptureGivenAuthWithEnhancedDataLineItemDataSubscription() throws Exception {
+		CaptureGivenAuth capturegivenauth = new CaptureGivenAuth();
+		capturegivenauth.setAmount(106L);
+		capturegivenauth.setOrderId("12344");
+		AuthInformation authInfo = new AuthInformation();
+		Calendar authDate = Calendar.getInstance();
+		authDate.set(2002, Calendar.OCTOBER, 9);
+		authInfo.setAuthDate(authDate);
+		authInfo.setAuthCode("543216");
+		authInfo.setAuthAmount(12345L);
+		capturegivenauth.setAuthInformation(authInfo);
+		capturegivenauth.setOrderSource(OrderSourceType.ECOMMERCE);
+		CardTokenType cardtoken = new CardTokenType();
+		cardtoken.setTokenURL("http://token.com/sales");
+		cardtoken.setExpDate("1210");
+		cardtoken.setCardValidationNum("555");
+		cardtoken.setType(MethodOfPaymentTypeEnum.VI);
+		capturegivenauth.setToken(cardtoken);
+		capturegivenauth.setId("id");
+		EnhancedData enhanced = new EnhancedData();
+		enhanced.setCustomerReference("Cust Ref");
+		enhanced.setSalesTax(1000L);
+		LineItemData lid = new LineItemData();
+		lid.setItemSequenceNumber(1);
+		lid.setItemDescription("Electronics");
+		lid.setProductCode("El01");
+		lid.setItemCategory("Ele Appiances");
+		lid.setItemSubCategory("home appliaces");
+		lid.setProductId("1001");
+		lid.setProductName("dryer");
+		Subscription sub = new Subscription();
+		sub.setSubscriptionId("123");
+		sub.setCurrentPeriod(BigInteger.valueOf(1));
+		sub.setPeriodUnit("QUARTER");
+		sub.setNumberOfPeriods(BigInteger.valueOf(2));
+		sub.setCurrentPeriod(BigInteger.valueOf(3));
+		sub.setNextDeliveryDate(Calendar.getInstance());
+		lid.setShipmentId("456");
+		lid.setSubscription(sub);
+		enhanced.getLineItemDatas().add(lid);
+		enhanced.setDiscountCode("oneTimeDis");
+		enhanced.setDiscountPercent(BigInteger.valueOf(12));
+		enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
+		capturegivenauth.setEnhancedData(enhanced);
+		capturegivenauth.setBusinessIndicator(BusinessIndicatorEnum.FUND_TRANSFER);
+		capturegivenauth.setCrypto(false);
+		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);
+		assertEquals(response.getMessage(), "Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }
