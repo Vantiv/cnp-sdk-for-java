@@ -1,6 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==Version 12.33.0 (Dec 7, 2023)
+==Version 12.33.0 (v12.32 & v12.33)(Dec 7, 2023)
+* Change: [cnpAPI v12.32] simple types of customerIpAddress is changed from ipAddress to stringipAddress
+* Change: [cnpAPI v12.32] to support  customerIpAddress new simple type stringipAddress is added
 * Change: [cnpAPI v12.33] Added new simple types are added stringipAddress,numberOfPeriods,string10Type
 * Change: [cnpAPI v12.33] Added new Element shipmentId and subscription
 * Change: [cnpAPI v12.33] Added new complex element subscription added with few simple elements subscriptionId ,nextDeliveryDate ,periodUnit ,numberOfPeriods ,regularItemPrice ,currentPeriod
