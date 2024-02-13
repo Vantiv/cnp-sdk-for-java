@@ -2,8 +2,8 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.33.xsd"/>
-    <xs:include schemaLocation="cnpRecurring_v12.33.xsd"/>
+    <xs:include schemaLocation="cnpCommon_v12.34.xsd"/>
+    <xs:include schemaLocation="cnpRecurring_v12.34.xsd"/>
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true"/>
 
@@ -1840,6 +1840,7 @@
             <xs:element name="routingNum" type="xp:routingNumberType"/>
             <xs:element name="checkNum" type="xp:checkNumberType" minOccurs="0"/>
             <xs:element name="ccdPaymentInformation" type="xp:string80Type" minOccurs="0"/>
+            <xs:element name="echeckCustomerId" type="xp:string25Type" minOccurs="0"/>
         </xs:all>
     </xs:complexType>
 
@@ -2484,7 +2485,7 @@
                         <xs:sequence>
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type"/>
-                            <xs:element name="amount" type="xp:transactionAmountType"/>
+                            <xs:element name="amount" type="xp:achTransactionAmountType"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -2500,7 +2501,7 @@
                         <xs:sequence>
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type"/>
-                            <xs:element name="amount" type="xp:transactionAmountType"/>
+                            <xs:element name="amount" type="xp:achTransactionAmountType"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -2559,7 +2560,7 @@
                                 <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType"/>
                             </xs:choice>
                             <xs:element name="fundsTransferId" type="xp:string36Type"/>
-                            <xs:element name="amount" type="xp:transactionAmountType"/>
+                            <xs:element name="amount" type="xp:achTransactionAmountType"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>
@@ -2578,7 +2579,7 @@
                                 <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType"/>
                             </xs:choice>
                             <xs:element name="fundsTransferId" type="xp:string36Type"/>
-                            <xs:element name="amount" type="xp:transactionAmountType"/>
+                            <xs:element name="amount" type="xp:achTransactionAmountType"/>
                         </xs:sequence>
                     </xs:choice>
                 </xs:extension>

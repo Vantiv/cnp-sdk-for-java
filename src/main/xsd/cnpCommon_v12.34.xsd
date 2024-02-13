@@ -298,6 +298,20 @@
             <xs:enumeration value="highRiskSecuritiesPurchase" />
             <xs:enumeration value="fundTransfer" />
             <xs:enumeration value="walletTransfer" />
+            <xs:enumeration value="accountToAccount" />
+            <xs:enumeration value="bankInitiated" />
+            <xs:enumeration value="fundsDisbursement" />
+            <xs:enumeration value="payrollDisbursement" />
+            <xs:enumeration value="personToPerson" />
+            <xs:enumeration value="topUp" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="achTransactionAmountType">
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="10" />
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999999999"/>
         </xs:restriction>
     </xs:simpleType>
 
