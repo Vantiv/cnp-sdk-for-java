@@ -151,5 +151,30 @@ public class TestEcheckCredit {
 		assertEquals("sandbox", response.getLocation());
     }
 
+	@Test
+	public void echeckCreditWithEcheckCustId() throws Exception{
+		EcheckCredit echeckcredit = new EcheckCredit();
+		echeckcredit.setAmount(12L);
+		echeckcredit.setOrderId("12345");
+		echeckcredit.setOrderSource(OrderSourceType.ECOMMERCE);
+		EcheckType echeck = new EcheckType();
+		echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+		echeck.setAccNum("12345657890");
+		echeck.setRoutingNum("123456789");
+		echeck.setCheckNum("123455");
+		echeck.setEcheckCustomerId("22345678");
+		echeckcredit.setEcheck(echeck);
+		Contact billToAddress = new Contact();
+		billToAddress.setName("Bob");
+		billToAddress.setCity("Lowell");
+		billToAddress.setState("MA");
+		billToAddress.setEmail("cnp.com");
+		echeckcredit.setBillToAddress(billToAddress);
+		echeckcredit.setId("id");
+		EcheckCreditResponse response = cnp.echeckCredit(echeckcredit);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }
 

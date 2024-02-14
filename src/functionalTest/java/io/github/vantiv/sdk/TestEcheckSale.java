@@ -263,5 +263,34 @@ public class TestEcheckSale {
         }
     }
 
+	@Test
+	public void echeckSaleWithEcheckCustId() throws Exception {
+		EcheckSale echecksale = new EcheckSale();
+		echecksale.setReportGroup("2403");
+		echecksale.setAmount(123456L);
+		echecksale.setVerify(true);
+		echecksale.setOrderId("TC7002_1.1ECSaleOnline");
+		echecksale.setOrderSource(OrderSourceType.TELEPHONE);
+		EcheckType echeck = new EcheckType();
+		echeck.setAccType(EcheckAccountTypeEnum.SAVINGS);
+		echeck.setAccNum("1099999902");
+		echeck.setRoutingNum("114567895");
+		echeck.setCheckNum("924");
+		echeck.setEcheckCustomerId("12345678");
+
+		echecksale.setEcheck(echeck);
+		Contact contact = new Contact();
+		contact.setName("Bob");
+		contact.setCity("lowell");
+		contact.setState("MA");
+		contact.setEmail("cnp.com");
+		echecksale.setBillToAddress(contact);
+		echecksale.setShipToAddress(contact);
+		echecksale.setId("id");
+		EcheckSalesResponse response = cnp.echeckSale(echecksale);
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }
 

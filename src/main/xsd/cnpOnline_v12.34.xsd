@@ -225,7 +225,7 @@
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:sequence>
-                        <xs:element name="origId" type="xp:string25Type" minOccurs="0" />
+                        <xs:element name="origId" type="xp:stringMin1Max36CollapseWhiteSpaceType" minOccurs="0" />
                         <xs:element name="origActionType" type="xp:actionTypeEnum" minOccurs="0" />
                         <xs:element name="origCnpTxnId" type="xp:cnpIdType" minOccurs="0" />
                         <xs:element name="showStatusOnly" type="xp:yesNoType" minOccurs="0" />
