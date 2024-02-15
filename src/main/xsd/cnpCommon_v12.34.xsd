@@ -1088,7 +1088,7 @@
 
     <xs:simpleType name="tripLegNumberType">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0" />
+            <xs:minInclusive value="1" />
             <xs:totalDigits value="3" />
         </xs:restriction>
     </xs:simpleType>
