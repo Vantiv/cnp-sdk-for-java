@@ -2,7 +2,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xp="http://www.vantivcnp.com/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.33.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.34.xsd" />
 
     <xs:element name="cnpRequest">
         <xs:complexType>
@@ -297,7 +297,7 @@
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckTypeCtx" />
                             <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
@@ -319,7 +319,7 @@
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckTypeCtx" />
                             <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
@@ -339,7 +339,7 @@
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
                             <xs:element name="submerchantName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckTypeCtx" />
                             <xs:element name="customIdentifier" type="xp:string15Type" minOccurs="0" />
                         </xs:sequence>
@@ -358,7 +358,7 @@
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
                             <xs:element name="submerchantName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckTypeCtx" />
                             <xs:element name="customIdentifier" type="xp:string15Type" minOccurs="0" />
                         </xs:sequence>

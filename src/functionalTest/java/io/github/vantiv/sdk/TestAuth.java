@@ -1029,4 +1029,24 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
+	@Test
+	public void simpleAuthWithBusinessIndcatorEnum() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		authorization.setBusinessIndicator(BusinessIndicatorEnum.TOP_UP);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
 }

@@ -3,7 +3,7 @@
 <xs:schema targetNamespace="http://www.vantivcnp.com/schema" xmlns:xp="http://www.vantivcnp.com/schema"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpTransaction_v12.33.xsd" />
+    <xs:include schemaLocation="cnpTransaction_v12.34.xsd" />
 
     <xs:complexType name="baseRequest">
         <xs:sequence>
@@ -225,7 +225,7 @@
             <xs:complexContent>
                 <xs:extension base="xp:transactionTypeWithReportGroup">
                     <xs:sequence>
-                        <xs:element name="origId" type="xp:string25Type" minOccurs="0" />
+                        <xs:element name="origId" type="xp:stringMin1Max36CollapseWhiteSpaceType" minOccurs="0" />
                         <xs:element name="origActionType" type="xp:actionTypeEnum" minOccurs="0" />
                         <xs:element name="origCnpTxnId" type="xp:cnpIdType" minOccurs="0" />
                         <xs:element name="showStatusOnly" type="xp:yesNoType" minOccurs="0" />
@@ -320,7 +320,7 @@
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
                             <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
@@ -342,7 +342,7 @@
                             </xs:choice>
                             <xs:element name="vendorName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
                             <xs:element name="vendorAddress" type="xp:address"  minOccurs="0"/>
                         </xs:sequence>
@@ -362,7 +362,7 @@
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
                             <xs:element name="submerchantName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
                             <xs:element name="customIdentifier" type="xp:string15Type" minOccurs="0" />
                         </xs:sequence>
@@ -381,7 +381,7 @@
                             <xs:element name="fundingSubmerchantId" type="xp:merchantIdentificationType" />
                             <xs:element name="submerchantName" type="xp:string256Type"/>
                             <xs:element name="fundsTransferId" type="xp:string36Type" />
-                            <xs:element name="amount" type="xp:transactionAmountType" />
+                            <xs:element name="amount" type="xp:achTransactionAmountType" />
                             <xs:element name="accountInfo" type="xp:echeckType" />
                             <xs:element name="customIdentifier" type="xp:string15Type" minOccurs="0" />
                         </xs:sequence>
@@ -428,5 +428,36 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>-->
+    <xs:element name="finicityUrlRequest" substitutionGroup="xp:transaction">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xp:transactionTypeWithReportGroup">
+                    <xs:all>
+                        <xs:element name="firstName" type="xp:string30Type"  minOccurs="0"  />
+                        <xs:element name="lastName" type="xp:string30Type"  minOccurs="0"  />
+                        <xs:element name="phoneNumber" type="xp:phoneType"  minOccurs="0"  />
+                        <xs:element name="email" type="xp:emailType"  minOccurs="0" />
+                    </xs:all>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="finicityUrlResponse" substitutionGroup="xp:transactionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xp:transactionTypeWithReportGroup">
+                    <xs:all>
+                        <xs:element name="cnpTxnId" type="xp:cnpIdType" minOccurs="0"/>
+                        <xs:element name="response" type="xp:responseType" minOccurs="0"/>
+                        <xs:element name="responseTime" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="message" type="xp:messageType" minOccurs="0"/>
+                        <xs:element name="location" type="xs:string" minOccurs="0"/>
+                        <xs:element name="echeckCustomerId" type="xp:string25Type" minOccurs="0"/>
+                        <xs:element name="url" type="xs:string" minOccurs="0"/>
+                    </xs:all>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

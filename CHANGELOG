@@ -1,5 +1,14 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.34.0 (v12.34)(Feb 15, 2024)
+* Change: [cnpAPI v12.34] For existing simple element 'amount' simple type is changed from 'transactionAmountType' to 'achTransactionAmountType' in transactions- vendorCredit,vendorDebit,submerchantCredit,submerchantDebit,payFacDebit,payFacCredit,reserveCredit,reserveDebit
+* Change: [cnpAPI v12.34] Added new simple type 'achTransactionAmountType' to support 'amount'.
+* Change: [cnpAPI v12.34] Added 'accountToAccount','bankInitiated','fundsDisbursement','payrollDisbursement','personToPerson','topUp' in existing enum businessIndicatorEnum.
+* Change: [cnpAPI v12.34] For existing element 'origId' from 'queryTransaction' simpletype changed from 'string25Type' to 'stringMin1Max36CollapseWhiteSpaceType'.
+* Change: [cnpAPI v12.34] New request element 'finicityUrlRequest' is added with subfeilds-'firstName','lastName','phoneNumber','email'.
+* Change: [cnpAPI v12.34] New response element 'finicityUrlResponse' is added with subfeilds-'cnpTxnId','response','responseTime','message','location','echeckCustomerId','url'.
+* Change: [cnpAPI v12.34] New simple element 'echeckCustomerId' is added existing complex type 'echeckType'.
+
 ==Version 12.33.0 (v12.32 & v12.33)(Dec 7, 2023)
 * Change: [cnpAPI v12.32] simple types of customerIpAddress is changed from ipAddress to stringipAddress
 * Change: [cnpAPI v12.32] to support  customerIpAddress new simple type stringipAddress is added

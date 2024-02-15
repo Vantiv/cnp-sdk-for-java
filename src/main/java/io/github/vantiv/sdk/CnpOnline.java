@@ -877,6 +877,21 @@ public class CnpOnline {
         return (PayoutOrgDebitResponse)newresponse.getValue();
     }
 
+    public FinicityUrlResponse finicityUrl(FinicityUrlRequest finicityUrl) throws CnpOnlineException {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return finicityUrl(finicityUrl, request);
+    }
+
+    public FinicityUrlResponse finicityUrl(FinicityUrlRequest finicityUrl, CnpOnlineRequest overrides) throws CnpOnlineException {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(finicityUrl);
+
+        request.setTransaction(CnpContext.getObjectFactory().createFinicityUrlRequest(finicityUrl));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (FinicityUrlResponse)newresponse.getValue();
+    }
+
 	private CnpOnlineRequest createCnpOnlineRequest() {
 		CnpOnlineRequest request = new CnpOnlineRequest();
 		request.setMerchantId(config.getProperty("merchantId"));
