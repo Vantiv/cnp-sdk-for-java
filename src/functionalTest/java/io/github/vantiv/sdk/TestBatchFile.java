@@ -956,6 +956,121 @@ public class TestBatchFile {
         assertEquals(transactionCount, processor.responseCount);
     }
 
+    @Test
+    public void testBusinessIndicatorEnum_EcheckCustId() {
+        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
+        String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
+        CnpBatchFileRequest request = new CnpBatchFileRequest(requestFileName);
+        Properties configFromFile = request.getConfig();
+
+        // pre-assert the config file has required param values
+         assertEquals("payments.vantivprelive.com", configFromFile.getProperty("batchHost"));
+
+        //assertEquals("15000", configFromFile.getProperty("batchPort"));
+
+        CnpBatchRequest batch = request.createBatch(configFromFile.getProperty("merchantId"));
+
+        Authorization authorization_authInd = new Authorization();
+        authorization_authInd.setId("12345");
+        authorization_authInd.setReportGroup("Default");
+        authorization_authInd.setOrderId("12344");
+        authorization_authInd.setAmount(10000L);
+        authorization_authInd.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType cardDetails = new CardType();
+        cardDetails.setNumber("4100000000000001");
+        cardDetails.setExpDate("1210");
+        cardDetails.setType(MethodOfPaymentTypeEnum.VI);
+        authorization_authInd.setCard(cardDetails);
+        authorization_authInd.setBusinessIndicator(BusinessIndicatorEnum.BANK_INITIATED);
+        batch.addTransaction(authorization_authInd);
+
+        // echeck
+        EcheckType echeck = new EcheckType();
+        echeck.setAccNum("1092969901");
+        echeck.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck.setRoutingNum("211370545");
+        echeck.setCheckNum("123455");
+        echeck.setEcheckCustomerId("154646587");
+
+        // billto address
+        Contact contact = new Contact();
+        contact.setName("Bob");
+        contact.setCity("Lowell");
+        contact.setState("MA");
+        contact.setEmail("Bob@cnp.com");
+
+        EcheckSale echeckSale = new EcheckSale();
+        echeckSale.setReportGroup("Planets");
+        echeckSale.setAmount(123456L);
+        echeckSale.setOrderId("12345");
+        echeckSale.setOrderSource(OrderSourceType.ECOMMERCE);
+        echeckSale.setBillToAddress(contact);
+        echeckSale.setEcheck(echeck);
+        echeckSale.setVerify(true);
+        echeckSale.setId("id");
+        batch.addTransaction(echeckSale);
+
+        VendorCredit vcredit = new VendorCredit();
+        vcredit.setReportGroup("vendorCredit");
+        vcredit.setId("111");
+        vcredit.setFundingSubmerchantId("vendorCredit");
+        vcredit.setVendorName("Vendor101");
+        vcredit.setFundsTransferId("1001");
+        vcredit.setAmount(1512l);
+
+        EcheckTypeCtx echeck1 = new EcheckTypeCtx();
+        echeck1.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck1.setAccNum("123456789012");
+        echeck1.setRoutingNum("211370545");
+        echeck1.setCcdPaymentInformation("paymentInfo");
+        vcredit.setAccountInfo(echeck1);
+
+        Address adr = new Address();
+        adr.setAddressLine1("100 MAIN ST1");
+        adr.setAddressLine2("100 MAIN ST2");
+        adr.setAddressLine3("100 MAIN ST3");
+        adr.setCity("home town");
+        adr.setState("MA");
+        adr.setZip("01851");
+        adr.setCountry(CountryTypeEnum.US);
+        vcredit.setVendorAddress(adr);
+        batch.addTransaction(vcredit);
+
+        SubmerchantDebit submerchantdebit = new SubmerchantDebit();
+        submerchantdebit.setReportGroup("submerchantdebit");
+        submerchantdebit.setId("111");
+        submerchantdebit.setFundingSubmerchantId("submerchantdebit");
+        submerchantdebit.setSubmerchantName("SubMerchant101");
+        submerchantdebit.setFundsTransferId("1001");
+        submerchantdebit.setAmount(1512l);
+
+        EcheckTypeCtx echeck2 = new EcheckTypeCtx();
+        echeck2.setAccType(EcheckAccountTypeEnum.CHECKING);
+        echeck2.setAccNum("123456789012");
+        echeck2.setRoutingNum("211370545");
+        echeck2.setCcdPaymentInformation("paymentInfo");
+        submerchantdebit.setAccountInfo(echeck2);
+        submerchantdebit.setCustomIdentifier("SCFFISC");
+        batch.addTransaction(submerchantdebit);
+
+        int transactionCount = batch.getNumberOfTransactions();
+
+        CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();
+        CnpBatchResponse batchResponse = fileResponse
+                .getNextCnpBatchResponse();
+        int txns = 0;
+
+        ResponseValidatorProcessor processor = new ResponseValidatorProcessor();
+
+        while (batchResponse.processNextTransaction(processor)) {
+            txns++;
+        }
+
+        assertEquals(transactionCount, txns);
+        assertEquals(transactionCount, processor.responseCount);
+    }
+
+
     private SellerInfo addSellerInfo(){
         SellerInfo sellerInfo=new SellerInfo();
         sellerInfo.setAccountNumber("4485581000000005");
