@@ -9,7 +9,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.BatchResponse;
 import io.github.vantiv.sdk.generate.CnpTransactionInterface;
 import io.github.vantiv.sdk.generate.TransactionType;

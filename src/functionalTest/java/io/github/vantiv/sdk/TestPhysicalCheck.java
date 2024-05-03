@@ -1,6 +1,5 @@
 package io.github.vantiv.sdk;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.PhysicalCheckCredit;
 import io.github.vantiv.sdk.generate.PhysicalCheckCreditResponse;
 import io.github.vantiv.sdk.generate.PhysicalCheckDebit;

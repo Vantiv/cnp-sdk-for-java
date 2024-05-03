@@ -1,6 +1,5 @@
 package io.github.vantiv.sdk;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.ReserveCredit;
 import io.github.vantiv.sdk.generate.ReserveCreditResponse;
 import io.github.vantiv.sdk.generate.ReserveDebit;

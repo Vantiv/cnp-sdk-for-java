@@ -2,7 +2,6 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertEquals;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;

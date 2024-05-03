@@ -1,6 +1,6 @@
 = Vantiv eCommerce CNP CHANGELOG
 
-==(Mar 30, 2024)
+==(May 03, 2024)
 * Change: cnp-sdk-for-java is upgraded to work with Java 17.
 
 ==Version 12.34.0 (v12.34)(Feb 15, 2024)

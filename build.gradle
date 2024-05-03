@@ -16,9 +16,6 @@ repositories {
 configurations {
     all{
         resolutionStrategy {
-            force "com.sun.xml.bind:jaxb-xjc:2.3.5"
-            force "com.sun.xml.bind:jaxb-core:2.3.0"
-
         }
     }
     functionalTestImplementation.extendsFrom testImplementation
@@ -51,13 +48,12 @@ sourceSets {
 }
 
 dependencies{
-    // https://mvnrepository.com/artifact/com.jcraft/jsch
     implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
-    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.4'
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
-
     implementation group: 'org.bouncycastle', name: 'bcpg-jdk18on', version: '1.75'
     implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15to18', version: '1.75'
 
@@ -65,16 +61,11 @@ dependencies{
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
     testImplementation 'org.slf4j:slf4j-nop:1.7.36'
 
-    implementation "javax.xml.bind:jaxb-api:2.3.1"
-
-    generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.3.0'
-    generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.3.4'
-    generateJAXB group:'com.sun.xml.bind', name:'jaxb-xjc', version:'2.3.5'
-
+    generateJAXB group: 'com.sun.xml.bind', name: 'jaxb-xjc', version: '2.3.5'
 }
 
 ////////// PLUGIN CONFIGURATION ////////// 
-sourceCompatibility=1.7
+//sourceCompatibility=1.7
 
 clean {
     // temporary, we need to change the tests to generate output inside build folder

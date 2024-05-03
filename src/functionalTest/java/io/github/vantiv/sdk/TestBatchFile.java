@@ -125,7 +125,6 @@ import io.github.vantiv.sdk.generate.UpdateSubscriptionResponse;
 import io.github.vantiv.sdk.generate.VendorCreditResponse;
 import io.github.vantiv.sdk.generate.VendorDebitResponse;
 import io.github.vantiv.sdk.generate.VirtualGiftCardType;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class TestBatchFile {
     private final long TIME_STAMP = System.currentTimeMillis();

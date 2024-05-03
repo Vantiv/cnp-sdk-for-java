@@ -8,7 +8,6 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 import org.junit.BeforeClass;
 import org.junit.Test;

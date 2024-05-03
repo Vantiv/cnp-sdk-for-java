@@ -1,7 +1,5 @@
 package io.github.vantiv.sdk;
 
-//import com.cnp.sdk.generate.*;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import io.github.vantiv.sdk.generate.*;
 import org.junit.Before;
 import org.junit.Test;

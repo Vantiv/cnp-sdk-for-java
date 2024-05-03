@@ -10,7 +10,6 @@ import java.util.Properties;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 import io.github.vantiv.sdk.generate.Void;
 

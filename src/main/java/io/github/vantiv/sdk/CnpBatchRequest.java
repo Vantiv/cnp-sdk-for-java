@@ -12,7 +12,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 import org.bouncycastle.openpgp.PGPException;
 

@@ -2,7 +2,6 @@ package io.github.vantiv.sdk;
 
 import java.util.Calendar;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 
 public class Test {

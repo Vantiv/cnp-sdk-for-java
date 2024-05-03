@@ -20,7 +20,6 @@ import io.github.vantiv.sdk.generate.GiftCardCredit;
 import io.github.vantiv.sdk.generate.GiftCardCreditResponse;
 import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
 import io.github.vantiv.sdk.generate.OrderSourceType;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class TestGiftCardTransactions {
 

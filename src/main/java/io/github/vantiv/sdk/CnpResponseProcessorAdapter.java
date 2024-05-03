@@ -1,6 +1,5 @@
 package io.github.vantiv.sdk;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.*;
 
 public class CnpResponseProcessorAdapter implements CnpResponseProcessor {

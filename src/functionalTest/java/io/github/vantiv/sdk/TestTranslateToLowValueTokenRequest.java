@@ -3,7 +3,6 @@ package io.github.vantiv.sdk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-//import com.cnp.sdk.generate.*;
 import io.github.vantiv.sdk.generate.TranslateToLowValueTokenRequestType;
 import io.github.vantiv.sdk.generate.TranslateToLowValueTokenResponse;
 import org.junit.BeforeClass;

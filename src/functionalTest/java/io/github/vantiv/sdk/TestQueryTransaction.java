@@ -3,7 +3,6 @@ package io.github.vantiv.sdk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-//import com.cnp.sdk.generate.*;
 import java.util.Properties;
 
 import io.github.vantiv.sdk.generate.*;

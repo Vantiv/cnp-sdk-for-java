@@ -14,7 +14,6 @@ import io.github.vantiv.sdk.generate.UnloadReversalResponse;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class TestUnloadReversal {
 
