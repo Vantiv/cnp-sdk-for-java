@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.37.1 (v12.37.1)(Jun 25, 2024)
+* Change: [cnpAPI v12.37.1] Change: cnp-sdk-for-java is upgraded to work with Java 8 compatibility.
+
 ==Version 12.37.0 (v12.37.0)(May 29, 2024)
 * Change: [cnpAPI v12.37] New existing 'postCheckoutRedirectUrl' with min length '1' and maxlength '200'
 * Change: [cnpAPI v12.37] New enum 'provider' is added with value 'AFFIRM'
@@ -29,6 +32,9 @@
 * Change: [cnpAPI v12.35] In existing Enum orderChannelEnum new values 'SCAN_AND_GO' and 'SMART_TV'
 * Change: [cnpAPI v12.35] New complex element 'accountFundingTransactionData' added with below simple elements receiverFirstName of 'string35Type' ,'receiverLastName' of 'string35Type','receiverState' of 'stateTypeEnum',''receiverCountry' of 'countryTypeEnum' and 'receiverAccountNumber' of 'string50Type'
 * Change: [cnpAPI v12.35] 'accountFundingTransactionData' is added in Authorization,sale,credit,capturegiventAuth and FORCECapture request.
+
+==Version 12.34.2 (v12.34.2)(Jun 21, 2024)
+* Change: [cnpAPI v12.34.2] cnp-sdk-for-java is upgraded to work with Java 8 compatibility.
 
 ==Version 12.34.1 (v12.34.1)(May 6, 2024)
 * Change: cnp-sdk-for-java is upgraded to work with Java 17.
