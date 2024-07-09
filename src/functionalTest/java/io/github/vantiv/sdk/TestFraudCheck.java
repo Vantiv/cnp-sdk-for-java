@@ -46,7 +46,7 @@ public class TestFraudCheck {
         
         AdvancedFraudResultsType advancedFraudResultsType = fraudCheckResponse.getAdvancedFraudResults();
         assertEquals("pass", advancedFraudResultsType.getDeviceReviewStatus());
-        assertEquals(new Integer(42), advancedFraudResultsType.getDeviceReputationScore());
+        assertEquals(Integer.valueOf(42), advancedFraudResultsType.getDeviceReputationScore());
         assertEquals(5, advancedFraudResultsType.getTriggeredRules().size());
     }
 }

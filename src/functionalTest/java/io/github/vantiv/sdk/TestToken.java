@@ -91,7 +91,7 @@ public class TestToken {
         token.setId("id");
         RegisterTokenResponse response = cnp.registerToken(token);
         assertEquals("Account number was successfully registered", response.getMessage());
-        assertEquals(new Long(0),response.getApplepayResponse().getTransactionAmount());
+        assertEquals(Long.valueOf(0),response.getApplepayResponse().getTransactionAmount());
 		assertEquals("sandbox", response.getLocation());
     }
 	

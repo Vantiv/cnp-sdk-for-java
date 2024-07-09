@@ -2,7 +2,7 @@ package io.github.vantiv.sdk;
 
 import java.io.File;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 
 public class CnpBatchFileResponse extends CnpFileResponse{

@@ -2,7 +2,7 @@ package io.github.vantiv.sdk;
 
 import static org.junit.Assert.assertSame;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 import io.github.vantiv.sdk.generate.ObjectFactory;
 import org.junit.Test;

@@ -1,5 +1,8 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Version 12.37.2_17 (v12.37.2_17)(July 10, 2024)
+* Change: [cnpAPI v12.37.2_17] Change: cnp-sdk-for-java is upgraded to work with Jakarta v4.0.2 and Java 17 compatibility.(Replaced Javax with Jakarta)
+
 ==Version 12.37.1 (v12.37.1)(Jun 25, 2024)
 * Change: [cnpAPI v12.37.1] Change: cnp-sdk-for-java is upgraded to work with Java 8 compatibility.
 

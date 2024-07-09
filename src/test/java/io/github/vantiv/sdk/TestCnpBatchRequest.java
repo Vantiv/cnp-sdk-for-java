@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.Properties;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import io.github.vantiv.sdk.generate.*;
 import org.junit.Before;

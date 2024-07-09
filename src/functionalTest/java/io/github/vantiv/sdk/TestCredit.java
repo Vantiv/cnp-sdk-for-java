@@ -268,8 +268,8 @@ public class TestCredit {
         passengerTransportData.setCreditReasonIndicator(CreditReasonIndicatorEnum.C);
         passengerTransportData.setTicketChangeIndicator(TicketChangeIndicatorEnum.C);
         passengerTransportData.setTicketIssuerAddress("IssuerAddress");
-        passengerTransportData.setExchangeAmount(new Long(110));
-        passengerTransportData.setExchangeFeeAmount(new Long(112));
+        passengerTransportData.setExchangeAmount(Long.valueOf(110));
+        passengerTransportData.setExchangeFeeAmount(Long.valueOf(112));
         passengerTransportData.setExchangeTicketNumber("ExchangeNumber");
         passengerTransportData.getTripLegDatas().add(addTripLegData());
         return  passengerTransportData;

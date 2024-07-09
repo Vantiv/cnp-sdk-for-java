@@ -7,7 +7,6 @@ apply plugin : 'maven-publish'
 group = 'io.github.vantiv'
 version = JAR_VERSION
 
-
 repositories {
     maven  {
         url "http://repo1.maven.org/maven2"
@@ -50,19 +49,21 @@ sourceSets {
 
 dependencies{
     implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
-    implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
-    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.4'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '4.0.5'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '4.0.5'
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.2'
     implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
     implementation group: 'org.bouncycastle', name: 'bcpg-jdk18on', version: '1.78.1'
     implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15to18', version: '1.78'
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-core', version: '4.0.5'
+    generateJAXB group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '4.0.5'
 
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
     testImplementation 'org.slf4j:slf4j-nop:1.7.36'
 
-    generateJAXB group: 'com.sun.xml.bind', name: 'jaxb-xjc', version: '2.3.5'
+    generateJAXB group: 'org.glassfish.jaxb', name: 'jaxb-xjc', version: '4.0.5'
 }
 
 ////////// PLUGIN CONFIGURATION ////////// 
@@ -79,7 +80,7 @@ jacocoTestReport {
 
 jar{
     manifest {
-        attributes("Implementation-Title":"Cnp SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"io.github.vantiv.sdk.Setup")
+        attributes("Implementation-Title":"Cnp SDK For Java 17 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"Cnp&Co","Main-Class":"io.github.vantiv.sdk.Setup")
     }
     getDestinationDirectory().set(file("${DIST_DIR_15}/lib"))
     getArchiveFileName().set("cnp-sdk-for-java-${JAR_VERSION}.jar")

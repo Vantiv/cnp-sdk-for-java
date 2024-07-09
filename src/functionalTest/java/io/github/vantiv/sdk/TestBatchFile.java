@@ -15,7 +15,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -181,7 +181,7 @@ public class TestBatchFile {
     public void testSendToCnp_WithConfigOverrides() throws Exception {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String workingDir = System.getProperty("java.io.tmpdir");
 
         String workingDirRequests = workingDir + File.separator
@@ -226,7 +226,7 @@ public class TestBatchFile {
             throws Exception {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -277,7 +277,7 @@ public class TestBatchFile {
             throws Exception {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         // --- Prepare the batch file ---
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request1 = new CnpBatchFileRequest(
@@ -342,7 +342,7 @@ public class TestBatchFile {
     public void testSendToCnpSFTP_WithFileConfig() throws Exception {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-fileConfigSFTP-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -382,7 +382,7 @@ public class TestBatchFile {
     public void testSendToCnpSFTP_WithConfigOverrides() throws Exception {
 
        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String workingDir = System.getProperty("java.io.tmpdir");
 
         String workingDirRequests = workingDir + File.separator
@@ -494,7 +494,7 @@ public class TestBatchFile {
     public void testMechaBatchAndProcess() {
 
        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-MECHA-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1214,7 +1214,7 @@ public class TestBatchFile {
     public void testEcheckPreNoteAll() {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-EcheckPreNoteAll-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1525,7 +1525,7 @@ public class TestBatchFile {
     public void testGiftCardTransactions() throws DatatypeConfigurationException {
 
        Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-GiftCardTransactions-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -1929,7 +1929,7 @@ public class TestBatchFile {
     public void testMechaBatchAndProcess_RecurringDemonstratesUseOfProcessorAdapter() {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile-RECURRING-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
@@ -2006,7 +2006,7 @@ public class TestBatchFile {
     public void testBatch_AU() {
 
         Assume.assumeFalse(preliveStatus.equalsIgnoreCase("down"));
-        
+
         String requestFileName = "cnpSdk-testBatchFile_AU-" + TIME_STAMP + ".xml";
         CnpBatchFileRequest request = new CnpBatchFileRequest(
                 requestFileName);
