@@ -7,6 +7,7 @@ apply plugin : 'maven-publish'
 group = 'io.github.vantiv'
 version = JAR_VERSION
 
+
 repositories {
     maven  {
         url "http://repo1.maven.org/maven2"
