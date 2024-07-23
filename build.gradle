@@ -49,7 +49,6 @@ sourceSets {
 
 dependencies{
     implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
-    implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '4.0.5'
     implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '4.0.5'
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.2'
