@@ -103,6 +103,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="string12Type">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="12" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="string14Type">
         <xs:restriction base="xs:string">
             <xs:maxLength value="14" />
