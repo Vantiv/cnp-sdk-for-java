@@ -2,8 +2,8 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.42.xsd"/>
-    <xs:include schemaLocation="cnpRecurring_v12.42.xsd"/>
+    <xs:include schemaLocation="cnpCommon_v12.43.xsd"/>
+    <xs:include schemaLocation="cnpRecurring_v12.43.xsd"/>
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true"/>
 
@@ -163,6 +163,8 @@
                         <xs:element name="originalNetworkTransactionId" type="xp:string30Type"/>
                         <xs:element name="merchantCategoryCode" type="xp:stringExactly4Type" minOccurs="0"/>
                         <xs:element name="originalRetrievalReferenceNumber" type="xp:string12Type"/>
+                        <xs:element name="cumulativeAmount" type="xp:transactionAmountType" minOccurs="0"/>
+                        <xs:element name="originalTransactionAmount" type="xp:transactionAmountType" minOccurs="0"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -1082,6 +1084,7 @@
             <xs:enumeration value="Transaction Description"/>
             <xs:enumeration value="Reserved for National Use"/>
             <xs:enumeration value="Reserved for Private Use"/>
+            <xs:enumeration value="Additional Request Data"/>
         </xs:restriction>
     </xs:simpleType>
 
