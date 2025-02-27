@@ -74,9 +74,9 @@ public class PgpHelper {
             return null;
         }
 
-        PBESecretKeyDecryptor secretKeyDecryptor = new JcePBESecretKeyDecryptorBuilder(new JcaPGPDigestCalculatorProviderBuilder().setProvider("BC").build()).setProvider("BC").build(pass);
+        PBESecretKeyDecryptor skd = new JcePBESecretKeyDecryptorBuilder(new JcaPGPDigestCalculatorProviderBuilder().setProvider("BC").build()).setProvider("BC").build(pass);
 
-        return pgpSecretKeyKey.extractPrivateKey(secretKeyDecryptor);
+        return pgpSecretKeyKey.extractPrivateKey(skd);
     }
 
     /**
@@ -85,13 +85,13 @@ public class PgpHelper {
      * @param inputFilepath path to encrypted file.
      * @param outputFilepath path to decrypted file
      * @param privateKeyPath path to Pgp Private key
-     * @param passphrase passphrse to access provided Pgp Private key
+     * @param pp passphrse to access provided Pgp Private key
      * @throws IOException
      * @throws PGPException
      */
-    public static void decrypt(String inputFilepath, String outputFilepath, String privateKeyPath, String passphrase)
+    public static void decrypt(String inputFilepath, String outputFilepath, String privateKeyPath, String pp)
             throws IOException, PGPException {
-        InputStream decryptionInputStream = decryptionStream(inputFilepath, privateKeyPath, passphrase);
+        InputStream decryptionInputStream = decryptionStream(inputFilepath, privateKeyPath, pp);
         OutputStream fileOutputStream = new FileOutputStream(outputFilepath);
         byte[] clearData = new byte[2097152];
         int len;
@@ -107,12 +107,12 @@ public class PgpHelper {
      *
      * @param inputFilepath path to encrypted file.
      * @param privateKeyPath path to Pgp Private key
-     * @param passphrase passphrse to access provided Pgp Private key
+     * @param pp passphrse to access provided Pgp Private key
      * @return An InputStream to read encrypted content in given encrypted file as decrypted raw data.
      * @throws IOException
      * @throws PGPException
      */
-    public static InputStream decryptionStream(String inputFilepath,  String privateKeyPath, String passphrase)
+    public static InputStream decryptionStream(String inputFilepath,  String privateKeyPath, String pp)
             throws IOException, PGPException {
         InputStream fileInputStream = new FileInputStream(inputFilepath);
         Security.addProvider(new BouncyCastleProvider());
@@ -133,7 +133,7 @@ public class PgpHelper {
 
         while (pgpPrivateKey == null && pgpPublicKeyEncryptedDataIterator.hasNext()) {
             pgpPublicKeyEncryptedData = pgpPublicKeyEncryptedDataIterator.next();
-            pgpPrivateKey = findSecretKey(new FileInputStream(privateKeyPath), pgpPublicKeyEncryptedData.getKeyID(), passphrase.toCharArray());
+            pgpPrivateKey = findSecretKey(new FileInputStream(privateKeyPath), pgpPublicKeyEncryptedData.getKeyID(), pp.toCharArray());
         }
 
         if (pgpPrivateKey == null) {
