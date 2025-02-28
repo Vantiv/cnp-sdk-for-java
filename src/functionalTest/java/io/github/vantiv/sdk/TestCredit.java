@@ -14,6 +14,7 @@ import io.github.vantiv.sdk.generate.CountryTypeEnum;
 import io.github.vantiv.sdk.generate.Credit;
 import io.github.vantiv.sdk.generate.CreditResponse;
 import io.github.vantiv.sdk.generate.EnhancedData;
+import io.github.vantiv.sdk.generate.IdentityBundle;
 import io.github.vantiv.sdk.generate.LineItemData;
 import io.github.vantiv.sdk.generate.MethodOfPaymentTypeEnum;
 import io.github.vantiv.sdk.generate.OrderSourceType;
@@ -355,4 +356,31 @@ public class TestCredit {
         assertEquals("sandbox", response.getLocation());
     }
 
+    //v12.41 changes to test identityBundle
+    @Test
+    public void simpleCreditWithIdentityBundle() throws Exception {
+        Credit credit = new Credit();
+        credit.setAmount(106L);
+        credit.setOrderId("12344");
+        credit.setOrderSource(OrderSourceType.ECOMMERCE);
+        CardType card = new CardType();
+        card.setType(MethodOfPaymentTypeEnum.VI);
+        card.setNumber("4100000000000001");
+        card.setExpDate("1210");
+        credit.setCard(card);
+        credit.setId("id");
+        IdentityBundle identityBundle = new IdentityBundle();
+        identityBundle.setMerchantId("12222");
+        identityBundle.setEntityId("222222");
+        identityBundle.setEntityReference("32222");
+        identityBundle.setResourceId("422222");
+        identityBundle.setResourceReference("52222");
+        identityBundle.setCommandId("6222");
+        identityBundle.setCommandReference("72222");
+        identityBundle.setOrderReference("82222");
+        credit.setIdentityBundle(identityBundle);
+        CreditResponse response = cnp.credit(credit);
+        assertEquals("Approved", response.getMessage());
+        assertEquals("sandbox", response.getLocation());
+    }
 }
