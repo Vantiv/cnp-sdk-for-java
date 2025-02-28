@@ -10,9 +10,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -29,6 +33,7 @@ import org.bouncycastle.openpgp.PGPException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -1101,7 +1106,7 @@ public class CnpOnline {
 			    xmlResponse = xmlResponse.replace("http://www.vantivcnp.com/schema/online", "http://www.vantivcnp.com/schema");
 			}
 
-			CnpOnlineResponse response = (CnpOnlineResponse)CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+			CnpOnlineResponse response = secureUnmarshal(xmlResponse);
 			// non-zero responses indicate a problem
 			if(!"0".equals(response.getResponse())) {
 				if ("2".equals(response.getResponse()) || "3".equals(response.getResponse())) {
@@ -1115,9 +1120,9 @@ public class CnpOnline {
 				}
 			}
 			return response;
-		} catch(JAXBException ume) {
+		} catch(JAXBException | ParserConfigurationException | IOException | SAXException  ume) {
 			throw new CnpOnlineException("Error validating xml data against the schema", ume);
-		} finally {
+        } finally {
 		}
 	}
 
@@ -1151,7 +1156,7 @@ public class CnpOnline {
             try {
                 if (xmlResponse.contains("queryTransactionResponse")) {
                     xmlResponse = getSchema(xmlResponse);
-                    response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+                    response = secureUnmarshal(xmlResponse);
                     queryTxnResponse = (QueryTransactionResponse) response.getTransactionResponse().getValue();
                     if (queryTxnResponse != null && "151".equals(queryTxnResponse.getResponse())) {
                         if (!retrySite) {
@@ -1180,7 +1185,7 @@ public class CnpOnline {
              * This issue will be fixed for OpenAccess in Jan 2018
              */
             xmlResponse = getSchema(xmlResponse);
-            response = (CnpOnlineResponse) CnpContext.getJAXBContext().createUnmarshaller().unmarshal(new StringReader(xmlResponse));
+            response = secureUnmarshal(xmlResponse);
             // non-zero responses indicate a problem
             if (!"0".equals(response.getResponse())) {
                 if ("2".equals(response.getResponse()) || "3".equals(response.getResponse())) {
@@ -1194,7 +1199,7 @@ public class CnpOnline {
                 }
             }
             return response;
-        } catch (JAXBException ume) {
+        } catch(JAXBException | ParserConfigurationException | IOException | SAXException  ume) {
             throw new CnpOnlineException("Error validating xml data against the schema", ume);
         } catch (CnpOnlineException ex) {
             if (retrySite) {
@@ -1249,7 +1254,20 @@ public class CnpOnline {
                     payloadTag
             );
             //for replacing specific txn tag by encryptedPayload, it will be append to the root element
-            Document encryptedPayloadDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(encryptedPayload)));
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+
+            docFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            docFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            docFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            docFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            docFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            docFactory.setXIncludeAware(false);
+            docFactory.setExpandEntityReferences(false);
+
+            DocumentBuilder builder = docFactory.newDocumentBuilder();
+
+            Document encryptedPayloadDoc =builder.parse(new InputSource(new StringReader(encryptedPayload)));
+
             Node newEncryptedPayloadNode = doc.importNode(encryptedPayloadDoc.getDocumentElement(), true);
 
             root.appendChild(newEncryptedPayloadNode);
@@ -1311,6 +1329,41 @@ public class CnpOnline {
     private void fillInReportGroup(TransactionTypeWithReportGroupAndRtp txn) {
         if(txn.getReportGroup() == null) {
             txn.setReportGroup(config.getProperty("reportGroup"));
+        }
+    }
+    private CnpOnlineResponse secureUnmarshal(String xmlResponse) throws JAXBException, SAXException, ParserConfigurationException, IOException {
+
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+
+        docFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        docFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        docFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        docFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        docFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        docFactory.setXIncludeAware(false);
+        docFactory.setExpandEntityReferences(false);
+        docFactory.setNamespaceAware(true);
+
+        DocumentBuilder db = docFactory.newDocumentBuilder();
+        db.setEntityResolver(new CustomEntityResolver());
+        Document doc = db.parse(new InputSource(new StringReader(xmlResponse)));
+
+        // Unmarshal the Document object
+        JAXBContext jc = CnpContext.getJAXBContext();
+        Unmarshaller unmarshaller = jc.createUnmarshaller();
+        return (CnpOnlineResponse) unmarshaller.unmarshal(doc);
+    }
+
+    // Custom EntityResolver to allow only specific url
+    private static class CustomEntityResolver implements EntityResolver {
+        private static final String ALLOWED_URL = "http://www.vantivcnp.com/schema";
+        @Override
+        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+            if (systemId != null && systemId.equals(ALLOWED_URL)) {
+                return new InputSource(systemId);
+            } else {
+                throw new SAXException("External entity resolution is not allowed");
+            }
         }
     }
 }
