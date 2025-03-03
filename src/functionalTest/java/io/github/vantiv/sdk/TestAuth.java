@@ -1130,14 +1130,14 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
-	//v12.41 changes to test identityBundle ,v12.43 originalRetrievalReferenceNumber
+	//v12.41 changes to test identityBundle ,v12.43 originalRetrievalReferenceNumber, v12.44 'ecommerceDataOnly' value in order source enum
 	@Test
 	public void authWithIdentityBundle() throws Exception {
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
 		authorization.setOrderId("12344");
 		authorization.setAmount(999999999999L);
-		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
 		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));

@@ -863,14 +863,14 @@ public class TestSale {
 		assertEquals("sandbox", response.getLocation());
 	}
 
-	//v12.41 changes to test identityBundle
+	//v12.41 changes to test identityBundle, v12.44 'ecommerceDataOnly' value in order source enum
 	@Test
 	public void saleWithIdentityBundle() throws Exception {
 		Sale sale = new Sale();
 		sale.setReportGroup("Planets");
 		sale.setOrderId("12344");
 		sale.setAmount(999999999999L);
-		sale.setOrderSource(OrderSourceType.ECOMMERCE);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
 		sale.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
 		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
