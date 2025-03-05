@@ -372,10 +372,10 @@ public class CnpBatchFileRequest{
 
     private void decryptResponseFile() {
         String encResponseFilename = responseFile.getAbsolutePath() + ".encrypted";
-        String passwd = properties.getProperty("gpgPassphrase");
+        String pp = properties.getProperty("gpgPassphrase");
         String privateKeyPath = properties.getProperty("PrivateKeyPath");
         try {
-            PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), privateKeyPath, passwd);
+            PgpHelper.decrypt(encResponseFilename, responseFile.getAbsolutePath(), privateKeyPath, pp);
         } catch (PGPException pgpe) {
             throw new CnpBatchException("Error while decrypting response file. Check if " + privateKeyPath + " contains correct private key." +
                     "and that the gpgPassphrase provided in config file is correct.", pgpe);

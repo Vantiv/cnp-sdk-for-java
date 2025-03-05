@@ -203,4 +203,27 @@ public class TestCapture {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	//v12.41 changes to test identityBundle
+	@Test
+	public void captureWithIdentityBundle() throws Exception {
+		Capture capture = new Capture();
+		capture.setCnpTxnId(123456000L);
+		capture.setAmount(106L);
+		capture.setId("id");
+		IdentityBundle identityBundle = new IdentityBundle();
+		identityBundle.setMerchantId("12222");
+		identityBundle.setEntityId("222222");
+		identityBundle.setEntityReference("32222");
+		identityBundle.setResourceId("422222");
+		identityBundle.setResourceReference("52222");
+		identityBundle.setCommandId("6222");
+		identityBundle.setCommandReference("72222");
+		identityBundle.setOrderReference("82222");
+		capture.setIdentityBundle(identityBundle);
+		CaptureResponse response = cnp.capture(capture);
+		assertEquals(response.getMessage(), "000", response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

@@ -108,6 +108,21 @@ public class CnpOnline {
 		return (AuthorizationResponse)newresponse.getValue();
 	}
 
+    public AuthorizationResponse realTimeIncrementalAuth(RealtimeIncrementalAuthorization auth) throws CnpOnlineException {
+        CnpOnlineRequest request = createCnpOnlineRequest();
+        return realTimeIncrementalAuth(auth, request);
+    }
+
+    public AuthorizationResponse realTimeIncrementalAuth(RealtimeIncrementalAuthorization auth, CnpOnlineRequest overrides) throws CnpOnlineException {
+        CnpOnlineRequest request = fillInMissingFieldsFromConfig(overrides);
+        fillInReportGroup(auth);
+
+        request.setTransaction(CnpContext.getObjectFactory().createRealtimeIncrementalAuthorization(auth));
+        CnpOnlineResponse response = sendToCnp(request);
+        JAXBElement<? extends TransactionTypeWithReportGroup> newresponse = response.getTransactionResponse();
+        return (AuthorizationResponse)newresponse.getValue();
+    }
+
 	public AuthReversalResponse authReversal(AuthReversal reversal) throws CnpOnlineException {
 		CnpOnlineRequest request = createCnpOnlineRequest();
 		return authReversal(reversal, request);

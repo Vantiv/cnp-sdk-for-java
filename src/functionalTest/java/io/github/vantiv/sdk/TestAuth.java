@@ -1130,4 +1130,38 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
+	//v12.41 changes to test identityBundle ,v12.43 originalRetrievalReferenceNumber, v12.44 'ecommerceDataOnly' value in order source enum
+	@Test
+	public void authWithIdentityBundle() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(999999999999L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
+		authorization.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setCustomerIpAddress("127.0.0.1");
+		authorization.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		authorization.setCard(card);
+		IdentityBundle identityBundle = new IdentityBundle();
+		identityBundle.setMerchantId("12222");
+		identityBundle.setEntityId("222222");
+		identityBundle.setEntityReference("32222");
+		identityBundle.setResourceId("422222");
+		identityBundle.setResourceReference("52222");
+		identityBundle.setCommandId("6222");
+		identityBundle.setCommandReference("72222");
+		identityBundle.setOrderReference("82222");
+		authorization.setIdentityBundle(identityBundle);
+		authorization.setOriginalRetrievalReferenceNumber("1234567");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000", response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }
