@@ -9,7 +9,8 @@ version = JAR_VERSION
 
 repositories {
     maven  {
-        url "http://repo1.maven.org/maven2"
+       url "http://nufl2vpnexus02.nonprod.nb01.local:8081/repository/central"
+			allowInsecureProtocol = true
     }
 }
 
@@ -85,8 +86,10 @@ jar{
 }
 
 task javadocJar(type:Jar){
+    dependsOn javadoc
     getArchiveClassifier().set('javadoc')
     getDestinationDirectory().set(file("$buildDir/kit/java15/doc"))
+    from tasks.javadoc
 }
 
 test {
