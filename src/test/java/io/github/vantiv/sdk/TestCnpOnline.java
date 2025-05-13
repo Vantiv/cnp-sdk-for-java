@@ -192,12 +192,14 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		authorization.setCard(card);
+		authorization.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.fromValue("A"));
 
 		helperMethodForAuth();
 		cnp.setCommunication(mockedCommunication);
 		AuthorizationResponse authorize = cnp.authorize(authorization);
 		assertEquals(123L, authorize.getCnpTxnId());
 		assertEquals(new BigInteger("1"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+		assertEquals(ForeignRetailerIndicatorEnum.fromValue("A"), authorization.getForeignRetailerIndicator());
 		assertEquals("sandbox", authorize.getLocation());
 	}
 

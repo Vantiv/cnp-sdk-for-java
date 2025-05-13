@@ -161,7 +161,7 @@
     <xs:simpleType name="stringipAddress">
         <xs:restriction base="xs:string">
             <xs:maxLength value="100" />
-            <xs:pattern value="[A-Z,a-z,0-9, ,:,.]*"/>
+            <xs:pattern value="[A-Za-z0-9 :.]*"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -803,7 +803,7 @@
     <xs:simpleType name="customBillingUrlType">
         <xs:restriction base="xs:string">
             <xs:maxLength value="13" />
-            <xs:pattern value="[A-Z,a-z,0-9,/,\-,_,.]*"/>
+            <xs:pattern value="[A-Za-z0-9/\-_.]*"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -1077,7 +1077,7 @@
     </xs:simpleType>
     <xs:simpleType name="awpTokenUrlType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="http.?://.*/.*"/>
+            <xs:pattern value="https?://[^/]+/.*"/>
             <xs:maxLength value="400"/>
         </xs:restriction>
     </xs:simpleType>
@@ -1152,7 +1152,7 @@
 
     <xs:simpleType name="stringExactly16AlphanumericType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Z,a-z,0-9]{16,16}"/>
+            <xs:pattern value="[A-Za-z0-9]{16,16}"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -1396,6 +1396,9 @@
     <xs:simpleType name="foreignRetailerIndicatorEnum">
         <xs:restriction base="xs:string">
             <xs:enumeration value="F" />
+            <!--    US2081172-79564-->
+            <xs:enumeration value="A" />
+            <xs:enumeration value="B" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -1428,6 +1431,17 @@
         <xs:restriction base="xs:integer">
             <xs:minInclusive value="1" />
             <xs:maxInclusive value="99" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--    US2081172-79564-->
+    <xs:simpleType name="typeOfDigitalCurrencyEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+            <xs:enumeration value="3" />
+            <xs:enumeration value="4" />
+            <xs:enumeration value="7" />
         </xs:restriction>
     </xs:simpleType>
 
