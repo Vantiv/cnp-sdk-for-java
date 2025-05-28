@@ -1,5 +1,10 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Change Log for 12.45 (May 22,2025)
+* Change: [cnpAPI v12.45] In existing enum 'foreignRetailerIndicatorEnum' new values 'A','B'.
+* Change: [cnpAPI v12.45] In existing authorization request new element 'foreignRetailerIndicator' of type 'foreignRetailerIndicatorEnum' is added in orderId sequence.
+* Change: [cnpAPI v12.45] In existing element 'typeOfDigitalCurrency' is modified to support only these value '1','2','3','4','7'.
+
 ==Change Log for 12.44.1 (March 06,2025)
 * Change: Upgraded commons-io 2.11.0 to commons-io 2.18.0 to fix BD vulnerability.
 

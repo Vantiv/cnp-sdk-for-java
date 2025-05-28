@@ -1122,7 +1122,7 @@ public class TestAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		authorization.setCard(card);
-		authorization.setTypeOfDigitalCurrency("2");
+		authorization.setTypeOfDigitalCurrency("1");
 		authorization.setConversionAffiliateId("ABCD");
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());

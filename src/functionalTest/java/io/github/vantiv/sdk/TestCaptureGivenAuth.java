@@ -592,7 +592,7 @@ public class TestCaptureGivenAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
-		capturegivenauth.setTypeOfDigitalCurrency("2");
+		capturegivenauth.setTypeOfDigitalCurrency("7");
 		capturegivenauth.setConversionAffiliateId("ABCD");
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);

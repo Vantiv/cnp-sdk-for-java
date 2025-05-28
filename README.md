@@ -195,7 +195,15 @@ Example for encryptionKeyRequest:
     }
 ```
 
+6.  Below is the sample to set element 'typeOfDigitalCurrency' and 'typeOfDigitalCurrencyEnum'.
+
+    authorization.setTypeOfDigitalCurrency("1");
+		
+
 There is one example shown in Note section can be used to validate transaction processing  after doing all setup . 
 
 More examples can be found here [Java Gists](https://gist.github.com/VantivSDK)
+
+
+
 

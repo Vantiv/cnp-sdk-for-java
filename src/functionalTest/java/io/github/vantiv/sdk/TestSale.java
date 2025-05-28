@@ -375,6 +375,7 @@ public class TestSale {
 		card.setExpDate("1215");
 		card.setType(MethodOfPaymentTypeEnum.VI);
 		sale.setCard(card);
+		sale.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.B);
 		SaleResponse response = cnp.sale(sale);
 		assertEquals(response.getMessage(), "Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());

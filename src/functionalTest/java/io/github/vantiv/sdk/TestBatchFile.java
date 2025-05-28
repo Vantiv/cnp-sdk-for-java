@@ -541,7 +541,7 @@ public class TestBatchFile {
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         auth.setCard(card);
         auth.setCardholderAuthentication(fraudCheckType1);
-        auth.setTypeOfDigitalCurrency("2");
+        auth.setTypeOfDigitalCurrency("7");
         auth.setConversionAffiliateId("ABCD");
         auth.setId("id");
         LodgingInfo lodgingInfo = new LodgingInfo();
@@ -560,7 +560,7 @@ public class TestBatchFile {
         sale.setAmount(6000L);
         sale.setOrderSource(OrderSourceType.ECOMMERCE);
         sale.setCard(card);
-        sale.setTypeOfDigitalCurrency("2");
+        sale.setTypeOfDigitalCurrency("7");
         sale.setConversionAffiliateId("ABCD");
         sale.setId("id");
         sale.setIdentityBundle(identityBundle());

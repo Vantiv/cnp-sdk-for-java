@@ -49,6 +49,8 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		authorization.setCard(card);
+		authorization.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.fromValue("A"));
+		authorization.setTypeOfDigitalCurrency("7");
 
 		helperMethodForAuth();
 
@@ -192,12 +194,14 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		authorization.setCard(card);
+		authorization.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.fromValue("A"));
 
 		helperMethodForAuth();
 		cnp.setCommunication(mockedCommunication);
 		AuthorizationResponse authorize = cnp.authorize(authorization);
 		assertEquals(123L, authorize.getCnpTxnId());
 		assertEquals(new BigInteger("1"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+		assertEquals(ForeignRetailerIndicatorEnum.fromValue("A"), authorization.getForeignRetailerIndicator());
 		assertEquals("sandbox", authorize.getLocation());
 	}
 
@@ -276,6 +280,7 @@ public class TestCnpOnline {
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
 		helperMethodForCaptureGivenAuth();
+		capturegivenauth.setTypeOfDigitalCurrency("7");
 		cnp.setCommunication(mockedCommunication);
 		CaptureGivenAuthResponse capturegivenauthresponse = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals(123L, capturegivenauthresponse.getCnpTxnId());
@@ -579,6 +584,7 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		sale.setCard(card);
+		sale.setTypeOfDigitalCurrency("7");
 		helperMethodForSale();
 		cnp.setCommunication(mockedCommunication);
 		SaleResponse saleresponse = cnp.sale(sale);
