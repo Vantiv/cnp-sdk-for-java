@@ -1,6 +1,6 @@
 package io.github.vantiv.sdk;
 
-import io.github.vantiv.sdk.generate.ForeignRetailerIndicatorEnum;
+
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
