@@ -1143,12 +1143,12 @@ public class TestBatchFile {
         authorization.setOrderChannel(OrderChannelEnum.SMART_TV);
         authorization.setBusinessIndicator(BusinessIndicatorEnum.RAPID_MERCHANT_SETTLEMENT);
         AccountFundingTransactionData accountFundingTransactionData= new AccountFundingTransactionData();
-        accountFundingTransactionData.setReceiverAccountNumber("12345");
         accountFundingTransactionData.setReceiverCountry(CountryTypeEnum.AD);
         accountFundingTransactionData.setReceiverFirstName("abc");
         accountFundingTransactionData.setReceiverState(StateTypeEnum.AK);
         accountFundingTransactionData.setReceiverLastName("def");
         accountFundingTransactionData.setReceiverAccountNumberType(AccountFundingTransactionAccountNumberTypeEnum.BAN_AND_BIC);
+        accountFundingTransactionData.setReceiverAccountNumberCnpToken("123456547890456987");
         accountFundingTransactionData.setAccountFundingTransactionType(AccountFundingTransactionTypeEnum.ACCOUNT_TO_ACCOUNT);
         authorization.setAccountFundingTransactionData(accountFundingTransactionData);
         authorization.setFraudCheckAction(FraudCheckActionEnum.DECLINED_NEED_FRAUD_CHECK);
