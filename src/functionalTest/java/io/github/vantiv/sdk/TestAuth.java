@@ -346,6 +346,7 @@ public class TestAuth {
 	    DetailTax dt2 = new DetailTax();
 	    dt2.setTaxAmount(200L);
 	    enhanced.getDetailTaxes().add(dt2);
+        enhanced.setNumberOfPayments("2");
 	    authorization.setEnhancedData(enhanced);
 	    CardType card = new CardType();
 	    card.setNumber("4100000000000000");
@@ -516,11 +517,12 @@ public class TestAuth {
 		EnhancedData enhanced = new EnhancedData();
 		enhanced.setCustomerReference("Cust Ref");
 		enhanced.setSalesTax(1000L);
-		enhanced.setNumberOfPayments("12");
+		enhanced.setNumberOfPayments("1");
 		LineItemData lid = new LineItemData();
 		lid.setItemSequenceNumber(1);
 		lid.setItemDescription("Electronics");
 		lid.setProductCode("El01");
+		lid.setLineItemDetailIndicator("0");
 		lid.setItemCategory("Ele Appiances");
 		lid.setItemSubCategory("home appliaces");
 		lid.setProductId("1001");
