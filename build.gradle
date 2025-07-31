@@ -8,8 +8,8 @@ group = 'io.github.vantiv'
 version = JAR_VERSION
 
 repositories {
-    maven  {
-        url "http://repo1.maven.org/maven2"
+    maven {    url "http://nufl2vpnexus02.nonprod.nb01.local:8081/repository/central/"
+        allowInsecureProtocol = true
     }
 }
 
