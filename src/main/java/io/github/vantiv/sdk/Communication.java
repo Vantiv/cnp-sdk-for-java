@@ -118,8 +118,6 @@ public class Communication {
         RequestTarget reqTarget = CommManager.instance(configuration).findUrl();
         HttpPost post = new HttpPost(reqTarget.getUrl());
         post.setHeader("Content-Type", CONTENT_TYPE_TEXT_XML_UTF8);
-        post.setHeader("ECOM_API","");
-
 
         post.setConfig(requestConfig);
         HttpEntity entity = null;
