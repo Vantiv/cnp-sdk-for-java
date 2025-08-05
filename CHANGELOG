@@ -1,6 +1,7 @@
 = Vantiv eCommerce CNP CHANGELOG
 
 ==Change Log for 12.47 (July 28,2025)
+* Change: [cnpAPI v12.47] New header 'X-Ecom-Api' is added in the request on the basis 2 cofiguration newly added properties in the property file 'sendEcomHeader' and 'ecomHeaderValue'.
 * Change: [cnpAPI v12.47] New enum 'numberOfPaymentsEnum' added with values '1','2','3','4','5','6','7','8','9','+' .
 * Change: [cnpAPI v12.47] New enum 'lineItemDetailIndicatorEnum' added with values '0','1','2','3','4','5'.
 * Change: [cnpAPI v12.47] In existing complex element lineItemData new enum 'lineItemDetailIndicator' of type 'lineItemDetailIndicatorEnum' is added.
