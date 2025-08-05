@@ -782,7 +782,7 @@ public class TestBatchFile {
         line_Item.setItemSequenceNumber(1);
         line_Item.setItemDescription("Electronics");
         line_Item.setProductCode("El01");
-        line_Item.setLineItemDetailIndicator("10");
+        line_Item.setLineItemDetailIndicator("0");
         line_Item.setItemCategory("Ele Appiances");
         line_Item.setItemSubCategory("home appliaces");
         line_Item.setProductId("1001");
