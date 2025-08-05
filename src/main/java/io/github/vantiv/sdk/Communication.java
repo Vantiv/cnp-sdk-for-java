@@ -123,7 +123,7 @@ public class Communication {
         boolean sendEcomHeader = "true".equalsIgnoreCase(configuration.getProperty("sendEcomHeader"));
         if(sendEcomHeader) {
             String ecomHeaderValue = configuration.getProperty("ecomHeaderValue");
-            post.setHeader("X-Ecom-Api", ecomHeaderValue != null ? ecomHeaderValue : ECOM_API);
+            post.setHeader("X-Ecom-Api", ecomHeaderValue != null ? ecomHeaderValue.trim() : ECOM_API);
         }
 
         post.setConfig(requestConfig);
