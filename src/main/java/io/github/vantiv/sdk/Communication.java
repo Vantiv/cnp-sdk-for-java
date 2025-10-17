@@ -43,6 +43,8 @@ public class Communication {
     private final int DEFAULT_RETRY_INTERVAL = 5000;
     private static final String NEUTER_STR = "NEUTERED";
 
+    private static final String ECOM_API = "";
+
     public Communication() {
         try {
             String protocol = getBestProtocol(SSLContext.getDefault().getSupportedSSLParameters().getProtocols());
@@ -118,13 +120,17 @@ public class Communication {
         RequestTarget reqTarget = CommManager.instance(configuration).findUrl();
         HttpPost post = new HttpPost(reqTarget.getUrl());
         post.setHeader("Content-Type", CONTENT_TYPE_TEXT_XML_UTF8);
+        boolean sendEcomHeader = "true".equalsIgnoreCase(configuration.getProperty("sendEcomHeader"));
+        if(sendEcomHeader) {
+            String ecomHeaderValue = configuration.getProperty("ecomHeaderValue");
+            post.setHeader("X-Ecom-Api", ecomHeaderValue != null ? ecomHeaderValue.trim() : ECOM_API);
+        }
 
         post.setConfig(requestConfig);
         HttpEntity entity = null;
         try {
             boolean printxml = "true".equalsIgnoreCase(configuration.getProperty("printxml"));
             boolean neuterXml = "true".equalsIgnoreCase(configuration.getProperty("neuterXml"));
-
             if (printxml) {
                 printXml(xmlRequest, neuterXml);
             }

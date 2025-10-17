@@ -22,8 +22,8 @@ public class TestQueryTransaction {
     @BeforeClass
     public static void beforeClass() throws Exception {
         cnp = new CnpOnline();
-        p= Mockito.mock(Properties.class);
-        cnpOnlineMock=Mockito.mock(CnpOnline.class);
+        p = Mockito.mock(Properties.class);
+        cnpOnlineMock = Mockito.mock(CnpOnline.class);
     }
 
     @Test
@@ -36,11 +36,11 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         //assertEquals("150", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction found", queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -56,11 +56,11 @@ public class TestQueryTransaction {
         queryTransaction.setShowStatusOnly(YesNoType.Y);
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("150", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction found", queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -75,11 +75,11 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("150", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction found", queryTransactionResponse.getMessage());
         assertEquals(2, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -94,11 +94,11 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("151", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction not found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction not found", queryTransactionResponse.getMessage());
         assertNull(queryTransactionResponse.getResultsMax10());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -113,11 +113,11 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("151", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction not found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction not found", queryTransactionResponse.getMessage());
         assertNull(queryTransactionResponse.getResultsMax10());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -132,11 +132,11 @@ public class TestQueryTransaction {
         queryTransaction.setReportGroup("default");
 
         TransactionTypeWithReportGroup response = cnp.queryTransaction(queryTransaction);
-        QueryTransactionUnavailableResponse queryTransactionResponse = (QueryTransactionUnavailableResponse)response;
+        QueryTransactionUnavailableResponse queryTransactionResponse = (QueryTransactionUnavailableResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         assertEquals("152", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction found but response not yet available",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction found but response not yet available", queryTransactionResponse.getMessage());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
     @Test
@@ -148,12 +148,12 @@ public class TestQueryTransaction {
         queryTransaction.setOrigActionType(ActionTypeEnum.A);
         queryTransaction.setReportGroup("default");
 
-        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://payments.east.vantivprelive.com/vap/communicator/online1","https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://payments.east.vantivprelive.com/vap/communicator/online1", "https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("findId", queryTransactionResponse.getId());
         assertEquals("customerId", queryTransactionResponse.getCustomerId());
         //assertEquals("150", queryTransactionResponse.getResponse());
-        assertEquals("Original transaction found",queryTransactionResponse.getMessage());
+        assertEquals("Original transaction found", queryTransactionResponse.getMessage());
         assertEquals(1, queryTransactionResponse.getResultsMax10().getTransactionResponses().size());
         assertEquals("sandbox", queryTransactionResponse.getLocation());
     }
@@ -166,13 +166,13 @@ public class TestQueryTransaction {
         queryTransaction.setOrigActionType(ActionTypeEnum.R);
         queryTransaction.setReportGroup("default");
         CommManager.reset();
-        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://www.testvantivcnp.com/sandbox/communicator/online","https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
-        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse)response;
+        TransactionTypeWithReportGroup response = new CnpOnline(getCnpProperty("https://www.testvantivcnp.com/sandbox/communicator/online", "https://www.testvantivcnp.com/sandbox/communicator/online")).queryTransaction(queryTransaction);
+        QueryTransactionResponse queryTransactionResponse = (QueryTransactionResponse) response;
         assertEquals("Original transaction not found", queryTransactionResponse.getMessage());
         assertEquals("151", queryTransactionResponse.getResponse());
     }
 
-    Properties getCnpProperty(String url1,String url2) {
+    Properties getCnpProperty(String url1, String url2) {
         Properties cnpProperty = new Properties();
         cnpProperty.setProperty("username", "SDKTEAM12");
         cnpProperty.setProperty("password", "V2b9F4k7");
@@ -181,11 +181,11 @@ public class TestQueryTransaction {
         cnpProperty.setProperty("printxml", "true");
         cnpProperty.setProperty("proxyHost", "usproxy.dlb.corp.vantiv.com");
         cnpProperty.setProperty("proxyPort", "8080");
-        cnpProperty.setProperty("multiSiteUrl1",url1);
-        cnpProperty.setProperty("multiSiteUrl2",url2);
-        cnpProperty.setProperty("oltpEncryptionPayload","true");
-        cnpProperty.setProperty("oltpEncryptionKeySequence","10000");
-        cnpProperty.setProperty("oltpEncryptionKeyPath","/home/buildvwr/pgpKeyOltp/cnpOltpEncryptionKey.asc");
+        cnpProperty.setProperty("multiSiteUrl1", url1);
+        cnpProperty.setProperty("multiSiteUrl2", url2);
+        cnpProperty.setProperty("oltpEncryptionPayload", "true");
+        cnpProperty.setProperty("oltpEncryptionKeySequence", "10000");
+        cnpProperty.setProperty("oltpEncryptionKeyPath", "/home/buildvwr/pgpKeyOltp/cnpOltpEncryptionKey.asc");
         return cnpProperty;
-  }
+    }
 }

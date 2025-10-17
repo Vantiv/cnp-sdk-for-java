@@ -85,8 +85,10 @@ jar{
 }
 
 task javadocJar(type:Jar){
+    dependsOn javadoc
     getArchiveClassifier().set('javadoc')
     getDestinationDirectory().set(file("$buildDir/kit/java15/doc"))
+    from tasks.javadoc
 }
 
 test {
