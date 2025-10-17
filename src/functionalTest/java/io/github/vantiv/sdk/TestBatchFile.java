@@ -782,6 +782,7 @@ public class TestBatchFile {
         line_Item.setItemSequenceNumber(1);
         line_Item.setItemDescription("Electronics");
         line_Item.setProductCode("El01");
+        line_Item.setLineItemDetailIndicator("0");
         line_Item.setItemCategory("Ele Appiances");
         line_Item.setItemSubCategory("home appliaces");
         line_Item.setProductId("1001");
@@ -798,6 +799,7 @@ public class TestBatchFile {
         enhancedData.getLineItemDatas().add(line_Item);
         enhancedData.setDiscountCode("oneTimeDis");
         enhancedData.setDiscountPercent(BigInteger.valueOf(12));
+        enhancedData.setNumberOfPayments("5");
         enhancedData.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
         authorization_mit.setEnhancedData(enhancedData);
         authorization_mit.setOrderChannel(OrderChannelEnum.MIT);
@@ -1135,7 +1137,9 @@ public class TestBatchFile {
         sub.setNextDeliveryDate(Calendar.getInstance());
         lid.setShipmentId("456");
         lid.setSubscription(sub);
+        lid.setLineItemDetailIndicator("0");
         enhanced.getLineItemDatas().add(lid);
+        enhanced.setNumberOfPayments("4");
         enhanced.setDiscountCode("oneTimeDis");
         enhanced.setDiscountPercent(BigInteger.valueOf(12));
         enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.STANDARD_SHIPPING);
@@ -1143,12 +1147,12 @@ public class TestBatchFile {
         authorization.setOrderChannel(OrderChannelEnum.SMART_TV);
         authorization.setBusinessIndicator(BusinessIndicatorEnum.RAPID_MERCHANT_SETTLEMENT);
         AccountFundingTransactionData accountFundingTransactionData= new AccountFundingTransactionData();
-        accountFundingTransactionData.setReceiverAccountNumber("12345");
         accountFundingTransactionData.setReceiverCountry(CountryTypeEnum.AD);
         accountFundingTransactionData.setReceiverFirstName("abc");
         accountFundingTransactionData.setReceiverState(StateTypeEnum.AK);
         accountFundingTransactionData.setReceiverLastName("def");
         accountFundingTransactionData.setReceiverAccountNumberType(AccountFundingTransactionAccountNumberTypeEnum.BAN_AND_BIC);
+        accountFundingTransactionData.setReceiverAccountNumberCnpToken("123456547890456987");
         accountFundingTransactionData.setAccountFundingTransactionType(AccountFundingTransactionTypeEnum.ACCOUNT_TO_ACCOUNT);
         authorization.setAccountFundingTransactionData(accountFundingTransactionData);
         authorization.setFraudCheckAction(FraudCheckActionEnum.DECLINED_NEED_FRAUD_CHECK);

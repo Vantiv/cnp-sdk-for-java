@@ -1,11 +1,9 @@
 package io.github.vantiv.sdk;
 
-import io.github.vantiv.sdk.generate.ForeignRetailerIndicatorEnum;
-
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
-
+// This class is deprecated we are going to delete this class in upcoming version.
 @XmlType(name = "typeOfDigitalCurrencyEnum")
 @XmlEnum
 public enum TypeOfDigitalCurrencyEnum {

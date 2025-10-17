@@ -165,7 +165,7 @@ public class TestCommunication {
 		//test that the data going out doesnt get neutered
 		assertEquals(communication.printXml(xml, true), xml);
 		//test that the output does in fact get neutered
-		assertEquals(outContent.toString(), neuteredXml);
+		assertEquals(outContent.toString().trim(), neuteredXml.trim());
 
 		//reset output
 		System.setOut(originalOut);

@@ -2,8 +2,8 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:include schemaLocation="cnpCommon_v12.45.xsd"/>
-    <xs:include schemaLocation="cnpRecurring_v12.45.xsd"/>
+    <xs:include schemaLocation="cnpCommon_v12.47.xsd"/>
+    <xs:include schemaLocation="cnpRecurring_v12.47.xsd"/>
 
     <xs:element name="transaction" type="xp:transactionType" abstract="true"/>
 
@@ -749,6 +749,7 @@
                 <xs:element name="discountCode" type="xp:string100Type" minOccurs="0"/>
                 <xs:element name="discountPercent" type="xp:discountPercentType" minOccurs="0"/>
                 <xs:element name="fulfilmentMethodType" type="xp:fulfilmentMethodTypeEnum" minOccurs="0"/>
+                <xs:element name="numberOfPayments" type="xp:numberOfPaymentsEnum" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -778,6 +779,7 @@
                 <!-- quantity * unit cost -->
                 <xs:element name="lineItemTotalWithTax" type="xp:transactionAmountType" minOccurs="0"/>
                 <!-- line item total + tax -->
+                <xs:element name="lineItemDetailIndicator" type="xp:lineItemDetailIndicatorEnum" minOccurs="0"/>
                 <xs:element name="itemDiscountAmount" type="xp:transactionAmountType" minOccurs="0"/>
                 <xs:element name="commodityCode" type="xp:commodityCodeType" minOccurs="0"/>
                 <xs:element name="unitCost" type="xp:unitCostType" minOccurs="0"/>
@@ -974,6 +976,8 @@
                         <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0"/>
                         <!--If AuthMax is used -->
                         <xs:element ref="xp:authMax" minOccurs="0"/>
+                        <xs:element name="credentialType" type="xp:string3Type" minOccurs="0"/>
+                        <xs:element name="cardDetails" type="xp:ccAccountNumberType" minOccurs="0"/>
                         <xs:element name="fundingTransactionReferenceNumber" type="xp:string19Type" minOccurs="0"/>
                         <xs:element name="retrievalReferenceNumber" type="xp:string12Type" minOccurs="0"/>
                         <xs:element name="orderSource" type="xp:orderSourceType" minOccurs="0"/>
@@ -1443,6 +1447,8 @@
                         <xs:element name="checkoutId" type="xp:string256Type" minOccurs="0"/>
                         <!--If AuthMax is used -->
                         <xs:element ref="xp:authMax" minOccurs="0"/>
+                        <xs:element name="credentialType" type="xp:string3Type" minOccurs="0"/>
+                        <xs:element name="cardDetails" type="xp:ccAccountNumberType" minOccurs="0"/>
                         <xs:element name="fundingTransactionReferenceNumber" type="xp:string19Type" minOccurs="0"/>
                         <xs:element name="retrievalReferenceNumber" type="xp:string12Type" minOccurs="0"/>
                         <xs:element name="orderSource" type="xp:orderSourceType" minOccurs="0"/>
@@ -3384,7 +3390,10 @@
                 <xs:element name="receiverState" type="xp:stateTypeEnum" minOccurs="0"/>
                 <xs:element name="receiverCountry" type="xp:countryTypeEnum" minOccurs="0"/>
                 <xs:element name="receiverAccountNumberType" type="xp:accountFundingTransactionAccountNumberTypeEnum" minOccurs="0"/>
-                <xs:element name="receiverAccountNumber" type="xp:string50Type" minOccurs="0"/>
+                <xs:choice>
+                    <xs:element name="receiverAccountNumber" type="xp:string50Type" minOccurs="0"/>
+                    <xs:element name="receiverAccountNumberCnpToken" type="xp:ccAccountNumberType" minOccurs="0"/>
+                </xs:choice>
                 <xs:element name="accountFundingTransactionType" type="xp:accountFundingTransactionTypeEnum" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>

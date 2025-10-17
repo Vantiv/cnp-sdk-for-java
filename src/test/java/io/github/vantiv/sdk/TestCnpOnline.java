@@ -988,6 +988,11 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		authorization.setCard(card);
+		AccountFundingTransactionData accountFunding = new AccountFundingTransactionData();
+		accountFunding.setAccountFundingTransactionType(AccountFundingTransactionTypeEnum.ACCOUNT_TO_ACCOUNT);
+		accountFunding.setReceiverCountry(CountryTypeEnum.US);
+		accountFunding.setReceiverAccountNumberCnpToken("12345677788888");
+		authorization.setAccountFundingTransactionData(accountFunding);
 		if ("true".equalsIgnoreCase(config.getProperty("oltpEncryptionPayload"))) {
 			when(mockedCommunication.requestToServer(matches("(?s).*?<cnpOnlineRequest.*?<encryptedPayload>(.*?)</encryptedPayload>.*?\n"), any(Properties.class)))
 					.thenReturn(
