@@ -1167,4 +1167,65 @@ public class TestAuth {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	//v12.48 changes to test pazeEncryptedPayload
+	@Test
+	public void authPazePayload_VI_Approve() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		authorization.setPazeEncryptedPayload("NDEwMDAwMDAwMDAwMDAwMA==");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void authPazePayload_VI_Decline() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		authorization.setPazeEncryptedPayload("NDEwMDAwMDAwMDAwMDAwMQ==");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "350",response.getResponse());
+		assertEquals("Generic Decline", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void authPazePayload_MC_Approve() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		authorization.setPazeEncryptedPayload("NTEwMDAwMDAwMDAwMDAwMA==");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "000",response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
+
+	@Test
+	public void authPazePayload_MC_Decline() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		authorization.setPazeEncryptedPayload("NTEwMDAwMDAwMDAwMDAwMQ==");
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "350",response.getResponse());
+		assertEquals("Generic Decline", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

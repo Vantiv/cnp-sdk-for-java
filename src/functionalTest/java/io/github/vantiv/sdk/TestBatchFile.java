@@ -1227,6 +1227,25 @@ public class TestBatchFile {
         saleReq.setId("id");
         batch.addTransaction(saleReq);
 
+        //Changes to test v12.48 -pazeEncryptedPayload in auth and sale txn request
+        Authorization authorization = new Authorization();
+        authorization.setReportGroup("Planets");
+        authorization.setOrderId("12344");
+        authorization.setAmount(106L);
+        authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+        authorization.setId("id");
+        authorization.setPazeEncryptedPayload("NTEwMDAwMDAwMDAwMDAw");
+        batch.addTransaction(authorization);
+
+        Sale sale = new Sale();
+        sale.setReportGroup("Planets");
+        sale.setOrderId("12344");
+        sale.setAmount(106L);
+        sale.setOrderSource(OrderSourceType.ECOMMERCE);
+        sale.setId("id");
+        sale.setPazeEncryptedPayload("NTEwMDAwMDAwMDAwMDAwMA==");
+        batch.addTransaction(sale);
+
         int transactionCount = batch.getNumberOfTransactions();
 
         CnpBatchFileResponse fileResponse = request.sendToCnpSFTP();

@@ -242,6 +242,13 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="stringTypeForPazeEncryptedPayload">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="7500" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
     <xs:simpleType name="methodOfPaymentTypeEnum">
         <xs:restriction base="xs:string">
             <xs:enumeration value="MC" />
