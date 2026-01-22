@@ -1,5 +1,13 @@
 = Vantiv eCommerce CNP CHANGELOG
 
+==Change Log for 12.49 (January 23,2026)
+* New simple element 'preferredCustomer' is added in authorization and sale request.
+* New simple element 'preferredCustomerDecision' is added in Authorization and sale response.
+* New complex element 'tlid' is added in sale response.
+* In existing enum 'tlidValidationActionIndicatorType'  new value "3" is added.
+* for existing request "reserveCredit" base type is changed from 'transactionTypeWithReportGroupAndRtp' to 'transactionTypeWithReportGroup'
+
+
 ==Change Log for 12.48 (October 29,2025)
 * Change: [cnpAPI v12.48] New element pazeEncryptedPayload added to both Auth and Sale transaction requests.
 * Change: [cnpAPI v12.48] New complex element TLID added in authResponse and authReversalResponse.
