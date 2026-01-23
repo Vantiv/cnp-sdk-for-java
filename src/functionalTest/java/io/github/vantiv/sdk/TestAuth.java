@@ -1228,4 +1228,20 @@ public class TestAuth {
 		assertEquals("Generic Decline", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void authPrefferedCustomer() throws Exception {
+		Authorization authorization = new Authorization();
+		authorization.setReportGroup("Planets");
+		authorization.setOrderId("12344");
+		authorization.setAmount(106L);
+		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
+		authorization.setId("id");
+		authorization.setPazeEncryptedPayload("NTEwMDAwMDAwMDAwMDAwMQ==");
+		authorization.setPreferredCustomer(true);
+		AuthorizationResponse response = cnp.authorize(authorization);
+		assertEquals(response.getMessage(), "350",response.getResponse());
+		assertEquals("Generic Decline", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

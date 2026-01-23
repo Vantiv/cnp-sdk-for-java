@@ -897,4 +897,28 @@ public class TestSale {
 		assertEquals("Approved", response.getMessage());
 		assertEquals("sandbox", response.getLocation());
 	}
+
+	@Test
+	public void saleWithPrefferedCustomer() throws Exception {
+		Sale sale = new Sale();
+		sale.setReportGroup("Planets");
+		sale.setOrderId("12344");
+		sale.setAmount(999999999999L);
+		sale.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
+		sale.setId("id");
+		FraudCheckType fraudCheckType = new FraudCheckType();
+		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setCustomerIpAddress("127.0.0.1");
+		sale.setCardholderAuthentication(fraudCheckType);
+		CardType card = new CardType();
+		card.setType(MethodOfPaymentTypeEnum.VI);
+		card.setNumber("4100000000000000");
+		card.setExpDate("1210");
+		sale.setCard(card);
+		sale.setPreferredCustomer(false);
+		SaleResponse response = cnp.sale(sale);
+		assertEquals(response.getMessage(), "000", response.getResponse());
+		assertEquals("Approved", response.getMessage());
+		assertEquals("sandbox", response.getLocation());
+	}
 }

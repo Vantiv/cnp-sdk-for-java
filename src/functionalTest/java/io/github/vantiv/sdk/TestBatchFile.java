@@ -552,6 +552,7 @@ public class TestBatchFile {
         lodgingInfo.getLodgingCharges().add(lodgingCharge);
         auth.setLodgingInfo(lodgingInfo);
         auth.setIdentityBundle(identityBundle());
+        auth.setPreferredCustomer(true);
         batch.addTransaction(auth);
 
         Sale sale = new Sale();
@@ -564,6 +565,7 @@ public class TestBatchFile {
         sale.setConversionAffiliateId("ABCD");
         sale.setId("id");
         sale.setIdentityBundle(identityBundle());
+        sale.setPreferredCustomer(true);
         batch.addTransaction(sale);
 
         Credit credit = new Credit();
