@@ -899,7 +899,7 @@ public class TestSale {
 	}
 
 	@Test
-	public void saleWithPrefferedCustomer() throws Exception {
+	public void saleWithPreferredCustomer() throws Exception {
 		Sale sale = new Sale();
 		sale.setReportGroup("Planets");
 		sale.setOrderId("12344");

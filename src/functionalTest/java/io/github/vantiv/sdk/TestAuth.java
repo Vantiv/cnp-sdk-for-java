@@ -1230,7 +1230,7 @@ public class TestAuth {
 	}
 
 	@Test
-	public void authPrefferedCustomer() throws Exception {
+	public void authPreferredCustomer() throws Exception {
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
 		authorization.setOrderId("12344");
