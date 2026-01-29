@@ -1,6 +1,7 @@
 package io.github.vantiv.sdk;
 
 import io.github.vantiv.sdk.generate.*;
+import io.github.vantiv.sdk.generate.TypeOfDigitalCurrencyEnum;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -50,7 +51,7 @@ public class TestCnpOnline {
 		card.setExpDate("1210");
 		authorization.setCard(card);
 		authorization.setForeignRetailerIndicator(ForeignRetailerIndicatorEnum.fromValue("A"));
-		authorization.setTypeOfDigitalCurrency("7");
+		authorization.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
 
 		helperMethodForAuth();
 
@@ -187,7 +188,7 @@ public class TestCnpOnline {
 		authorization.setAmount(106L);
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		FraudCheckType ftc = new FraudCheckType();
-		ftc.setAuthenticationProtocolVersion(new BigInteger("1"));
+		ftc.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.ONE);
 		authorization.setCardholderAuthentication(ftc);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);
@@ -200,7 +201,7 @@ public class TestCnpOnline {
 		cnp.setCommunication(mockedCommunication);
 		AuthorizationResponse authorize = cnp.authorize(authorization);
 		assertEquals(123L, authorize.getCnpTxnId());
-		assertEquals(new BigInteger("1"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+		assertEquals(AuthenticationProtocolVersionType.ONE, authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
 		assertEquals(ForeignRetailerIndicatorEnum.fromValue("A"), authorization.getForeignRetailerIndicator());
 		assertEquals("sandbox", authorize.getLocation());
 	}
@@ -213,7 +214,8 @@ public class TestCnpOnline {
 		authorization.setAmount(106L);
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		FraudCheckType ftc = new FraudCheckType();
-		ftc.setAuthenticationProtocolVersion(new BigInteger("0"));
+		//check once again
+		ftc.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.ONE);
 		authorization.setCardholderAuthentication(ftc);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);
@@ -225,7 +227,7 @@ public class TestCnpOnline {
 		cnp.setCommunication(mockedCommunication);
 		AuthorizationResponse authorize = cnp.authorize(authorization);
 		assertEquals(123L, authorize.getCnpTxnId());
-		assertEquals(new BigInteger("0"), authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
+		assertEquals(AuthenticationProtocolVersionType.ONE, authorization.getCardholderAuthentication().getAuthenticationProtocolVersion());
 		assertEquals("sandbox", authorize.getLocation());
 	}
 
@@ -280,7 +282,7 @@ public class TestCnpOnline {
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
 		helperMethodForCaptureGivenAuth();
-		capturegivenauth.setTypeOfDigitalCurrency("7");
+		capturegivenauth.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
 		cnp.setCommunication(mockedCommunication);
 		CaptureGivenAuthResponse capturegivenauthresponse = cnp.captureGivenAuth(capturegivenauth);
 		assertEquals(123L, capturegivenauthresponse.getCnpTxnId());
@@ -584,7 +586,7 @@ public class TestCnpOnline {
 		card.setNumber("4100000000000002");
 		card.setExpDate("1210");
 		sale.setCard(card);
-		sale.setTypeOfDigitalCurrency("7");
+		sale.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
 		helperMethodForSale();
 		cnp.setCommunication(mockedCommunication);
 		SaleResponse saleresponse = cnp.sale(sale);

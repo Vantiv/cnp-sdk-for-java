@@ -3,6 +3,7 @@ package io.github.vantiv.sdk;
 import static org.junit.Assert.assertEquals;
 
 import io.github.vantiv.sdk.generate.*;
+import io.github.vantiv.sdk.generate.TypeOfDigitalCurrencyEnum;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -848,7 +849,7 @@ public class TestSale {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		sale.setCard(card);
-		sale.setTypeOfDigitalCurrency("2");
+		sale.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.TWO);
 		sale.setConversionAffiliateId("ABCD");
 		sale.setId("id");
 		AccountFundingTransactionData accountFundingTransactionData= new AccountFundingTransactionData();
@@ -874,7 +875,7 @@ public class TestSale {
 		sale.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
 		sale.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
 		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		sale.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
@@ -907,7 +908,7 @@ public class TestSale {
 		sale.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
 		sale.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
 		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		sale.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();

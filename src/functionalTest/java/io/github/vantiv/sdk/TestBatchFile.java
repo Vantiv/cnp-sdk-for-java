@@ -21,6 +21,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import io.github.vantiv.sdk.generate.*;
+import io.github.vantiv.sdk.generate.TypeOfDigitalCurrencyEnum;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -531,7 +532,7 @@ public class TestBatchFile {
         //test for new elements:typeOfDigitalCurrency,conversionAffiliateId in Authorization, sale, captureGivenAuth
         //and authenticationProtocolVersionType for enum value added 3,4,5,6,7,8,9 in FraudCheckType in Authorization
         FraudCheckType fraudCheckType1 = new FraudCheckType();
-        fraudCheckType1.setAuthenticationProtocolVersion(new BigInteger("9"));
+        fraudCheckType1.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.NINE);
         fraudCheckType1.setCustomerIpAddress("127.0.0.1");
 
         Authorization auth = new Authorization();
@@ -541,7 +542,7 @@ public class TestBatchFile {
         auth.setOrderSource(OrderSourceType.ECOMMERCE);
         auth.setCard(card);
         auth.setCardholderAuthentication(fraudCheckType1);
-        auth.setTypeOfDigitalCurrency("7");
+        auth.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
         auth.setConversionAffiliateId("ABCD");
         auth.setId("id");
         LodgingInfo lodgingInfo = new LodgingInfo();
@@ -561,7 +562,7 @@ public class TestBatchFile {
         sale.setAmount(6000L);
         sale.setOrderSource(OrderSourceType.ECOMMERCE);
         sale.setCard(card);
-        sale.setTypeOfDigitalCurrency("7");
+        sale.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
         sale.setConversionAffiliateId("ABCD");
         sale.setId("id");
         sale.setIdentityBundle(identityBundle());
@@ -633,7 +634,7 @@ public class TestBatchFile {
         captureGivenAuth.setAuthInformation(authInformation);
         captureGivenAuth.setOrderSource(OrderSourceType.ECOMMERCE);
         captureGivenAuth.setCard(card);
-        captureGivenAuth.setTypeOfDigitalCurrency("2");
+        captureGivenAuth.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.TWO);
         captureGivenAuth.setConversionAffiliateId("ABCD");
         captureGivenAuth.setId("id");
         batch.addTransaction(captureGivenAuth);
@@ -784,7 +785,7 @@ public class TestBatchFile {
         line_Item.setItemSequenceNumber(1);
         line_Item.setItemDescription("Electronics");
         line_Item.setProductCode("El01");
-        line_Item.setLineItemDetailIndicator("0");
+        line_Item.setLineItemDetailIndicator(LineItemDetailIndicatorEnum.ZERO);
         line_Item.setItemCategory("Ele Appiances");
         line_Item.setItemSubCategory("home appliaces");
         line_Item.setProductId("1001");
@@ -801,7 +802,7 @@ public class TestBatchFile {
         enhancedData.getLineItemDatas().add(line_Item);
         enhancedData.setDiscountCode("oneTimeDis");
         enhancedData.setDiscountPercent(BigInteger.valueOf(12));
-        enhancedData.setNumberOfPayments("5");
+        enhancedData.setNumberOfPayments(NumberOfPaymentsEnum.FIVE);
         enhancedData.setFulfilmentMethodType(FulfilmentMethodTypeEnum.COUNTER_PICKUP);
         authorization_mit.setEnhancedData(enhancedData);
         authorization_mit.setOrderChannel(OrderChannelEnum.MIT);
@@ -1139,9 +1140,9 @@ public class TestBatchFile {
         sub.setNextDeliveryDate(Calendar.getInstance());
         lid.setShipmentId("456");
         lid.setSubscription(sub);
-        lid.setLineItemDetailIndicator("0");
+        lid.setLineItemDetailIndicator(LineItemDetailIndicatorEnum.ZERO);
         enhanced.getLineItemDatas().add(lid);
-        enhanced.setNumberOfPayments("4");
+        enhanced.setNumberOfPayments(NumberOfPaymentsEnum.FOUR);
         enhanced.setDiscountCode("oneTimeDis");
         enhanced.setDiscountPercent(BigInteger.valueOf(12));
         enhanced.setFulfilmentMethodType(FulfilmentMethodTypeEnum.STANDARD_SHIPPING);
@@ -1224,7 +1225,7 @@ public class TestBatchFile {
         saleReq.setAmount(6000L);
         saleReq.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
         saleReq.setCard(card);
-        saleReq.setTypeOfDigitalCurrency("2");
+        saleReq.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.TWO);
         saleReq.setConversionAffiliateId("ABCD");
         saleReq.setId("id");
         batch.addTransaction(saleReq);

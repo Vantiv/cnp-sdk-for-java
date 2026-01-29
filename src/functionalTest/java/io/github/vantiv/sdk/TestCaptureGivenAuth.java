@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.Calendar;
 
 import io.github.vantiv.sdk.generate.*;
+import io.github.vantiv.sdk.generate.TypeOfDigitalCurrencyEnum;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -592,7 +593,7 @@ public class TestCaptureGivenAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		capturegivenauth.setCard(card);
-		capturegivenauth.setTypeOfDigitalCurrency("7");
+		capturegivenauth.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.SEVEN);
 		capturegivenauth.setConversionAffiliateId("ABCD");
 		capturegivenauth.setId("id");
 		CaptureGivenAuthResponse response = cnp.captureGivenAuth(capturegivenauth);

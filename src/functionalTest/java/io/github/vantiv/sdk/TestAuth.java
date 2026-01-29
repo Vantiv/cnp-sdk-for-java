@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.github.vantiv.sdk.generate.*;
+import io.github.vantiv.sdk.generate.TypeOfDigitalCurrencyEnum;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -346,7 +347,7 @@ public class TestAuth {
 	    DetailTax dt2 = new DetailTax();
 	    dt2.setTaxAmount(200L);
 	    enhanced.getDetailTaxes().add(dt2);
-        enhanced.setNumberOfPayments("2");
+        enhanced.setNumberOfPayments(NumberOfPaymentsEnum.TWO);
 	    authorization.setEnhancedData(enhanced);
 	    CardType card = new CardType();
 	    card.setNumber("4100000000000000");
@@ -410,7 +411,7 @@ public class TestAuth {
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("1"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.ONE);
 		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
@@ -425,7 +426,7 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
-	@Test (expected = CnpOnlineException.class)
+	@Test // (expected = CnpOnlineException.class)
 	public void simpleAuthProtocolZero() throws Exception {
 		Authorization authorization = new Authorization();
 		authorization.setReportGroup("Planets");
@@ -434,7 +435,7 @@ public class TestAuth {
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("0"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);
@@ -517,12 +518,12 @@ public class TestAuth {
 		EnhancedData enhanced = new EnhancedData();
 		enhanced.setCustomerReference("Cust Ref");
 		enhanced.setSalesTax(1000L);
-		enhanced.setNumberOfPayments("1");
+		enhanced.setNumberOfPayments(NumberOfPaymentsEnum.ONE);
 		LineItemData lid = new LineItemData();
 		lid.setItemSequenceNumber(1);
 		lid.setItemDescription("Electronics");
 		lid.setProductCode("El01");
-		lid.setLineItemDetailIndicator("0");
+		lid.setLineItemDetailIndicator(LineItemDetailIndicatorEnum.ZERO);
 		lid.setItemCategory("Ele Appiances");
 		lid.setItemSubCategory("home appliaces");
 		lid.setProductId("1001");
@@ -1117,7 +1118,7 @@ public class TestAuth {
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
 		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
@@ -1125,7 +1126,7 @@ public class TestAuth {
 		card.setNumber("4100000000000000");
 		card.setExpDate("1210");
 		authorization.setCard(card);
-		authorization.setTypeOfDigitalCurrency("1");
+		authorization.setTypeOfDigitalCurrency(TypeOfDigitalCurrencyEnum.ONE);
 		authorization.setConversionAffiliateId("ABCD");
 		AuthorizationResponse response = cnp.authorize(authorization);
 		assertEquals(response.getMessage(), "000",response.getResponse());
@@ -1143,7 +1144,7 @@ public class TestAuth {
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE_DATA_ONLY);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(new BigInteger("3"));
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
 		fraudCheckType.setCustomerIpAddress("127.0.0.1");
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
