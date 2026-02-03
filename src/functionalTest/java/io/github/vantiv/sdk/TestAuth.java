@@ -426,6 +426,9 @@ public class TestAuth {
 		assertEquals("sandbox", response.getLocation());
 	}
 
+	//unable to test the AuthProtocol using a value of ZERO because the enumeration AuthenticationProtocolVersionType does not define an entry for ZERO.
+	//Previously, this parameter was handled as a string, but following the recent ANT updates, it is now strictly typed as an enumeration. Consequently, validation is performed using AuthenticationProtocolVersionType.ONE.
+
 	@Test // (expected = CnpOnlineException.class)
 	public void simpleAuthProtocolZero() throws Exception {
 		Authorization authorization = new Authorization();
@@ -435,7 +438,7 @@ public class TestAuth {
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		authorization.setId("id");
 		FraudCheckType fraudCheckType = new FraudCheckType();
-		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.THREE);
+		fraudCheckType.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.ONE);
 		authorization.setCardholderAuthentication(fraudCheckType);
 		CardType card = new CardType();
 		card.setType(MethodOfPaymentTypeEnum.VI);

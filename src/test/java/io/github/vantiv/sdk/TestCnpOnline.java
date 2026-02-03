@@ -205,7 +205,8 @@ public class TestCnpOnline {
 		assertEquals(ForeignRetailerIndicatorEnum.fromValue("A"), authorization.getForeignRetailerIndicator());
 		assertEquals("sandbox", authorize.getLocation());
 	}
-
+	//unable to test the AuthProtocol using a value of ZERO because the enumeration AuthenticationProtocolVersionType does not define an entry for ZERO.
+	//Previously, this parameter was handled as a string, but following the recent ANT updates, it is now strictly typed as an enumeration. Consequently, validation is performed using AuthenticationProtocolVersionType.ONE.
 	@Test
 	public void testAuthProtocolIsZero() throws Exception {
 		Authorization authorization = new Authorization();
@@ -214,7 +215,6 @@ public class TestCnpOnline {
 		authorization.setAmount(106L);
 		authorization.setOrderSource(OrderSourceType.ECOMMERCE);
 		FraudCheckType ftc = new FraudCheckType();
-		//check once again
 		ftc.setAuthenticationProtocolVersion(AuthenticationProtocolVersionType.ONE);
 		authorization.setCardholderAuthentication(ftc);
 		CardType card = new CardType();
